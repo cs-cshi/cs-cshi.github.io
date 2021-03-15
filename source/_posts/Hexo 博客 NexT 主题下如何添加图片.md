@@ -2,7 +2,7 @@
 title: Hexo 博客 NexT 主题下如何添加图片
 date: 2021-03-13 09:47:57
 tags: 
-      - Hexo
+      - Hexo 博客
       - 搭建环境
 categories: Hexo 博客
 ---

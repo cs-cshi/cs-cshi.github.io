@@ -2,7 +2,7 @@
 title: 如何使用 Github + Hexo 搭建博客
 date: 2021-03-13 09:47:57
 tags: 
-      - Hexo
+      - Hexo 博客
       - 搭建环境
 categories: Hexo 博客
 ---
