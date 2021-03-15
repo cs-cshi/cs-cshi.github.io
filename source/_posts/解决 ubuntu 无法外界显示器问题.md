@@ -2,9 +2,9 @@
 title: 解决 AMD 在 ubuntu 上无法外接显示器问题
 date: 2021-03-15 09:58:57
 tags: 
-   - linux
-   - ubuntu
-categories: ubuntu
+   - Linux
+   - Ubuntu
+categories: Ubuntu
 ---
 
 实际上 ubuntu 的内核（5.4及以下）还不支持 AMD 4000 系列的集显，所以无法驱动。

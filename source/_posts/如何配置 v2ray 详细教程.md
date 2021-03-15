@@ -3,7 +3,7 @@ title: 如何配置 v2ray 详细教程
 date: 2021-03-14 08:09:57
 tags: 
    - 代理
-categories: proxy
+categories: Proxy
 ---
 
 V2ray 是继 Shadowsocks(R) 后又一个体验很棒、功能非常强大的科学上网工具，近年来受到网友的广泛关注和喜爱。本教程详细介绍V2ray的安装和配置过程，让读者能迅速上手和使用V2ray。
