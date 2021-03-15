@@ -134,6 +134,9 @@ git commit -m 'hexo source post' # 引号内是描述
 git push origin hexo-source  # hexo-source 是分支名
 ```
 
+注意：如果是通过 git clone 下载配置的主题， push 源文件时需要将主题的 `.git`文件夹删除或改名备份。
+
+
 ## 8. 更换主题
 在 Themes | Hexo 选择一个喜欢的主题，比如 NexT，进入网站目录打开 Git Bash Here 下载主题：
 > 主题链接: https://hexo.io/themes/
