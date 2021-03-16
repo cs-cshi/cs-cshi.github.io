@@ -4,7 +4,7 @@ date: 2021-03-15 10:18:57
 tags: 
    - 网络安全
    - 搭建环境
-categories: 《从0到1：CTFer成长之路 》
+categories: 《从0到1：CTFer成长之路》
 ---
 
 《从0到1：CTFer 成长之路》书中涉及的题目已经封装成 docker 镜像，通过 docker 很容易能在本地实现做题的环境。

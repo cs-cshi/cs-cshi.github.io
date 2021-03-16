@@ -2,7 +2,6 @@
 title: 解决 AMD 在 ubuntu 上无法外接显示器问题
 date: 2021-03-15 09:58:57
 tags: 
-   - Linux
    - Ubuntu
 categories: Ubuntu
 ---
