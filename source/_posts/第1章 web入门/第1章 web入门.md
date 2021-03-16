@@ -58,7 +58,7 @@ categories: 《从0到1：CTFer成长之路》
 
   ```
   # 通过获取的表名获取表中列名
-  -1 union select 1,group_concat(column_name) from information_schema.column where table_name = ***
+  -1 union select 1,group_concat(column_name) from information_schema.columns where table_name = ***
   ```
 
   数字型注入中，可以输入特别大的数或 -1 这类明显可能无返回结果的值，这样服务器返回的就只有我们想要的信息。
