@@ -2,7 +2,7 @@
 title: 如何为 Git 设置代理
 date: 2021-03-13 09:47:57
 tags: 代理
-categories: Proxy
+categories: proxy
 ---
 
 ## 1. 连接情况总览
