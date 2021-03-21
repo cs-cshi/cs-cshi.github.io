@@ -2,7 +2,7 @@
 title: Ubuntu中Pycharm专业版2020.1 安装，永久激活
 date: 2021-03-20 14:20:00
 tags: 
-      - 软件
+      - 软件资源
 categories: 资源
 ---
 
