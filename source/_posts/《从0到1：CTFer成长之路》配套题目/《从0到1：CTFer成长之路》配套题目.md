@@ -6,10 +6,8 @@ tags:
 categories: 《从0到1：CTFer成长之路》
 ---
 
-
-第一章内容的题目
-
 官方平台网址：https://book.nu1l.com/tasks/
+
 <!--more-->
 
 # 第一章 Web 入门
@@ -407,4 +405,84 @@ if __name__ == '__main__':
 13. 将`flask-session-cookie-manager`获得的编码放到请求包的 session 中，再向服务器发送该包，成功获得 flag.py
     ![afr](afr_3_flag.png)
 
-  
+
+# 第二章 Web 进阶
+## 2.1 SSRF漏洞
+1.  进入环境，点击 intersting challenge，代码审计。更详细的代码审计可以看这篇[博客](https://blog.csdn.net/wuyaowangchuan/article/details/110433971)
+```php
+<?php 
+highlight_file(__FILE__);  # 高亮显示当前文件
+function check_inner_ip($url) 
+{ 
+    $match_result=preg_match('/^(http|https)?:\/\/.*(\/)?.*$/',$url); 
+    // ^ 匹配行的开始
+    // (xyz) 字符组，按照确切的顺序匹配字符 xyz
+    // | 分支结构，匹配符号之前的字符或后面的字符
+    // ? 	匹配前面的子表达式零次或一次，或指明一个非贪婪限定符
+    // \ 转义符，它可以还原元字符原来的含义，允许你匹配保留字符 [ ] ( ) { } . * + ? ^ $ \ |
+    // . 匹配除换行符以外的任意字符
+    // * 匹配前面的子表达式零次或多次
+    // $ 匹配行的结束
+
+    if (!$match_result) 
+    { 
+        die('url fomat error'); 
+    } 
+    try 
+    { 
+        $url_parse=parse_url($url); 
+        // 分解出一个URL的各个部分，返回数组。这是 php 的方法，各种语言对 URL 各部分解析规则会各不一样
+    } 
+    catch(Exception $e) 
+    { 
+        die('url fomat error'); 
+        return false; 
+    } 
+    $hostname=$url_parse['host']; 
+    $ip=gethostbyname($hostname); 
+    $int_ip=ip2long($ip); 
+    return ip2long('127.0.0.0')>>24 == $int_ip>>24 || ip2long('10.0.0.0')>>24 == $int_ip>>24 || ip2long('172.16.0.0')>>20 == $int_ip>>20 || ip2long('192.168.0.0')>>16 == $int_ip>>16; 
+} 
+
+function safe_request_url($url) 
+{ 
+     
+    if (check_inner_ip($url)) 
+    { 
+        echo $url.' is inner ip'; 
+    } 
+    else 
+    {
+        $ch = curl_init();  # 初始化
+        curl_setopt($ch, CURLOPT_URL, $url); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        curl_setopt($ch, CURLOPT_HEADER, 0); 
+        $output = curl_exec($ch);  #  //抓取URL并把它传递给浏览器，实际上由于解析规则，获得的域名与 php parse_url 方法获得的不一样
+        $result_info = curl_getinfo($ch); 
+        if ($result_info['redirect_url']) 
+        { 
+            safe_request_url($result_info['redirect_url']); 
+        } 
+        curl_close($ch); 
+        var_dump($output); 
+    } 
+     
+} 
+
+$url = $_GET['url']; 
+if(!empty($url)){ 
+    safe_request_url($url); 
+} 
+
+?>
+```
+
+2. URL 都要经过 check_inner_ip 函数检测，但 php_url_parse 和 curl 对 url 的解析是不同的，强烈看看这篇文章 [【Blackhat】SSRF的新纪元：在编程语言中利用URL解析器](https://www.anquanke.com/post/id/86527)
+    ![ssrf](ssrf_1_url.png)
+
+3. 直接构造`?url=http://a@127.0.0.1:80@baidu.com/flag.php`
+
+4. 后续还有 MySQL、Redies，我是跟着这个博客做的 [《从0到1：CTFer成长之路》 配套题目Web WP](https://blog.csdn.net/rfrder/article/details/108930033?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161604810616780255279438%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=161604810616780255279438&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-108930033.pc_search_result_cache&utm_term=%E4%BB%8E0%E5%88%B01%EF%BC%9ACTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF\)
+   1. 查看已经运行的docker镜像 `sudo docker ps -a`
+   2. 连接到mysql镜像中 `sudo docker exec -it 2-web-ssrf_mysql_1 bash`,2-web-ssrf_mysql_1 在上一步查看镜像时 NAMES 的内容。[怎么访问docker内的MySQL](https://www.php.cn/docker/445365.html)
+   - 将 docker 容器中的文件传递到主机:`sudo docker cp 2-web-ssrf_mysql_1:/pcap/mysql.pcap /home/chang/`
