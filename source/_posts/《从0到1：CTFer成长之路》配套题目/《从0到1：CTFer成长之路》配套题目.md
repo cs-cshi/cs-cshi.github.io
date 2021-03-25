@@ -486,3 +486,9 @@ if(!empty($url)){
    1. 查看已经运行的docker镜像 `sudo docker ps -a`
    2. 连接到mysql镜像中 `sudo docker exec -it 2-web-ssrf_mysql_1 bash`,2-web-ssrf_mysql_1 在上一步查看镜像时 NAMES 的内容。[怎么访问docker内的MySQL](https://www.php.cn/docker/445365.html)
    - 将 docker 容器中的文件传递到主机:`sudo docker cp 2-web-ssrf_mysql_1:/pcap/mysql.pcap /home/chang/`
+
+## 2.2 命令执行漏洞
+这道题主要是看博文，弄懂 linux文件描述符 和 反弹shell原理再看 writeup 基本上没什么难度了。
+- [《从0到1：CTFer成长之路》 配套题目Web WP](https://blog.csdn.net/rfrder/article/details/108930033?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161604810616780255279438%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=161604810616780255279438&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-108930033.pc_search_result_cache&utm_term=%E4%BB%8E0%E5%88%B01%EF%BC%9ACTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF\)
+- [反弹Shell原理及检测技术研究](https://www.cnblogs.com/LittleHann/p/12038070.html#_lab2_1_1)
+- [彻底弄懂 Linux 下的文件描述符（fd）](https://cs-cshi.github.io/2021/03/23/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/)
