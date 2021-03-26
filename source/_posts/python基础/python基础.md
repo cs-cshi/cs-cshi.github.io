@@ -839,3 +839,362 @@ print(set1) # {1, 4}
 ```
 
 # 13. 函数
+## 13.1 语法
+```python
+def 函数名(参数):
+    """ 说明⽂档的位置 """
+    code
+    ...
+```
+- 查看函数说明文档
+  - help(func)
+
+## 13.2 变量作用域
+- 局部变量
+  - 定义在函数体内部的变量，只在函数体内部⽣效。
+- 全局变量
+  - 定义在函数体内、外都能⽣效的变量。
+
+## 13.3 函数的返回值
+- 返回多个返回值
+  ```python
+  def return_num():
+      return 1, 2
+  
+  result = return_num()
+  print(result)  # (1, 2)
+  ```
+
+## 13.4 函数参数
+- 位置参数
+  - 根据函数定义的位置来传递参数
+    ```python
+    def user_info(name, age, gender):
+        print(f'您的名字是{name}, 年龄是{age}, 性别是{gender}')
+
+    user_info('TOM', 20, '男')
+    ```
+- 关键字参数
+  - 通过“键=值”形式加以指定，可以让函数更加清晰、容易使⽤，同时也清除了参数的顺序需
+求。
+  - 函数调⽤时，如果有位置参数时，**位置参数必须在关键字参数的前⾯**，但**关键字参数之间不存在
+先后顺序**。
+    ```python
+    def user_info(name, age, gender):
+        print(f'您的名字是{name}, 年龄是{age}, 性别是{gender}')
+
+    user_info('Rose', age=20, gender='⼥')
+    user_info('⼩明', gender='男', age=16)
+    ```
+- 缺省参数
+  - 缺省参数也叫默认参数，⽤于定义函数，为参数提供默认值，调⽤函数时可不传该默认参数的值
+  - 所有位置参数必须出现在默认参数前，包括函数定义和调⽤
+    ```python
+    def user_info(name, age, gender='男'):
+        print(f'您的名字是{name}, 年龄是{age}, 性别是{gender}')
+
+    user_info('TOM', 20)
+    user_info('Rose', 18, '⼥')
+    ```
+- 不定⻓参数
+  - 也叫可变参数。分为包裹(packing)位置参数，和包裹关键字参数。
+    ```python
+    # 1. 包裹位置传参
+    def user_info(*args):
+        print(args)
+    
+    user_info('TOM')  # ('TOM',)
+    user_info('TOM', 18)  # ('TOM', 18)
+
+    # 2. 包裹关键字传参
+    def user_info(**kwargs):
+        print(kwargs)
+   
+    user_info(name='TOM', age=18, id=110)  # {'name': 'TOM', 'age': 18, 'id': 110}
+    ```
+
+## 13.5 拆包
+- 元组(tuple)拆包
+  ```python
+  def return_num():
+      return 100, 200
+
+  num1, num2 = return_num()
+  print(num1)  # 100
+  print(num2)  # 200
+  ```
+- 字典(dict)拆包
+  ```python
+  dict1 = {'name': 'TOM', 'age': 18}
+  a, b = dict1
+
+  # 对字典进⾏拆包，取出来的是字典的key
+  print(a)  # name
+  print(b)  # age
+  print(dict1[a])  # TOM
+  print(dict1[b])  # 18
+  ```
+
+## 13.6 引用
+在python中，值是靠引⽤来传递来的。可以⽤ id() 来判断两个变量是否为同⼀个值的引⽤。
+- 引⽤当做实参
+  ```python
+  def test1(a):
+      print(a)
+      print(id(a))
+
+  a += a
+  
+  print(a)
+  print(id(a))
+
+  # int：计算前后id值不同
+  b = 100
+  test1(b)
+
+  # 列表：计算前后id值相同
+  c = [11, 22]
+  test1(c)
+  ```
+## 13.7 可变和不可变类型
+所谓可变类型与不可变类型是指：数据能够直接进⾏修改，如果能直接修改那么就是可变，否则是不可变.
+- 可变类型
+  - 列表
+  - 字典
+  - 集合
+- 不可变类型
+  - 整型
+  - 浮点型
+  - 字符串
+  - 元组
+  
+
+## 13.8 lambda 表达式
+如果⼀个函数有⼀个返回值，并且只有⼀句代码，可以使⽤ lambda简化。
+### 13.8.1 语法
+lambda 参数列表 ： 表达式
+- lambda表达式的参数可有可⽆，函数的参数在lambda表达式中完全适⽤。
+- lambda表达式能接收任何数量的参数但只能返回⼀个表达式的值。
+```python
+
+# 函数
+def fn1():
+    return 200
+print(fn1)  # 内存地址
+print(fn1())  # 200
+
+# lambda表达式
+fn2 = lambda: 100
+print(fn2)  # 内存地址
+print(fn2())  # 100
+```
+
+### 13.8.2 参数形式
+- 无参数
+  ```python
+  fn1 = lambda: 100
+  print(fn1())  # 100
+  ```
+- 一个参数
+  ```python
+  fn1 = lambda a: a
+  print(fn1('hello world'))  # hello world
+  ```
+- 默认参数
+  ```python
+  fn1 = lambda a, b, c=100: a + b + c
+  print(fn1(10, 20))  # 130 : 10+20+100
+  ```
+- 可变参数：*args
+  ```python
+  fn1 = lambda *args: args
+  print(fn1(10, 20, 30))  # (10,20,30) 元组
+  ```
+- 可变参数：**kwargs
+  ```python
+  fn1 = lambda **kwargs: kwargs
+  print(fn1(name='python', age=20))  # {'name': 'python', 'age': 20}
+  ```  
+### 13.8.3 应用
+- 带判断的lambda
+  ```python
+  fn1 = lambda a, b: a if a > b else b
+  print(fn1(1000, 500))
+  ```
+- 列表数据按字典key的值排序
+  ```python
+  students = [
+    {'name': 'TOM', 'age': 20},
+    {'name': 'ROSE', 'age': 19},
+    {'name': 'Jack', 'age': 22}
+  ]
+  # 按name值升序排列
+  students.sort(key=lambda x: x['name'])
+  print(students)  # [{'name': 'Jack', 'age': 22}, {'name': 'ROSE', 'age': 19}, {'name': 'TOM', 'age': 20}]
+
+  # 按name值降序排列
+  students.sort(key=lambda x: x['name'], reverse=True)
+  print(students)  # [{'name': 'TOM', 'age': 20}, {'name': 'ROSE', 'age': 19}, {'name': 'Jack', 'age': 22}]
+
+  # 按age值升序排列
+  students.sort(key=lambda x: x['age'])
+  print(students)  # [{'name': 'ROSE', 'age': 19}, {'name': 'TOM', 'age': 20}, {'name': 'Jack', 'age': 22}]
+  ```
+
+## 13.9 内置高阶函数
+- map()
+  - map(func, lst)，将传⼊的函数变量func作⽤到lst变量的每个元素中，并将结果组成新的列表(Python2)/迭代器(Python3)返回。
+    ```python
+    list1 = [1, 2, 3, 4, 5]
+    def func(x):
+        return x ** 2
+    
+    result = map(func, list1)
+    print(result) # <map object at 0x0000013769653198>
+    print(list(result)) # [1, 4, 9, 16, 25]
+    # 注意 result 经过 list 类型转换后，result 变为空
+    ```
+- reduce()
+  - reduce(func，lst)，其中func必须有两个参数。每次func计算的结果继续和序列的下⼀个元素做累积计算。
+    ```python
+    import functools
+    
+    list1 = [1, 2, 3, 4, 5]
+    
+    def func(a, b):  # 上一次函数执行的结果会当作参数传递到下一次的函数（参数 a）
+        return a + b
+    
+    result = functools.reduce(func, list1)
+    print(result)  # 15
+    ```
+- filter()
+  - filter(func, lst)函数⽤于过滤序列, 过滤掉不符合条件的元素, 返回⼀个 filter 对象。如果要转换为列表,可以使⽤ list() 来转换。
+    ```python
+    list1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    def func(x):
+        return x % 2 == 0
+    
+    result = filter(func, list1)
+    print(result)  # 内存地址
+    print(list(result))  # [2, 4, 6, 8, 10]
+    ```
+
+# 14. 文件操作
+## 14.1 打开模式
+在python，使⽤open函数，可以打开⼀个已经存在的⽂件，或者创建⼀个新⽂件，语法如下：
+> open(name, mode)
+>  - name：是要打开的⽬标⽂件名的字符串(可以包含⽂件所在的具体路径)。
+>  - mode：设置打开⽂件的模式(访问模式)：只读、写⼊、追加等。
+
+
+| 模式 | 描述 |
+| --- | --- |
+| r | 以只读⽅式打开⽂件。⽂件的指针将会放在⽂件的开头。这是默认模式。|
+| rb | 以⼆进制格式打开⼀个⽂件⽤于只读。⽂件指针将会放在⽂件的开头。这是默认模式。|
+| r+ | 打开⼀个⽂件⽤于读写。⽂件指针将会放在⽂件的开头。|
+| rb+ | 以⼆进制格式打开⼀个⽂件⽤于读写。⽂件指针将会放在⽂件的开头。|
+| w | 打开⼀个⽂件只⽤于写⼊。如果该⽂件已存在则打开⽂件，并从开头开始编辑，即原有内容会被删除。如果该⽂件不存在，创建新⽂件。|
+| wb | 以⼆进制格式打开⼀个⽂件只⽤于写⼊。如果该⽂件已存在则打开⽂件，并从开头开始编辑，即原有内容会被删除。如果该⽂件不存在，创建新⽂件。|
+| w+ | 打开⼀个⽂件⽤于读写。如果该⽂件已存在则打开⽂件，并从开头开始编辑，即原有内容会被删除。如果该⽂件不存在，创建新⽂件。|
+| wb+ | 以⼆进制格式打开⼀个⽂件⽤于读写。如果该⽂件已存在则打开⽂件，并从开头开始编辑，即原有内容会被删除。如果该⽂件不存在，创建新⽂件。|
+| a | 打开⼀个⽂件⽤于追加。如果该⽂件已存在，⽂件指针将会放在⽂件的结尾。也就是说，新的内容将会被写⼊到已有内容之后。如果该⽂件不存在，创建新⽂件进⾏写⼊。|
+| ab | 以⼆进制格式打开⼀个⽂件⽤于追加。如果该⽂件已存在，⽂件指针将会放在⽂件的结尾。也就是说，新的内容将会被写⼊到已有内容之后。如果该⽂件不存在，创建新⽂件进⾏写⼊。|
+| a+ | 打开⼀个⽂件⽤于读写。如果该⽂件已存在，⽂件指针将会放在⽂件的结尾。⽂件打开时会是追加模式。如果该⽂件不存在，创建新⽂件⽤于读写。ab+ 以⼆进制格式打开⼀个⽂件⽤于追加。如果该⽂件已存在，⽂件指针将会放在⽂件的结尾。如果该⽂件不存在，创建新⽂件⽤于读写。|
+
+## 14.2 ⽂件对象⽅法
+### 14.2.1 写
+> 对象.write('内容')
+
+```python
+# 1. 打开⽂件
+f = open('test.txt', 'w')
+
+# 2.⽂件写⼊
+f.write('hello world')
+
+# 3. 关闭⽂件
+f.close()
+```
+> 注意：
+>  1. w 和 a 模式：如果⽂件不存在则创建该⽂件；如果⽂件存在， w 模式先清空再写⼊， a 模式直接末尾追加。
+>  2. r 模式：如果⽂件不存在则报错。
+
+### 14.2.2 读
+- read()
+  - ⽂件对象.read(num), num表示要从⽂件中读取的数据的⻓度（单位是字节），如果没有传⼊num，那么就表示读取⽂件中所有的数据。
+- readlines()
+  - readlines可以按照⾏的⽅式把整个⽂件中的内容进⾏⼀次性读取，并且返回的是⼀个列表，其中每⼀⾏的数据为⼀个元素。  
+- readline()
+  - ⼀次读取⼀⾏内容。
+- seek()
+  - ⽂件对象.seek(偏移量, 起始位置)。⽤来移动⽂件指针。
+    - 0：⽂件开头
+    - 1：当前位置
+    - 2：⽂件结尾
+
+## 14.3 文件备份
+```python
+old_name = input('请输⼊您要备份的⽂件名：')
+index = old_name.rfind('.')
+
+if index > 0:
+    postfix = old_name[index:]
+
+new_name = old_name[:index] + '[备份]' + postfix
+
+old_f = open(old_name, 'rb')
+new_f = open(new_name, 'wb')
+
+while True:
+    con = old_f.read(1024)
+    if len(con) == 0:
+        break
+    new_f.write(con)
+
+old_f.close()
+new_f.close()
+```
+
+## 14.4 ⽂件和⽂件夹的操作
+在Python中⽂件和⽂件夹的操作要借助os模块⾥⾯的相关功能
+```python
+import os
+```
+| 函数 | 说明 |
+| --- | --- |
+| os.rename(⽬标⽂件名, 新⽂件名) | ⽂件重命名 |
+| os.rename(⽬标⽂件名, 新⽂件名) | 删除⽂件 |
+| os.mkdir(⽂件夹名字) | 创建⽂件夹 |
+| os.rmdir(⽂件夹名字) | 删除⽂件夹 |
+| os.getcwd() | 获取当前⽬录 |
+| os.chdir(⽬录) | 改变默认⽬录 |
+| os.listdir(⽬录) | 获取⽬录列表 |
+```python
+import os
+# 设置重命名标识：如果为1则添加指定字符，flag取值为2则删除指定字符
+flag = 1
+
+# 获取指定⽬录
+dir_name = './'
+
+# 获取指定⽬录的⽂件列表
+file_list = os.listdir(dir_name)
+# print(file_list)
+
+# 遍历⽂件列表内的⽂件
+for name in file_list:
+    # 添加指定字符
+    if flag == 1:
+        new_name = 'Python-' + name
+    # 删除指定字符
+    elif flag == 2:
+        num = len('Python-')
+        new_name = name[num:]
+
+# 打印新⽂件名，测试程序正确性
+print(new_name)
+ 
+# 重命名
+os.rename(dir_name+name, dir_name+new_name)
+```
