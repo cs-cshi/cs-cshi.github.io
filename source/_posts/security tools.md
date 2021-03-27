@@ -2,9 +2,9 @@
 title: security tools
 date: 2021-03-19 09:47:57
 tags: 
-      - 网络安全
+      - 工具
       - 软件资源
-categories: 网络安全
+categories: 工具
 ---
 
 收集学习网安过程中遇到的工具
