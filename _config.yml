@@ -105,3 +105,9 @@ deploy:
   type: git
   repo: git@github.com:cs-cshi/cs-cshi.github.io.git
   branch: master
+
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
