@@ -3,13 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 大观园
 subtitle: ''
-description: ''
+description: '慢下来，记录生活点滴，畅游人类知识和艺术的海洋。'
 keywords:
 author: Charles
 language: zh-CN
-timezone: Asia/Shanghai
+timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
@@ -40,7 +40,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: true
+post_asset_folder: false
 relative_link: false
 future: true
 highlight:
@@ -98,10 +98,6 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: next
-
-# Social links
-#social:
-#  GitHub: https://github.com/cs-cshi
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
