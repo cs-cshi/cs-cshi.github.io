@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo 博客 NexT 主题下如何添加图片</title>
-    <url>/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87/</url>
+    <title>Hexo-NexT 添加图片</title>
+    <url>/Hexo-NexT%20%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87/</url>
     <content><![CDATA[<p>先安装插件，再打开 hexo 的配置，最后按照指定格式放置和引用图片。<br>前面的摘要貌似不能为空，否则<code>more</code>标签无效。</p>
 <span id="more"></span>
 
@@ -20,6 +20,36 @@
 <li><p>插入图片。语法和 markdown 语法一致。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![]()  # [描述，不能为空，否则不会显示，md 下是可以不写的](图片完整名称)</span><br><span class="line"># eg. ![test](test.jpg)，注意 test.jpg 是按要求放在与此 .md 文件同名的文件夹内。</span><br></pre></td></tr></table></figure></li>
 </ol>
+]]></content>
+      <categories>
+        <category>网站建设</category>
+        <category>Hexo 博客</category>
+      </categories>
+      <tags>
+        <tag>Hexo 博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo-NexT 设置博客背景图片</title>
+    <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/</url>
+    <content><![CDATA[<h2 id="1-设置背景图片"><a href="#1-设置背景图片" class="headerlink" title="1. 设置背景图片"></a>1. 设置背景图片</h2><p>将想要的背景图片放入 themes/next/source/images。打开 themes/next/source/css/ _custom/custom.styl 文件，这个是 Next 故意留给用户自己个性化定制一些样式的文件，添加以下代码即可。</p>
+<span id="more"></span>
+<p>实际上我的版本里没有_custom，通过新建目录无法实现。我是在 themes/next/source/css/_schemes/Gemini/index.styl 中添加的代码，Gemini是我的 next 的布局样式。</p>
+<p>在写这篇博客的过程中，又尝试了下将代码添加到 blog_root/source/_data/styles.style 下，设置成功。如果没有这个目录，直接新建即可。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>:<span class="built_in">url</span>(<span class="string">/images/yourbackground.jpg</span>);</span><br><span class="line">    <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">    <span class="attribute">background-attachment</span>:fixed; //不重复</span><br><span class="line">    <span class="attribute">background-size</span>: cover;      //填充</span><br><span class="line">    <span class="attribute">background-position</span>:<span class="number">50%</span> <span class="number">50%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>background:url 为图片路径，也可以直接使用链接。</li>
+<li>background-repeat：若果背景图片不能全屏，那么是否平铺显示，充满屏幕</li>
+<li>background-attachment：背景是否随着网页上下滚动而滚动，fixed 为固定</li>
+<li>background-size：图片展示大小，这里设置 100%，100% 的意义为：如果背景图片不能全屏，那么是否通过拉伸的方式将背景强制拉伸至全屏显示。</li>
+</ul>
+<h2 id="2-博客内容透明化"><a href="#2-博客内容透明化" class="headerlink" title="2. 博客内容透明化"></a>2. 博客内容透明化</h2><p>NexT 主题的博客文章均是不透明的，这样读者就不能好好欣赏背景图片了，下面的方法可以使博客内容透明化：</p>
+<p>在 blog_root/source/_data/styles.style  中添加以下内容：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">//博客内容透明化</span><br><span class="line">//文章内容的透明度设置</span><br><span class="line"><span class="selector-class">.content-wrap</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//侧边框的透明度设置</span><br><span class="line"><span class="selector-class">.sidebar</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//菜单栏的透明度设置</span><br><span class="line"><span class="selector-class">.header-inner</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.9</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//搜索框（local-search）的透明度设置</span><br><span class="line"><span class="selector-class">.popup</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：其中 header-inner 不能使用 opacity 进行配置。因为 header-inner 包含 header.swig 中的所有内容。若使用 opacity 进行配置，子结点会出很多问题。</p>
+<h2 id="3-参考"><a href="#3-参考" class="headerlink" title="3. 参考"></a>3. 参考</h2><ul>
+<li><a href="https://tding.top/archives/761b6f4d.html">Hexo-NexT 设置博客背景图片</a></li>
+</ul>
 ]]></content>
       <categories>
         <category>网站建设</category>
@@ -214,7 +244,7 @@
   </entry>
   <entry>
     <title>Hexo 博客 NexT 主题下如何添加分类、标签</title>
-    <url>/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/</url>
+    <url>/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo-NexT%20%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/</url>
     <content><![CDATA[<p>Hexo Next 主题默认带有不少菜单，如关于（about）、分类（categories）、标签（tags）等，默认处于注释状态，将需要取消的菜单注释掉，然后生成相应的 page 即可。</p>
 <span id="more"></span>
 
@@ -341,200 +371,6 @@
       </tags>
   </entry>
   <entry>
-    <title>如何配置 v2ray 详细教程</title>
-    <url>/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<p>V2ray 是继 Shadowsocks(R) 后又一个体验很棒、功能非常强大的科学上网工具，近年来受到网友的广泛关注和喜爱。本教程详细介绍V2ray的安装和配置过程，让读者能迅速上手和使用V2ray。</p>
-<span id="more"></span>
-
-<h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><blockquote>
-<p>先创建安装 v2ray 的目录</p>
-</blockquote>
-<ol>
-<li>下载 QT 实现的 v2ray 界面。在官网链接上找到最新的 release 下载。<blockquote>
-<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
-</blockquote>
-</li>
-</ol>
-<p>比如，我目前下载的是Qv2ray.v2.2.3.linux-x64.AppImage。</p>
-<blockquote>
-<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a></p>
-</blockquote>
-<ol start="2">
-<li><p>下载v2ray核心</p>
-<blockquote>
-<p><a href="https://github.com/v2ray/v2ray-core/releases">https://github.com/v2ray/v2ray-core/releases</a></p>
-</blockquote>
-</li>
-<li><p>解压v2ray核心文件</p>
-</li>
-<li><p>执行 Qv2ray 客户端，选择首选项 -&gt; 内核设置，修改下列两个路径</p>
-<ul>
-<li>V2Ray 核心文件可执行<strong>文件</strong>路径：<code>.../v2ray-windows-64/wv2ray.exe</code></li>
-<li>V2Ray 资源<strong>目录</strong>：<code>.../v2ray-windows-64/</code></li>
-</ul>
-</li>
-<li><p>点击检查 V2Ray 核心设置，通过即可.<br><img src="v2ray_settings.png" alt="v2ray settings"></p>
-</li>
-<li><p>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）</p>
-</li>
-<li><p>配置成功 Qv2ray 主界面默认分组内会出现多条线路，并显示链路的个数。</p>
-</li>
-</ol>
-<h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><blockquote>
-<p>可自建 v2ray 目录，也可直接将 v2ray core 放在 ~/.config/qv2ray/vcore/ 中，这是 Qvray 默认路径。</p>
-</blockquote>
-<ol>
-<li>下载QT实现的v2ray界面。在官网链接上找到最新的release下载。<blockquote>
-<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
-</blockquote>
-</li>
-</ol>
-<p>比如，我目前下载的是Qv2ray.v2.6.3.linux-x64.AppImage。</p>
-<ol start="2">
-<li>下载v2ray core核心文件。打开官方网站：<blockquote>
-<p><a href="https://github.com/v2ray/v2ray-core/releases/">https://github.com/v2ray/v2ray-core/releases/</a> 。</p>
-</blockquote>
-</li>
-</ol>
-<p>选择下载文件v2ray-linux-64.zip。</p>
-<ol start="3">
-<li><p>进入 v2ray 下载的目录（我的是<code>~/v2ray</code>），执行下面命令给 Qv2ray 增加权限</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chmod +x ./Qv2ray.v2.6.3.linux-x64.AppImage  # 注意版本号</span><br></pre></td></tr></table></figure></li>
-<li><p>启动 Qv2ray。仍然在v2ray根目录，执行下列终端命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./Qv2ray.v2.6.3.linux-x64.AppImage</span><br></pre></td></tr></table></figure></li>
-<li><p>解压 v2ray core 核心文件。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unzip v2ray-linux-64.zip</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>注意不要用 <code>sudo</code> 解压，用 <code>sudo</code> 解压须给 <code>v2ray-linux-64</code> 加权限，容易造成权限紊乱。</p>
-<ol start="5">
-<li>在 Qv2ray 的首选项(Preference) 页面的内核设置（General Setting）中，设置v2ray核心文件的路径。</li>
-</ol>
-<p>默认的路径是<code>~/.config/qv2ray/vcore/</code>。如果没有新建 v2ray 目录结构，可以将 v2ray-linux-64.zip 解压后的文件都放置到这个目录里面。</p>
-<p>如果自建 v2ray 目录，选择自己的 V2Ray 核心可执行文件路径和 V2Ray 资源目录。</p>
-<p>最后，可以点击Check V2ray Core Setting按钮，验证这两个可执行文件的有效性。<br>   <img src="v2ray_linux_settings.png" alt="v2ray settings"></p>
-<ol start="6">
-<li>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 不可用</span><br><span class="line">https:&#x2F;&#x2F;cloudfront-cdn-hk-iplc1.com&#x2F;sub&#x2F;v&#x2F;wrvDgcKnw6nDncOAwrrCmMOOw5_CiH1-wqPCnMK1w4LCosOcw4B8wq1_w98k&#x3D;&#x2F;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li><p>在 Qv2ray 的首选项（Preferences）窗口中，可以设置语言、系统代理、开机启动等。</p>
-</li>
-<li><p>如果想仅仅在 Chrome 浏览器上做网络翻墙功能，就在 Chrome 浏览器上安装 Proxy SwitchyOmega 插件。在插件的配置页面上，设置Proxy Server，采用协议SOCK5，代理服务器是本地127.0.0.1，端口是1088（具体端口号查看 Qv2ray的 首选项（Preferences）。</p>
-</li>
-<li><p>如果不想做全局的系统代理 System Proxy，在Qv2ray的首选项中取消系统代理即可。</p>
-</li>
-<li><p>Git 的代理需要另外配置。</p>
-</li>
-</ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li>【Linux配置v2ray详细教程-Ubuntu为例】：<a href="https://www.boluo.in/1776.html">https://www.boluo.in/1776.htm</a>l</li>
-</ul>
-]]></content>
-      <categories>
-        <category>工具</category>
-        <category>proxy</category>
-      </categories>
-      <tags>
-        <tag>代理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>彻底弄懂 Linux 下的文件描述符（fd）</title>
-    <url>/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/</url>
-    <content><![CDATA[<p>Linux 下的文件描述符</p>
-<span id="more"></span>
-
-<h2 id="1-从一个最常见的例子说起"><a href="#1-从一个最常见的例子说起" class="headerlink" title="1. 从一个最常见的例子说起"></a>1. 从一个最常见的例子说起</h2><p>在使用Linux的过程中， 我们平时经常看到下面这样的用法：</p>
-<blockquote>
-<p>echo log &gt; /dev/null 2&gt;&amp;1</p>
-</blockquote>
-<ul>
-<li><blockquote>
-<p>  ：表示将输出结果重定向到哪里，例如：echo “123” &gt; /home/123.txt</p>
-</blockquote>
-</li>
-<li>/dev/null ：表示空设备文件<br>所以 echo log &gt; /dev/null 表示把日志输出到空文件设备，也就是将打印信息丢弃掉，屏幕上什么也不显示。</li>
-<li>1  ：表示stdout标准输出</li>
-<li>2  ：表示stderr标准错误</li>
-<li>&amp;  ：表示等同于的意思</li>
-</ul>
-<p>所以  2&gt;&amp;1 表示2的输出重定向等同于1，也就是标准错误输出重定向到标准输出。因为前面标准输出已经重定向到了空设备文件，所以标准错误输出也重定向到空设备文件。</p>
-<p>这个用法平时很常见，重点是为什么这里是用 2 和 1 ，不是3456什么的呢？这要从 Linux 中的文件描述符说起。</p>
-<h2 id="2-Linux中的文件描述符（file-descriptor）"><a href="#2-Linux中的文件描述符（file-descriptor）" class="headerlink" title="2. Linux中的文件描述符（file descriptor）"></a>2. Linux中的文件描述符（file descriptor）</h2><p>我们知道在Linux系统中一切皆可以看成是文件，文件又可分为：普通文件、目录文件、链接文件和设备文件。在操作这些所谓的文件的时候，我们每操作一次就找一次名字，这会耗费大量的时间和效率。所以Linux中规定每一个文件对应一个索引，这样要操作文件的时候，我们直接找到索引就可以对其进行操作了。</p>
-<p>文件描述符（file descriptor）就是内核为了高效管理这些已经被打开的文件所创建的索引，其是一个非负整数（通常是小整数），用于指代被打开的文件，所有执行I/O操作的系统调用都通过文件描述符来实现。同时还规定系统刚刚启动的时候，0是标准输入，1是标准输出，2是标准错误。这意味着如果此时去打开一个新的文件，它的文件描述符会是3，再打开一个文件文件描述符就是4……</p>
-<p>Linux内核对所有打开的文件有一个文件描述符表格，里面存储了每个文件描述符作为索引与一个打开文件相对应的关系，简单理解就是下图这样一个数组，文件描述符（索引）就是文件描述符表这个数组的下标，数组的内容就是指向一个个打开的文件的指针。</p>
-<p><img src="file_descriptor.png" alt="file descriptor"></p>
-<p><strong>上面只是简单理解，实际上关于文件描述符，Linux内核维护了3个数据结构：</strong></p>
-<ul>
-<li>进程级的文件描述符表</li>
-<li>系统级的打开文件描述符表</li>
-<li>文件系统的i-node表</li>
-</ul>
-<p>一个 Linux 进程启动后，会在内核空间中创建一个 PCB(Process Control Block) 控制块，PCB 内部有一个文件描述符表（File descriptor table），记录着当前进程所有可用的文件描述符，也即当前进程所有打开的文件。进程级的描述符表的每一条记录了单个进程所使用的文件描述符的相关信息，进程之间相互独立，一个进程使用了文件描述符3，另一个进程也可以用3。除了进程级的文件描述符表，系统还需要维护另外两张表：打开文件表、i-node 表。这两张表存储了每个打开文件的打开文件句柄（open file handle）。一个打开文件句柄存储了与一个打开文件相关的全部信息。</p>
-<p><strong>系统级的打开文件描述符表：</strong></p>
-<ul>
-<li>当前文件偏移量（调用read()和write()时更新，或使用lseek()直接修改）</li>
-<li>打开文件时的标识（open()的flags参数）</li>
-<li>文件访问模式（如调用open()时所设置的只读模式、只写模式或读写模式）</li>
-<li>与信号驱动相关的设置</li>
-<li>对该文件i-node对象的引用，即i-node 表指针</li>
-</ul>
-<p><strong>文件系统的i-node表：</strong></p>
-<ul>
-<li><p>文件类型（例如：常规文件、套接字或FIFO）和访问权限</p>
-</li>
-<li><p>一个指针，指向该文件所持有的锁列表</p>
-</li>
-<li><p>文件的各种属性，包括文件大小以及与不同类型操作相关的时间戳</p>
-</li>
-<li><p>文件描述符、打开的文件句柄以及i-node之间的关系如下图：<br><img src="relationship.png" alt="relationship"></p>
-</li>
-<li><p>在进程 A 中，文件描述符 1 和 20 都指向了同一个打开文件表项，标号为 23（指向了打开文件表中下标为 23 的数组元素），这可能是通过调用 dup()、dup2()、fcntl() 或者对同一个文件多次调用了 open() 函数形成的。</p>
-</li>
-<li><p>进程 A 的文件描述符 2 和进程 B 的文件描述符 2 都指向了同一个文件，这可能是在调用 fork() 后出现的（即进程 A、B 是父子进程关系），或者是不同的进程独自去调用 open() 函数打开了同一个文件，此时进程内部的描述符正好分配到与其他进程打开该文件的描述符一样。</p>
-</li>
-<li><p>进程 A 的描述符 0 和进程 B 的描述符 3 分别指向不同的打开文件表项，但这些表项均指向 i-node 表的同一个条目（标号为 1976）；换言之，它们指向了同一个文件。发生这种情况是因为每个进程各自对同一个文件发起了 open() 调用。同一个进程两次打开同一个文件，也会发生类似情况。 </p>
-</li>
-</ul>
-<p><strong>这就说明：同一个进程的不同文件描述符可以指向同一个文件；不同进程可以拥有相同的文件描述符；不同进程的同一个文件描述符可以指向不同的文件（一般也是这样，除了 0、1、2 这三个特殊的文件）；不同进程的不同文件描述符也可以指向同一个文件。</strong></p>
-<h2 id="3-Linux上打开文件举例"><a href="#3-Linux上打开文件举例" class="headerlink" title="3. Linux上打开文件举例"></a>3. Linux上打开文件举例</h2><p>比如在Linux上用 vim test.py 打开一个文件，保持打开状态，再新打开一个新的shell，输入命令pidof vim 获取vim进程的pid号，然后 ll  /proc/$pid/fd 查看vim 进程所使用的文件描述符列表。<br><img src="example_vim.png" alt="example vim"></p>
-<p>/dev/pts是远程登陆(telnet,ssh等)后创建的控制台设备文件所在的目录。因为我是通过Xshell远程登录的，所以标准输入0，标准输出1，标准错误2的文件描述符都指向虚拟终端控制台 /dev/pts/6 。再看下面是新打开的 test.py 的文件描述符，竟然是4，说好的从3开始呢？</p>
-<p>这个我也困扰了好久，查了各种资料，终于在一个大佬的帮助下在一个论坛找到原因，有时候中文查不到还是要试试英文搜索啊。因为vim这种编辑器的原理是先打开源文件并拷贝，然后关闭源文件再打开自己的副本，修改完文件保存的时候直接将副本重命名覆盖源文件。所以打开源文件的时候用的文件描述符3，然后打开自己的副本是时候就该用文件描述符4了，然后关闭源文件，文件描述符3就被释放了，我们查看的时候就只剩下了4，这里它指向的是vim创建的副本文件。这里只是说个大概意思，具体深究要去深入了解一下<a href="https://blog.csdn.net/weixin_43535689/article/details/104750148">vim的实现原理——奥尔特星云大使</a>，下面是当时我看到的论坛上的资料截图，链接在这：<a href="https://stackoverflow.com/questions/48588284/lsof-command-can-not-return-files-being-opened-by-kwrite">StackOverFlow</a>。<br><img src="stackoverflow_vim.png" alt="stackoverflow vim"></p>
-<h2 id="4-C语言中文件描述符的使用"><a href="#4-C语言中文件描述符的使用" class="headerlink" title="4. C语言中文件描述符的使用"></a>4. C语言中文件描述符的使用</h2><p>C语言中可以通过 open 函数返回一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test.c 文件，输入下面代码保存。 编译后执行，发现新打开文件的文件描述符是3。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> fd = open(<span class="string">&quot;test.py&quot;</span>, O_RDONLY);</span><br><span class="line">        <span class="keyword">if</span> (fd == <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;test.py fd = %d \n&quot;</span>, fd);  <span class="comment">// test.py fd = 3</span></span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-Python中文件描述符的使用"><a href="#5-Python中文件描述符的使用" class="headerlink" title="5. Python中文件描述符的使用"></a>5. Python中文件描述符的使用</h2><p>Python中通过 sys 模块封装了标准输入、标准输出和错误输出。通过我们平时常用的内建函数 open 可以获取一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test2.py 文件，输入下面代码保存。 执行，发现新打开文件的文件描述符是3。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdin fd = &#x27;</span>, sys.stdin.fileno())  // stdin fd = <span class="number">0</span> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdout fd = &#x27;</span>, sys.stdout.fileno())  // stdout fd = <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stderr fd = &#x27;</span>, sys.stderr.fileno())  // stderr fd = <span class="number">2</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;test.py&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;test.py fd = &#x27;</span>, f.fileno())  // test.py fd = <span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="6-Linux配置系统最大打开文件描述符个数"><a href="#6-Linux配置系统最大打开文件描述符个数" class="headerlink" title="6. Linux配置系统最大打开文件描述符个数"></a>6. Linux配置系统最大打开文件描述符个数</h2><h3 id="系统级限制"><a href="#系统级限制" class="headerlink" title="系统级限制"></a>系统级限制</h3><p>理论上系统内存有多少就可以打开多少的文件描述符，但是在实际中内核是会做相应的处理，一般最大打开文件数会是系统内存的10%（以KB来计算），称之为系统级限制。这个数字可以通过 cat /proc/sys/fs/file-max 或者 sysctl -a | grep fs.file-max 命令查看。</p>
-<p>更改系统级限制有临时更改和永久更改两种方式：</p>
-<ul>
-<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 sysctl -w fs.file-max=xxxx，其中xxxx就是要设置的数字。</li>
-<li>永久更改：vim编辑 /etc/sysctl.conf 文件，在后面添加 fs.file-max=xxxx，其中xxxx就是要设置的数字。保存退出后还要使用sysctl -p 命令使其生效。</li>
-</ul>
-<h3 id="用户级限制"><a href="#用户级限制" class="headerlink" title="用户级限制"></a>用户级限制</h3><p>同时为了控制每个进程消耗的文件资源，内核也会对单个进程最大打开文件数做默认限制，即用户级限制。32位系统默认值一般是1024，64位系统默认值一般是65535，可以使用 ulimit -n 命令查看。</p>
-<p>更改用户级限制也有临时更改和永久更改两种方式：</p>
-<ul>
-<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 ulimit -SHn xxxx 命令来修改，其中xxxx就是要设置的数字。</li>
-<li>永久更改：vim编辑 /etc/security/limits.conf 文件，修改其中的 hard nofile xxxx 和 soft nofile xxxx，其中xxxx就是要设置的数字。保存后退出。关于hard和soft的区别，参照下面参考链接中的第5个。</li>
-</ul>
-<h2 id="7-参考链接"><a href="#7-参考链接" class="headerlink" title="7. 参考链接"></a>7. 参考链接</h2><ol>
-<li><a href="https://blog.csdn.net/cywosp/article/details/38965239">每天进步一点点——Linux中的文件描述符与打开文件之间的关系——cywosp</a></li>
-<li><a href="http://c.biancheng.net/view/3066.html">Linux文件描述符到底是什么？——C语言中文网</a></li>
-<li><a href="https://www.jianshu.com/p/0ff9ff1d108e">句柄和文件描述符（FD）——阳光丶不锈</a></li>
-<li><a href="https://juejin.cn/post/6844903962043236365#heading-0">带你破案：文件描述符到底是什么？——vran</a></li>
-<li><a href="http://www.ideabuffer.cn/2016/11/20/Linux%E9%85%8D%E7%BD%AE%E8%B0%83%E4%BC%98%EF%BC%9A%E6%9C%80%E5%A4%A7%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E4%B8%AA%E6%95%B0/">Linux配置调优：最大打开文件描述符个数——Idea Buffer</a></li>
-<li><a href="%E4%BF%AE%E6%94%B9Linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84%E6%9C%80%E5%A4%A7%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E9%99%90%E5%88%B6">修改Linux系统下的最大文件描述符限制——BlueguyChui</a></li>
-</ol>
-<p>————————————————<br>版权声明：本文为CSDN博主「杰克小麻雀」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/yushuaigee/article/details/107883964">https://blog.csdn.net/yushuaigee/article/details/107883964</a></p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何使用 Github + Hexo 搭建博客</title>
     <url>/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<blockquote>
@@ -572,7 +408,7 @@
 <p>Title 随便取个名字，粘贴复制的 id_rsa.pub 内容到 Key 中，点击 Add SSH key 完成添加。</p>
 <p><strong>验证连接</strong>：</p>
 <blockquote>
-<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
+<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#103;&#x69;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#117;&#98;&#46;&#99;&#x6f;&#x6d;">&#103;&#x69;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#117;&#98;&#46;&#99;&#x6f;&#x6d;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
 </blockquote>
 <blockquote>
 <p>显示 “Hi xxx! You’ve successfully……” 即连接成功。</p>
@@ -676,30 +512,100 @@
       </tags>
   </entry>
   <entry>
-    <title>读书笔记——《具体生活》</title>
-    <url>/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/</url>
-    <content><![CDATA[<p>  焦虑是现代人的常态。时间不够用，钱不够花，职业发展不够快，对当下和未来不够了解…我们不断加快生活的节奏，但快节奏之后是否带来了好处，我们并不清楚，只是觉得“快”比“慢”要好。</p>
-<p>  很多时候，我们做不好事情，是我们太匆忙、太着急，其实只要慢三拍，我们的事情会比以前做得好很多。有时候，慢比快好。</p>
-<p>  当忙碌成为生活的主旋律时，我们是否可以思考一下：生活的目的是什么？从容做事，优雅生活，这是我们生活的目的。很多人羡慕所谓的贵族生活，其实过去贵族的物质生活并不比今天的中产阶级好多少，但是他们整体的生活质量远非今天一般意义上的富有家庭所能比的。究其原因，是因为今天的人缺少了那份应有的从容和优雅。</p>
-<p>  当我们做事情的时候能够慢一点，少走点弯路，多花点实践享受浪漫而美好的人生，畅游人类知识和艺术的海洋，我们会发现自己是在真正地生活，而不是只是为了工作而活着。</p>
+    <title>如何配置 v2ray 详细教程</title>
+    <url>/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<p>V2ray 是继 Shadowsocks(R) 后又一个体验很棒、功能非常强大的科学上网工具，近年来受到网友的广泛关注和喜爱。本教程详细介绍V2ray的安装和配置过程，让读者能迅速上手和使用V2ray。</p>
 <span id="more"></span>
 
-<h2 id="1-旅行的意义"><a href="#1-旅行的意义" class="headerlink" title="1. 旅行的意义"></a>1. 旅行的意义</h2><h2 id="2-博物馆之美"><a href="#2-博物馆之美" class="headerlink" title="2. 博物馆之美"></a>2. 博物馆之美</h2><h2 id="3-读书以以怡情长智"><a href="#3-读书以以怡情长智" class="headerlink" title="3. 读书以以怡情长智"></a>3. 读书以以怡情长智</h2><p>  古人把读万卷书和行万里路看作精英阶层成长不可或缺的两个环节，它们既能使人获得知识，也能令人愉悦自我。</p>
-<h3 id="3-1-阅读的意义"><a href="#3-1-阅读的意义" class="headerlink" title="3.1 阅读的意义"></a>3.1 阅读的意义</h3><ol>
-<li>阅读是放下可以让我们审视人生的不多的方式之一。<br>苏格拉底曾经说过，未经审视的人生不值得度过。而绅士人生需要有闲暇。读书必须有比较长的一段时间，不做其他事情，专心致志地阅读。</li>
-<li>阅读是一种交友方式，借书可以令两人的关系有所增进。<br>借书，说明至少两个人有共同的语言，在此基础上，谈合作也好，谈利益也罢，才搭得上话。对于男女之间交往来说，借一次书，还一次，至少就接触了两次，并且这也能创造一个良好的交谈话题。</li>
-<li>阅读不仅仅是为了让我们在冷酷无情的科技时代获得喘息，让我们重启大脑深入思考的功能，也是抵抗狭隘、思想控制和舆论支配的方式。<blockquote>
-<p>常常在焦虑的时候，或者感到特别难的时候，会去看看曾经觉得深有启发的书，让自己慢慢静下来，焦虑慢慢会平息，困难也会渐渐淡化，恢复状态，继续前行。现在发现，将书中的内容，与自己思想相结合，写出来的时候，特别的舒畅。</p>
+<h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><blockquote>
+<p>先创建安装 v2ray 的目录</p>
+</blockquote>
+<ol>
+<li>下载 QT 实现的 v2ray 界面。在官网链接上找到最新的 release 下载。<blockquote>
+<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
 </blockquote>
 </li>
 </ol>
-<h2 id="4-音乐的故事"><a href="#4-音乐的故事" class="headerlink" title="4. 音乐的故事"></a>4. 音乐的故事</h2><h2 id="5-徕卡摄影的魅力"><a href="#5-徕卡摄影的魅力" class="headerlink" title="5. 徕卡摄影的魅力"></a>5. 徕卡摄影的魅力</h2><h2 id="6-香醇美酒"><a href="#6-香醇美酒" class="headerlink" title="6. 香醇美酒"></a>6. 香醇美酒</h2><h2 id="7-奢侈品的光泽"><a href="#7-奢侈品的光泽" class="headerlink" title="7. 奢侈品的光泽"></a>7. 奢侈品的光泽</h2>]]></content>
+<p>比如，我目前下载的是Qv2ray.v2.2.3.linux-x64.AppImage。</p>
+<blockquote>
+<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a></p>
+</blockquote>
+<ol start="2">
+<li><p>下载v2ray核心</p>
+<blockquote>
+<p><a href="https://github.com/v2ray/v2ray-core/releases">https://github.com/v2ray/v2ray-core/releases</a></p>
+</blockquote>
+</li>
+<li><p>解压v2ray核心文件</p>
+</li>
+<li><p>执行 Qv2ray 客户端，选择首选项 -&gt; 内核设置，修改下列两个路径</p>
+<ul>
+<li>V2Ray 核心文件可执行<strong>文件</strong>路径：<code>.../v2ray-windows-64/wv2ray.exe</code></li>
+<li>V2Ray 资源<strong>目录</strong>：<code>.../v2ray-windows-64/</code></li>
+</ul>
+</li>
+<li><p>点击检查 V2Ray 核心设置，通过即可.<br><img src="v2ray_settings.png" alt="v2ray settings"></p>
+</li>
+<li><p>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）</p>
+</li>
+<li><p>配置成功 Qv2ray 主界面默认分组内会出现多条线路，并显示链路的个数。</p>
+</li>
+</ol>
+<h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><blockquote>
+<p>可自建 v2ray 目录，也可直接将 v2ray core 放在 ~/.config/qv2ray/vcore/ 中，这是 Qvray 默认路径。</p>
+</blockquote>
+<ol>
+<li>下载QT实现的v2ray界面。在官网链接上找到最新的release下载。<blockquote>
+<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
+</blockquote>
+</li>
+</ol>
+<p>比如，我目前下载的是Qv2ray.v2.6.3.linux-x64.AppImage。</p>
+<ol start="2">
+<li>下载v2ray core核心文件。打开官方网站：<blockquote>
+<p><a href="https://github.com/v2ray/v2ray-core/releases/">https://github.com/v2ray/v2ray-core/releases/</a> 。</p>
+</blockquote>
+</li>
+</ol>
+<p>选择下载文件v2ray-linux-64.zip。</p>
+<ol start="3">
+<li><p>进入 v2ray 下载的目录（我的是<code>~/v2ray</code>），执行下面命令给 Qv2ray 增加权限</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chmod +x ./Qv2ray.v2.6.3.linux-x64.AppImage  # 注意版本号</span><br></pre></td></tr></table></figure></li>
+<li><p>启动 Qv2ray。仍然在v2ray根目录，执行下列终端命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./Qv2ray.v2.6.3.linux-x64.AppImage</span><br></pre></td></tr></table></figure></li>
+<li><p>解压 v2ray core 核心文件。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unzip v2ray-linux-64.zip</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>注意不要用 <code>sudo</code> 解压，用 <code>sudo</code> 解压须给 <code>v2ray-linux-64</code> 加权限，容易造成权限紊乱。</p>
+<ol start="5">
+<li>在 Qv2ray 的首选项(Preference) 页面的内核设置（General Setting）中，设置v2ray核心文件的路径。</li>
+</ol>
+<p>默认的路径是<code>~/.config/qv2ray/vcore/</code>。如果没有新建 v2ray 目录结构，可以将 v2ray-linux-64.zip 解压后的文件都放置到这个目录里面。</p>
+<p>如果自建 v2ray 目录，选择自己的 V2Ray 核心可执行文件路径和 V2Ray 资源目录。</p>
+<p>最后，可以点击Check V2ray Core Setting按钮，验证这两个可执行文件的有效性。<br>   <img src="v2ray_linux_settings.png" alt="v2ray settings"></p>
+<ol start="6">
+<li>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 不可用</span><br><span class="line">https:&#x2F;&#x2F;cloudfront-cdn-hk-iplc1.com&#x2F;sub&#x2F;v&#x2F;wrvDgcKnw6nDncOAwrrCmMOOw5_CiH1-wqPCnMK1w4LCosOcw4B8wq1_w98k&#x3D;&#x2F;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><p>在 Qv2ray 的首选项（Preferences）窗口中，可以设置语言、系统代理、开机启动等。</p>
+</li>
+<li><p>如果想仅仅在 Chrome 浏览器上做网络翻墙功能，就在 Chrome 浏览器上安装 Proxy SwitchyOmega 插件。在插件的配置页面上，设置Proxy Server，采用协议SOCK5，代理服务器是本地127.0.0.1，端口是1088（具体端口号查看 Qv2ray的 首选项（Preferences）。</p>
+</li>
+<li><p>如果不想做全局的系统代理 System Proxy，在Qv2ray的首选项中取消系统代理即可。</p>
+</li>
+<li><p>Git 的代理需要另外配置。</p>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>【Linux配置v2ray详细教程-Ubuntu为例】：<a href="https://www.boluo.in/1776.html">https://www.boluo.in/1776.htm</a>l</li>
+</ul>
+]]></content>
       <categories>
-        <category>怡情长智</category>
-        <category>阅读</category>
+        <category>工具</category>
+        <category>proxy</category>
       </categories>
       <tags>
-        <tag>读书/生活</tag>
+        <tag>代理</tag>
       </tags>
   </entry>
   <entry>
@@ -845,6 +751,130 @@
       <tags>
         <tag>网络安全</tag>
         <tag>Web 安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>彻底弄懂 Linux 下的文件描述符（fd）</title>
+    <url>/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/</url>
+    <content><![CDATA[<p>Linux 下的文件描述符</p>
+<span id="more"></span>
+
+<h2 id="1-从一个最常见的例子说起"><a href="#1-从一个最常见的例子说起" class="headerlink" title="1. 从一个最常见的例子说起"></a>1. 从一个最常见的例子说起</h2><p>在使用Linux的过程中， 我们平时经常看到下面这样的用法：</p>
+<blockquote>
+<p>echo log &gt; /dev/null 2&gt;&amp;1</p>
+</blockquote>
+<ul>
+<li><blockquote>
+<p>  ：表示将输出结果重定向到哪里，例如：echo “123” &gt; /home/123.txt</p>
+</blockquote>
+</li>
+<li>/dev/null ：表示空设备文件<br>所以 echo log &gt; /dev/null 表示把日志输出到空文件设备，也就是将打印信息丢弃掉，屏幕上什么也不显示。</li>
+<li>1  ：表示stdout标准输出</li>
+<li>2  ：表示stderr标准错误</li>
+<li>&amp;  ：表示等同于的意思</li>
+</ul>
+<p>所以  2&gt;&amp;1 表示2的输出重定向等同于1，也就是标准错误输出重定向到标准输出。因为前面标准输出已经重定向到了空设备文件，所以标准错误输出也重定向到空设备文件。</p>
+<p>这个用法平时很常见，重点是为什么这里是用 2 和 1 ，不是3456什么的呢？这要从 Linux 中的文件描述符说起。</p>
+<h2 id="2-Linux中的文件描述符（file-descriptor）"><a href="#2-Linux中的文件描述符（file-descriptor）" class="headerlink" title="2. Linux中的文件描述符（file descriptor）"></a>2. Linux中的文件描述符（file descriptor）</h2><p>我们知道在Linux系统中一切皆可以看成是文件，文件又可分为：普通文件、目录文件、链接文件和设备文件。在操作这些所谓的文件的时候，我们每操作一次就找一次名字，这会耗费大量的时间和效率。所以Linux中规定每一个文件对应一个索引，这样要操作文件的时候，我们直接找到索引就可以对其进行操作了。</p>
+<p>文件描述符（file descriptor）就是内核为了高效管理这些已经被打开的文件所创建的索引，其是一个非负整数（通常是小整数），用于指代被打开的文件，所有执行I/O操作的系统调用都通过文件描述符来实现。同时还规定系统刚刚启动的时候，0是标准输入，1是标准输出，2是标准错误。这意味着如果此时去打开一个新的文件，它的文件描述符会是3，再打开一个文件文件描述符就是4……</p>
+<p>Linux内核对所有打开的文件有一个文件描述符表格，里面存储了每个文件描述符作为索引与一个打开文件相对应的关系，简单理解就是下图这样一个数组，文件描述符（索引）就是文件描述符表这个数组的下标，数组的内容就是指向一个个打开的文件的指针。</p>
+<p><img src="file_descriptor.png" alt="file descriptor"></p>
+<p><strong>上面只是简单理解，实际上关于文件描述符，Linux内核维护了3个数据结构：</strong></p>
+<ul>
+<li>进程级的文件描述符表</li>
+<li>系统级的打开文件描述符表</li>
+<li>文件系统的i-node表</li>
+</ul>
+<p>一个 Linux 进程启动后，会在内核空间中创建一个 PCB(Process Control Block) 控制块，PCB 内部有一个文件描述符表（File descriptor table），记录着当前进程所有可用的文件描述符，也即当前进程所有打开的文件。进程级的描述符表的每一条记录了单个进程所使用的文件描述符的相关信息，进程之间相互独立，一个进程使用了文件描述符3，另一个进程也可以用3。除了进程级的文件描述符表，系统还需要维护另外两张表：打开文件表、i-node 表。这两张表存储了每个打开文件的打开文件句柄（open file handle）。一个打开文件句柄存储了与一个打开文件相关的全部信息。</p>
+<p><strong>系统级的打开文件描述符表：</strong></p>
+<ul>
+<li>当前文件偏移量（调用read()和write()时更新，或使用lseek()直接修改）</li>
+<li>打开文件时的标识（open()的flags参数）</li>
+<li>文件访问模式（如调用open()时所设置的只读模式、只写模式或读写模式）</li>
+<li>与信号驱动相关的设置</li>
+<li>对该文件i-node对象的引用，即i-node 表指针</li>
+</ul>
+<p><strong>文件系统的i-node表：</strong></p>
+<ul>
+<li><p>文件类型（例如：常规文件、套接字或FIFO）和访问权限</p>
+</li>
+<li><p>一个指针，指向该文件所持有的锁列表</p>
+</li>
+<li><p>文件的各种属性，包括文件大小以及与不同类型操作相关的时间戳</p>
+</li>
+<li><p>文件描述符、打开的文件句柄以及i-node之间的关系如下图：<br><img src="relationship.png" alt="relationship"></p>
+</li>
+<li><p>在进程 A 中，文件描述符 1 和 20 都指向了同一个打开文件表项，标号为 23（指向了打开文件表中下标为 23 的数组元素），这可能是通过调用 dup()、dup2()、fcntl() 或者对同一个文件多次调用了 open() 函数形成的。</p>
+</li>
+<li><p>进程 A 的文件描述符 2 和进程 B 的文件描述符 2 都指向了同一个文件，这可能是在调用 fork() 后出现的（即进程 A、B 是父子进程关系），或者是不同的进程独自去调用 open() 函数打开了同一个文件，此时进程内部的描述符正好分配到与其他进程打开该文件的描述符一样。</p>
+</li>
+<li><p>进程 A 的描述符 0 和进程 B 的描述符 3 分别指向不同的打开文件表项，但这些表项均指向 i-node 表的同一个条目（标号为 1976）；换言之，它们指向了同一个文件。发生这种情况是因为每个进程各自对同一个文件发起了 open() 调用。同一个进程两次打开同一个文件，也会发生类似情况。 </p>
+</li>
+</ul>
+<p><strong>这就说明：同一个进程的不同文件描述符可以指向同一个文件；不同进程可以拥有相同的文件描述符；不同进程的同一个文件描述符可以指向不同的文件（一般也是这样，除了 0、1、2 这三个特殊的文件）；不同进程的不同文件描述符也可以指向同一个文件。</strong></p>
+<h2 id="3-Linux上打开文件举例"><a href="#3-Linux上打开文件举例" class="headerlink" title="3. Linux上打开文件举例"></a>3. Linux上打开文件举例</h2><p>比如在Linux上用 vim test.py 打开一个文件，保持打开状态，再新打开一个新的shell，输入命令pidof vim 获取vim进程的pid号，然后 ll  /proc/$pid/fd 查看vim 进程所使用的文件描述符列表。<br><img src="example_vim.png" alt="example vim"></p>
+<p>/dev/pts是远程登陆(telnet,ssh等)后创建的控制台设备文件所在的目录。因为我是通过Xshell远程登录的，所以标准输入0，标准输出1，标准错误2的文件描述符都指向虚拟终端控制台 /dev/pts/6 。再看下面是新打开的 test.py 的文件描述符，竟然是4，说好的从3开始呢？</p>
+<p>这个我也困扰了好久，查了各种资料，终于在一个大佬的帮助下在一个论坛找到原因，有时候中文查不到还是要试试英文搜索啊。因为vim这种编辑器的原理是先打开源文件并拷贝，然后关闭源文件再打开自己的副本，修改完文件保存的时候直接将副本重命名覆盖源文件。所以打开源文件的时候用的文件描述符3，然后打开自己的副本是时候就该用文件描述符4了，然后关闭源文件，文件描述符3就被释放了，我们查看的时候就只剩下了4，这里它指向的是vim创建的副本文件。这里只是说个大概意思，具体深究要去深入了解一下<a href="https://blog.csdn.net/weixin_43535689/article/details/104750148">vim的实现原理——奥尔特星云大使</a>，下面是当时我看到的论坛上的资料截图，链接在这：<a href="https://stackoverflow.com/questions/48588284/lsof-command-can-not-return-files-being-opened-by-kwrite">StackOverFlow</a>。<br><img src="stackoverflow_vim.png" alt="stackoverflow vim"></p>
+<h2 id="4-C语言中文件描述符的使用"><a href="#4-C语言中文件描述符的使用" class="headerlink" title="4. C语言中文件描述符的使用"></a>4. C语言中文件描述符的使用</h2><p>C语言中可以通过 open 函数返回一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test.c 文件，输入下面代码保存。 编译后执行，发现新打开文件的文件描述符是3。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> fd = open(<span class="string">&quot;test.py&quot;</span>, O_RDONLY);</span><br><span class="line">        <span class="keyword">if</span> (fd == <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;test.py fd = %d \n&quot;</span>, fd);  <span class="comment">// test.py fd = 3</span></span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Python中文件描述符的使用"><a href="#5-Python中文件描述符的使用" class="headerlink" title="5. Python中文件描述符的使用"></a>5. Python中文件描述符的使用</h2><p>Python中通过 sys 模块封装了标准输入、标准输出和错误输出。通过我们平时常用的内建函数 open 可以获取一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test2.py 文件，输入下面代码保存。 执行，发现新打开文件的文件描述符是3。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdin fd = &#x27;</span>, sys.stdin.fileno())  // stdin fd = <span class="number">0</span> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdout fd = &#x27;</span>, sys.stdout.fileno())  // stdout fd = <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stderr fd = &#x27;</span>, sys.stderr.fileno())  // stderr fd = <span class="number">2</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;test.py&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;test.py fd = &#x27;</span>, f.fileno())  // test.py fd = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-Linux配置系统最大打开文件描述符个数"><a href="#6-Linux配置系统最大打开文件描述符个数" class="headerlink" title="6. Linux配置系统最大打开文件描述符个数"></a>6. Linux配置系统最大打开文件描述符个数</h2><h3 id="系统级限制"><a href="#系统级限制" class="headerlink" title="系统级限制"></a>系统级限制</h3><p>理论上系统内存有多少就可以打开多少的文件描述符，但是在实际中内核是会做相应的处理，一般最大打开文件数会是系统内存的10%（以KB来计算），称之为系统级限制。这个数字可以通过 cat /proc/sys/fs/file-max 或者 sysctl -a | grep fs.file-max 命令查看。</p>
+<p>更改系统级限制有临时更改和永久更改两种方式：</p>
+<ul>
+<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 sysctl -w fs.file-max=xxxx，其中xxxx就是要设置的数字。</li>
+<li>永久更改：vim编辑 /etc/sysctl.conf 文件，在后面添加 fs.file-max=xxxx，其中xxxx就是要设置的数字。保存退出后还要使用sysctl -p 命令使其生效。</li>
+</ul>
+<h3 id="用户级限制"><a href="#用户级限制" class="headerlink" title="用户级限制"></a>用户级限制</h3><p>同时为了控制每个进程消耗的文件资源，内核也会对单个进程最大打开文件数做默认限制，即用户级限制。32位系统默认值一般是1024，64位系统默认值一般是65535，可以使用 ulimit -n 命令查看。</p>
+<p>更改用户级限制也有临时更改和永久更改两种方式：</p>
+<ul>
+<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 ulimit -SHn xxxx 命令来修改，其中xxxx就是要设置的数字。</li>
+<li>永久更改：vim编辑 /etc/security/limits.conf 文件，修改其中的 hard nofile xxxx 和 soft nofile xxxx，其中xxxx就是要设置的数字。保存后退出。关于hard和soft的区别，参照下面参考链接中的第5个。</li>
+</ul>
+<h2 id="7-参考链接"><a href="#7-参考链接" class="headerlink" title="7. 参考链接"></a>7. 参考链接</h2><ol>
+<li><a href="https://blog.csdn.net/cywosp/article/details/38965239">每天进步一点点——Linux中的文件描述符与打开文件之间的关系——cywosp</a></li>
+<li><a href="http://c.biancheng.net/view/3066.html">Linux文件描述符到底是什么？——C语言中文网</a></li>
+<li><a href="https://www.jianshu.com/p/0ff9ff1d108e">句柄和文件描述符（FD）——阳光丶不锈</a></li>
+<li><a href="https://juejin.cn/post/6844903962043236365#heading-0">带你破案：文件描述符到底是什么？——vran</a></li>
+<li><a href="http://www.ideabuffer.cn/2016/11/20/Linux%E9%85%8D%E7%BD%AE%E8%B0%83%E4%BC%98%EF%BC%9A%E6%9C%80%E5%A4%A7%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E4%B8%AA%E6%95%B0/">Linux配置调优：最大打开文件描述符个数——Idea Buffer</a></li>
+<li><a href="%E4%BF%AE%E6%94%B9Linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84%E6%9C%80%E5%A4%A7%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E9%99%90%E5%88%B6">修改Linux系统下的最大文件描述符限制——BlueguyChui</a></li>
+</ol>
+<p>————————————————<br>版权声明：本文为CSDN博主「杰克小麻雀」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/yushuaigee/article/details/107883964">https://blog.csdn.net/yushuaigee/article/details/107883964</a></p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>读书笔记——《具体生活》</title>
+    <url>/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/</url>
+    <content><![CDATA[<p>  焦虑是现代人的常态。时间不够用，钱不够花，职业发展不够快，对当下和未来不够了解…我们不断加快生活的节奏，但快节奏之后是否带来了好处，我们并不清楚，只是觉得“快”比“慢”要好。</p>
+<p>  很多时候，我们做不好事情，是我们太匆忙、太着急，其实只要慢三拍，我们的事情会比以前做得好很多。有时候，慢比快好。</p>
+<p>  当忙碌成为生活的主旋律时，我们是否可以思考一下：生活的目的是什么？从容做事，优雅生活，这是我们生活的目的。很多人羡慕所谓的贵族生活，其实过去贵族的物质生活并不比今天的中产阶级好多少，但是他们整体的生活质量远非今天一般意义上的富有家庭所能比的。究其原因，是因为今天的人缺少了那份应有的从容和优雅。</p>
+<p>  当我们做事情的时候能够慢一点，少走点弯路，多花点实践享受浪漫而美好的人生，畅游人类知识和艺术的海洋，我们会发现自己是在真正地生活，而不是只是为了工作而活着。</p>
+<span id="more"></span>
+
+<h2 id="1-旅行的意义"><a href="#1-旅行的意义" class="headerlink" title="1. 旅行的意义"></a>1. 旅行的意义</h2><h2 id="2-博物馆之美"><a href="#2-博物馆之美" class="headerlink" title="2. 博物馆之美"></a>2. 博物馆之美</h2><h2 id="3-读书以以怡情长智"><a href="#3-读书以以怡情长智" class="headerlink" title="3. 读书以以怡情长智"></a>3. 读书以以怡情长智</h2><p>  古人把读万卷书和行万里路看作精英阶层成长不可或缺的两个环节，它们既能使人获得知识，也能令人愉悦自我。</p>
+<h3 id="3-1-阅读的意义"><a href="#3-1-阅读的意义" class="headerlink" title="3.1 阅读的意义"></a>3.1 阅读的意义</h3><ol>
+<li>阅读是放下可以让我们审视人生的不多的方式之一。<br>苏格拉底曾经说过，未经审视的人生不值得度过。而绅士人生需要有闲暇。读书必须有比较长的一段时间，不做其他事情，专心致志地阅读。</li>
+<li>阅读是一种交友方式，借书可以令两人的关系有所增进。<br>借书，说明至少两个人有共同的语言，在此基础上，谈合作也好，谈利益也罢，才搭得上话。对于男女之间交往来说，借一次书，还一次，至少就接触了两次，并且这也能创造一个良好的交谈话题。</li>
+<li>阅读不仅仅是为了让我们在冷酷无情的科技时代获得喘息，让我们重启大脑深入思考的功能，也是抵抗狭隘、思想控制和舆论支配的方式。<blockquote>
+<p>常常在焦虑的时候，或者感到特别难的时候，会去看看曾经觉得深有启发的书，让自己慢慢静下来，焦虑慢慢会平息，困难也会渐渐淡化，恢复状态，继续前行。现在发现，将书中的内容，与自己思想相结合，写出来的时候，特别的舒畅。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="4-音乐的故事"><a href="#4-音乐的故事" class="headerlink" title="4. 音乐的故事"></a>4. 音乐的故事</h2><h2 id="5-徕卡摄影的魅力"><a href="#5-徕卡摄影的魅力" class="headerlink" title="5. 徕卡摄影的魅力"></a>5. 徕卡摄影的魅力</h2><h2 id="6-香醇美酒"><a href="#6-香醇美酒" class="headerlink" title="6. 香醇美酒"></a>6. 香醇美酒</h2><h2 id="7-奢侈品的光泽"><a href="#7-奢侈品的光泽" class="headerlink" title="7. 奢侈品的光泽"></a>7. 奢侈品的光泽</h2>]]></content>
+      <categories>
+        <category>怡情长智</category>
+        <category>阅读</category>
+      </categories>
+      <tags>
+        <tag>读书/生活</tag>
       </tags>
   </entry>
   <entry>
@@ -1334,7 +1364,7 @@
 <p>将该url使用sqlmap进行注入测试，，测试结果可能存在SQL注入，也可能不存在SQL注入，存在则可以进行数据库名称，数据库表以及数据的操作。</p>
 <p><strong>4. 批量检测</strong><br>将目标url搜集并整理为txt文件，如图4所示，所有文件都保存为tg.txt，然后使用“sqlmap.py-m tg.txt”，注意tg.txt跟sqlmap在同一个目录下。<br><img src="%E6%89%B9%E9%87%8F%E6%95%B4%E7%90%86%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80.jpg" alt="批量整理目标地址"></p>
 <h3 id="1-4-2-直接连接数据库"><a href="#1-4-2-直接连接数据库" class="headerlink" title="1.4.2 直接连接数据库"></a>1.4.2 直接连接数据库</h3><blockquote>
-<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#x61;&#x64;&#109;&#105;&#x6e;&#x40;&#x31;&#x39;&#50;&#x2e;&#49;&#x36;&#56;&#46;&#50;&#49;&#46;&#x31;&#55;">&#x61;&#x64;&#109;&#105;&#x6e;&#x40;&#x31;&#x39;&#50;&#x2e;&#49;&#x36;&#56;&#46;&#50;&#49;&#46;&#x31;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
+<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#97;&#x64;&#x6d;&#x69;&#x6e;&#64;&#49;&#57;&#x32;&#46;&#x31;&#x36;&#56;&#x2e;&#50;&#x31;&#x2e;&#x31;&#x37;">&#97;&#x64;&#x6d;&#x69;&#x6e;&#64;&#49;&#57;&#x32;&#46;&#x31;&#x36;&#56;&#x2e;&#50;&#x31;&#x2e;&#x31;&#x37;</a>:3306/testdb” -f –banner –dbs–users</p>
 </blockquote>
 <h3 id="1-4-3数据库相关操作"><a href="#1-4-3数据库相关操作" class="headerlink" title="1.4.3数据库相关操作"></a>1.4.3数据库相关操作</h3><ul>
 <li>列数据库信息：–dbs</li>
@@ -2516,6 +2546,32 @@
       </categories>
       <tags>
         <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo-NexT 设置近期文章</title>
+    <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<ol>
+<li><p>新建 source/_data/sidebar.njk 文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;# RecentPosts #&#125;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">  &lt;div class&#x3D;&quot;links-of-recent-posts motion-element&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;links-of-recent-posts-title&quot;&gt;</span><br><span class="line">      &#123;%- if theme.recent_posts.icon %&#125;</span><br><span class="line">      &lt;i class&#x3D;&quot;&#123;&#123; theme.recent_posts.icon &#125;&#125; fa-fw&quot;&gt;&lt;&#x2F;i&gt;</span><br><span class="line">      &#123;%- endif %&#125;</span><br><span class="line">      &#123;&#123; theme.recent_posts.title &#125;&#125;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;ul class&#x3D;&quot;links-of-recent-posts-list&quot;&gt;</span><br><span class="line">      &#123;%- set posts &#x3D; site.posts.sort(&#39;date&#39;, &#39;desc&#39;).toArray() %&#125;</span><br><span class="line">      &#123;%- for post in posts.slice(&#39;0&#39;, theme.recent_posts.max_count) %&#125;</span><br><span class="line">        &lt;li class&#x3D;&quot;links-of-recent-posts-item&quot;&gt;</span><br><span class="line">          &#123;&#123; next_url(post.path, post.title, &#123;title: post.path&#125;) &#125;&#125;</span><br><span class="line">        &lt;&#x2F;li&gt;</span><br><span class="line">      &#123;%- endfor %&#125;</span><br><span class="line">    &lt;&#x2F;ul&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>修改_config.next.yml，取消 custom_file_path 中的 sidebar 和 style 两个注释，并新增 recent_posts 内容。variable 应该是设置另外的功能时打开的，和此处无关。实际上我的 sidebar 原本是 source/_data/sidebar.swig, 直接改成 njk 的没问题。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">custom_file_path:</span></span><br><span class="line">  <span class="comment">#head: source/_data/head.swig</span></span><br><span class="line">  <span class="comment">#header: source/_data/header.swig</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="string">source/_data/sidebar.njk</span></span><br><span class="line">  <span class="comment">#postMeta: source/_data/post-meta.swig</span></span><br><span class="line">  <span class="comment">#postBodyEnd: source/_data/post-body-end.swig</span></span><br><span class="line">  <span class="comment">#footer: source/_data/footer.swig</span></span><br><span class="line">  <span class="comment">#bodyEnd: source/_data/body-end.swig</span></span><br><span class="line">  <span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br><span class="line">  <span class="comment">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">source/_data/styles.styl</span></span><br><span class="line"></span><br><span class="line"><span class="attr">recent_posts:</span></span><br><span class="line"><span class="comment"># 块标题</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">最近文章</span></span><br><span class="line"><span class="comment"># 图标</span></span><br><span class="line">  <span class="attr">icon:</span> <span class="string">fa</span> <span class="string">fa-history</span></span><br><span class="line"><span class="comment"># 最多多少文章链接</span></span><br><span class="line">  <span class="attr">max_count:</span> <span class="number">5</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改 source/_data/styles.styl 文件，文件不存在新建即可。添加如下代码：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 近期文章</span><br><span class="line"><span class="selector-class">.links-of-recent-posts</span></span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">0.8125em</span></span><br><span class="line">  margin-top: <span class="number">10px</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-title</span><br><span class="line">  font-size: <span class="number">1.03em</span></span><br><span class="line">  font-weight: <span class="number">600</span></span><br><span class="line">  margin-top: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-list</span><br><span class="line">  list-style: none</span><br><span class="line">  margin: <span class="number">0</span></span><br><span class="line">  padding: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>————————</p>
+</li>
+</ol>
+<p><strong>参考</strong></p>
+<ul>
+<li><a href="https://weilining.github.io/925-1.html">Hexo NexT 添加近期文章功能</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>网站建设</category>
+        <category>Hexo 博客</category>
+      </categories>
+      <tags>
+        <tag>Hexo 博客</tag>
       </tags>
   </entry>
 </search>

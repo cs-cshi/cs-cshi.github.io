@@ -17,26 +17,23 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Hexo Next 主题默认带有不少菜单，如关于（about）、分类（categories）、标签（tags）等，默认处于注释状态，将需要取消的菜单注释掉，然后生成相应的 page 即可。">
+  <meta name="description" content="新建 source&#x2F;_data&#x2F;sidebar.njk 文件，内容如下： 12345678910111213141516171819&amp;#123;# RecentPosts #&amp;#125;&amp;#123;%- if theme.recent_posts %&amp;#125;  &lt;div class&#x3D;&quot;links-of-recent-posts motion-element&amp;quot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo 博客 NexT 主题下如何添加分类、标签">
-<meta property="og:url" content="https://cs-cshi.github.io/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/index.html">
+<meta property="og:title" content="Hexo-NexT 设置近期文章">
+<meta property="og:url" content="https://cs-cshi.github.io/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/index.html">
 <meta property="og:site_name" content="Chang">
-<meta property="og:description" content="Hexo Next 主题默认带有不少菜单，如关于（about）、分类（categories）、标签（tags）等，默认处于注释状态，将需要取消的菜单注释掉，然后生成相应的 page 即可。">
+<meta property="og:description" content="新建 source&#x2F;_data&#x2F;sidebar.njk 文件，内容如下： 12345678910111213141516171819&amp;#123;# RecentPosts #&amp;#125;&amp;#123;%- if theme.recent_posts %&amp;#125;  &lt;div class&#x3D;&quot;links-of-recent-posts motion-element&amp;quot">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cs-cshi.github.io/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/hexo_next_menu.png">
-<meta property="article:published_time" content="2021-03-13T01:47:57.000Z">
-<meta property="article:modified_time" content="2021-03-31T09:58:08.958Z">
+<meta property="article:published_time" content="2021-03-31T16:30:00.000Z">
+<meta property="article:modified_time" content="2021-03-31T16:47:24.513Z">
 <meta property="article:author" content="Charles">
 <meta property="article:tag" content="Hexo 博客">
-<meta property="article:tag" content="搭建环境">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cs-cshi.github.io/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/hexo_next_menu.png">
 
-<link rel="canonical" href="https://cs-cshi.github.io/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/">
+<link rel="canonical" href="https://cs-cshi.github.io/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/">
 
 
 <script id="page-configurations">
@@ -49,7 +46,7 @@
   };
 </script>
 
-  <title>Hexo 博客 NexT 主题下如何添加分类、标签 | Chang</title>
+  <title>Hexo-NexT 设置近期文章 | Chang</title>
   
 
 
@@ -139,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">17</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">19</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -179,10 +176,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
 
     <main class="main">
@@ -197,7 +190,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://cs-cshi.github.io/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/">
+    <link itemprop="mainEntityOfPage" href="https://cs-cshi.github.io/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -210,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo 博客 NexT 主题下如何添加分类、标签
+          Hexo-NexT 设置近期文章
         </h1>
 
         <div class="post-meta">
@@ -219,16 +212,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-03-13 09:47:57" itemprop="dateCreated datePublished" datetime="2021-03-13T09:47:57+08:00">2021-03-13</time>
+              <time title="创建时间：2021-04-01 00:30:00 / 修改时间：00:47:24" itemprop="dateCreated datePublished" datetime="2021-04-01T00:30:00+08:00">2021-04-01</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 17:58:08" itemprop="dateModified" datetime="2021-03-31T17:58:08+08:00">2021-03-31</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -252,8 +239,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/" itemprop="commentCount"></span>
+    <a title="valine" href="/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -263,14 +250,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1k</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -282,29 +269,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Hexo Next 主题默认带有不少菜单，如关于（about）、分类（categories）、标签（tags）等，默认处于注释状态，将需要取消的菜单注释掉，然后生成相应的 page 即可。</p>
-<span id="more"></span>
-
-<ol>
-<li><p>打开 <code>~\themes\next\_config.yml</code> 文件，找到 <code>menu</code> 相关的设置，取消掉需要的菜单项的注释。<br><img src="hexo_next_menu.png" alt="test"></p>
+        <ol>
+<li><p>新建 source/_data/sidebar.njk 文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;# RecentPosts #&#125;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">  &lt;div class&#x3D;&quot;links-of-recent-posts motion-element&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;links-of-recent-posts-title&quot;&gt;</span><br><span class="line">      &#123;%- if theme.recent_posts.icon %&#125;</span><br><span class="line">      &lt;i class&#x3D;&quot;&#123;&#123; theme.recent_posts.icon &#125;&#125; fa-fw&quot;&gt;&lt;&#x2F;i&gt;</span><br><span class="line">      &#123;%- endif %&#125;</span><br><span class="line">      &#123;&#123; theme.recent_posts.title &#125;&#125;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;ul class&#x3D;&quot;links-of-recent-posts-list&quot;&gt;</span><br><span class="line">      &#123;%- set posts &#x3D; site.posts.sort(&#39;date&#39;, &#39;desc&#39;).toArray() %&#125;</span><br><span class="line">      &#123;%- for post in posts.slice(&#39;0&#39;, theme.recent_posts.max_count) %&#125;</span><br><span class="line">        &lt;li class&#x3D;&quot;links-of-recent-posts-item&quot;&gt;</span><br><span class="line">          &#123;&#123; next_url(post.path, post.title, &#123;title: post.path&#125;) &#125;&#125;</span><br><span class="line">        &lt;&#x2F;li&gt;</span><br><span class="line">      &#123;%- endfor %&#125;</span><br><span class="line">    &lt;&#x2F;ul&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>修改_config.next.yml，取消 custom_file_path 中的 sidebar 和 style 两个注释，并新增 recent_posts 内容。variable 应该是设置另外的功能时打开的，和此处无关。实际上我的 sidebar 原本是 source/_data/sidebar.swig, 直接改成 njk 的没问题。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">custom_file_path:</span></span><br><span class="line">  <span class="comment">#head: source/_data/head.swig</span></span><br><span class="line">  <span class="comment">#header: source/_data/header.swig</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="string">source/_data/sidebar.njk</span></span><br><span class="line">  <span class="comment">#postMeta: source/_data/post-meta.swig</span></span><br><span class="line">  <span class="comment">#postBodyEnd: source/_data/post-body-end.swig</span></span><br><span class="line">  <span class="comment">#footer: source/_data/footer.swig</span></span><br><span class="line">  <span class="comment">#bodyEnd: source/_data/body-end.swig</span></span><br><span class="line">  <span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br><span class="line">  <span class="comment">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">source/_data/styles.styl</span></span><br><span class="line"></span><br><span class="line"><span class="attr">recent_posts:</span></span><br><span class="line"><span class="comment"># 块标题</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">最近文章</span></span><br><span class="line"><span class="comment"># 图标</span></span><br><span class="line">  <span class="attr">icon:</span> <span class="string">fa</span> <span class="string">fa-history</span></span><br><span class="line"><span class="comment"># 最多多少文章链接</span></span><br><span class="line">  <span class="attr">max_count:</span> <span class="number">5</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改 source/_data/styles.styl 文件，文件不存在新建即可。添加如下代码：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 近期文章</span><br><span class="line"><span class="selector-class">.links-of-recent-posts</span></span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">0.8125em</span></span><br><span class="line">  margin-top: <span class="number">10px</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-title</span><br><span class="line">  font-size: <span class="number">1.03em</span></span><br><span class="line">  font-weight: <span class="number">600</span></span><br><span class="line">  margin-top: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-list</span><br><span class="line">  list-style: none</span><br><span class="line">  margin: <span class="number">0</span></span><br><span class="line">  padding: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>————————</p>
 </li>
-<li><p>重新生成部署后，可以看到新增的菜单项，但是单击后会报如下错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Cannot GET &#x2F;about&#x2F;</span><br><span class="line">Cannot GET &#x2F;tags&#x2F;</span><br><span class="line">Cannot GET &#x2F;categories&#x2F;</span><br></pre></td></tr></table></figure></li>
-<li><p>这是因为还需要运行如下命令新建相关 page</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br><span class="line">hexo new page &quot;tags&quot;</span><br><span class="line">hexo new page &quot;categories&quot;</span><br></pre></td></tr></table></figure></li>
-<li><p>新建 page 后，会在 source 目录下新建 <code>about</code>、<code>tags</code>、<code>categories</code>文件夹，每个文件夹下还会创建一个<code>index.md</code>文件表示关于、标签页分类页面，编辑这三个MarkDown文件可以自定义这三个页面的内容.</p>
-</li>
-<li><p>最后一步，编辑各页面对应的<code>index.md</code>文件，增加 type 即可。注意冒号 : 后必须空一格，title 和 date 是默认生成的。重新部署后能够看到效果。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2021-03-13 15:21:30</span><br><span class="line">type: &quot;about&quot;</span><br><span class="line">---</span><br><span class="line"> </span><br><span class="line">---</span><br><span class="line">title: tages</span><br><span class="line">date: 2021-03-13 15:21:30</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">---</span><br><span class="line"> </span><br><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2021-03-13 15:21:30</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
-<li><p>在新建博文的头部，直接输入该博文的分类、标签等即可。分类只能有一个，标签能有多个，多个标签不能一行，注意下面的格式。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Hello World # 标题</span><br><span class="line">date: 2019&#x2F;3&#x2F;26 hh:mm:ss # 时间</span><br><span class="line">categories: # 分类</span><br><span class="line">	- 分类  # 只能由一个</span><br><span class="line">tags: # 标签</span><br><span class="line">	- PS3  # 能有多个</span><br><span class="line">	- Games  # 一个标签一行</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">摘要</span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">正文</span><br></pre></td></tr></table></figure></li>
 </ol>
+<p><strong>参考</strong></p>
 <ul>
-<li>参考<ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/mqdxiaoxiao/article/details/93644533">Hexo博客NexT主题下添加分类、标签、关于菜单项</a></li>
-<li><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/front-matter">Hexo 官方文档</a></li>
-</ul>
-</li>
+<li><a target="_blank" rel="noopener" href="https://weilining.github.io/925-1.html">Hexo NexT 添加近期文章功能</a></li>
 </ul>
 
     </div>
@@ -316,16 +293,19 @@
   <div class="popular-posts-header">相关文章推荐</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\如何使用 Github + Hexo 搭建博客\如何使用 Github + Hexo 搭建博客\" rel="bookmark">如何使用 Github + Hexo 搭建博客</a></div>
+      <div class="popular-posts-title"><a href="\Hexo-NexT 添加图片\" rel="bookmark">Hexo-NexT 添加图片</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\Hexo 博客 NexT 主题下如何添加图片\" rel="bookmark">Hexo 博客 NexT 主题下如何添加图片</a></div>
+      <div class="popular-posts-title"><a href="\Hexo-NexT 设置博客背景图片\" rel="bookmark">Hexo-NexT 设置博客背景图片</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\Hexo 博客 NexT 主题下如何添加分类、标签\Hexo-NexT 添加分类、标签\" rel="bookmark">Hexo 博客 NexT 主题下如何添加分类、标签</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\博客运维\博客运维\" rel="bookmark">博客运维记录</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\如何搭建《从0到1：CTFer 成长之路》docker 做题环境\" rel="bookmark">如何搭建《从0到1：CTFer 成长之路》docker 做题环境</a></div>
+      <div class="popular-posts-title"><a href="\如何使用 Github + Hexo 搭建博客\如何使用 Github + Hexo 搭建博客\" rel="bookmark">如何使用 Github + Hexo 搭建博客</a></div>
     </li>
   </ul>
 
@@ -358,7 +338,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://cs-cshi.github.io/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/" title="Hexo 博客 NexT 主题下如何添加分类、标签">https://cs-cshi.github.io/Hexo 博客 NexT 主题下如何添加分类、标签/Hexo 博客 NexT 主题下如何添加分类、标签/</a>
+    <a href="https://cs-cshi.github.io/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/" title="Hexo-NexT 设置近期文章">https://cs-cshi.github.io/Hexo-NexT 设置近期文章/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -370,7 +350,6 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Hexo-%E5%8D%9A%E5%AE%A2/" rel="tag"># Hexo 博客</a>
-              <a href="/tags/%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83/" rel="tag"># 搭建环境</a>
           </div>
 
         
@@ -379,12 +358,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/" rel="prev" title="【TCP/IP详解 卷1:协议】 第一章">
-      <i class="fa fa-chevron-left"></i> 【TCP/IP详解 卷1:协议】 第一章
+    <a href="/%E7%AC%AC1%E7%AB%A0%20web%E5%85%A5%E9%97%A8/%E7%AC%AC1%E7%AB%A0%20web%E5%85%A5%E9%97%A8/" rel="prev" title="第1章 web入门">
+      <i class="fa fa-chevron-left"></i> 第1章 web入门
     </a></div>
       <div class="post-nav-item">
-    <a href="/%E5%A6%82%E4%BD%95%E4%B8%BA%20Git%20%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/" rel="next" title="如何为 Git 设置代理">
-      如何为 Git 设置代理 <i class="fa fa-chevron-right"></i>
+    <a href="/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/" rel="next" title="Hexo-NexT 设置博客背景图片">
+      Hexo-NexT 设置博客背景图片 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -460,7 +439,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -496,6 +475,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/" title="Hexo-NexT 设置博客背景图片&#x2F;">Hexo-NexT 设置博客背景图片</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/" title="Hexo-NexT 设置近期文章&#x2F;">Hexo-NexT 设置近期文章</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/%E7%AC%AC1%E7%AB%A0%20web%E5%85%A5%E9%97%A8/%E7%AC%AC1%E7%AB%A0%20web%E5%85%A5%E9%97%A8/" title="第1章 web入门&#x2F;第1章 web入门&#x2F;">第1章 web入门</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -504,15 +489,14 @@
         <li class="links-of-recent-posts-item">
           <a href="/python%E5%9F%BA%E7%A1%80/python%E5%9F%BA%E7%A1%80/" title="python基础&#x2F;python基础&#x2F;">【python】python基础</a>
         </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/" title="彻底弄懂 Linux 下的文件描述符（fd）&#x2F;彻底弄懂 Linux 下的文件描述符（fd）&#x2F;">彻底弄懂 Linux 下的文件描述符（fd）</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/Ubuntu%E4%B8%ADPycharm%E4%B8%93%E4%B8%9A%E7%89%882020.1%20%E5%AE%89%E8%A3%85%EF%BC%8C%E6%B0%B8%E4%B9%85%E6%BF%80%E6%B4%BB/Ubuntu%E4%B8%ADPycharm%E4%B8%93%E4%B8%9A%E7%89%882020.1%20%E5%AE%89%E8%A3%85%EF%BC%8C%E6%B0%B8%E4%B9%85%E6%BF%80%E6%B4%BB/" title="Ubuntu中Pycharm专业版2020.1 安装，永久激活&#x2F;Ubuntu中Pycharm专业版2020.1 安装，永久激活&#x2F;">Ubuntu中Pycharm专业版2020.1 安装，永久激活</a>
-        </li>
     </ul>
   </div>
+
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -541,13 +525,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">83k</span>
+    <span title="站点总字数">86k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:15</span>
+    <span title="站点阅读时长">1:18</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
@@ -612,7 +596,7 @@
       quicklink({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/',]
       });
       });
   </script>
