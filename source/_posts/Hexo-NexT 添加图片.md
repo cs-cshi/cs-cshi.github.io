@@ -1,10 +1,10 @@
 ---
-title: Hexo 博客 NexT 主题下如何添加图片
+title: Hexo-NexT 添加图片
 date: 2021-03-13 09:47:57
 tags: 
       - Hexo 博客
-      - 搭建环境
-categories: Hexo 博客
+categories: 
+- [网站建设, Hexo 博客]
 ---
 
 先安装插件，再打开 hexo 的配置，最后按照指定格式放置和引用图片。

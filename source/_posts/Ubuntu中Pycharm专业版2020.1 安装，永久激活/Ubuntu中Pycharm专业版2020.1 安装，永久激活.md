@@ -3,7 +3,8 @@ title: Ubuntu中Pycharm专业版2020.1 安装，永久激活
 date: 2021-03-20 14:20:00
 tags: 
       - 软件资源
-categories: 资源
+categories: 
+- [工具, 软件]
 ---
 
 记录下 Ubuntu 中 Pycharm 专业版2020.1 安装激活

@@ -3,7 +3,8 @@ title: 彻底弄懂 Linux 下的文件描述符（fd）
 date: 2021-03-23 09:22:57
 tags: 
    - linux
-categories: linux
+categories: 
+- linux
 ---
 
 Linux 下的文件描述符

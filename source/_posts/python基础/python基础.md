@@ -3,9 +3,10 @@ title: 【python】python基础
 date: 2021-03-24 22:43:57
 tags: 
       - python
-categories: python
+categories: 
+- [编程语言, python]
+
 ---
-[toc]
 
 python 基础语法
 

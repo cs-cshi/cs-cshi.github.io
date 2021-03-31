@@ -4,7 +4,8 @@ date: 2021-03-13 09:47:57
 tags: 
       - Hexo 博客
       - 搭建环境
-categories: Hexo 博客
+categories: 
+- [网站建设, Hexo 博客]
 ---
 
 Hexo Next 主题默认带有不少菜单，如关于（about）、分类（categories）、标签（tags）等，默认处于注释状态，将需要取消的菜单注释掉，然后生成相应的 page 即可。
