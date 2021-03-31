@@ -17,14 +17,14 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="搭建初衷：个人喜欢在本地用 markdown 来记录。之前使用过博客园、印象笔记等，发现都有不便之处。博客园上在发文时，还需要来调整格式，且不能将本地的 md 文件直接上传，会增加很多工作；而在印象笔记上，不开会员会有诸多的限制，其中限制终端登录数量，以及不同终端不能编辑等问题无法接受。于是产生了一种需求:我只要将自己编写的 md 上传，就能形成良好的博客效果，格式固定,且便于维护和浏览,。在">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何使用 Github + Hexo 搭建博客">
 <meta property="og:url" content="https://cs-cshi.github.io/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/index.html">
-<meta property="og:site_name" content="小观园">
+<meta property="og:site_name" content="Charles&#39;s Blog">
 <meta property="og:description" content="搭建初衷：个人喜欢在本地用 markdown 来记录。之前使用过博客园、印象笔记等，发现都有不便之处。博客园上在发文时，还需要来调整格式，且不能将本地的 md 文件直接上传，会增加很多工作；而在印象笔记上，不开会员会有诸多的限制，其中限制终端登录数量，以及不同终端不能编辑等问题无法接受。于是产生了一种需求:我只要将自己编写的 md 上传，就能形成良好的博客效果，格式固定,且便于维护和浏览,。在">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cs-cshi.github.io/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/version.png">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>如何使用 Github + Hexo 搭建博客 | 小观园</title>
+  <title>如何使用 Github + Hexo 搭建博客 | Charles's Blog</title>
   
 
 
@@ -100,7 +100,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">小观园</h1>
+      <h1 class="site-title">Charles's Blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -179,10 +179,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
 
     <main class="main">
@@ -206,7 +202,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小观园">
+      <meta itemprop="name" content="Charles's Blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -618,6 +614,10 @@
     </ul>
   </div>
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
