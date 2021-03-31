@@ -22,11 +22,11 @@
 </ol>
 ]]></content>
       <categories>
+        <category>网站建设</category>
         <category>Hexo 博客</category>
       </categories>
       <tags>
         <tag>Hexo 博客</tag>
-        <tag>搭建环境</tag>
       </tags>
   </entry>
   <entry>
@@ -65,11 +65,11 @@
 </ul>
 ]]></content>
       <categories>
+        <category>网络安全</category>
         <category>工具</category>
       </categories>
       <tags>
         <tag>工具</tag>
-        <tag>软件资源</tag>
       </tags>
   </entry>
   <entry>
@@ -129,6 +129,7 @@
 <h2 id="4-署名"><a href="#4-署名" class="headerlink" title="4. 署名"></a>4. 署名</h2><p>本文内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议<br>参考文章永久链接是：<a href="https://ericclose.github.io/git-proxy-config.html">https://ericclose.github.io/git-proxy-config.html</a><br>本文根据参考文章仅做了少量修改</p>
 ]]></content>
       <categories>
+        <category>工具</category>
         <category>proxy</category>
       </categories>
       <tags>
@@ -174,11 +175,13 @@
 <p>可以对每个题目都创建一个文件夹，里面存放这个题目的 docker-compose.yml，这样需要启动某个题目环境的时候直接进它的目录执行启动指令即可。</p>
 ]]></content>
       <categories>
+        <category>网络安全</category>
+        <category>CTF</category>
         <category>《从0到1：CTFer成长之路》</category>
       </categories>
       <tags>
-        <tag>搭建环境</tag>
         <tag>网络安全</tag>
+        <tag>搭建环境</tag>
       </tags>
   </entry>
   <entry>
@@ -210,6 +213,19 @@
       </tags>
   </entry>
   <entry>
+    <title>【TCP/IP详解 卷1:协议】 第一章</title>
+    <url>/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/</url>
+    <content><![CDATA[<p>test1<br><img src="activation_install.jpg" alt="sss"></p>
+]]></content>
+      <categories>
+        <category>计算机基础</category>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 博客 NexT 主题下如何添加分类、标签</title>
     <url>/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/</url>
     <content><![CDATA[<p>Hexo Next 主题默认带有不少菜单，如关于（about）、分类（categories）、标签（tags）等，默认处于注释状态，将需要取消的菜单注释掉，然后生成相应的 page 即可。</p>
@@ -238,23 +254,12 @@
 </ul>
 ]]></content>
       <categories>
+        <category>网站建设</category>
         <category>Hexo 博客</category>
       </categories>
       <tags>
         <tag>Hexo 博客</tag>
         <tag>搭建环境</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【TCP/IP详解 卷1:协议】 第一章</title>
-    <url>/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/</url>
-    <content><![CDATA[<p>test1<br><img src="activation_install.jpg" alt="sss"></p>
-]]></content>
-      <categories>
-        <category>计算机网络</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -295,10 +300,44 @@
 <p>本文转载自：<a href="https://www.cnblogs.com/fuhua/p/12799534.html#4565992">https://www.cnblogs.com/fuhua/p/12799534.html#4565992</a></p>
 ]]></content>
       <categories>
-        <category>资源</category>
+        <category>工具</category>
+        <category>软件</category>
       </categories>
       <tags>
         <tag>软件资源</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>博客运维记录</title>
+    <url>/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/</url>
+    <content><![CDATA[<p>记录使用博客时遇到的问题，以及对博客的优化。</p>
+<span id="more"></span>
+
+<ol>
+<li>本地 markdown 撰写<ul>
+<li>官方介绍中本地的博文需写在 _post 目录下，而博文中添加照片的方式之一是在同目录下新建与博文名同名的文件夹，将图片放在该文件夹。</li>
+<li>这样由于本地没有分类机制，非常不便于在本地对所有博文进行管理。</li>
+<li>目前采用策略：写新的博文时，先在 _post 目录下新建以博文名命名的文件夹，在这一层撰写博文，再在内嵌套一个同样为以博文名命名的文件夹，放置图片。</li>
+</ul>
+</li>
+<li>修改分类<ul>
+<li>将分类名由”proxy”改成”Proxy”，发现在本地环境访问是正常的，但到我<code>github.io</code>上访问时会报 404 错误</li>
+<li>实际上，Hexo 分类的修改是作用在文件夹上的，而我使用<code>hexo d</code>将博客部署到 github 上时，不会对原本的文件夹进行修改。也就是说 github 上依旧是”proxy”。</li>
+</ul>
+</li>
+<li>恢复博客<ul>
+<li>尝试了 <a href="https://github.com/blinkfox/hexo-theme-matery">matery</a> 主题，搭建完后发现对 markdown 的支持没有 next 的好，<code>python</code>的注释<code>#</code>容易被当成 markdown 的目录结构，引起目录混乱。</li>
+<li>恢复 next 的过程中发现 github 博客源码的分支没有备份 next 主题，没办法只能重新配置，配置过程中遇到一个大坑，github star 排第一的<a href="https://github.com/iissnan/hexo-theme-next">iissnan/hexo-theme-next</a>有很多小问题，解决一个又会有下一个，本来打算重新换个主题了，最后尝试了 star 较少的<a href="https://github.com/theme-next/hexo-theme-next">theme-next/hexo-theme-next</a>，成功恢复。（原因：第一次配置的时候看的官方英文文档，写博客时记录的中文文档，结果两个文档指向不同的 github 仓库）</li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>网站建设</category>
+        <category>Hexo 博客</category>
+      </categories>
+      <tags>
+        <tag>Hexo 博客</tag>
       </tags>
   </entry>
   <entry>
@@ -339,7 +378,7 @@
 <p>Title 随便取个名字，粘贴复制的 id_rsa.pub 内容到 Key 中，点击 Add SSH key 完成添加。</p>
 <p><strong>验证连接</strong>：</p>
 <blockquote>
-<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#x67;&#x69;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#117;&#x62;&#46;&#99;&#x6f;&#x6d;">&#x67;&#x69;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#117;&#x62;&#46;&#99;&#x6f;&#x6d;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
+<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#103;&#105;&#x74;&#64;&#103;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#105;&#x74;&#64;&#103;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
 </blockquote>
 <blockquote>
 <p>显示 “Hi xxx! You’ve successfully……” 即连接成功。</p>
@@ -434,43 +473,12 @@
 </ul>
 ]]></content>
       <categories>
+        <category>网站建设</category>
         <category>Hexo 博客</category>
       </categories>
       <tags>
         <tag>Hexo 博客</tag>
         <tag>搭建环境</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>博客运维记录</title>
-    <url>/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/</url>
-    <content><![CDATA[<p>记录使用博客时遇到的问题，以及对博客的优化。</p>
-<span id="more"></span>
-
-<ol>
-<li>本地 markdown 撰写<ul>
-<li>官方介绍中本地的博文需写在 _post 目录下，而博文中添加照片的方式之一是在同目录下新建与博文名同名的文件夹，将图片放在该文件夹。</li>
-<li>这样由于本地没有分类机制，非常不便于在本地对所有博文进行管理。</li>
-<li>目前采用策略：写新的博文时，先在 _post 目录下新建以博文名命名的文件夹，在这一层撰写博文，再在内嵌套一个同样为以博文名命名的文件夹，放置图片。</li>
-</ul>
-</li>
-<li>修改分类<ul>
-<li>将分类名由”proxy”改成”Proxy”，发现在本地环境访问是正常的，但到我<code>github.io</code>上访问时会报 404 错误</li>
-<li>实际上，Hexo 分类的修改是作用在文件夹上的，而我使用<code>hexo d</code>将博客部署到 github 上时，不会对原本的文件夹进行修改。也就是说 github 上依旧是”proxy”。</li>
-</ul>
-</li>
-<li>恢复博客<ul>
-<li>尝试了 <a href="https://github.com/blinkfox/hexo-theme-matery">matery</a> 主题，搭建完后发现对 markdown 的支持没有 next 的好，<code>python</code>的注释<code>#</code>容易被当成 markdown 的目录结构，引起目录混乱。</li>
-<li>恢复 next 的过程中发现 github 博客源码的分支没有备份 next 主题，没办法只能重新配置，配置过程中遇到一个大坑，github star 排第一的<a href="https://github.com/iissnan/hexo-theme-next">iissnan/hexo-theme-next</a>有很多小问题，解决一个又会有下一个，本来打算重新换个主题了，最后尝试了 star 较少的<a href="https://github.com/theme-next/hexo-theme-next">theme-next/hexo-theme-next</a>，成功恢复。（原因：第一次配置的时候看的官方英文文档，写博客时记录的中文文档，结果两个文档指向不同的 github 仓库）</li>
-</ul>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Hexo 博客</category>
-      </categories>
-      <tags>
-        <tag>Hexo 博客</tag>
       </tags>
   </entry>
   <entry>
@@ -571,6 +579,178 @@
       </tags>
   </entry>
   <entry>
+    <title>读书笔记——《具体生活》</title>
+    <url>/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/</url>
+    <content><![CDATA[<p>  焦虑是现代人的常态。时间不够用，钱不够花，职业发展不够快，对当下和未来不够了解…我们不断加快生活的节奏，但快节奏之后是否带来了好处，我们并不清楚，只是觉得“快”比“慢”要好。</p>
+<p>  很多时候，我们做不好事情，是我们太匆忙、太着急，其实只要慢三拍，我们的事情会比以前做得好很多。有时候，慢比快好。</p>
+<p>  当忙碌成为生活的主旋律时，我们是否可以思考一下：生活的目的是什么？从容做事，优雅生活，这是我们生活的目的。很多人羡慕所谓的贵族生活，其实过去贵族的物质生活并不比今天的中产阶级好多少，但是他们整体的生活质量远非今天一般意义上的富有家庭所能比的。究其原因，是因为今天的人缺少了那份应有的从容和优雅。</p>
+<p>  当我们做事情的时候能够慢一点，少走点弯路，多花点实践享受浪漫而美好的人生，畅游人类知识和艺术的海洋，我们会发现自己是在真正地生活，而不是只是为了工作而活着。</p>
+<span id="more"></span>
+
+<h2 id="1-旅行的意义"><a href="#1-旅行的意义" class="headerlink" title="1. 旅行的意义"></a>1. 旅行的意义</h2><h2 id="2-博物馆之美"><a href="#2-博物馆之美" class="headerlink" title="2. 博物馆之美"></a>2. 博物馆之美</h2><h2 id="3-读书以以怡情长智"><a href="#3-读书以以怡情长智" class="headerlink" title="3. 读书以以怡情长智"></a>3. 读书以以怡情长智</h2><p>  古人把读万卷书和行万里路看作精英阶层成长不可或缺的两个环节，它们既能使人获得知识，也能令人愉悦自我。</p>
+<h3 id="3-1-阅读的意义"><a href="#3-1-阅读的意义" class="headerlink" title="3.1 阅读的意义"></a>3.1 阅读的意义</h3><ol>
+<li>阅读是放下可以让我们审视人生的不多的方式之一。<br>苏格拉底曾经说过，未经审视的人生不值得度过。而绅士人生需要有闲暇。读书必须有比较长的一段时间，不做其他事情，专心致志地阅读。</li>
+<li>阅读是一种交友方式，借书可以令两人的关系有所增进。<br>借书，说明至少两个人有共同的语言，在此基础上，谈合作也好，谈利益也罢，才搭得上话。对于男女之间交往来说，借一次书，还一次，至少就接触了两次，并且这也能创造一个良好的交谈话题。</li>
+<li>阅读不仅仅是为了让我们在冷酷无情的科技时代获得喘息，让我们重启大脑深入思考的功能，也是抵抗狭隘、思想控制和舆论支配的方式。<blockquote>
+<p>常常在焦虑的时候，或者感到特别难的时候，会去看看曾经觉得深有启发的书，让自己慢慢静下来，焦虑慢慢会平息，困难也会渐渐淡化，恢复状态，继续前行。现在发现，将书中的内容，与自己思想相结合，写出来的时候，特别的舒畅。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="4-音乐的故事"><a href="#4-音乐的故事" class="headerlink" title="4. 音乐的故事"></a>4. 音乐的故事</h2><h2 id="5-徕卡摄影的魅力"><a href="#5-徕卡摄影的魅力" class="headerlink" title="5. 徕卡摄影的魅力"></a>5. 徕卡摄影的魅力</h2><h2 id="6-香醇美酒"><a href="#6-香醇美酒" class="headerlink" title="6. 香醇美酒"></a>6. 香醇美酒</h2><h2 id="7-奢侈品的光泽"><a href="#7-奢侈品的光泽" class="headerlink" title="7. 奢侈品的光泽"></a>7. 奢侈品的光泽</h2>]]></content>
+      <categories>
+        <category>怡情长智</category>
+        <category>阅读</category>
+      </categories>
+      <tags>
+        <tag>读书/生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第1章 web入门</title>
+    <url>/%E7%AC%AC1%E7%AB%A0%20web%E5%85%A5%E9%97%A8/%E7%AC%AC1%E7%AB%A0%20web%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>按照 CTF 线上赛中各种 Web 漏洞出现的频率、漏洞的复杂程序，将 Web 漏洞分为入门、进阶、拓展三个层次。本章从入门层次开始，介绍 Web 类题目中最常见的 3 类漏洞，即信息搜索、SQL 注入、任意文件读取漏洞。</p>
+<span id="more"></span>
+
+<h1 id="1-信息搜索"><a href="#1-信息搜索" class="headerlink" title="1 信息搜索"></a>1 信息搜索</h1><p>   信息搜索是前期的必备工作，也是重中之重。信息搜索简单分为敏感目录、敏感备份文件、Banner 识别。</p>
+<h2 id="1-1-敏感目录泄露"><a href="#1-1-敏感目录泄露" class="headerlink" title="1.1 敏感目录泄露"></a>1.1 敏感目录泄露</h2><p>  通过敏感目录泄露，往往能获得网站源代码和敏感 URL 地址，如后台地址。</p>
+<ol>
+<li>git 泄露，将<code>.git</code>文件夹部署到了外网环境，导致攻击者可以通过<code>.git</code>文件夹获得源码。工具：<a href="https://github.com/denny0223/scrabble">https://github.com/denny0223/scrabble</a></li>
+<li>SVN 泄露，将 SVN 隐藏文件暴露于外网环境,可以利用 <code>.svn/entries</code>或<code>wc.db</code>文件获取源码信息。工具：<a href="https://github.com/kost/dvcs-ripper">https://github.com/kost/dvcs-ripper</a></li>
+<li>HG 泄露。<code>.hg</code>文件夹，包含代码和分支修改记录等信息。工具：<a href="https://github.com/kost/dvcs-ripper">https://github.com/kost/dvcs-ripper</a></li>
+</ol>
+<p>  推荐<strong>开源目录扫描工具</strong>：<a href="https://github.com/maurosoria/dirsearch%E3%80%82">https://github.com/maurosoria/dirsearch。</a></p>
+<ol start="4">
+<li>经验总结<br>CTF 线上赛往往有重定向的问题，如只要访问<code>.git</code>便会返回403，此时可以试探访问<code>.git/config</code>，如果有内容返回，说明存在<code>git</code>泄露风险。</li>
+</ol>
+<h2 id="1-2-敏感备份文件"><a href="#1-2-敏感备份文件" class="headerlink" title="1.2 敏感备份文件"></a>1.2 敏感备份文件</h2><p>  通过访问一些敏感的备份文件，往往能获得某一文件的源码，亦或整个网站目录。</p>
+<ol>
+<li>gedit 备份文件，以”~”后缀结尾。</li>
+<li>vim 备份文件，vim 意外退出时会生成备份文件，”<em>.swp”、”</em>.swo”、”<em>.swn”、“</em>.un.”等形式。</li>
+<li>常规文件，如<code>robots.txt</code>、<code>readme.md</code>、<code>网站名.tar.gz</code></li>
+<li>经验总结<br>CTF 线上比赛过程中，出题人往往会在线运维题目，有时会导致备份文件生成，所以比赛过程中可以编写实时监控脚本，对题目服务进行监控。</li>
+</ol>
+<h2 id="1-3-Banner-信息"><a href="#1-3-Banner-信息" class="headerlink" title="1.3 Banner 信息"></a>1.3 Banner 信息</h2><p>  一个网站的 Banner 信息，是服务器对外显示的一些基础信息。往往通过这些基础信息，如网站是用 ThinkPHP 框架编写时，可以尝试 ThinkPHP 框架的漏洞。</p>
+<ol>
+<li>自行搜集 CMS 指纹库</li>
+<li>已有工具：Wappalyzer</li>
+</ol>
+<h1 id="2-SQL-注入"><a href="#2-SQL-注入" class="headerlink" title="2 SQL 注入"></a>2 SQL 注入</h1><h2 id="2-1-SQL-注入基础"><a href="#2-1-SQL-注入基础" class="headerlink" title="2.1 SQL 注入基础"></a>2.1 SQL 注入基础</h2><p>  SQL 注入是开发者对用户输入的参数过滤不严格，将可能存在的攻击载荷拼接到 SQL 查询语句中，导致用户输入的数据能够影响预设查询功能的一种技术，通常将导致数据库信息泄露、篡改，甚至被删除。</p>
+<p>  <strong>注入技巧的优先级： UNION注入 &gt; 报错注入 &gt; 布尔盲注 &gt; 时间注入</strong></p>
+<h3 id="2-1-1-数字型注入"><a href="#2-1-1-数字型注入" class="headerlink" title="2.1.1 数字型注入"></a>2.1.1 数字型注入</h3><p>  可以从数字运算这个特征行为来判断该注入点是否是数字型注入，表现为输入点是否被引号包裹。如注入 “3-1” 返回的结果与”2”的结果一致。</p>
+<h3 id="2-1-2-UNION-注入"><a href="#2-1-2-UNION-注入" class="headerlink" title="2.1.2 UNION 注入"></a>2.1.2 UNION 注入</h3><p>  把使用 UNION 语句将数据展示到页面上的注入办法，通常和数字型注入或字符型注入联合起来。如联合数字型注入，<code>1 UNION SELECT ...</code>，可以先简单 UNION SELECT 1,2,3… 来判断有几列。</p>
+<p>  现在很多数据库都有默认带有 information_schma 数据库，整个数据库的库名、表明、字段名都可以从中查到，虽然这样方便了数据库信息的查询，但也方便了 SQL 注入的利用。</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查询本数据库的所有表名</span><br><span class="line">-1 union select 1,group_concat(table_name) from information_schema.tables where table_schema &#x3D; database()</span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 通过获取的表名获取表中列名</span><br><span class="line">-1 union select 1,group_concat(column_name) from information_schema.columns where table_name &#x3D; ***</span><br></pre></td></tr></table></figure>
+
+<p>  数字型注入中，可以输入特别大的数或 -1 这类明显可能无返回结果的值，这样服务器返回的就只有我们想要的信息。</p>
+<h3 id="2-1-3-字符型注入"><a href="#2-1-3-字符型注入" class="headerlink" title="2.1.3 字符型注入"></a>2.1.3 字符型注入</h3><p>  与数字型注入点相反，字符型注入输入点被引号包裹。</p>
+<p>  判断方法：先尝试数学表达式，再尝试 1a,2a等特性的输入，最后通过 <em>‘#来判断，如果是字符，</em>后的 ‘ 会先与 SQL 语句形成闭合，而 # 会注释掉 SQL 后面那个 ‘。</p>
+<h3 id="2-1-4-布尔盲注、时间盲注"><a href="#2-1-4-布尔盲注、时间盲注" class="headerlink" title="2.1.4 布尔盲注、时间盲注"></a>2.1.4 布尔盲注、时间盲注</h3><p>  布尔盲注：<code>id=1&#39; and &#39;1</code>,在这个查询中，如果能确定 <code>id=1</code> 的查询结果，那么后面那个 1 就可以作为我们用来判断数据是否猜测正确的预测点。这种虽然我们看不到数据，但可以通过注入推测出数据的技术称为布尔盲注。</p>
+<p>  时间盲注：有些情况下，页面回显内容完全一致，需要借助其他手段对 SQL 注入的执行结果进行判断，如通过服务器执行 SQL 语句所需的时间，通过 sleep()，利用 IF 条件函数或 AND、OR 函数的短路特性和 SQL 执行的时间判断 SQL 攻击的结果。</p>
+<h3 id="2-1-5-报错注入、堆叠注入"><a href="#2-1-5-报错注入、堆叠注入" class="headerlink" title="2.1.5 报错注入、堆叠注入"></a>2.1.5 报错注入、堆叠注入</h3><p>  有时为了方便开发者调试，有的网站会开启错误调试信息，即数据库将语句执行后的报错信息输出，这种注入称为报错注入。</p>
+<p>  在 MySQL 中， updatexml 函数在执行时，第二个参数应该为合法的 XPATH 路径，否则会在引发报错的同时将传入的参数进行输出。利用这个特性，将想要得到的信息传入 updataxml 函数的第二个参数。如 <code>https:127.0.0.1/sql3.php?id=1&#39; or updatexml(1,concat(0x7e,(select pwd from wp_user),0x7e),1)%23</code></p>
+<ul>
+<li><code>concat</code> 函数，用于将多个字符串连接为一个字符串。concat()函数是将其连成一个字符串，因此不会符合XPATH_string的格式，从而出现格式错误，爆出用户。</li>
+<li><code>updatexml</code> 函数，作用：改变文档中符合条件的节点的值<blockquote>
+<p>updatexml(XML_document, XPath_string, new_value);</p>
+<ul>
+<li>XML_document, string，为XML文档对象的名称</li>
+<li>XPath_string Xpath格式的字符串</li>
+<li>new_value，替换查找到的符合条件的数据</li>
+</ul>
+</blockquote>
+</li>
+<li><code>0x7e</code>，ASCII码,实为<code>~</code>,upadtexml()报错信息为特殊字符、字母及之后的内容,为了前面字母丢失,开头连接一个特殊字符~</li>
+</ul>
+<p>  如果目标开启了多语句执行，可以通过分号<code>;</code>执行多条语句，任意修改数据库的结构和数据。<br>使用优先级：UNION注入 &gt; 报错注入 &gt; 布尔盲注 &gt; 时间盲注</p>
+<h2 id="2-2-注入点"><a href="#2-2-注入点" class="headerlink" title="2.2 注入点"></a>2.2 注入点</h2><h3 id="2-2-1-SELECT-注入"><a href="#2-2-1-SELECT-注入" class="headerlink" title="2.2.1 SELECT 注入"></a>2.2.1 SELECT 注入</h3><ol>
+<li>注入点在 select_expr。如<code>SELECT $&#123;_GET[&#39;id&#39;]&#125;, content FROM wp_news</code>，此时首先可以采取时间盲注，另外更优的方法是用 AS 别名的方法。例如注入<code>(SELECT pwd FROM wp_user) AS title</code></li>
+<li>注入点在 table_reference。如<code>SELECT title FROM $&#123; &#125;</code>，采用 AS 别名，可注入<code>(SELECT pwd AS title FROM wp_user)</code></li>
+<li>注入点在 WHERE 或 HAVING 后。这种情况与注入基础中介绍的一致，要先判断有无引号包裹。</li>
+<li>注入点在 GROUP BY 或 ORDER BY 后。当遇到不是 WHERE 后的注入点时，先尝试可以输入什么，判断出当前注入的位置。</li>
+<li>注入点在 LIMIT 后。</li>
+</ol>
+<h3 id="2-2-2-INSERT-注入"><a href="#2-2-2-INSERT-注入" class="headerlink" title="2.2.2 INSERT 注入"></a>2.2.2 INSERT 注入</h3><ol>
+<li>注入点在 table_name ，可以通过注释掉注入点后面的语句，在数据库中插入自己的数据，如管理员。</li>
+<li>注入点在 VALUES,此时可先闭合单引号，然后另行插入一条记录。</li>
+</ol>
+<h3 id="2-2-3-UPDATE-注入"><a href="#2-2-3-UPDATE-注入" class="headerlink" title="2.2.3 UPDATE 注入"></a>2.2.3 UPDATE 注入</h3><p>  与 SELECT 注入类似</p>
+<h3 id="2-2-4-DELETE-注入"><a href="#2-2-4-DELETE-注入" class="headerlink" title="2.2.4 DELETE 注入"></a>2.2.4 DELETE 注入</h3><p>  DELETE 注入大多在 WHERE 后。为了保证不会对正常数据造成干扰，通常使用 <code>and sleep(1)</code> 的方式保证 WHERE 执行结果返回 FALSE，与时间盲注类似。</p>
+<h2 id="2-3-注入与防御"><a href="#2-3-注入与防御" class="headerlink" title="2.3 注入与防御"></a>2.3 注入与防御</h2><h3 id="2-3-1-字符替换"><a href="#2-3-1-字符替换" class="headerlink" title="2.3.1 字符替换"></a>2.3.1 字符替换</h3><ol>
+<li>过滤了空格。将空格特换位<code>%09</code></li>
+<li>将 SELECT 替换成空。可以用嵌套的方式，如 SESELECTLECT。</li>
+<li>大小写匹配。在 MySQL 中，关键字是不区分大小写的，但替换语句通常区分大小写，故可采用混写。</li>
+<li>正则匹配。正则匹配关键字<code>\bselect\b</code>，可以用形如<code>/*!50000select/</code>方式绕过。</li>
+<li>替换了单引号或双引号，忘了反斜扛。如<code>WHERE id=&#39;可控1&#39; AND title = &#39;可控2&#39;</code>，可控点都进行了单引号、双引号替换，此时可用<code>\</code>转义了可控点1 后<code>&#39;</code>,这样会与可控点2前的引号<code>&#39;</code>匹配起来，再利用<code>OR</code>将可控点2前的语句都无效，可控点2可注入。即 <code>where id = &#39;a\&#39; and title=&#39; OR ***#</code></li>
+</ol>
+<h3 id="2-3-2-逃逸引号"><a href="#2-3-2-逃逸引号" class="headerlink" title="2.3.2 逃逸引号"></a>2.3.2 逃逸引号</h3><p>  注入的重点在于逃逸引号，而开发者常会将用户的输入全局做一次 <code>addslashes</code>,即在预定义字符(‘、”、\）前添加反斜扛。</p>
+<ol>
+<li>编码解码</li>
+<li>意料之外的输入点</li>
+<li>二次注入。如 SQL 插入用户名 <code>admin&#39;or&#39;1</code>，经转义变成<code>admin\&#39;or\&#39;1</code>,正常入库。但当这个用户名被再次使用时， get 的 SQL 语句就变成了 <code>WHERE username = &#39;admin&#39; or &#39;1&#39;</code></li>
+<li>字符串截断。如输入<code>aaaa&#39;</code>，自动转义为<code>aaaa\&#39;</code>，但由于长度限制，被截取成了<code>aaaa\</code>，正好转义了 SQL 语句中预置的单引号。</li>
+</ol>
+<h2 id="2-4-注入的功效"><a href="#2-4-注入的功效" class="headerlink" title="2.4 注入的功效"></a>2.4 注入的功效</h2><ol>
+<li>有写文件权限时，用 <code>INTO OUTFILE</code> 或者 <code>DUMPFILE</code>向 Web 目录写文件，或者写入包含漏洞文件。</li>
+<li>有读文件权限时，用 laad_file()函数读取往回走那源码和配置信息。</li>
+<li>提升权限。</li>
+<li>通过注入控制数据库查询出来的数据，控制如模板、缓存等文件内容来获取权限，或者删除、读取某些关键文件。</li>
+<li>可执行多语句时，控制整个数据库。</li>
+<li>直接执行系统命令。</li>
+</ol>
+<h2 id="2-5-小结"><a href="#2-5-小结" class="headerlink" title="2.5 小结"></a>2.5 小结</h2><p>  由于 SQL 服务器在实现时不同，即使时相同的功能，也会有多种多样的实现方式。</p>
+<p>  为了做出题目或更深入了解 SQL 注入原理，最关键的是根据不同的 SQL 服务器类型，查找相关资料，通过模糊测试（fuzz testing）得出被过滤的字符、函数、关键词等，在文档中查找功能相同但不包含过滤特征的替代品。</p>
+<p>  sqli-labs（<a href="https://github.com/Audi-1/sqli-labs%EF%BC%89%E6%8F%90%E4%BE%9B%E4%B8%8D%E5%90%8C%E8%BF%87%E6%BB%A4%E7%AD%89%E7%BA%A7%E4%B8%8B%E7%9A%84%E6%B3%A8%E5%85%A5%E9%A2%98%E7%9B%AE%E3%80%82">https://github.com/Audi-1/sqli-labs）提供不同过滤等级下的注入题目。</a></p>
+<h1 id="3-任意文件读取漏洞"><a href="#3-任意文件读取漏洞" class="headerlink" title="3 任意文件读取漏洞"></a>3 任意文件读取漏洞</h1><p>  文件读取漏洞， 指的是攻击者通过一些手段读取服务器上开发者不允许读到的文件。</p>
+<p>  实际上，许多开发人员在进行二次开发时过于信任框架或中间件底层所实现的安全机制，未了解框架对应的安全机制，只是简单的利用 API 文档开发。</p>
+<p>  还有一种是服务器本身的问题，或者是服务器不安全的配置导致的。</p>
+<h2 id="3-1-文件读取漏洞常见触发点"><a href="#3-1-文件读取漏洞常见触发点" class="headerlink" title="3.1 文件读取漏洞常见触发点"></a>3.1 文件读取漏洞常见触发点</h2><h3 id="3-1-1-Web-语言"><a href="#3-1-1-Web-语言" class="headerlink" title="3.1.1 Web 语言"></a>3.1.1 Web 语言</h3><ol>
+<li>PHP<br>PHP 标准函数，包括但不限于：<blockquote>
+<ul>
+<li>file_get_contents()、file()</li>
+<li>fopen()、fread()、fgets()</li>
+<li>文件包含相关函数：include()、require()、include_once()、require_once()</li>
+<li>执行系统命令：system()、exec()</li>
+<li>其他 php 扩展函数</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<p>  <strong>PHP 的 wrapper 和 filter 特色机制</strong></p>
+<ul>
+<li><p>PHP 向用户提供待打开文件的方式不是简简单单的一个路径，而是一个流，它是对数据的抽象，用于统一数据操作。它不管是本地文件还是远程文件，或是压缩文件等等，只要来的是流式数据，操作方法都一样。</p>
+</li>
+<li><p>每个流都对应一种包装器 wrapper。流是从统一操作这个角度产生的概念，包装器是从理解数据内容出发产生的概念，也就是这个统一的操作方式如何操作或配置不同的内容。比如 http 协议传来的数据是流的方式，但只有 http 包装器才能理解传来数据的意思。</p>
+</li>
+<li><p>每一种流打开后都可以应用任意数量的过滤器 filter 在上面，它可以对数据进行添加、修改等。</p>
+</li>
+<li><p>PHP 的 filter 特性给我们进行任意文件读取提供了很多便利。假如服务端 include 函数路径参数可控，正常情况下它会将目标文件当作 PHP 文件去解析，如果解析文件中存在 <code>&lt;?PHP</code>等 PHP 相关标签，那么标签中的内容会被当作代码执行。</p>
+</li>
+<li><p>PHP 文件包含的实际问题中，可能遇到三种情况</p>
+<ol>
+<li>文件路径前面可控，后面不可控。PHP 较低版本可以用<code>\x00</code>截断，当服务器具有文件上传功能时，可以尝试利用 zip 或 phar 协议直接进行文件包含进而执行 php 代码。</li>
+<li>文件路径后面可控，前面不可控。可以通过<code>../</code>进行目录穿越直接读取文件，但这种情况下无法使用 wrapper。如果服务器利用 include 等包含类的函数，无法读取 PHP 文件中的 PHP 代码。</li>
+<li>文件路径中间可控。与第一种类似，无法利用 wrapper 进行文件包含。</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>Python</li>
+<li></li>
+</ol>
+]]></content>
+      <categories>
+        <category>网络安全</category>
+        <category>CTF</category>
+        <category>《从0到1：CTFer成长之路》</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>Web 安全</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何配置 v2ray 详细教程</title>
     <url>/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<p>V2ray 是继 Shadowsocks(R) 后又一个体验很棒、功能非常强大的科学上网工具，近年来受到网友的广泛关注和喜爱。本教程详细介绍V2ray的安装和配置过程，让读者能迅速上手和使用V2ray。</p>
@@ -660,36 +840,11 @@
 </ul>
 ]]></content>
       <categories>
+        <category>工具</category>
         <category>proxy</category>
       </categories>
       <tags>
         <tag>代理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>读书笔记——《具体生活》</title>
-    <url>/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/</url>
-    <content><![CDATA[<p>  焦虑是现代人的常态。时间不够用，钱不够花，职业发展不够快，对当下和未来不够了解…我们不断加快生活的节奏，但快节奏之后是否带来了好处，我们并不清楚，只是觉得“快”比“慢”要好。</p>
-<p>  很多时候，我们做不好事情，是我们太匆忙、太着急，其实只要慢三拍，我们的事情会比以前做得好很多。有时候，慢比快好。</p>
-<p>  当忙碌成为生活的主旋律时，我们是否可以思考一下：生活的目的是什么？从容做事，优雅生活，这是我们生活的目的。很多人羡慕所谓的贵族生活，其实过去贵族的物质生活并不比今天的中产阶级好多少，但是他们整体的生活质量远非今天一般意义上的富有家庭所能比的。究其原因，是因为今天的人缺少了那份应有的从容和优雅。</p>
-<p>  当我们做事情的时候能够慢一点，少走点弯路，多花点实践享受浪漫而美好的人生，畅游人类知识和艺术的海洋，我们会发现自己是在真正地生活，而不是只是为了工作而活着。</p>
-<span id="more"></span>
-
-<h2 id="1-旅行的意义"><a href="#1-旅行的意义" class="headerlink" title="1. 旅行的意义"></a>1. 旅行的意义</h2><h2 id="2-博物馆之美"><a href="#2-博物馆之美" class="headerlink" title="2. 博物馆之美"></a>2. 博物馆之美</h2><h2 id="3-读书以以怡情长智"><a href="#3-读书以以怡情长智" class="headerlink" title="3. 读书以以怡情长智"></a>3. 读书以以怡情长智</h2><p>  古人把读万卷书和行万里路看作精英阶层成长不可或缺的两个环节，它们既能使人获得知识，也能令人愉悦自我。</p>
-<h3 id="3-1-阅读的意义"><a href="#3-1-阅读的意义" class="headerlink" title="3.1 阅读的意义"></a>3.1 阅读的意义</h3><ol>
-<li>阅读是放下可以让我们审视人生的不多的方式之一。<br>苏格拉底曾经说过，未经审视的人生不值得度过。而绅士人生需要有闲暇。读书必须有比较长的一段时间，不做其他事情，专心致志地阅读。</li>
-<li>阅读是一种交友方式，借书可以令两人的关系有所增进。<br>借书，说明至少两个人有共同的语言，在此基础上，谈合作也好，谈利益也罢，才搭得上话。对于男女之间交往来说，借一次书，还一次，至少就接触了两次，并且这也能创造一个良好的交谈话题。</li>
-<li>阅读不仅仅是为了让我们在冷酷无情的科技时代获得喘息，让我们重启大脑深入思考的功能，也是抵抗狭隘、思想控制和舆论支配的方式。<blockquote>
-<p>常常在焦虑的时候，或者感到特别难的时候，会去看看曾经觉得深有启发的书，让自己慢慢静下来，焦虑慢慢会平息，困难也会渐渐淡化，恢复状态，继续前行。现在发现，将书中的内容，与自己思想相结合，写出来的时候，特别的舒畅。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="4-音乐的故事"><a href="#4-音乐的故事" class="headerlink" title="4. 音乐的故事"></a>4. 音乐的故事</h2><h2 id="5-徕卡摄影的魅力"><a href="#5-徕卡摄影的魅力" class="headerlink" title="5. 徕卡摄影的魅力"></a>5. 徕卡摄影的魅力</h2><h2 id="6-香醇美酒"><a href="#6-香醇美酒" class="headerlink" title="6. 香醇美酒"></a>6. 香醇美酒</h2><h2 id="7-奢侈品的光泽"><a href="#7-奢侈品的光泽" class="headerlink" title="7. 奢侈品的光泽"></a>7. 奢侈品的光泽</h2>]]></content>
-      <categories>
-        <category>怡情长智</category>
-      </categories>
-      <tags>
-        <tag>读书/生活</tag>
       </tags>
   </entry>
   <entry>
@@ -887,6 +1042,8 @@
 </ul>
 ]]></content>
       <categories>
+        <category>网络安全</category>
+        <category>CTF</category>
         <category>《从0到1：CTFer成长之路》</category>
       </categories>
       <tags>
@@ -1177,7 +1334,7 @@
 <p>将该url使用sqlmap进行注入测试，，测试结果可能存在SQL注入，也可能不存在SQL注入，存在则可以进行数据库名称，数据库表以及数据的操作。</p>
 <p><strong>4. 批量检测</strong><br>将目标url搜集并整理为txt文件，如图4所示，所有文件都保存为tg.txt，然后使用“sqlmap.py-m tg.txt”，注意tg.txt跟sqlmap在同一个目录下。<br><img src="%E6%89%B9%E9%87%8F%E6%95%B4%E7%90%86%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80.jpg" alt="批量整理目标地址"></p>
 <h3 id="1-4-2-直接连接数据库"><a href="#1-4-2-直接连接数据库" class="headerlink" title="1.4.2 直接连接数据库"></a>1.4.2 直接连接数据库</h3><blockquote>
-<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#97;&#x64;&#x6d;&#105;&#x6e;&#x40;&#49;&#x39;&#x32;&#46;&#x31;&#x36;&#56;&#46;&#50;&#49;&#x2e;&#x31;&#55;">&#97;&#x64;&#x6d;&#105;&#x6e;&#x40;&#49;&#x39;&#x32;&#46;&#x31;&#x36;&#56;&#46;&#50;&#49;&#x2e;&#x31;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
+<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#x61;&#100;&#x6d;&#x69;&#110;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#x32;&#x31;&#46;&#49;&#55;">&#x61;&#100;&#x6d;&#x69;&#110;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#x32;&#x31;&#46;&#49;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
 </blockquote>
 <h3 id="1-4-3数据库相关操作"><a href="#1-4-3数据库相关操作" class="headerlink" title="1.4.3数据库相关操作"></a>1.4.3数据库相关操作</h3><ul>
 <li>列数据库信息：–dbs</li>
@@ -1310,6 +1467,7 @@
 <p>————————<br>本文作者：simeon， 转载请注明来自<a href="https://www.freebuf.com/">FreeBuf.COM</a><br>原文：<a href="https://www.freebuf.com/sectool/164608.html">超详细SQLMap使用攻略及技巧分享</a></p>
 ]]></content>
       <categories>
+        <category>网络安全</category>
         <category>工具</category>
       </categories>
       <tags>
@@ -1320,8 +1478,7 @@
   <entry>
     <title>【python】python基础</title>
     <url>/python%E5%9F%BA%E7%A1%80/python%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<p>[toc]</p>
-<p>python 基础语法</p>
+    <content><![CDATA[<p>python 基础语法</p>
 <span id="more"></span>
 
 <h1 id="1-python-解释器"><a href="#1-python-解释器" class="headerlink" title="1. python 解释器"></a>1. python 解释器</h1><p>我们编写的Python代码都要放在Python解释器上运行，解释器是代码与计算机硬件之间的软件逻辑层。根据选用的Python版本的不同，解释器本身可以用C语言实现（Python的官方实现版本）、Java语言实现或者其他的形式。无论使用采用什么版本，编写好的Python程序代码必须放在解释器中运行。</p>
@@ -2354,6 +2511,7 @@
 </tbody></table>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="comment"># 设置重命名标识：如果为1则添加指定字符，flag取值为2则删除指定字符</span></span><br><span class="line">flag = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取指定⽬录</span></span><br><span class="line">dir_name = <span class="string">&#x27;./&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取指定⽬录的⽂件列表</span></span><br><span class="line">file_list = os.listdir(dir_name)</span><br><span class="line"><span class="comment"># print(file_list)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历⽂件列表内的⽂件</span></span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> file_list:</span><br><span class="line">    <span class="comment"># 添加指定字符</span></span><br><span class="line">    <span class="keyword">if</span> flag == <span class="number">1</span>:</span><br><span class="line">        new_name = <span class="string">&#x27;Python-&#x27;</span> + name</span><br><span class="line">    <span class="comment"># 删除指定字符</span></span><br><span class="line">    <span class="keyword">elif</span> flag == <span class="number">2</span>:</span><br><span class="line">        num = <span class="built_in">len</span>(<span class="string">&#x27;Python-&#x27;</span>)</span><br><span class="line">        new_name = name[num:]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印新⽂件名，测试程序正确性</span></span><br><span class="line"><span class="built_in">print</span>(new_name)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 重命名</span></span><br><span class="line">os.rename(dir_name+name, dir_name+new_name)</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
+        <category>编程语言</category>
         <category>python</category>
       </categories>
       <tags>
