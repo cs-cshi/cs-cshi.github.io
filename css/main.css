@@ -1283,7 +1283,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff03ff;
+  background: #ffb625;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2841,6 +2841,13 @@ a.category-list-link:before {
   font-size: 15px;
   line-height: 18px;
 }
+body {
+  background: url("/images/background4.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: 50% 50%;
+}
 .content-wrap {
   opacity: 0.9;
 }
@@ -2863,4 +2870,11 @@ a.category-list-link:before {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+body {
+  background: url("/images/background4.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: 50% 50%;
 }
