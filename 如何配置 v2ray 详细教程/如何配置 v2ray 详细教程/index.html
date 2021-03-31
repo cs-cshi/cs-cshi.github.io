@@ -17,14 +17,14 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="V2ray 是继 Shadowsocks(R) 后又一个体验很棒、功能非常强大的科学上网工具，近年来受到网友的广泛关注和喜爱。本教程详细介绍V2ray的安装和配置过程，让读者能迅速上手和使用V2ray。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何配置 v2ray 详细教程">
 <meta property="og:url" content="https://cs-cshi.github.io/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/index.html">
-<meta property="og:site_name" content="Charles&#39;s Blog">
+<meta property="og:site_name" content="Chang">
 <meta property="og:description" content="V2ray 是继 Shadowsocks(R) 后又一个体验很棒、功能非常强大的科学上网工具，近年来受到网友的广泛关注和喜爱。本教程详细介绍V2ray的安装和配置过程，让读者能迅速上手和使用V2ray。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cs-cshi.github.io/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/v2ray_settings.png">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>如何配置 v2ray 详细教程 | Charles's Blog</title>
+  <title>如何配置 v2ray 详细教程 | Chang</title>
   
 
 
@@ -100,7 +100,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Charles's Blog</h1>
+      <h1 class="site-title">Chang</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -119,31 +119,31 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页 | home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于 | about</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签 | tags<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类 | categories<span class="badge">16</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">17</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">17</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索 | search
         </a>
       </li>
   </ul>
@@ -179,6 +179,10 @@
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main class="main">
@@ -202,7 +206,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Charles's Blog">
+      <meta itemprop="name" content="Chang">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -483,10 +487,10 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          文章目录
+          文章目录 | toc
         </li>
         <li class="sidebar-nav-overview">
-          站点概览
+          站点概览 | overview
         </li>
       </ul>
 
@@ -561,10 +565,6 @@
     </ul>
   </div>
       </div>
-        <div class="back-to-top motion-element">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
-        </div>
 
     </div>
   </aside>
@@ -658,6 +658,16 @@
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/',]
+      });
+      });
+  </script>
 
 
 <script>

@@ -17,14 +17,14 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="超详细SQLMap使用攻略及技巧分享">
 <meta property="og:url" content="https://cs-cshi.github.io/%E8%B6%85%E8%AF%A6%E7%BB%86SQLMap%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5%E5%8F%8A%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB/%E8%B6%85%E8%AF%A6%E7%BB%86SQLMap%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5%E5%8F%8A%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB/index.html">
-<meta property="og:site_name" content="Charles&#39;s Blog">
+<meta property="og:site_name" content="Chang">
 <meta property="og:description" content="sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cs-cshi.github.io/%E8%B6%85%E8%AF%A6%E7%BB%86SQLMap%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5%E5%8F%8A%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB/%E8%B6%85%E8%AF%A6%E7%BB%86SQLMap%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5%E5%8F%8A%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB/%E6%89%B9%E9%87%8F%E6%95%B4%E7%90%86%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80.jpg">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>超详细SQLMap使用攻略及技巧分享 | Charles's Blog</title>
+  <title>超详细SQLMap使用攻略及技巧分享 | Chang</title>
   
 
 
@@ -100,7 +100,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Charles's Blog</h1>
+      <h1 class="site-title">Chang</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -119,31 +119,31 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页 | home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于 | about</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签 | tags<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类 | categories<span class="badge">16</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">17</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">17</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索 | search
         </a>
       </li>
   </ul>
@@ -179,6 +179,10 @@
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main class="main">
@@ -202,7 +206,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Charles's Blog">
+      <meta itemprop="name" content="Chang">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -559,7 +563,7 @@
 <p>将该url使用sqlmap进行注入测试，，测试结果可能存在SQL注入，也可能不存在SQL注入，存在则可以进行数据库名称，数据库表以及数据的操作。</p>
 <p><strong>4. 批量检测</strong><br>将目标url搜集并整理为txt文件，如图4所示，所有文件都保存为tg.txt，然后使用“sqlmap.py-m tg.txt”，注意tg.txt跟sqlmap在同一个目录下。<br><img src="%E6%89%B9%E9%87%8F%E6%95%B4%E7%90%86%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80.jpg" alt="批量整理目标地址"></p>
 <h3 id="1-4-2-直接连接数据库"><a href="#1-4-2-直接连接数据库" class="headerlink" title="1.4.2 直接连接数据库"></a>1.4.2 直接连接数据库</h3><blockquote>
-<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#x61;&#100;&#x6d;&#x69;&#110;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#x32;&#x31;&#46;&#49;&#55;">&#x61;&#100;&#x6d;&#x69;&#110;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#x32;&#x31;&#46;&#49;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
+<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#x61;&#x64;&#109;&#105;&#x6e;&#x40;&#x31;&#x39;&#50;&#x2e;&#49;&#x36;&#56;&#46;&#50;&#49;&#46;&#x31;&#55;">&#x61;&#x64;&#109;&#105;&#x6e;&#x40;&#x31;&#x39;&#50;&#x2e;&#49;&#x36;&#56;&#46;&#50;&#49;&#46;&#x31;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
 </blockquote>
 <h3 id="1-4-3数据库相关操作"><a href="#1-4-3数据库相关操作" class="headerlink" title="1.4.3数据库相关操作"></a>1.4.3数据库相关操作</h3><ul>
 <li>列数据库信息：–dbs</li>
@@ -820,10 +824,10 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          文章目录
+          文章目录 | toc
         </li>
         <li class="sidebar-nav-overview">
-          站点概览
+          站点概览 | overview
         </li>
       </ul>
 
@@ -898,10 +902,6 @@
     </ul>
   </div>
       </div>
-        <div class="back-to-top motion-element">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
-        </div>
 
     </div>
   </aside>
@@ -995,6 +995,16 @@
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/%E8%B6%85%E8%AF%A6%E7%BB%86SQLMap%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5%E5%8F%8A%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB/%E8%B6%85%E8%AF%A6%E7%BB%86SQLMap%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5%E5%8F%8A%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB/',]
+      });
+      });
+  </script>
 
 
 <script>

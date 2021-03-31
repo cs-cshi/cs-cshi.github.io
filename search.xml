@@ -213,19 +213,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【TCP/IP详解 卷1:协议】 第一章</title>
-    <url>/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/</url>
-    <content><![CDATA[<p>test1<br><img src="activation_install.jpg" alt="sss"></p>
-]]></content>
-      <categories>
-        <category>计算机基础</category>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo 博客 NexT 主题下如何添加分类、标签</title>
     <url>/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/</url>
     <content><![CDATA[<p>Hexo Next 主题默认带有不少菜单，如关于（about）、分类（categories）、标签（tags）等，默认处于注释状态，将需要取消的菜单注释掉，然后生成相应的 page 即可。</p>
@@ -260,6 +247,19 @@
       <tags>
         <tag>Hexo 博客</tag>
         <tag>搭建环境</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【TCP/IP详解 卷1:协议】 第一章</title>
+    <url>/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/</url>
+    <content><![CDATA[<p>test1<br><img src="activation_install.jpg" alt="sss"></p>
+]]></content>
+      <categories>
+        <category>计算机基础</category>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -341,6 +341,200 @@
       </tags>
   </entry>
   <entry>
+    <title>如何配置 v2ray 详细教程</title>
+    <url>/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<p>V2ray 是继 Shadowsocks(R) 后又一个体验很棒、功能非常强大的科学上网工具，近年来受到网友的广泛关注和喜爱。本教程详细介绍V2ray的安装和配置过程，让读者能迅速上手和使用V2ray。</p>
+<span id="more"></span>
+
+<h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><blockquote>
+<p>先创建安装 v2ray 的目录</p>
+</blockquote>
+<ol>
+<li>下载 QT 实现的 v2ray 界面。在官网链接上找到最新的 release 下载。<blockquote>
+<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
+</blockquote>
+</li>
+</ol>
+<p>比如，我目前下载的是Qv2ray.v2.2.3.linux-x64.AppImage。</p>
+<blockquote>
+<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a></p>
+</blockquote>
+<ol start="2">
+<li><p>下载v2ray核心</p>
+<blockquote>
+<p><a href="https://github.com/v2ray/v2ray-core/releases">https://github.com/v2ray/v2ray-core/releases</a></p>
+</blockquote>
+</li>
+<li><p>解压v2ray核心文件</p>
+</li>
+<li><p>执行 Qv2ray 客户端，选择首选项 -&gt; 内核设置，修改下列两个路径</p>
+<ul>
+<li>V2Ray 核心文件可执行<strong>文件</strong>路径：<code>.../v2ray-windows-64/wv2ray.exe</code></li>
+<li>V2Ray 资源<strong>目录</strong>：<code>.../v2ray-windows-64/</code></li>
+</ul>
+</li>
+<li><p>点击检查 V2Ray 核心设置，通过即可.<br><img src="v2ray_settings.png" alt="v2ray settings"></p>
+</li>
+<li><p>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）</p>
+</li>
+<li><p>配置成功 Qv2ray 主界面默认分组内会出现多条线路，并显示链路的个数。</p>
+</li>
+</ol>
+<h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><blockquote>
+<p>可自建 v2ray 目录，也可直接将 v2ray core 放在 ~/.config/qv2ray/vcore/ 中，这是 Qvray 默认路径。</p>
+</blockquote>
+<ol>
+<li>下载QT实现的v2ray界面。在官网链接上找到最新的release下载。<blockquote>
+<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
+</blockquote>
+</li>
+</ol>
+<p>比如，我目前下载的是Qv2ray.v2.6.3.linux-x64.AppImage。</p>
+<ol start="2">
+<li>下载v2ray core核心文件。打开官方网站：<blockquote>
+<p><a href="https://github.com/v2ray/v2ray-core/releases/">https://github.com/v2ray/v2ray-core/releases/</a> 。</p>
+</blockquote>
+</li>
+</ol>
+<p>选择下载文件v2ray-linux-64.zip。</p>
+<ol start="3">
+<li><p>进入 v2ray 下载的目录（我的是<code>~/v2ray</code>），执行下面命令给 Qv2ray 增加权限</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chmod +x ./Qv2ray.v2.6.3.linux-x64.AppImage  # 注意版本号</span><br></pre></td></tr></table></figure></li>
+<li><p>启动 Qv2ray。仍然在v2ray根目录，执行下列终端命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./Qv2ray.v2.6.3.linux-x64.AppImage</span><br></pre></td></tr></table></figure></li>
+<li><p>解压 v2ray core 核心文件。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unzip v2ray-linux-64.zip</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>注意不要用 <code>sudo</code> 解压，用 <code>sudo</code> 解压须给 <code>v2ray-linux-64</code> 加权限，容易造成权限紊乱。</p>
+<ol start="5">
+<li>在 Qv2ray 的首选项(Preference) 页面的内核设置（General Setting）中，设置v2ray核心文件的路径。</li>
+</ol>
+<p>默认的路径是<code>~/.config/qv2ray/vcore/</code>。如果没有新建 v2ray 目录结构，可以将 v2ray-linux-64.zip 解压后的文件都放置到这个目录里面。</p>
+<p>如果自建 v2ray 目录，选择自己的 V2Ray 核心可执行文件路径和 V2Ray 资源目录。</p>
+<p>最后，可以点击Check V2ray Core Setting按钮，验证这两个可执行文件的有效性。<br>   <img src="v2ray_linux_settings.png" alt="v2ray settings"></p>
+<ol start="6">
+<li>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 不可用</span><br><span class="line">https:&#x2F;&#x2F;cloudfront-cdn-hk-iplc1.com&#x2F;sub&#x2F;v&#x2F;wrvDgcKnw6nDncOAwrrCmMOOw5_CiH1-wqPCnMK1w4LCosOcw4B8wq1_w98k&#x3D;&#x2F;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><p>在 Qv2ray 的首选项（Preferences）窗口中，可以设置语言、系统代理、开机启动等。</p>
+</li>
+<li><p>如果想仅仅在 Chrome 浏览器上做网络翻墙功能，就在 Chrome 浏览器上安装 Proxy SwitchyOmega 插件。在插件的配置页面上，设置Proxy Server，采用协议SOCK5，代理服务器是本地127.0.0.1，端口是1088（具体端口号查看 Qv2ray的 首选项（Preferences）。</p>
+</li>
+<li><p>如果不想做全局的系统代理 System Proxy，在Qv2ray的首选项中取消系统代理即可。</p>
+</li>
+<li><p>Git 的代理需要另外配置。</p>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>【Linux配置v2ray详细教程-Ubuntu为例】：<a href="https://www.boluo.in/1776.html">https://www.boluo.in/1776.htm</a>l</li>
+</ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+        <category>proxy</category>
+      </categories>
+      <tags>
+        <tag>代理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>彻底弄懂 Linux 下的文件描述符（fd）</title>
+    <url>/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/</url>
+    <content><![CDATA[<p>Linux 下的文件描述符</p>
+<span id="more"></span>
+
+<h2 id="1-从一个最常见的例子说起"><a href="#1-从一个最常见的例子说起" class="headerlink" title="1. 从一个最常见的例子说起"></a>1. 从一个最常见的例子说起</h2><p>在使用Linux的过程中， 我们平时经常看到下面这样的用法：</p>
+<blockquote>
+<p>echo log &gt; /dev/null 2&gt;&amp;1</p>
+</blockquote>
+<ul>
+<li><blockquote>
+<p>  ：表示将输出结果重定向到哪里，例如：echo “123” &gt; /home/123.txt</p>
+</blockquote>
+</li>
+<li>/dev/null ：表示空设备文件<br>所以 echo log &gt; /dev/null 表示把日志输出到空文件设备，也就是将打印信息丢弃掉，屏幕上什么也不显示。</li>
+<li>1  ：表示stdout标准输出</li>
+<li>2  ：表示stderr标准错误</li>
+<li>&amp;  ：表示等同于的意思</li>
+</ul>
+<p>所以  2&gt;&amp;1 表示2的输出重定向等同于1，也就是标准错误输出重定向到标准输出。因为前面标准输出已经重定向到了空设备文件，所以标准错误输出也重定向到空设备文件。</p>
+<p>这个用法平时很常见，重点是为什么这里是用 2 和 1 ，不是3456什么的呢？这要从 Linux 中的文件描述符说起。</p>
+<h2 id="2-Linux中的文件描述符（file-descriptor）"><a href="#2-Linux中的文件描述符（file-descriptor）" class="headerlink" title="2. Linux中的文件描述符（file descriptor）"></a>2. Linux中的文件描述符（file descriptor）</h2><p>我们知道在Linux系统中一切皆可以看成是文件，文件又可分为：普通文件、目录文件、链接文件和设备文件。在操作这些所谓的文件的时候，我们每操作一次就找一次名字，这会耗费大量的时间和效率。所以Linux中规定每一个文件对应一个索引，这样要操作文件的时候，我们直接找到索引就可以对其进行操作了。</p>
+<p>文件描述符（file descriptor）就是内核为了高效管理这些已经被打开的文件所创建的索引，其是一个非负整数（通常是小整数），用于指代被打开的文件，所有执行I/O操作的系统调用都通过文件描述符来实现。同时还规定系统刚刚启动的时候，0是标准输入，1是标准输出，2是标准错误。这意味着如果此时去打开一个新的文件，它的文件描述符会是3，再打开一个文件文件描述符就是4……</p>
+<p>Linux内核对所有打开的文件有一个文件描述符表格，里面存储了每个文件描述符作为索引与一个打开文件相对应的关系，简单理解就是下图这样一个数组，文件描述符（索引）就是文件描述符表这个数组的下标，数组的内容就是指向一个个打开的文件的指针。</p>
+<p><img src="file_descriptor.png" alt="file descriptor"></p>
+<p><strong>上面只是简单理解，实际上关于文件描述符，Linux内核维护了3个数据结构：</strong></p>
+<ul>
+<li>进程级的文件描述符表</li>
+<li>系统级的打开文件描述符表</li>
+<li>文件系统的i-node表</li>
+</ul>
+<p>一个 Linux 进程启动后，会在内核空间中创建一个 PCB(Process Control Block) 控制块，PCB 内部有一个文件描述符表（File descriptor table），记录着当前进程所有可用的文件描述符，也即当前进程所有打开的文件。进程级的描述符表的每一条记录了单个进程所使用的文件描述符的相关信息，进程之间相互独立，一个进程使用了文件描述符3，另一个进程也可以用3。除了进程级的文件描述符表，系统还需要维护另外两张表：打开文件表、i-node 表。这两张表存储了每个打开文件的打开文件句柄（open file handle）。一个打开文件句柄存储了与一个打开文件相关的全部信息。</p>
+<p><strong>系统级的打开文件描述符表：</strong></p>
+<ul>
+<li>当前文件偏移量（调用read()和write()时更新，或使用lseek()直接修改）</li>
+<li>打开文件时的标识（open()的flags参数）</li>
+<li>文件访问模式（如调用open()时所设置的只读模式、只写模式或读写模式）</li>
+<li>与信号驱动相关的设置</li>
+<li>对该文件i-node对象的引用，即i-node 表指针</li>
+</ul>
+<p><strong>文件系统的i-node表：</strong></p>
+<ul>
+<li><p>文件类型（例如：常规文件、套接字或FIFO）和访问权限</p>
+</li>
+<li><p>一个指针，指向该文件所持有的锁列表</p>
+</li>
+<li><p>文件的各种属性，包括文件大小以及与不同类型操作相关的时间戳</p>
+</li>
+<li><p>文件描述符、打开的文件句柄以及i-node之间的关系如下图：<br><img src="relationship.png" alt="relationship"></p>
+</li>
+<li><p>在进程 A 中，文件描述符 1 和 20 都指向了同一个打开文件表项，标号为 23（指向了打开文件表中下标为 23 的数组元素），这可能是通过调用 dup()、dup2()、fcntl() 或者对同一个文件多次调用了 open() 函数形成的。</p>
+</li>
+<li><p>进程 A 的文件描述符 2 和进程 B 的文件描述符 2 都指向了同一个文件，这可能是在调用 fork() 后出现的（即进程 A、B 是父子进程关系），或者是不同的进程独自去调用 open() 函数打开了同一个文件，此时进程内部的描述符正好分配到与其他进程打开该文件的描述符一样。</p>
+</li>
+<li><p>进程 A 的描述符 0 和进程 B 的描述符 3 分别指向不同的打开文件表项，但这些表项均指向 i-node 表的同一个条目（标号为 1976）；换言之，它们指向了同一个文件。发生这种情况是因为每个进程各自对同一个文件发起了 open() 调用。同一个进程两次打开同一个文件，也会发生类似情况。 </p>
+</li>
+</ul>
+<p><strong>这就说明：同一个进程的不同文件描述符可以指向同一个文件；不同进程可以拥有相同的文件描述符；不同进程的同一个文件描述符可以指向不同的文件（一般也是这样，除了 0、1、2 这三个特殊的文件）；不同进程的不同文件描述符也可以指向同一个文件。</strong></p>
+<h2 id="3-Linux上打开文件举例"><a href="#3-Linux上打开文件举例" class="headerlink" title="3. Linux上打开文件举例"></a>3. Linux上打开文件举例</h2><p>比如在Linux上用 vim test.py 打开一个文件，保持打开状态，再新打开一个新的shell，输入命令pidof vim 获取vim进程的pid号，然后 ll  /proc/$pid/fd 查看vim 进程所使用的文件描述符列表。<br><img src="example_vim.png" alt="example vim"></p>
+<p>/dev/pts是远程登陆(telnet,ssh等)后创建的控制台设备文件所在的目录。因为我是通过Xshell远程登录的，所以标准输入0，标准输出1，标准错误2的文件描述符都指向虚拟终端控制台 /dev/pts/6 。再看下面是新打开的 test.py 的文件描述符，竟然是4，说好的从3开始呢？</p>
+<p>这个我也困扰了好久，查了各种资料，终于在一个大佬的帮助下在一个论坛找到原因，有时候中文查不到还是要试试英文搜索啊。因为vim这种编辑器的原理是先打开源文件并拷贝，然后关闭源文件再打开自己的副本，修改完文件保存的时候直接将副本重命名覆盖源文件。所以打开源文件的时候用的文件描述符3，然后打开自己的副本是时候就该用文件描述符4了，然后关闭源文件，文件描述符3就被释放了，我们查看的时候就只剩下了4，这里它指向的是vim创建的副本文件。这里只是说个大概意思，具体深究要去深入了解一下<a href="https://blog.csdn.net/weixin_43535689/article/details/104750148">vim的实现原理——奥尔特星云大使</a>，下面是当时我看到的论坛上的资料截图，链接在这：<a href="https://stackoverflow.com/questions/48588284/lsof-command-can-not-return-files-being-opened-by-kwrite">StackOverFlow</a>。<br><img src="stackoverflow_vim.png" alt="stackoverflow vim"></p>
+<h2 id="4-C语言中文件描述符的使用"><a href="#4-C语言中文件描述符的使用" class="headerlink" title="4. C语言中文件描述符的使用"></a>4. C语言中文件描述符的使用</h2><p>C语言中可以通过 open 函数返回一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test.c 文件，输入下面代码保存。 编译后执行，发现新打开文件的文件描述符是3。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> fd = open(<span class="string">&quot;test.py&quot;</span>, O_RDONLY);</span><br><span class="line">        <span class="keyword">if</span> (fd == <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;test.py fd = %d \n&quot;</span>, fd);  <span class="comment">// test.py fd = 3</span></span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Python中文件描述符的使用"><a href="#5-Python中文件描述符的使用" class="headerlink" title="5. Python中文件描述符的使用"></a>5. Python中文件描述符的使用</h2><p>Python中通过 sys 模块封装了标准输入、标准输出和错误输出。通过我们平时常用的内建函数 open 可以获取一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test2.py 文件，输入下面代码保存。 执行，发现新打开文件的文件描述符是3。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdin fd = &#x27;</span>, sys.stdin.fileno())  // stdin fd = <span class="number">0</span> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdout fd = &#x27;</span>, sys.stdout.fileno())  // stdout fd = <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stderr fd = &#x27;</span>, sys.stderr.fileno())  // stderr fd = <span class="number">2</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;test.py&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;test.py fd = &#x27;</span>, f.fileno())  // test.py fd = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-Linux配置系统最大打开文件描述符个数"><a href="#6-Linux配置系统最大打开文件描述符个数" class="headerlink" title="6. Linux配置系统最大打开文件描述符个数"></a>6. Linux配置系统最大打开文件描述符个数</h2><h3 id="系统级限制"><a href="#系统级限制" class="headerlink" title="系统级限制"></a>系统级限制</h3><p>理论上系统内存有多少就可以打开多少的文件描述符，但是在实际中内核是会做相应的处理，一般最大打开文件数会是系统内存的10%（以KB来计算），称之为系统级限制。这个数字可以通过 cat /proc/sys/fs/file-max 或者 sysctl -a | grep fs.file-max 命令查看。</p>
+<p>更改系统级限制有临时更改和永久更改两种方式：</p>
+<ul>
+<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 sysctl -w fs.file-max=xxxx，其中xxxx就是要设置的数字。</li>
+<li>永久更改：vim编辑 /etc/sysctl.conf 文件，在后面添加 fs.file-max=xxxx，其中xxxx就是要设置的数字。保存退出后还要使用sysctl -p 命令使其生效。</li>
+</ul>
+<h3 id="用户级限制"><a href="#用户级限制" class="headerlink" title="用户级限制"></a>用户级限制</h3><p>同时为了控制每个进程消耗的文件资源，内核也会对单个进程最大打开文件数做默认限制，即用户级限制。32位系统默认值一般是1024，64位系统默认值一般是65535，可以使用 ulimit -n 命令查看。</p>
+<p>更改用户级限制也有临时更改和永久更改两种方式：</p>
+<ul>
+<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 ulimit -SHn xxxx 命令来修改，其中xxxx就是要设置的数字。</li>
+<li>永久更改：vim编辑 /etc/security/limits.conf 文件，修改其中的 hard nofile xxxx 和 soft nofile xxxx，其中xxxx就是要设置的数字。保存后退出。关于hard和soft的区别，参照下面参考链接中的第5个。</li>
+</ul>
+<h2 id="7-参考链接"><a href="#7-参考链接" class="headerlink" title="7. 参考链接"></a>7. 参考链接</h2><ol>
+<li><a href="https://blog.csdn.net/cywosp/article/details/38965239">每天进步一点点——Linux中的文件描述符与打开文件之间的关系——cywosp</a></li>
+<li><a href="http://c.biancheng.net/view/3066.html">Linux文件描述符到底是什么？——C语言中文网</a></li>
+<li><a href="https://www.jianshu.com/p/0ff9ff1d108e">句柄和文件描述符（FD）——阳光丶不锈</a></li>
+<li><a href="https://juejin.cn/post/6844903962043236365#heading-0">带你破案：文件描述符到底是什么？——vran</a></li>
+<li><a href="http://www.ideabuffer.cn/2016/11/20/Linux%E9%85%8D%E7%BD%AE%E8%B0%83%E4%BC%98%EF%BC%9A%E6%9C%80%E5%A4%A7%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E4%B8%AA%E6%95%B0/">Linux配置调优：最大打开文件描述符个数——Idea Buffer</a></li>
+<li><a href="%E4%BF%AE%E6%94%B9Linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84%E6%9C%80%E5%A4%A7%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E9%99%90%E5%88%B6">修改Linux系统下的最大文件描述符限制——BlueguyChui</a></li>
+</ol>
+<p>————————————————<br>版权声明：本文为CSDN博主「杰克小麻雀」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/yushuaigee/article/details/107883964">https://blog.csdn.net/yushuaigee/article/details/107883964</a></p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何使用 Github + Hexo 搭建博客</title>
     <url>/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<blockquote>
@@ -378,7 +572,7 @@
 <p>Title 随便取个名字，粘贴复制的 id_rsa.pub 内容到 Key 中，点击 Add SSH key 完成添加。</p>
 <p><strong>验证连接</strong>：</p>
 <blockquote>
-<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#103;&#105;&#x74;&#64;&#103;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#105;&#x74;&#64;&#103;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
+<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
 </blockquote>
 <blockquote>
 <p>显示 “Hi xxx! You’ve successfully……” 即连接成功。</p>
@@ -479,103 +673,6 @@
       <tags>
         <tag>Hexo 博客</tag>
         <tag>搭建环境</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>彻底弄懂 Linux 下的文件描述符（fd）</title>
-    <url>/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/</url>
-    <content><![CDATA[<p>Linux 下的文件描述符</p>
-<span id="more"></span>
-
-<h2 id="1-从一个最常见的例子说起"><a href="#1-从一个最常见的例子说起" class="headerlink" title="1. 从一个最常见的例子说起"></a>1. 从一个最常见的例子说起</h2><p>在使用Linux的过程中， 我们平时经常看到下面这样的用法：</p>
-<blockquote>
-<p>echo log &gt; /dev/null 2&gt;&amp;1</p>
-</blockquote>
-<ul>
-<li><blockquote>
-<p>  ：表示将输出结果重定向到哪里，例如：echo “123” &gt; /home/123.txt</p>
-</blockquote>
-</li>
-<li>/dev/null ：表示空设备文件<br>所以 echo log &gt; /dev/null 表示把日志输出到空文件设备，也就是将打印信息丢弃掉，屏幕上什么也不显示。</li>
-<li>1  ：表示stdout标准输出</li>
-<li>2  ：表示stderr标准错误</li>
-<li>&amp;  ：表示等同于的意思</li>
-</ul>
-<p>所以  2&gt;&amp;1 表示2的输出重定向等同于1，也就是标准错误输出重定向到标准输出。因为前面标准输出已经重定向到了空设备文件，所以标准错误输出也重定向到空设备文件。</p>
-<p>这个用法平时很常见，重点是为什么这里是用 2 和 1 ，不是3456什么的呢？这要从 Linux 中的文件描述符说起。</p>
-<h2 id="2-Linux中的文件描述符（file-descriptor）"><a href="#2-Linux中的文件描述符（file-descriptor）" class="headerlink" title="2. Linux中的文件描述符（file descriptor）"></a>2. Linux中的文件描述符（file descriptor）</h2><p>我们知道在Linux系统中一切皆可以看成是文件，文件又可分为：普通文件、目录文件、链接文件和设备文件。在操作这些所谓的文件的时候，我们每操作一次就找一次名字，这会耗费大量的时间和效率。所以Linux中规定每一个文件对应一个索引，这样要操作文件的时候，我们直接找到索引就可以对其进行操作了。</p>
-<p>文件描述符（file descriptor）就是内核为了高效管理这些已经被打开的文件所创建的索引，其是一个非负整数（通常是小整数），用于指代被打开的文件，所有执行I/O操作的系统调用都通过文件描述符来实现。同时还规定系统刚刚启动的时候，0是标准输入，1是标准输出，2是标准错误。这意味着如果此时去打开一个新的文件，它的文件描述符会是3，再打开一个文件文件描述符就是4……</p>
-<p>Linux内核对所有打开的文件有一个文件描述符表格，里面存储了每个文件描述符作为索引与一个打开文件相对应的关系，简单理解就是下图这样一个数组，文件描述符（索引）就是文件描述符表这个数组的下标，数组的内容就是指向一个个打开的文件的指针。</p>
-<p><img src="file_descriptor.png" alt="file descriptor"></p>
-<p><strong>上面只是简单理解，实际上关于文件描述符，Linux内核维护了3个数据结构：</strong></p>
-<ul>
-<li>进程级的文件描述符表</li>
-<li>系统级的打开文件描述符表</li>
-<li>文件系统的i-node表</li>
-</ul>
-<p>一个 Linux 进程启动后，会在内核空间中创建一个 PCB(Process Control Block) 控制块，PCB 内部有一个文件描述符表（File descriptor table），记录着当前进程所有可用的文件描述符，也即当前进程所有打开的文件。进程级的描述符表的每一条记录了单个进程所使用的文件描述符的相关信息，进程之间相互独立，一个进程使用了文件描述符3，另一个进程也可以用3。除了进程级的文件描述符表，系统还需要维护另外两张表：打开文件表、i-node 表。这两张表存储了每个打开文件的打开文件句柄（open file handle）。一个打开文件句柄存储了与一个打开文件相关的全部信息。</p>
-<p><strong>系统级的打开文件描述符表：</strong></p>
-<ul>
-<li>当前文件偏移量（调用read()和write()时更新，或使用lseek()直接修改）</li>
-<li>打开文件时的标识（open()的flags参数）</li>
-<li>文件访问模式（如调用open()时所设置的只读模式、只写模式或读写模式）</li>
-<li>与信号驱动相关的设置</li>
-<li>对该文件i-node对象的引用，即i-node 表指针</li>
-</ul>
-<p><strong>文件系统的i-node表：</strong></p>
-<ul>
-<li><p>文件类型（例如：常规文件、套接字或FIFO）和访问权限</p>
-</li>
-<li><p>一个指针，指向该文件所持有的锁列表</p>
-</li>
-<li><p>文件的各种属性，包括文件大小以及与不同类型操作相关的时间戳</p>
-</li>
-<li><p>文件描述符、打开的文件句柄以及i-node之间的关系如下图：<br><img src="relationship.png" alt="relationship"></p>
-</li>
-<li><p>在进程 A 中，文件描述符 1 和 20 都指向了同一个打开文件表项，标号为 23（指向了打开文件表中下标为 23 的数组元素），这可能是通过调用 dup()、dup2()、fcntl() 或者对同一个文件多次调用了 open() 函数形成的。</p>
-</li>
-<li><p>进程 A 的文件描述符 2 和进程 B 的文件描述符 2 都指向了同一个文件，这可能是在调用 fork() 后出现的（即进程 A、B 是父子进程关系），或者是不同的进程独自去调用 open() 函数打开了同一个文件，此时进程内部的描述符正好分配到与其他进程打开该文件的描述符一样。</p>
-</li>
-<li><p>进程 A 的描述符 0 和进程 B 的描述符 3 分别指向不同的打开文件表项，但这些表项均指向 i-node 表的同一个条目（标号为 1976）；换言之，它们指向了同一个文件。发生这种情况是因为每个进程各自对同一个文件发起了 open() 调用。同一个进程两次打开同一个文件，也会发生类似情况。 </p>
-</li>
-</ul>
-<p><strong>这就说明：同一个进程的不同文件描述符可以指向同一个文件；不同进程可以拥有相同的文件描述符；不同进程的同一个文件描述符可以指向不同的文件（一般也是这样，除了 0、1、2 这三个特殊的文件）；不同进程的不同文件描述符也可以指向同一个文件。</strong></p>
-<h2 id="3-Linux上打开文件举例"><a href="#3-Linux上打开文件举例" class="headerlink" title="3. Linux上打开文件举例"></a>3. Linux上打开文件举例</h2><p>比如在Linux上用 vim test.py 打开一个文件，保持打开状态，再新打开一个新的shell，输入命令pidof vim 获取vim进程的pid号，然后 ll  /proc/$pid/fd 查看vim 进程所使用的文件描述符列表。<br><img src="example_vim.png" alt="example vim"></p>
-<p>/dev/pts是远程登陆(telnet,ssh等)后创建的控制台设备文件所在的目录。因为我是通过Xshell远程登录的，所以标准输入0，标准输出1，标准错误2的文件描述符都指向虚拟终端控制台 /dev/pts/6 。再看下面是新打开的 test.py 的文件描述符，竟然是4，说好的从3开始呢？</p>
-<p>这个我也困扰了好久，查了各种资料，终于在一个大佬的帮助下在一个论坛找到原因，有时候中文查不到还是要试试英文搜索啊。因为vim这种编辑器的原理是先打开源文件并拷贝，然后关闭源文件再打开自己的副本，修改完文件保存的时候直接将副本重命名覆盖源文件。所以打开源文件的时候用的文件描述符3，然后打开自己的副本是时候就该用文件描述符4了，然后关闭源文件，文件描述符3就被释放了，我们查看的时候就只剩下了4，这里它指向的是vim创建的副本文件。这里只是说个大概意思，具体深究要去深入了解一下<a href="https://blog.csdn.net/weixin_43535689/article/details/104750148">vim的实现原理——奥尔特星云大使</a>，下面是当时我看到的论坛上的资料截图，链接在这：<a href="https://stackoverflow.com/questions/48588284/lsof-command-can-not-return-files-being-opened-by-kwrite">StackOverFlow</a>。<br><img src="stackoverflow_vim.png" alt="stackoverflow vim"></p>
-<h2 id="4-C语言中文件描述符的使用"><a href="#4-C语言中文件描述符的使用" class="headerlink" title="4. C语言中文件描述符的使用"></a>4. C语言中文件描述符的使用</h2><p>C语言中可以通过 open 函数返回一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test.c 文件，输入下面代码保存。 编译后执行，发现新打开文件的文件描述符是3。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> fd = open(<span class="string">&quot;test.py&quot;</span>, O_RDONLY);</span><br><span class="line">        <span class="keyword">if</span> (fd == <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;test.py fd = %d \n&quot;</span>, fd);  <span class="comment">// test.py fd = 3</span></span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-Python中文件描述符的使用"><a href="#5-Python中文件描述符的使用" class="headerlink" title="5. Python中文件描述符的使用"></a>5. Python中文件描述符的使用</h2><p>Python中通过 sys 模块封装了标准输入、标准输出和错误输出。通过我们平时常用的内建函数 open 可以获取一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test2.py 文件，输入下面代码保存。 执行，发现新打开文件的文件描述符是3。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdin fd = &#x27;</span>, sys.stdin.fileno())  // stdin fd = <span class="number">0</span> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdout fd = &#x27;</span>, sys.stdout.fileno())  // stdout fd = <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stderr fd = &#x27;</span>, sys.stderr.fileno())  // stderr fd = <span class="number">2</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;test.py&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;test.py fd = &#x27;</span>, f.fileno())  // test.py fd = <span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="6-Linux配置系统最大打开文件描述符个数"><a href="#6-Linux配置系统最大打开文件描述符个数" class="headerlink" title="6. Linux配置系统最大打开文件描述符个数"></a>6. Linux配置系统最大打开文件描述符个数</h2><h3 id="系统级限制"><a href="#系统级限制" class="headerlink" title="系统级限制"></a>系统级限制</h3><p>理论上系统内存有多少就可以打开多少的文件描述符，但是在实际中内核是会做相应的处理，一般最大打开文件数会是系统内存的10%（以KB来计算），称之为系统级限制。这个数字可以通过 cat /proc/sys/fs/file-max 或者 sysctl -a | grep fs.file-max 命令查看。</p>
-<p>更改系统级限制有临时更改和永久更改两种方式：</p>
-<ul>
-<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 sysctl -w fs.file-max=xxxx，其中xxxx就是要设置的数字。</li>
-<li>永久更改：vim编辑 /etc/sysctl.conf 文件，在后面添加 fs.file-max=xxxx，其中xxxx就是要设置的数字。保存退出后还要使用sysctl -p 命令使其生效。</li>
-</ul>
-<h3 id="用户级限制"><a href="#用户级限制" class="headerlink" title="用户级限制"></a>用户级限制</h3><p>同时为了控制每个进程消耗的文件资源，内核也会对单个进程最大打开文件数做默认限制，即用户级限制。32位系统默认值一般是1024，64位系统默认值一般是65535，可以使用 ulimit -n 命令查看。</p>
-<p>更改用户级限制也有临时更改和永久更改两种方式：</p>
-<ul>
-<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 ulimit -SHn xxxx 命令来修改，其中xxxx就是要设置的数字。</li>
-<li>永久更改：vim编辑 /etc/security/limits.conf 文件，修改其中的 hard nofile xxxx 和 soft nofile xxxx，其中xxxx就是要设置的数字。保存后退出。关于hard和soft的区别，参照下面参考链接中的第5个。</li>
-</ul>
-<h2 id="7-参考链接"><a href="#7-参考链接" class="headerlink" title="7. 参考链接"></a>7. 参考链接</h2><ol>
-<li><a href="https://blog.csdn.net/cywosp/article/details/38965239">每天进步一点点——Linux中的文件描述符与打开文件之间的关系——cywosp</a></li>
-<li><a href="http://c.biancheng.net/view/3066.html">Linux文件描述符到底是什么？——C语言中文网</a></li>
-<li><a href="https://www.jianshu.com/p/0ff9ff1d108e">句柄和文件描述符（FD）——阳光丶不锈</a></li>
-<li><a href="https://juejin.cn/post/6844903962043236365#heading-0">带你破案：文件描述符到底是什么？——vran</a></li>
-<li><a href="http://www.ideabuffer.cn/2016/11/20/Linux%E9%85%8D%E7%BD%AE%E8%B0%83%E4%BC%98%EF%BC%9A%E6%9C%80%E5%A4%A7%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E4%B8%AA%E6%95%B0/">Linux配置调优：最大打开文件描述符个数——Idea Buffer</a></li>
-<li><a href="%E4%BF%AE%E6%94%B9Linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84%E6%9C%80%E5%A4%A7%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E9%99%90%E5%88%B6">修改Linux系统下的最大文件描述符限制——BlueguyChui</a></li>
-</ol>
-<p>————————————————<br>版权声明：本文为CSDN博主「杰克小麻雀」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/yushuaigee/article/details/107883964">https://blog.csdn.net/yushuaigee/article/details/107883964</a></p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -748,103 +845,6 @@
       <tags>
         <tag>网络安全</tag>
         <tag>Web 安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何配置 v2ray 详细教程</title>
-    <url>/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<p>V2ray 是继 Shadowsocks(R) 后又一个体验很棒、功能非常强大的科学上网工具，近年来受到网友的广泛关注和喜爱。本教程详细介绍V2ray的安装和配置过程，让读者能迅速上手和使用V2ray。</p>
-<span id="more"></span>
-
-<h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><blockquote>
-<p>先创建安装 v2ray 的目录</p>
-</blockquote>
-<ol>
-<li>下载 QT 实现的 v2ray 界面。在官网链接上找到最新的 release 下载。<blockquote>
-<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
-</blockquote>
-</li>
-</ol>
-<p>比如，我目前下载的是Qv2ray.v2.2.3.linux-x64.AppImage。</p>
-<blockquote>
-<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a></p>
-</blockquote>
-<ol start="2">
-<li><p>下载v2ray核心</p>
-<blockquote>
-<p><a href="https://github.com/v2ray/v2ray-core/releases">https://github.com/v2ray/v2ray-core/releases</a></p>
-</blockquote>
-</li>
-<li><p>解压v2ray核心文件</p>
-</li>
-<li><p>执行 Qv2ray 客户端，选择首选项 -&gt; 内核设置，修改下列两个路径</p>
-<ul>
-<li>V2Ray 核心文件可执行<strong>文件</strong>路径：<code>.../v2ray-windows-64/wv2ray.exe</code></li>
-<li>V2Ray 资源<strong>目录</strong>：<code>.../v2ray-windows-64/</code></li>
-</ul>
-</li>
-<li><p>点击检查 V2Ray 核心设置，通过即可.<br><img src="v2ray_settings.png" alt="v2ray settings"></p>
-</li>
-<li><p>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）</p>
-</li>
-<li><p>配置成功 Qv2ray 主界面默认分组内会出现多条线路，并显示链路的个数。</p>
-</li>
-</ol>
-<h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><blockquote>
-<p>可自建 v2ray 目录，也可直接将 v2ray core 放在 ~/.config/qv2ray/vcore/ 中，这是 Qvray 默认路径。</p>
-</blockquote>
-<ol>
-<li>下载QT实现的v2ray界面。在官网链接上找到最新的release下载。<blockquote>
-<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
-</blockquote>
-</li>
-</ol>
-<p>比如，我目前下载的是Qv2ray.v2.6.3.linux-x64.AppImage。</p>
-<ol start="2">
-<li>下载v2ray core核心文件。打开官方网站：<blockquote>
-<p><a href="https://github.com/v2ray/v2ray-core/releases/">https://github.com/v2ray/v2ray-core/releases/</a> 。</p>
-</blockquote>
-</li>
-</ol>
-<p>选择下载文件v2ray-linux-64.zip。</p>
-<ol start="3">
-<li><p>进入 v2ray 下载的目录（我的是<code>~/v2ray</code>），执行下面命令给 Qv2ray 增加权限</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chmod +x ./Qv2ray.v2.6.3.linux-x64.AppImage  # 注意版本号</span><br></pre></td></tr></table></figure></li>
-<li><p>启动 Qv2ray。仍然在v2ray根目录，执行下列终端命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./Qv2ray.v2.6.3.linux-x64.AppImage</span><br></pre></td></tr></table></figure></li>
-<li><p>解压 v2ray core 核心文件。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unzip v2ray-linux-64.zip</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>注意不要用 <code>sudo</code> 解压，用 <code>sudo</code> 解压须给 <code>v2ray-linux-64</code> 加权限，容易造成权限紊乱。</p>
-<ol start="5">
-<li>在 Qv2ray 的首选项(Preference) 页面的内核设置（General Setting）中，设置v2ray核心文件的路径。</li>
-</ol>
-<p>默认的路径是<code>~/.config/qv2ray/vcore/</code>。如果没有新建 v2ray 目录结构，可以将 v2ray-linux-64.zip 解压后的文件都放置到这个目录里面。</p>
-<p>如果自建 v2ray 目录，选择自己的 V2Ray 核心可执行文件路径和 V2Ray 资源目录。</p>
-<p>最后，可以点击Check V2ray Core Setting按钮，验证这两个可执行文件的有效性。<br>   <img src="v2ray_linux_settings.png" alt="v2ray settings"></p>
-<ol start="6">
-<li>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 不可用</span><br><span class="line">https:&#x2F;&#x2F;cloudfront-cdn-hk-iplc1.com&#x2F;sub&#x2F;v&#x2F;wrvDgcKnw6nDncOAwrrCmMOOw5_CiH1-wqPCnMK1w4LCosOcw4B8wq1_w98k&#x3D;&#x2F;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li><p>在 Qv2ray 的首选项（Preferences）窗口中，可以设置语言、系统代理、开机启动等。</p>
-</li>
-<li><p>如果想仅仅在 Chrome 浏览器上做网络翻墙功能，就在 Chrome 浏览器上安装 Proxy SwitchyOmega 插件。在插件的配置页面上，设置Proxy Server，采用协议SOCK5，代理服务器是本地127.0.0.1，端口是1088（具体端口号查看 Qv2ray的 首选项（Preferences）。</p>
-</li>
-<li><p>如果不想做全局的系统代理 System Proxy，在Qv2ray的首选项中取消系统代理即可。</p>
-</li>
-<li><p>Git 的代理需要另外配置。</p>
-</li>
-</ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li>【Linux配置v2ray详细教程-Ubuntu为例】：<a href="https://www.boluo.in/1776.html">https://www.boluo.in/1776.htm</a>l</li>
-</ul>
-]]></content>
-      <categories>
-        <category>工具</category>
-        <category>proxy</category>
-      </categories>
-      <tags>
-        <tag>代理</tag>
       </tags>
   </entry>
   <entry>
@@ -1334,7 +1334,7 @@
 <p>将该url使用sqlmap进行注入测试，，测试结果可能存在SQL注入，也可能不存在SQL注入，存在则可以进行数据库名称，数据库表以及数据的操作。</p>
 <p><strong>4. 批量检测</strong><br>将目标url搜集并整理为txt文件，如图4所示，所有文件都保存为tg.txt，然后使用“sqlmap.py-m tg.txt”，注意tg.txt跟sqlmap在同一个目录下。<br><img src="%E6%89%B9%E9%87%8F%E6%95%B4%E7%90%86%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80.jpg" alt="批量整理目标地址"></p>
 <h3 id="1-4-2-直接连接数据库"><a href="#1-4-2-直接连接数据库" class="headerlink" title="1.4.2 直接连接数据库"></a>1.4.2 直接连接数据库</h3><blockquote>
-<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#x61;&#100;&#x6d;&#x69;&#110;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#x32;&#x31;&#46;&#49;&#55;">&#x61;&#100;&#x6d;&#x69;&#110;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#x32;&#x31;&#46;&#49;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
+<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#x61;&#x64;&#109;&#105;&#x6e;&#x40;&#x31;&#x39;&#50;&#x2e;&#49;&#x36;&#56;&#46;&#50;&#49;&#46;&#x31;&#55;">&#x61;&#x64;&#109;&#105;&#x6e;&#x40;&#x31;&#x39;&#50;&#x2e;&#49;&#x36;&#56;&#46;&#50;&#49;&#46;&#x31;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
 </blockquote>
 <h3 id="1-4-3数据库相关操作"><a href="#1-4-3数据库相关操作" class="headerlink" title="1.4.3数据库相关操作"></a>1.4.3数据库相关操作</h3><ul>
 <li>列数据库信息：–dbs</li>

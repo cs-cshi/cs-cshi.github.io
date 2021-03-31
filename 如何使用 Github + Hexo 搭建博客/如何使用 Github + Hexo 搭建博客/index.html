@@ -17,14 +17,14 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="搭建初衷：个人喜欢在本地用 markdown 来记录。之前使用过博客园、印象笔记等，发现都有不便之处。博客园上在发文时，还需要来调整格式，且不能将本地的 md 文件直接上传，会增加很多工作；而在印象笔记上，不开会员会有诸多的限制，其中限制终端登录数量，以及不同终端不能编辑等问题无法接受。于是产生了一种需求:我只要将自己编写的 md 上传，就能形成良好的博客效果，格式固定,且便于维护和浏览,。在">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何使用 Github + Hexo 搭建博客">
 <meta property="og:url" content="https://cs-cshi.github.io/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/index.html">
-<meta property="og:site_name" content="Charles&#39;s Blog">
+<meta property="og:site_name" content="Chang">
 <meta property="og:description" content="搭建初衷：个人喜欢在本地用 markdown 来记录。之前使用过博客园、印象笔记等，发现都有不便之处。博客园上在发文时，还需要来调整格式，且不能将本地的 md 文件直接上传，会增加很多工作；而在印象笔记上，不开会员会有诸多的限制，其中限制终端登录数量，以及不同终端不能编辑等问题无法接受。于是产生了一种需求:我只要将自己编写的 md 上传，就能形成良好的博客效果，格式固定,且便于维护和浏览,。在">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cs-cshi.github.io/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/version.png">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>如何使用 Github + Hexo 搭建博客 | Charles's Blog</title>
+  <title>如何使用 Github + Hexo 搭建博客 | Chang</title>
   
 
 
@@ -100,7 +100,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Charles's Blog</h1>
+      <h1 class="site-title">Chang</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -119,31 +119,31 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页 | home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于 | about</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签 | tags<span class="badge">11</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类 | categories<span class="badge">16</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">17</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">17</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索 | search
         </a>
       </li>
   </ul>
@@ -179,6 +179,10 @@
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main class="main">
@@ -202,7 +206,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Charles's Blog">
+      <meta itemprop="name" content="Chang">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -313,7 +317,7 @@
 <p>Title 随便取个名字，粘贴复制的 id_rsa.pub 内容到 Key 中，点击 Add SSH key 完成添加。</p>
 <p><strong>验证连接</strong>：</p>
 <blockquote>
-<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#103;&#105;&#x74;&#64;&#103;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#105;&#x74;&#64;&#103;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
+<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
 </blockquote>
 <blockquote>
 <p>显示 “Hi xxx! You’ve successfully……” 即连接成功。</p>
@@ -483,8 +487,8 @@
       <i class="fa fa-chevron-left"></i> 读书笔记——《具体生活》
     </a></div>
       <div class="post-nav-item">
-    <a href="/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/" rel="next" title="Hexo 博客 NexT 主题下如何添加分类、标签">
-      Hexo 博客 NexT 主题下如何添加分类、标签 <i class="fa fa-chevron-right"></i>
+    <a href="/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/" rel="next" title="【TCP/IP详解 卷1:协议】 第一章">
+      【TCP/IP详解 卷1:协议】 第一章 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -536,10 +540,10 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          文章目录
+          文章目录 | toc
         </li>
         <li class="sidebar-nav-overview">
-          站点概览
+          站点概览 | overview
         </li>
       </ul>
 
@@ -614,10 +618,6 @@
     </ul>
   </div>
       </div>
-        <div class="back-to-top motion-element">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
-        </div>
 
     </div>
   </aside>
@@ -711,6 +711,16 @@
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/',]
+      });
+      });
+  </script>
 
 
 <script>
