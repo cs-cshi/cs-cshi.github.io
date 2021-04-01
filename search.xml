@@ -240,6 +240,34 @@
       </tags>
   </entry>
   <entry>
+    <title>解决 AMD 在 ubuntu 上无法外接显示器问题</title>
+    <url>/%E8%A7%A3%E5%86%B3%20ubuntu%20%E6%97%A0%E6%B3%95%E5%A4%96%E7%95%8C%E6%98%BE%E7%A4%BA%E5%99%A8%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>实际上 ubuntu 的内核（5.4及以下）还不支持 AMD 4000 系列的集显，所以无法驱动。</p>
+<p>解决办法是更新 ubuntu 内核版本</p>
+<span id="more"></span>
+
+<p>更新前最好用 timeshift 备份系统</p>
+<p>matebook14 2020 锐龙版 4600H CPU 实测 v5.7 内核能支持。</p>
+<p>v5.7：<a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/"></a><a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/">https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/</a></p>
+<p>升级方法：</p>
+<ol>
+<li>下载内核包(共四个)<br>第一个：linux-headers_***all.deb<br>其余三个：分三类（headers、module、image）全选择 generic 或者 lowlatency 下载。</li>
+<li><code>sudo dpkg -i </code>依次安装<br>我的安装顺序：all -&gt; headers -&gt; module -&gt; image。</li>
+<li>重启电脑，输入命令<code>uname -a</code> 查看是否升级成功 </li>
+</ol>
+<p><strong>参考</strong></p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/149564937">联想小新Pro13 2020锐龙版R7 4800U安装ubuntu-20.04</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 博客 NexT 主题下如何添加分类、标签</title>
     <url>/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo-NexT%20%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/</url>
     <content><![CDATA[<p>Hexo Next 主题默认带有不少菜单，如关于（about）、分类（categories）、标签（tags）等，默认处于注释状态，将需要取消的菜单注释掉，然后生成相应的 page 即可。</p>
@@ -307,10 +335,9 @@
   <entry>
     <title>Hexo-NexT 设置圆角</title>
     <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92/</url>
-    <content><![CDATA[<span id="more"></span>
-
-<ol>
+    <content><![CDATA[<ol>
 <li><p>在 blog_root/source/_data/variables.styl 中增加下列代码：</p>
+<span id="more"></span>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">// 圆角设置</span><br><span class="line">$border-radius-inner     = 20px;</span><br><span class="line">$border-radius           = 20px;</span><br></pre></td></tr></table></figure></li>
 <li><p>然后在 NexT 的配置文件 _config.yml 中取消 variables.styl 的注释：</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br></pre></td></tr></table></figure></li>
@@ -387,34 +414,6 @@
       </tags>
   </entry>
   <entry>
-    <title>解决 AMD 在 ubuntu 上无法外接显示器问题</title>
-    <url>/%E8%A7%A3%E5%86%B3%20ubuntu%20%E6%97%A0%E6%B3%95%E5%A4%96%E7%95%8C%E6%98%BE%E7%A4%BA%E5%99%A8%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>实际上 ubuntu 的内核（5.4及以下）还不支持 AMD 4000 系列的集显，所以无法驱动。</p>
-<p>解决办法是更新 ubuntu 内核版本</p>
-<span id="more"></span>
-
-<p>更新前最好用 timeshift 备份系统</p>
-<p>matebook14 2020 锐龙版 4600H CPU 实测 v5.7 内核能支持。</p>
-<p>v5.7：<a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/"></a><a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/">https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/</a></p>
-<p>升级方法：</p>
-<ol>
-<li>下载内核包(共四个)<br>第一个：linux-headers_***all.deb<br>其余三个：分三类（headers、module、image）全选择 generic 或者 lowlatency 下载。</li>
-<li><code>sudo dpkg -i </code>依次安装<br>我的安装顺序：all -&gt; headers -&gt; module -&gt; image。</li>
-<li>重启电脑，输入命令<code>uname -a</code> 查看是否升级成功 </li>
-</ol>
-<p><strong>参考</strong></p>
-<ul>
-<li><a href="https://zhuanlan.zhihu.com/p/149564937">联想小新Pro13 2020锐龙版R7 4800U安装ubuntu-20.04</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>博客运维记录</title>
     <url>/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/</url>
     <content><![CDATA[<p>记录使用博客时遇到的问题，以及对博客的优化。</p>
@@ -485,7 +484,7 @@
 <p>Title 随便取个名字，粘贴复制的 id_rsa.pub 内容到 Key 中，点击 Add SSH key 完成添加。</p>
 <p><strong>验证连接</strong>：</p>
 <blockquote>
-<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#x75;&#x62;&#x2e;&#99;&#111;&#109;">&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#x75;&#x62;&#x2e;&#99;&#111;&#109;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
+<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#x67;&#105;&#116;&#x40;&#x67;&#105;&#x74;&#104;&#x75;&#98;&#46;&#99;&#x6f;&#109;">&#x67;&#105;&#116;&#x40;&#x67;&#105;&#x74;&#104;&#x75;&#98;&#46;&#99;&#x6f;&#109;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
 </blockquote>
 <blockquote>
 <p>显示 “Hi xxx! You’ve successfully……” 即连接成功。</p>
@@ -783,33 +782,6 @@
       </tags>
   </entry>
   <entry>
-    <title>读书笔记——《具体生活》</title>
-    <url>/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/</url>
-    <content><![CDATA[<p>  焦虑是现代人的常态。时间不够用，钱不够花，职业发展不够快，对当下和未来不够了解…我们不断加快生活的节奏，但快节奏之后是否带来了好处，我们并不清楚，只是觉得“快”比“慢”要好。</p>
-<p>  很多时候，我们做不好事情，是我们太匆忙、太着急，其实只要慢三拍，我们的事情会比以前做得好很多。有时候，慢比快好。</p>
-<p>  当忙碌成为生活的主旋律时，我们是否可以思考一下：生活的目的是什么？从容做事，优雅生活，这是我们生活的目的。很多人羡慕所谓的贵族生活，其实过去贵族的物质生活并不比今天的中产阶级好多少，但是他们整体的生活质量远非今天一般意义上的富有家庭所能比的。究其原因，是因为今天的人缺少了那份应有的从容和优雅。</p>
-<p>  当我们做事情的时候能够慢一点，少走点弯路，多花点实践享受浪漫而美好的人生，畅游人类知识和艺术的海洋，我们会发现自己是在真正地生活，而不是只是为了工作而活着。</p>
-<span id="more"></span>
-
-<h2 id="1-旅行的意义"><a href="#1-旅行的意义" class="headerlink" title="1. 旅行的意义"></a>1. 旅行的意义</h2><h2 id="2-博物馆之美"><a href="#2-博物馆之美" class="headerlink" title="2. 博物馆之美"></a>2. 博物馆之美</h2><h2 id="3-读书以以怡情长智"><a href="#3-读书以以怡情长智" class="headerlink" title="3. 读书以以怡情长智"></a>3. 读书以以怡情长智</h2><p>  古人把读万卷书和行万里路看作精英阶层成长不可或缺的两个环节，它们既能使人获得知识，也能令人愉悦自我。</p>
-<h3 id="3-1-阅读的意义"><a href="#3-1-阅读的意义" class="headerlink" title="3.1 阅读的意义"></a>3.1 阅读的意义</h3><ol>
-<li>阅读是放下可以让我们审视人生的不多的方式之一。<br>苏格拉底曾经说过，未经审视的人生不值得度过。而绅士人生需要有闲暇。读书必须有比较长的一段时间，不做其他事情，专心致志地阅读。</li>
-<li>阅读是一种交友方式，借书可以令两人的关系有所增进。<br>借书，说明至少两个人有共同的语言，在此基础上，谈合作也好，谈利益也罢，才搭得上话。对于男女之间交往来说，借一次书，还一次，至少就接触了两次，并且这也能创造一个良好的交谈话题。</li>
-<li>阅读不仅仅是为了让我们在冷酷无情的科技时代获得喘息，让我们重启大脑深入思考的功能，也是抵抗狭隘、思想控制和舆论支配的方式。<blockquote>
-<p>常常在焦虑的时候，或者感到特别难的时候，会去看看曾经觉得深有启发的书，让自己慢慢静下来，焦虑慢慢会平息，困难也会渐渐淡化，恢复状态，继续前行。现在发现，将书中的内容，与自己思想相结合，写出来的时候，特别的舒畅。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="4-音乐的故事"><a href="#4-音乐的故事" class="headerlink" title="4. 音乐的故事"></a>4. 音乐的故事</h2><h2 id="5-徕卡摄影的魅力"><a href="#5-徕卡摄影的魅力" class="headerlink" title="5. 徕卡摄影的魅力"></a>5. 徕卡摄影的魅力</h2><h2 id="6-香醇美酒"><a href="#6-香醇美酒" class="headerlink" title="6. 香醇美酒"></a>6. 香醇美酒</h2><h2 id="7-奢侈品的光泽"><a href="#7-奢侈品的光泽" class="headerlink" title="7. 奢侈品的光泽"></a>7. 奢侈品的光泽</h2>]]></content>
-      <categories>
-        <category>怡情长智</category>
-        <category>阅读</category>
-      </categories>
-      <tags>
-        <tag>读书/生活</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>第1章 web入门</title>
     <url>/%E7%AC%AC1%E7%AB%A0%20web%E5%85%A5%E9%97%A8/%E7%AC%AC1%E7%AB%A0%20web%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<p>按照 CTF 线上赛中各种 Web 漏洞出现的频率、漏洞的复杂程序，将 Web 漏洞分为入门、进阶、拓展三个层次。本章从入门层次开始，介绍 Web 类题目中最常见的 3 类漏洞，即信息搜索、SQL 注入、任意文件读取漏洞。</p>
@@ -952,6 +924,33 @@
       <tags>
         <tag>网络安全</tag>
         <tag>Web 安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>读书笔记——《具体生活》</title>
+    <url>/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/</url>
+    <content><![CDATA[<p>  焦虑是现代人的常态。时间不够用，钱不够花，职业发展不够快，对当下和未来不够了解…我们不断加快生活的节奏，但快节奏之后是否带来了好处，我们并不清楚，只是觉得“快”比“慢”要好。</p>
+<p>  很多时候，我们做不好事情，是我们太匆忙、太着急，其实只要慢三拍，我们的事情会比以前做得好很多。有时候，慢比快好。</p>
+<p>  当忙碌成为生活的主旋律时，我们是否可以思考一下：生活的目的是什么？从容做事，优雅生活，这是我们生活的目的。很多人羡慕所谓的贵族生活，其实过去贵族的物质生活并不比今天的中产阶级好多少，但是他们整体的生活质量远非今天一般意义上的富有家庭所能比的。究其原因，是因为今天的人缺少了那份应有的从容和优雅。</p>
+<p>  当我们做事情的时候能够慢一点，少走点弯路，多花点实践享受浪漫而美好的人生，畅游人类知识和艺术的海洋，我们会发现自己是在真正地生活，而不是只是为了工作而活着。</p>
+<span id="more"></span>
+
+<h2 id="1-旅行的意义"><a href="#1-旅行的意义" class="headerlink" title="1. 旅行的意义"></a>1. 旅行的意义</h2><h2 id="2-博物馆之美"><a href="#2-博物馆之美" class="headerlink" title="2. 博物馆之美"></a>2. 博物馆之美</h2><h2 id="3-读书以以怡情长智"><a href="#3-读书以以怡情长智" class="headerlink" title="3. 读书以以怡情长智"></a>3. 读书以以怡情长智</h2><p>  古人把读万卷书和行万里路看作精英阶层成长不可或缺的两个环节，它们既能使人获得知识，也能令人愉悦自我。</p>
+<h3 id="3-1-阅读的意义"><a href="#3-1-阅读的意义" class="headerlink" title="3.1 阅读的意义"></a>3.1 阅读的意义</h3><ol>
+<li>阅读是放下可以让我们审视人生的不多的方式之一。<br>苏格拉底曾经说过，未经审视的人生不值得度过。而绅士人生需要有闲暇。读书必须有比较长的一段时间，不做其他事情，专心致志地阅读。</li>
+<li>阅读是一种交友方式，借书可以令两人的关系有所增进。<br>借书，说明至少两个人有共同的语言，在此基础上，谈合作也好，谈利益也罢，才搭得上话。对于男女之间交往来说，借一次书，还一次，至少就接触了两次，并且这也能创造一个良好的交谈话题。</li>
+<li>阅读不仅仅是为了让我们在冷酷无情的科技时代获得喘息，让我们重启大脑深入思考的功能，也是抵抗狭隘、思想控制和舆论支配的方式。<blockquote>
+<p>常常在焦虑的时候，或者感到特别难的时候，会去看看曾经觉得深有启发的书，让自己慢慢静下来，焦虑慢慢会平息，困难也会渐渐淡化，恢复状态，继续前行。现在发现，将书中的内容，与自己思想相结合，写出来的时候，特别的舒畅。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="4-音乐的故事"><a href="#4-音乐的故事" class="headerlink" title="4. 音乐的故事"></a>4. 音乐的故事</h2><h2 id="5-徕卡摄影的魅力"><a href="#5-徕卡摄影的魅力" class="headerlink" title="5. 徕卡摄影的魅力"></a>5. 徕卡摄影的魅力</h2><h2 id="6-香醇美酒"><a href="#6-香醇美酒" class="headerlink" title="6. 香醇美酒"></a>6. 香醇美酒</h2><h2 id="7-奢侈品的光泽"><a href="#7-奢侈品的光泽" class="headerlink" title="7. 奢侈品的光泽"></a>7. 奢侈品的光泽</h2>]]></content>
+      <categories>
+        <category>怡情长智</category>
+        <category>阅读</category>
+      </categories>
+      <tags>
+        <tag>读书/生活</tag>
       </tags>
   </entry>
   <entry>
@@ -1441,7 +1440,7 @@
 <p>将该url使用sqlmap进行注入测试，，测试结果可能存在SQL注入，也可能不存在SQL注入，存在则可以进行数据库名称，数据库表以及数据的操作。</p>
 <p><strong>4. 批量检测</strong><br>将目标url搜集并整理为txt文件，如图4所示，所有文件都保存为tg.txt，然后使用“sqlmap.py-m tg.txt”，注意tg.txt跟sqlmap在同一个目录下。<br><img src="%E6%89%B9%E9%87%8F%E6%95%B4%E7%90%86%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80.jpg" alt="批量整理目标地址"></p>
 <h3 id="1-4-2-直接连接数据库"><a href="#1-4-2-直接连接数据库" class="headerlink" title="1.4.2 直接连接数据库"></a>1.4.2 直接连接数据库</h3><blockquote>
-<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#97;&#100;&#109;&#x69;&#x6e;&#64;&#x31;&#x39;&#x32;&#x2e;&#49;&#x36;&#56;&#46;&#x32;&#49;&#x2e;&#49;&#55;">&#97;&#100;&#109;&#x69;&#x6e;&#64;&#x31;&#x39;&#x32;&#x2e;&#49;&#x36;&#56;&#46;&#x32;&#49;&#x2e;&#49;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
+<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#x61;&#100;&#x6d;&#x69;&#x6e;&#64;&#49;&#x39;&#50;&#46;&#49;&#x36;&#56;&#46;&#50;&#49;&#x2e;&#49;&#55;">&#x61;&#100;&#x6d;&#x69;&#x6e;&#64;&#49;&#x39;&#50;&#46;&#49;&#x36;&#56;&#46;&#50;&#49;&#x2e;&#49;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
 </blockquote>
 <h3 id="1-4-3数据库相关操作"><a href="#1-4-3数据库相关操作" class="headerlink" title="1.4.3数据库相关操作"></a>1.4.3数据库相关操作</h3><ul>
 <li>列数据库信息：–dbs</li>
