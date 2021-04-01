@@ -8,6 +8,7 @@ categories:
 ---
 
 1. 新建 source/_data/sidebar.njk 文件，内容如下：
+<!--more-->
 ```
 {# RecentPosts #}
 {%- if theme.recent_posts %}
@@ -30,7 +31,7 @@ categories:
 {%- endif %}
 ```
 
-2. 修改_config.next.yml，取消 custom_file_path 中的 sidebar 和 style 两个注释，并新增 recent_posts 内容。variable 应该是设置另外的功能时打开的，和此处无关。实际上我的 sidebar 原本是 source/_data/sidebar.swig, 直接改成 njk 的没问题。
+1. 修改_config.next.yml，取消 custom_file_path 中的 sidebar 和 style 两个注释，并新增 recent_posts 内容。variable 应该是设置另外的功能时打开的，和此处无关。实际上我的 sidebar 原本是 source/_data/sidebar.swig, 直接改成 njk 的没问题。
 ```yml
 custom_file_path:
   #head: source/_data/head.swig
@@ -70,6 +71,7 @@ recent_posts:
   margin: 0
   padding: 0
 ```
-————————
+
+——————————
 **参考**
 - [Hexo NexT 添加近期文章功能](https://weilining.github.io/925-1.html)
