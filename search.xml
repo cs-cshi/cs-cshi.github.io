@@ -356,13 +356,31 @@
       </tags>
   </entry>
   <entry>
-    <title>【TCP/IP详解 卷1:协议】 第一章</title>
+    <title>【TCP/IP详解】 第1章 概述</title>
     <url>/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/TCPIP%E8%AF%A6%E8%A7%A3%E5%8D%B71_%E5%8D%8F%E8%AE%AE_%E7%AC%AC%E4%B8%80%E7%AB%A0/</url>
-    <content><![CDATA[<p>test1<br><img src="activation_install.jpg" alt="sss"></p>
-]]></content>
+    <content><![CDATA[<p>《TCP/IP详解 卷1：协议》第1章笔记</p>
+<span id="more"></span>
+
+<h2 id="1-1-分层"><a href="#1-1-分层" class="headerlink" title="1.1 分层"></a>1.1 分层</h2><p><strong>TCP/IP 协议族的四个层次</strong><br><img src="TCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%B1%82%E6%AC%A1.png" alt="TCP/IP协议族的四个层次"></p>
+<ul>
+<li>链路层，也称作数据链路层或网络接口层，通常包括操作系统中的设备驱动程序和计算机中对应的网络接口卡，一起处理与电缆（或其他任何传输媒介）的物理接口细节。</li>
+<li>网络层，也称互联网层，处理分组在网络中的活动，网络层IP提供不可靠的服务。</li>
+<li>运输层，主要为两台主机提供端到端的通信。TCP 在 不可靠的 IP层上提供了可靠的运输层。</li>
+<li>应用层，负责处理特定的应用程序细节。</li>
+</ul>
+<br>
+
+<p><strong>路由器</strong></p>
+<ul>
+<li>构造互连网最简单的方法是把两个或多个网络通过路由器连接。路由器具有多个网络接口，通常连接不同网络的接口有不同的 MAC 地址。</li>
+<li>路由器是在网络层上对网络进行互连，网桥是在链路层上对网络进行互连。</li>
+</ul>
+<p><img src="%E9%80%9A%E8%BF%87%E8%B7%AF%E7%94%B1%E5%99%A8%E8%BF%9E%E6%8E%A5%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%BD%91%E7%BB%9C.png" alt="通过路由器连接的两个网络"></p>
+<h2 id="1-2-TCP-IP的分层"><a href="#1-2-TCP-IP的分层" class="headerlink" title="1.2 TCP/IP的分层"></a>1.2 TCP/IP的分层</h2>]]></content>
       <categories>
         <category>计算机基础</category>
         <category>网络</category>
+        <category>TCP/IP详解 卷1</category>
       </categories>
       <tags>
         <tag>计算机网络</tag>
@@ -436,6 +454,7 @@
 <li>恢复 next 的过程中发现 github 博客源码的分支没有备份 next 主题，没办法只能重新配置，配置过程中遇到一个大坑，github star 排第一的<a href="https://github.com/iissnan/hexo-theme-next">iissnan/hexo-theme-next</a>有很多小问题，解决一个又会有下一个，本来打算重新换个主题了，最后尝试了 star 较少的<a href="https://github.com/theme-next/hexo-theme-next">theme-next/hexo-theme-next</a>，成功恢复。（原因：第一次配置的时候看的官方英文文档，写博客时记录的中文文档，结果两个文档指向不同的 github 仓库）</li>
 </ul>
 </li>
+<li>2021.3.31 增加<code>背景图片</code>、<code>valine评论</code>、<code>最近文章</code>、<code>分类页面优化</code>、<code>设置圆角</code></li>
 </ol>
 ]]></content>
       <categories>
@@ -484,7 +503,7 @@
 <p>Title 随便取个名字，粘贴复制的 id_rsa.pub 内容到 Key 中，点击 Add SSH key 完成添加。</p>
 <p><strong>验证连接</strong>：</p>
 <blockquote>
-<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#x67;&#105;&#116;&#x40;&#x67;&#105;&#x74;&#104;&#x75;&#98;&#46;&#99;&#x6f;&#109;">&#x67;&#105;&#116;&#x40;&#x67;&#105;&#x74;&#104;&#x75;&#98;&#46;&#99;&#x6f;&#109;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
+<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#x67;&#x69;&#116;&#64;&#x67;&#x69;&#116;&#104;&#x75;&#98;&#x2e;&#99;&#x6f;&#x6d;">&#x67;&#x69;&#116;&#64;&#x67;&#x69;&#116;&#104;&#x75;&#98;&#x2e;&#99;&#x6f;&#x6d;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
 </blockquote>
 <blockquote>
 <p>显示 “Hi xxx! You’ve successfully……” 即连接成功。</p>
@@ -1440,7 +1459,7 @@
 <p>将该url使用sqlmap进行注入测试，，测试结果可能存在SQL注入，也可能不存在SQL注入，存在则可以进行数据库名称，数据库表以及数据的操作。</p>
 <p><strong>4. 批量检测</strong><br>将目标url搜集并整理为txt文件，如图4所示，所有文件都保存为tg.txt，然后使用“sqlmap.py-m tg.txt”，注意tg.txt跟sqlmap在同一个目录下。<br><img src="%E6%89%B9%E9%87%8F%E6%95%B4%E7%90%86%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80.jpg" alt="批量整理目标地址"></p>
 <h3 id="1-4-2-直接连接数据库"><a href="#1-4-2-直接连接数据库" class="headerlink" title="1.4.2 直接连接数据库"></a>1.4.2 直接连接数据库</h3><blockquote>
-<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#x61;&#100;&#x6d;&#x69;&#x6e;&#64;&#49;&#x39;&#50;&#46;&#49;&#x36;&#56;&#46;&#50;&#49;&#x2e;&#49;&#55;">&#x61;&#100;&#x6d;&#x69;&#x6e;&#64;&#49;&#x39;&#50;&#46;&#49;&#x36;&#56;&#46;&#50;&#49;&#x2e;&#49;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
+<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#x61;&#x64;&#x6d;&#105;&#x6e;&#x40;&#x31;&#x39;&#50;&#46;&#x31;&#x36;&#56;&#46;&#50;&#x31;&#x2e;&#49;&#55;">&#x61;&#x64;&#x6d;&#105;&#x6e;&#x40;&#x31;&#x39;&#50;&#46;&#x31;&#x36;&#56;&#46;&#50;&#x31;&#x2e;&#49;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
 </blockquote>
 <h3 id="1-4-3数据库相关操作"><a href="#1-4-3数据库相关操作" class="headerlink" title="1.4.3数据库相关操作"></a>1.4.3数据库相关操作</h3><ul>
 <li>列数据库信息：–dbs</li>
