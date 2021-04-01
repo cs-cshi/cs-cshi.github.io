@@ -30,6 +30,104 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo-NexT 设置博客背景图片</title>
+    <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/</url>
+    <content><![CDATA[<h2 id="1-设置背景图片"><a href="#1-设置背景图片" class="headerlink" title="1. 设置背景图片"></a>1. 设置背景图片</h2><p>将想要的背景图片放入 themes/next/source/images。打开 themes/next/source/css/ _custom/custom.styl 文件，这个是 Next 故意留给用户自己个性化定制一些样式的文件，添加以下代码即可。</p>
+<span id="more"></span>
+<p>实际上我的版本里没有_custom，通过新建目录无法实现。我是在 themes/next/source/css/_schemes/Gemini/index.styl 中添加的代码，Gemini是我的 next 的布局样式。</p>
+<p>在写这篇博客的过程中，又尝试了下将代码添加到 blog_root/source/_data/styles.style 下，设置成功。如果没有这个目录，直接新建即可。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>:<span class="built_in">url</span>(<span class="string">/images/yourbackground.jpg</span>);</span><br><span class="line">    <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">    <span class="attribute">background-attachment</span>:fixed; //不重复</span><br><span class="line">    <span class="attribute">background-size</span>: cover;      //填充</span><br><span class="line">    <span class="attribute">background-position</span>:<span class="number">50%</span> <span class="number">50%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>background:url 为图片路径，也可以直接使用链接。</li>
+<li>background-repeat：若果背景图片不能全屏，那么是否平铺显示，充满屏幕</li>
+<li>background-attachment：背景是否随着网页上下滚动而滚动，fixed 为固定</li>
+<li>background-size：图片展示大小，这里设置 100%，100% 的意义为：如果背景图片不能全屏，那么是否通过拉伸的方式将背景强制拉伸至全屏显示。</li>
+</ul>
+<h2 id="2-博客内容透明化"><a href="#2-博客内容透明化" class="headerlink" title="2. 博客内容透明化"></a>2. 博客内容透明化</h2><p>NexT 主题的博客文章均是不透明的，这样读者就不能好好欣赏背景图片了，下面的方法可以使博客内容透明化：</p>
+<p>在 blog_root/source/_data/styles.style  中添加以下内容：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">//博客内容透明化</span><br><span class="line">//文章内容的透明度设置</span><br><span class="line"><span class="selector-class">.content-wrap</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//侧边框的透明度设置</span><br><span class="line"><span class="selector-class">.sidebar</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//菜单栏的透明度设置</span><br><span class="line"><span class="selector-class">.header-inner</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.9</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//搜索框（local-search）的透明度设置</span><br><span class="line"><span class="selector-class">.popup</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：其中 header-inner 不能使用 opacity 进行配置。因为 header-inner 包含 header.swig 中的所有内容。若使用 opacity 进行配置，子结点会出很多问题。</p>
+<h2 id="3-参考"><a href="#3-参考" class="headerlink" title="3. 参考"></a>3. 参考</h2><ul>
+<li><a href="https://tding.top/archives/761b6f4d.html">Hexo-NexT 设置博客背景图片</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>网站建设</category>
+        <category>Hexo 博客</category>
+      </categories>
+      <tags>
+        <tag>Hexo 博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo-NexT 设置近期文章</title>
+    <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<ol>
+<li><p>新建 source/_data/sidebar.njk 文件，内容如下：</p>
+<span id="more"></span>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;# RecentPosts #&#125;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">  &lt;div class&#x3D;&quot;links-of-recent-posts motion-element&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;links-of-recent-posts-title&quot;&gt;</span><br><span class="line">      &#123;%- if theme.recent_posts.icon %&#125;</span><br><span class="line">      &lt;i class&#x3D;&quot;&#123;&#123; theme.recent_posts.icon &#125;&#125; fa-fw&quot;&gt;&lt;&#x2F;i&gt;</span><br><span class="line">      &#123;%- endif %&#125;</span><br><span class="line">      &#123;&#123; theme.recent_posts.title &#125;&#125;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;ul class&#x3D;&quot;links-of-recent-posts-list&quot;&gt;</span><br><span class="line">      &#123;%- set posts &#x3D; site.posts.sort(&#39;date&#39;, &#39;desc&#39;).toArray() %&#125;</span><br><span class="line">      &#123;%- for post in posts.slice(&#39;0&#39;, theme.recent_posts.max_count) %&#125;</span><br><span class="line">        &lt;li class&#x3D;&quot;links-of-recent-posts-item&quot;&gt;</span><br><span class="line">          &#123;&#123; next_url(post.path, post.title, &#123;title: post.path&#125;) &#125;&#125;</span><br><span class="line">        &lt;&#x2F;li&gt;</span><br><span class="line">      &#123;%- endfor %&#125;</span><br><span class="line">    &lt;&#x2F;ul&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>修改_config.next.yml，取消 custom_file_path 中的 sidebar 和 style 两个注释，并新增 recent_posts 内容。variable 应该是设置另外的功能时打开的，和此处无关。实际上我的 sidebar 原本是 source/_data/sidebar.swig, 直接改成 njk 的没问题。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">custom_file_path:</span></span><br><span class="line">  <span class="comment">#head: source/_data/head.swig</span></span><br><span class="line">  <span class="comment">#header: source/_data/header.swig</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="string">source/_data/sidebar.njk</span></span><br><span class="line">  <span class="comment">#postMeta: source/_data/post-meta.swig</span></span><br><span class="line">  <span class="comment">#postBodyEnd: source/_data/post-body-end.swig</span></span><br><span class="line">  <span class="comment">#footer: source/_data/footer.swig</span></span><br><span class="line">  <span class="comment">#bodyEnd: source/_data/body-end.swig</span></span><br><span class="line">  <span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br><span class="line">  <span class="comment">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">source/_data/styles.styl</span></span><br><span class="line"></span><br><span class="line"><span class="attr">recent_posts:</span></span><br><span class="line"><span class="comment"># 块标题</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">最近文章</span></span><br><span class="line"><span class="comment"># 图标</span></span><br><span class="line">  <span class="attr">icon:</span> <span class="string">fa</span> <span class="string">fa-history</span></span><br><span class="line"><span class="comment"># 最多多少文章链接</span></span><br><span class="line">  <span class="attr">max_count:</span> <span class="number">5</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改 source/_data/styles.styl 文件，文件不存在新建即可。添加如下代码：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 近期文章</span><br><span class="line"><span class="selector-class">.links-of-recent-posts</span></span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">0.8125em</span></span><br><span class="line">  margin-top: <span class="number">10px</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-title</span><br><span class="line">  font-size: <span class="number">1.03em</span></span><br><span class="line">  font-weight: <span class="number">600</span></span><br><span class="line">  margin-top: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-list</span><br><span class="line">  list-style: none</span><br><span class="line">  margin: <span class="number">0</span></span><br><span class="line">  padding: <span class="number">0</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>——————————<br><strong>参考</strong></p>
+<ul>
+<li><a href="https://weilining.github.io/925-1.html">Hexo NexT 添加近期文章功能</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>网站建设</category>
+        <category>Hexo 博客</category>
+      </categories>
+      <tags>
+        <tag>Hexo 博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>security tools</title>
+    <url>/security%20tools/</url>
+    <content><![CDATA[<p>收集学习网安过程中遇到的工具</p>
+<span id="more"></span>
+
+<ul>
+<li><p>git 泄露：</p>
+<ul>
+<li>GitHack: <a href="https://github.com/lijiejie/GitHack">https://github.com/lijiejie/GitHack</a></li>
+<li>scrabble: <a href="https://github.com/denny0223/scrabble">https://github.com/denny0223/scrabble</a></li>
+</ul>
+</li>
+<li><p>网站目录扫描</p>
+<ul>
+<li>dirsearch：<a href="https://github.com/maurosoria/dirsearch">https://github.com/maurosoria/dirsearch</a></li>
+</ul>
+</li>
+<li><p>Flask Session Cookie Decoder/Encoder（flask session 伪造）</p>
+<ul>
+<li>flask-session-cookie-manager： <a href="https://github.com/noraj/flask-session-cookie-manager">https://github.com/noraj/flask-session-cookie-manager</a></li>
+</ul>
+</li>
+<li><p>Fastcgi PHP-FPM Client &amp;&amp; Code Execution</p>
+<ul>
+<li><a href="https://gist.github.com/phith0n/9615e2420f31048f7e30f3937356cf75">https://gist.github.com/phith0n/9615e2420f31048f7e30f3937356cf75</a></li>
+</ul>
+</li>
+<li><p>SSRF,自动组装 Gopher</p>
+<ul>
+<li>Gopherus: <a href="https://github.com/tarunkant/Gopherus">https://github.com/tarunkant/Gopherus</a></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络安全</category>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何为 Git 设置代理</title>
     <url>/%E5%A6%82%E4%BD%95%E4%B8%BA%20Git%20%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/</url>
     <content><![CDATA[<h2 id="1-连接情况总览"><a href="#1-连接情况总览" class="headerlink" title="1. 连接情况总览"></a>1. 连接情况总览</h2><p>如果在克隆或从远程仓库获取数据时遇到很慢甚至超时的情况，那么此时可能需要配置 Git 的代理。这里讲讲两种情况的代理方法：使用 HTTP 或 HTTPS 协议连接到 Git 仓库的代理方法和使用 SSH 协议连接到 Git 仓库的代理方法。</p>
@@ -94,105 +192,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo-NexT 设置博客背景图片</title>
-    <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/</url>
-    <content><![CDATA[<h2 id="1-设置背景图片"><a href="#1-设置背景图片" class="headerlink" title="1. 设置背景图片"></a>1. 设置背景图片</h2><p>将想要的背景图片放入 themes/next/source/images。打开 themes/next/source/css/ _custom/custom.styl 文件，这个是 Next 故意留给用户自己个性化定制一些样式的文件，添加以下代码即可。</p>
-<span id="more"></span>
-<p>实际上我的版本里没有_custom，通过新建目录无法实现。我是在 themes/next/source/css/_schemes/Gemini/index.styl 中添加的代码，Gemini是我的 next 的布局样式。</p>
-<p>在写这篇博客的过程中，又尝试了下将代码添加到 blog_root/source/_data/styles.style 下，设置成功。如果没有这个目录，直接新建即可。</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>:<span class="built_in">url</span>(<span class="string">/images/yourbackground.jpg</span>);</span><br><span class="line">    <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">    <span class="attribute">background-attachment</span>:fixed; //不重复</span><br><span class="line">    <span class="attribute">background-size</span>: cover;      //填充</span><br><span class="line">    <span class="attribute">background-position</span>:<span class="number">50%</span> <span class="number">50%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>background:url 为图片路径，也可以直接使用链接。</li>
-<li>background-repeat：若果背景图片不能全屏，那么是否平铺显示，充满屏幕</li>
-<li>background-attachment：背景是否随着网页上下滚动而滚动，fixed 为固定</li>
-<li>background-size：图片展示大小，这里设置 100%，100% 的意义为：如果背景图片不能全屏，那么是否通过拉伸的方式将背景强制拉伸至全屏显示。</li>
-</ul>
-<h2 id="2-博客内容透明化"><a href="#2-博客内容透明化" class="headerlink" title="2. 博客内容透明化"></a>2. 博客内容透明化</h2><p>NexT 主题的博客文章均是不透明的，这样读者就不能好好欣赏背景图片了，下面的方法可以使博客内容透明化：</p>
-<p>在 blog_root/source/_data/styles.style  中添加以下内容：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">//博客内容透明化</span><br><span class="line">//文章内容的透明度设置</span><br><span class="line"><span class="selector-class">.content-wrap</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//侧边框的透明度设置</span><br><span class="line"><span class="selector-class">.sidebar</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//菜单栏的透明度设置</span><br><span class="line"><span class="selector-class">.header-inner</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.9</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//搜索框（local-search）的透明度设置</span><br><span class="line"><span class="selector-class">.popup</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意：其中 header-inner 不能使用 opacity 进行配置。因为 header-inner 包含 header.swig 中的所有内容。若使用 opacity 进行配置，子结点会出很多问题。</p>
-<h2 id="3-参考"><a href="#3-参考" class="headerlink" title="3. 参考"></a>3. 参考</h2><ul>
-<li><a href="https://tding.top/archives/761b6f4d.html">Hexo-NexT 设置博客背景图片</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>网站建设</category>
-        <category>Hexo 博客</category>
-      </categories>
-      <tags>
-        <tag>Hexo 博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>security tools</title>
-    <url>/security%20tools/</url>
-    <content><![CDATA[<p>收集学习网安过程中遇到的工具</p>
-<span id="more"></span>
-
-<ul>
-<li><p>git 泄露：</p>
-<ul>
-<li>GitHack: <a href="https://github.com/lijiejie/GitHack">https://github.com/lijiejie/GitHack</a></li>
-<li>scrabble: <a href="https://github.com/denny0223/scrabble">https://github.com/denny0223/scrabble</a></li>
-</ul>
-</li>
-<li><p>网站目录扫描</p>
-<ul>
-<li>dirsearch：<a href="https://github.com/maurosoria/dirsearch">https://github.com/maurosoria/dirsearch</a></li>
-</ul>
-</li>
-<li><p>Flask Session Cookie Decoder/Encoder（flask session 伪造）</p>
-<ul>
-<li>flask-session-cookie-manager： <a href="https://github.com/noraj/flask-session-cookie-manager">https://github.com/noraj/flask-session-cookie-manager</a></li>
-</ul>
-</li>
-<li><p>Fastcgi PHP-FPM Client &amp;&amp; Code Execution</p>
-<ul>
-<li><a href="https://gist.github.com/phith0n/9615e2420f31048f7e30f3937356cf75">https://gist.github.com/phith0n/9615e2420f31048f7e30f3937356cf75</a></li>
-</ul>
-</li>
-<li><p>SSRF,自动组装 Gopher</p>
-<ul>
-<li>Gopherus: <a href="https://github.com/tarunkant/Gopherus">https://github.com/tarunkant/Gopherus</a></li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>网络安全</category>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo-NexT 设置近期文章</title>
-    <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<ol>
-<li><p>新建 source/_data/sidebar.njk 文件，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;# RecentPosts #&#125;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">  &lt;div class&#x3D;&quot;links-of-recent-posts motion-element&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;links-of-recent-posts-title&quot;&gt;</span><br><span class="line">      &#123;%- if theme.recent_posts.icon %&#125;</span><br><span class="line">      &lt;i class&#x3D;&quot;&#123;&#123; theme.recent_posts.icon &#125;&#125; fa-fw&quot;&gt;&lt;&#x2F;i&gt;</span><br><span class="line">      &#123;%- endif %&#125;</span><br><span class="line">      &#123;&#123; theme.recent_posts.title &#125;&#125;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;ul class&#x3D;&quot;links-of-recent-posts-list&quot;&gt;</span><br><span class="line">      &#123;%- set posts &#x3D; site.posts.sort(&#39;date&#39;, &#39;desc&#39;).toArray() %&#125;</span><br><span class="line">      &#123;%- for post in posts.slice(&#39;0&#39;, theme.recent_posts.max_count) %&#125;</span><br><span class="line">        &lt;li class&#x3D;&quot;links-of-recent-posts-item&quot;&gt;</span><br><span class="line">          &#123;&#123; next_url(post.path, post.title, &#123;title: post.path&#125;) &#125;&#125;</span><br><span class="line">        &lt;&#x2F;li&gt;</span><br><span class="line">      &#123;%- endfor %&#125;</span><br><span class="line">    &lt;&#x2F;ul&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>修改_config.next.yml，取消 custom_file_path 中的 sidebar 和 style 两个注释，并新增 recent_posts 内容。variable 应该是设置另外的功能时打开的，和此处无关。实际上我的 sidebar 原本是 source/_data/sidebar.swig, 直接改成 njk 的没问题。</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">custom_file_path:</span></span><br><span class="line">  <span class="comment">#head: source/_data/head.swig</span></span><br><span class="line">  <span class="comment">#header: source/_data/header.swig</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="string">source/_data/sidebar.njk</span></span><br><span class="line">  <span class="comment">#postMeta: source/_data/post-meta.swig</span></span><br><span class="line">  <span class="comment">#postBodyEnd: source/_data/post-body-end.swig</span></span><br><span class="line">  <span class="comment">#footer: source/_data/footer.swig</span></span><br><span class="line">  <span class="comment">#bodyEnd: source/_data/body-end.swig</span></span><br><span class="line">  <span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br><span class="line">  <span class="comment">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">source/_data/styles.styl</span></span><br><span class="line"></span><br><span class="line"><span class="attr">recent_posts:</span></span><br><span class="line"><span class="comment"># 块标题</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">最近文章</span></span><br><span class="line"><span class="comment"># 图标</span></span><br><span class="line">  <span class="attr">icon:</span> <span class="string">fa</span> <span class="string">fa-history</span></span><br><span class="line"><span class="comment"># 最多多少文章链接</span></span><br><span class="line">  <span class="attr">max_count:</span> <span class="number">5</span></span><br></pre></td></tr></table></figure></li>
-<li><p>修改 source/_data/styles.styl 文件，文件不存在新建即可。添加如下代码：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 近期文章</span><br><span class="line"><span class="selector-class">.links-of-recent-posts</span></span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">0.8125em</span></span><br><span class="line">  margin-top: <span class="number">10px</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-title</span><br><span class="line">  font-size: <span class="number">1.03em</span></span><br><span class="line">  font-weight: <span class="number">600</span></span><br><span class="line">  margin-top: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-list</span><br><span class="line">  list-style: none</span><br><span class="line">  margin: <span class="number">0</span></span><br><span class="line">  padding: <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>————————</p>
-</li>
-</ol>
-<p><strong>参考</strong></p>
-<ul>
-<li><a href="https://weilining.github.io/925-1.html">Hexo NexT 添加近期文章功能</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>网站建设</category>
-        <category>Hexo 博客</category>
-      </categories>
-      <tags>
-        <tag>Hexo 博客</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何搭建《从0到1：CTFer 成长之路》docker 做题环境</title>
     <url>/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E3%80%8A%E4%BB%8E0%E5%88%B01%EF%BC%9ACTFer%20%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%E3%80%8Bdocker%20%E5%81%9A%E9%A2%98%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<p>《从0到1：CTFer 成长之路》书中涉及的题目已经封装成 docker 镜像，通过 docker 很容易能在本地实现做题的环境。</p>
@@ -241,34 +240,6 @@
       </tags>
   </entry>
   <entry>
-    <title>解决 AMD 在 ubuntu 上无法外接显示器问题</title>
-    <url>/%E8%A7%A3%E5%86%B3%20ubuntu%20%E6%97%A0%E6%B3%95%E5%A4%96%E7%95%8C%E6%98%BE%E7%A4%BA%E5%99%A8%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>实际上 ubuntu 的内核（5.4及以下）还不支持 AMD 4000 系列的集显，所以无法驱动。</p>
-<p>解决办法是更新 ubuntu 内核版本</p>
-<span id="more"></span>
-
-<p>更新前最好用 timeshift 备份系统</p>
-<p>matebook14 2020 锐龙版 4600H CPU 实测 v5.7 内核能支持。</p>
-<p>v5.7：<a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/"></a><a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/">https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/</a></p>
-<p>升级方法：</p>
-<ol>
-<li>下载内核包(共四个)<br>第一个：linux-headers_***all.deb<br>其余三个：分三类（headers、module、image）全选择 generic 或者 lowlatency 下载。</li>
-<li><code>sudo dpkg -i </code>依次安装<br>我的安装顺序：all -&gt; headers -&gt; module -&gt; image。</li>
-<li>重启电脑，输入命令<code>uname -a</code> 查看是否升级成功 </li>
-</ol>
-<p><strong>参考</strong></p>
-<ul>
-<li><a href="https://zhuanlan.zhihu.com/p/149564937">联想小新Pro13 2020锐龙版R7 4800U安装ubuntu-20.04</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo 博客 NexT 主题下如何添加分类、标签</title>
     <url>/Hexo%20%E5%8D%9A%E5%AE%A2%20NexT%20%E4%B8%BB%E9%A2%98%E4%B8%8B%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/Hexo-NexT%20%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE/</url>
     <content><![CDATA[<p>Hexo Next 主题默认带有不少菜单，如关于（about）、分类（categories）、标签（tags）等，默认处于注释状态，将需要取消的菜单注释掉，然后生成相应的 page 即可。</p>
@@ -303,6 +274,58 @@
       <tags>
         <tag>Hexo 博客</tag>
         <tag>搭建环境</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo-NexT 分类多层级描述</title>
+    <url>/Hexo-NexT%20%E5%88%86%E7%B1%BB%E5%A4%9A%E5%B1%82%E7%BA%A7%E6%8F%8F%E8%BF%B0/Hexo-NexT%20%E5%88%86%E7%B1%BB%E5%A4%9A%E5%B1%82%E7%BA%A7%E6%8F%8F%E8%BF%B0/</url>
+    <content><![CDATA[<ol>
+<li>分类一般用法<br> Hexo 中分类和标签有着明显的差别：分类具有顺序性和层次性，也就是说 Foo, Bar 不等于 Bar, Foo；而标签没有顺序和层次。 <span id="more"></span>
+ <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Diary</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">PS3</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Games</span></span><br></pre></td></tr></table></figure></li>
+<li>父子分类<br>如果您有过使用 WordPress 的经验，就很容易误解 Hexo 的分类方式。WordPress 支持对一篇文章设置多个分类，而且这些分类可以是同级的，也可以是父子分类。但是 Hexo 不支持指定多个同级分类。下面的指定方法：<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Diary</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Life</span></span><br></pre></td></tr></table></figure>
+会使分类Life成为Diary的子分类，而不是并列分类。因此，有必要为您的文章选择尽可能准确的分类。</li>
+<li>并列+子分类<br>如果你需要为文章添加多个分类，可以尝试以下 list 中的方法。<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> [<span class="string">Diary</span>, <span class="string">PlayStation</span>]</span><br><span class="line"><span class="bullet">-</span> [<span class="string">Diary</span>, <span class="string">Games</span>]</span><br><span class="line"><span class="bullet">-</span> [<span class="string">Life</span>]</span><br></pre></td></tr></table></figure>
+此时这篇文章同时包括三个分类： PlayStation 和 Games 分别都是父分类 Diary 的子分类，同时 Life 是一个没有子分类的分类。 </li>
+<li>分类页面优化<br>我想要的是这种层次分明的效果：<br><img src="categories-result.png" alt="result"><br>但我设置完成后，实际的效果, 层次感不强。:<br><img src="categories_ori.png" alt="ori"><strong>问题解决</strong><br>首先尝试了CodeHeap 的文章<a href="https://jrbcode.gitee.io/posts/be9758cd.html">Hexo+NexT博客归档/标签/分类页美化</a>,对分类栏进行了优化。发现只是增加了效果，分类的层次结构还是不清晰。<br><img src="categories_1.png" alt="categories">然后修改 /themes/next/source/css/_common/components/pages/categories.styl 代码,将  .category-list-child 的 padding-left 属性改为 60px。<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.category-list-child &#123;</span><br><span class="line">  padding-left: 60px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+最终效果图：<br><img src="categories_2.png" alt="categories"></li>
+</ol>
+<p>——————————<br><strong>参考</strong></p>
+<ul>
+<li><a href="https://hexo.io/zh-cn/docs/front-matter">Hexo 官方文档</a></li>
+<li><a href="https://jrbcode.gitee.io/posts/be9758cd.html">Hexo+NexT博客归档/标签/分类页美化</a></li>
+<li><a href="http://yuchen-lea.github.io/2016-01-23-display-hexo-category-in-hierarchy/">Hexo多级类别的层级显示</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>网站建设</category>
+        <category>Hexo 博客</category>
+      </categories>
+      <tags>
+        <tag>Hexo 博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo-NexT 设置圆角</title>
+    <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<ol>
+<li><p>在 blog_root/source/_data/variables.styl 中增加下列代码：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">// 圆角设置</span><br><span class="line">$border-radius-inner     = 20px;</span><br><span class="line">$border-radius           = 20px;</span><br></pre></td></tr></table></figure></li>
+<li><p>然后在 NexT 的配置文件 _config.yml 中取消 variables.styl 的注释：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br></pre></td></tr></table></figure></li>
+<li><p>问题描述<br>侧边栏的圆角明显有一层阴影，圆角效果不明显<br><img src="circle_problem.png" alt="problem"></p>
+</li>
+<li><p>问题解决<br>github issues 上也有人提过类似的问题<a href="https://github.com/next-theme/hexo-theme-next/issues/51">侧边栏顶栏无法显示为圆角</a>，并且给出了回答。<br><img src="issues_answer.png" alt="issues"><br>回答中有提到黑色背景覆盖了圆角，所以我尝试了下将黑色改为透明，成功实现。具体是修改 /themes/next/source/css/_variables/Gemini.styl 内代码,将 $body-bg-color 赋值为透明 transparent。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">// Variables of Gemini scheme</span><br><span class="line">// ==================================================</span><br><span class="line"></span><br><span class="line"><span class="keyword">@import</span> <span class="string">&quot;Pisces.styl&quot;</span>;</span><br><span class="line"></span><br><span class="line">// Settings for some of the most global styles.</span><br><span class="line">// --------------------------------------------------</span><br><span class="line">$body-bg-color           = #eee;</span><br><span class="line">// $body-bg-color           = transparent;</span><br><span class="line">// Borders.</span><br><span class="line">// --------------------------------------------------</span><br><span class="line">$box-shadow-inner        = 0 2px 2px 0 rgba(0, 0, 0, .12), 0 3px 1px -2px rgba(0, 0, 0, .06), 0 1px 5px 0 rgba(0, 0, 0, .12);</span><br><span class="line">$box-shadow              = 0 2px 2px 0 rgba(0, 0, 0, .12), 0 3px 1px -2px rgba(0, 0, 0, .06), 0 1px 5px 0 rgba(0, 0, 0, .12), 0 -1px .5px 0 rgba(0, 0, 0, .09);</span><br><span class="line"></span><br><span class="line">// $border-radius-inner     = 20px;</span><br><span class="line">// $border-radius           = 20px;</span><br><span class="line"></span><br><span class="line">$border-radius-inner     = initial;</span><br><span class="line">$border-radius           = initial;</span><br><span class="line">// $border-radius-inner     = 0 0 3px 3px;</span><br><span class="line">// $border-radius           = 3px;</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>网站建设</category>
+        <category>Hexo 博客</category>
+      </categories>
+      <tags>
+        <tag>Hexo 博客</tag>
       </tags>
   </entry>
   <entry>
@@ -364,6 +387,67 @@
       </tags>
   </entry>
   <entry>
+    <title>解决 AMD 在 ubuntu 上无法外接显示器问题</title>
+    <url>/%E8%A7%A3%E5%86%B3%20ubuntu%20%E6%97%A0%E6%B3%95%E5%A4%96%E7%95%8C%E6%98%BE%E7%A4%BA%E5%99%A8%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>实际上 ubuntu 的内核（5.4及以下）还不支持 AMD 4000 系列的集显，所以无法驱动。</p>
+<p>解决办法是更新 ubuntu 内核版本</p>
+<span id="more"></span>
+
+<p>更新前最好用 timeshift 备份系统</p>
+<p>matebook14 2020 锐龙版 4600H CPU 实测 v5.7 内核能支持。</p>
+<p>v5.7：<a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/"></a><a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/">https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/</a></p>
+<p>升级方法：</p>
+<ol>
+<li>下载内核包(共四个)<br>第一个：linux-headers_***all.deb<br>其余三个：分三类（headers、module、image）全选择 generic 或者 lowlatency 下载。</li>
+<li><code>sudo dpkg -i </code>依次安装<br>我的安装顺序：all -&gt; headers -&gt; module -&gt; image。</li>
+<li>重启电脑，输入命令<code>uname -a</code> 查看是否升级成功 </li>
+</ol>
+<p><strong>参考</strong></p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/149564937">联想小新Pro13 2020锐龙版R7 4800U安装ubuntu-20.04</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>博客运维记录</title>
+    <url>/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/</url>
+    <content><![CDATA[<p>记录使用博客时遇到的问题，以及对博客的优化。</p>
+<span id="more"></span>
+
+<ol>
+<li>本地 markdown 撰写<ul>
+<li>官方介绍中本地的博文需写在 _post 目录下，而博文中添加照片的方式之一是在同目录下新建与博文名同名的文件夹，将图片放在该文件夹。</li>
+<li>这样由于本地没有分类机制，非常不便于在本地对所有博文进行管理。</li>
+<li>目前采用策略：写新的博文时，先在 _post 目录下新建以博文名命名的文件夹，在这一层撰写博文，再在内嵌套一个同样为以博文名命名的文件夹，放置图片。</li>
+</ul>
+</li>
+<li>修改分类<ul>
+<li>将分类名由”proxy”改成”Proxy”，发现在本地环境访问是正常的，但到我<code>github.io</code>上访问时会报 404 错误</li>
+<li>实际上，Hexo 分类的修改是作用在文件夹上的，而我使用<code>hexo d</code>将博客部署到 github 上时，不会对原本的文件夹进行修改。也就是说 github 上依旧是”proxy”。</li>
+</ul>
+</li>
+<li>恢复博客<ul>
+<li>尝试了 <a href="https://github.com/blinkfox/hexo-theme-matery">matery</a> 主题，搭建完后发现对 markdown 的支持没有 next 的好，<code>python</code>的注释<code>#</code>容易被当成 markdown 的目录结构，引起目录混乱。</li>
+<li>恢复 next 的过程中发现 github 博客源码的分支没有备份 next 主题，没办法只能重新配置，配置过程中遇到一个大坑，github star 排第一的<a href="https://github.com/iissnan/hexo-theme-next">iissnan/hexo-theme-next</a>有很多小问题，解决一个又会有下一个，本来打算重新换个主题了，最后尝试了 star 较少的<a href="https://github.com/theme-next/hexo-theme-next">theme-next/hexo-theme-next</a>，成功恢复。（原因：第一次配置的时候看的官方英文文档，写博客时记录的中文文档，结果两个文档指向不同的 github 仓库）</li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>网站建设</category>
+        <category>Hexo 博客</category>
+      </categories>
+      <tags>
+        <tag>Hexo 博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何使用 Github + Hexo 搭建博客</title>
     <url>/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<blockquote>
@@ -401,7 +485,7 @@
 <p>Title 随便取个名字，粘贴复制的 id_rsa.pub 内容到 Key 中，点击 Add SSH key 完成添加。</p>
 <p><strong>验证连接</strong>：</p>
 <blockquote>
-<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#103;&#105;&#x74;&#x40;&#x67;&#x69;&#116;&#x68;&#x75;&#x62;&#x2e;&#99;&#x6f;&#x6d;">&#103;&#105;&#x74;&#x40;&#x67;&#x69;&#116;&#x68;&#x75;&#x62;&#x2e;&#99;&#x6f;&#x6d;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
+<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#x75;&#x62;&#x2e;&#99;&#111;&#109;">&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#x75;&#x62;&#x2e;&#99;&#111;&#109;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
 </blockquote>
 <blockquote>
 <p>显示 “Hi xxx! You’ve successfully……” 即连接成功。</p>
@@ -505,6 +589,103 @@
       </tags>
   </entry>
   <entry>
+    <title>如何配置 v2ray 详细教程</title>
+    <url>/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<p>V2ray 是继 Shadowsocks(R) 后又一个体验很棒、功能非常强大的科学上网工具，近年来受到网友的广泛关注和喜爱。本教程详细介绍V2ray的安装和配置过程，让读者能迅速上手和使用V2ray。</p>
+<span id="more"></span>
+
+<h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><blockquote>
+<p>先创建安装 v2ray 的目录</p>
+</blockquote>
+<ol>
+<li>下载 QT 实现的 v2ray 界面。在官网链接上找到最新的 release 下载。<blockquote>
+<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
+</blockquote>
+</li>
+</ol>
+<p>比如，我目前下载的是Qv2ray.v2.2.3.linux-x64.AppImage。</p>
+<blockquote>
+<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a></p>
+</blockquote>
+<ol start="2">
+<li><p>下载v2ray核心</p>
+<blockquote>
+<p><a href="https://github.com/v2ray/v2ray-core/releases">https://github.com/v2ray/v2ray-core/releases</a></p>
+</blockquote>
+</li>
+<li><p>解压v2ray核心文件</p>
+</li>
+<li><p>执行 Qv2ray 客户端，选择首选项 -&gt; 内核设置，修改下列两个路径</p>
+<ul>
+<li>V2Ray 核心文件可执行<strong>文件</strong>路径：<code>.../v2ray-windows-64/wv2ray.exe</code></li>
+<li>V2Ray 资源<strong>目录</strong>：<code>.../v2ray-windows-64/</code></li>
+</ul>
+</li>
+<li><p>点击检查 V2Ray 核心设置，通过即可.<br><img src="v2ray_settings.png" alt="v2ray settings"></p>
+</li>
+<li><p>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）</p>
+</li>
+<li><p>配置成功 Qv2ray 主界面默认分组内会出现多条线路，并显示链路的个数。</p>
+</li>
+</ol>
+<h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><blockquote>
+<p>可自建 v2ray 目录，也可直接将 v2ray core 放在 ~/.config/qv2ray/vcore/ 中，这是 Qvray 默认路径。</p>
+</blockquote>
+<ol>
+<li>下载QT实现的v2ray界面。在官网链接上找到最新的release下载。<blockquote>
+<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
+</blockquote>
+</li>
+</ol>
+<p>比如，我目前下载的是Qv2ray.v2.6.3.linux-x64.AppImage。</p>
+<ol start="2">
+<li>下载v2ray core核心文件。打开官方网站：<blockquote>
+<p><a href="https://github.com/v2ray/v2ray-core/releases/">https://github.com/v2ray/v2ray-core/releases/</a> 。</p>
+</blockquote>
+</li>
+</ol>
+<p>选择下载文件v2ray-linux-64.zip。</p>
+<ol start="3">
+<li><p>进入 v2ray 下载的目录（我的是<code>~/v2ray</code>），执行下面命令给 Qv2ray 增加权限</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chmod +x ./Qv2ray.v2.6.3.linux-x64.AppImage  # 注意版本号</span><br></pre></td></tr></table></figure></li>
+<li><p>启动 Qv2ray。仍然在v2ray根目录，执行下列终端命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./Qv2ray.v2.6.3.linux-x64.AppImage</span><br></pre></td></tr></table></figure></li>
+<li><p>解压 v2ray core 核心文件。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unzip v2ray-linux-64.zip</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>注意不要用 <code>sudo</code> 解压，用 <code>sudo</code> 解压须给 <code>v2ray-linux-64</code> 加权限，容易造成权限紊乱。</p>
+<ol start="5">
+<li>在 Qv2ray 的首选项(Preference) 页面的内核设置（General Setting）中，设置v2ray核心文件的路径。</li>
+</ol>
+<p>默认的路径是<code>~/.config/qv2ray/vcore/</code>。如果没有新建 v2ray 目录结构，可以将 v2ray-linux-64.zip 解压后的文件都放置到这个目录里面。</p>
+<p>如果自建 v2ray 目录，选择自己的 V2Ray 核心可执行文件路径和 V2Ray 资源目录。</p>
+<p>最后，可以点击Check V2ray Core Setting按钮，验证这两个可执行文件的有效性。<br>   <img src="v2ray_linux_settings.png" alt="v2ray settings"></p>
+<ol start="6">
+<li>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 不可用</span><br><span class="line">https:&#x2F;&#x2F;cloudfront-cdn-hk-iplc1.com&#x2F;sub&#x2F;v&#x2F;wrvDgcKnw6nDncOAwrrCmMOOw5_CiH1-wqPCnMK1w4LCosOcw4B8wq1_w98k&#x3D;&#x2F;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><p>在 Qv2ray 的首选项（Preferences）窗口中，可以设置语言、系统代理、开机启动等。</p>
+</li>
+<li><p>如果想仅仅在 Chrome 浏览器上做网络翻墙功能，就在 Chrome 浏览器上安装 Proxy SwitchyOmega 插件。在插件的配置页面上，设置Proxy Server，采用协议SOCK5，代理服务器是本地127.0.0.1，端口是1088（具体端口号查看 Qv2ray的 首选项（Preferences）。</p>
+</li>
+<li><p>如果不想做全局的系统代理 System Proxy，在Qv2ray的首选项中取消系统代理即可。</p>
+</li>
+<li><p>Git 的代理需要另外配置。</p>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>【Linux配置v2ray详细教程-Ubuntu为例】：<a href="https://www.boluo.in/1776.html">https://www.boluo.in/1776.htm</a>l</li>
+</ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+        <category>proxy</category>
+      </categories>
+      <tags>
+        <tag>代理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>彻底弄懂 Linux 下的文件描述符（fd）</title>
     <url>/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/</url>
     <content><![CDATA[<p>Linux 下的文件描述符</p>
@@ -602,36 +783,30 @@
       </tags>
   </entry>
   <entry>
-    <title>博客运维记录</title>
-    <url>/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/</url>
-    <content><![CDATA[<p>记录使用博客时遇到的问题，以及对博客的优化。</p>
+    <title>读书笔记——《具体生活》</title>
+    <url>/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/</url>
+    <content><![CDATA[<p>  焦虑是现代人的常态。时间不够用，钱不够花，职业发展不够快，对当下和未来不够了解…我们不断加快生活的节奏，但快节奏之后是否带来了好处，我们并不清楚，只是觉得“快”比“慢”要好。</p>
+<p>  很多时候，我们做不好事情，是我们太匆忙、太着急，其实只要慢三拍，我们的事情会比以前做得好很多。有时候，慢比快好。</p>
+<p>  当忙碌成为生活的主旋律时，我们是否可以思考一下：生活的目的是什么？从容做事，优雅生活，这是我们生活的目的。很多人羡慕所谓的贵族生活，其实过去贵族的物质生活并不比今天的中产阶级好多少，但是他们整体的生活质量远非今天一般意义上的富有家庭所能比的。究其原因，是因为今天的人缺少了那份应有的从容和优雅。</p>
+<p>  当我们做事情的时候能够慢一点，少走点弯路，多花点实践享受浪漫而美好的人生，畅游人类知识和艺术的海洋，我们会发现自己是在真正地生活，而不是只是为了工作而活着。</p>
 <span id="more"></span>
 
-<ol>
-<li>本地 markdown 撰写<ul>
-<li>官方介绍中本地的博文需写在 _post 目录下，而博文中添加照片的方式之一是在同目录下新建与博文名同名的文件夹，将图片放在该文件夹。</li>
-<li>这样由于本地没有分类机制，非常不便于在本地对所有博文进行管理。</li>
-<li>目前采用策略：写新的博文时，先在 _post 目录下新建以博文名命名的文件夹，在这一层撰写博文，再在内嵌套一个同样为以博文名命名的文件夹，放置图片。</li>
-</ul>
-</li>
-<li>修改分类<ul>
-<li>将分类名由”proxy”改成”Proxy”，发现在本地环境访问是正常的，但到我<code>github.io</code>上访问时会报 404 错误</li>
-<li>实际上，Hexo 分类的修改是作用在文件夹上的，而我使用<code>hexo d</code>将博客部署到 github 上时，不会对原本的文件夹进行修改。也就是说 github 上依旧是”proxy”。</li>
-</ul>
-</li>
-<li>恢复博客<ul>
-<li>尝试了 <a href="https://github.com/blinkfox/hexo-theme-matery">matery</a> 主题，搭建完后发现对 markdown 的支持没有 next 的好，<code>python</code>的注释<code>#</code>容易被当成 markdown 的目录结构，引起目录混乱。</li>
-<li>恢复 next 的过程中发现 github 博客源码的分支没有备份 next 主题，没办法只能重新配置，配置过程中遇到一个大坑，github star 排第一的<a href="https://github.com/iissnan/hexo-theme-next">iissnan/hexo-theme-next</a>有很多小问题，解决一个又会有下一个，本来打算重新换个主题了，最后尝试了 star 较少的<a href="https://github.com/theme-next/hexo-theme-next">theme-next/hexo-theme-next</a>，成功恢复。（原因：第一次配置的时候看的官方英文文档，写博客时记录的中文文档，结果两个文档指向不同的 github 仓库）</li>
-</ul>
+<h2 id="1-旅行的意义"><a href="#1-旅行的意义" class="headerlink" title="1. 旅行的意义"></a>1. 旅行的意义</h2><h2 id="2-博物馆之美"><a href="#2-博物馆之美" class="headerlink" title="2. 博物馆之美"></a>2. 博物馆之美</h2><h2 id="3-读书以以怡情长智"><a href="#3-读书以以怡情长智" class="headerlink" title="3. 读书以以怡情长智"></a>3. 读书以以怡情长智</h2><p>  古人把读万卷书和行万里路看作精英阶层成长不可或缺的两个环节，它们既能使人获得知识，也能令人愉悦自我。</p>
+<h3 id="3-1-阅读的意义"><a href="#3-1-阅读的意义" class="headerlink" title="3.1 阅读的意义"></a>3.1 阅读的意义</h3><ol>
+<li>阅读是放下可以让我们审视人生的不多的方式之一。<br>苏格拉底曾经说过，未经审视的人生不值得度过。而绅士人生需要有闲暇。读书必须有比较长的一段时间，不做其他事情，专心致志地阅读。</li>
+<li>阅读是一种交友方式，借书可以令两人的关系有所增进。<br>借书，说明至少两个人有共同的语言，在此基础上，谈合作也好，谈利益也罢，才搭得上话。对于男女之间交往来说，借一次书，还一次，至少就接触了两次，并且这也能创造一个良好的交谈话题。</li>
+<li>阅读不仅仅是为了让我们在冷酷无情的科技时代获得喘息，让我们重启大脑深入思考的功能，也是抵抗狭隘、思想控制和舆论支配的方式。<blockquote>
+<p>常常在焦虑的时候，或者感到特别难的时候，会去看看曾经觉得深有启发的书，让自己慢慢静下来，焦虑慢慢会平息，困难也会渐渐淡化，恢复状态，继续前行。现在发现，将书中的内容，与自己思想相结合，写出来的时候，特别的舒畅。</p>
+</blockquote>
 </li>
 </ol>
-]]></content>
+<h2 id="4-音乐的故事"><a href="#4-音乐的故事" class="headerlink" title="4. 音乐的故事"></a>4. 音乐的故事</h2><h2 id="5-徕卡摄影的魅力"><a href="#5-徕卡摄影的魅力" class="headerlink" title="5. 徕卡摄影的魅力"></a>5. 徕卡摄影的魅力</h2><h2 id="6-香醇美酒"><a href="#6-香醇美酒" class="headerlink" title="6. 香醇美酒"></a>6. 香醇美酒</h2><h2 id="7-奢侈品的光泽"><a href="#7-奢侈品的光泽" class="headerlink" title="7. 奢侈品的光泽"></a>7. 奢侈品的光泽</h2>]]></content>
       <categories>
-        <category>网站建设</category>
-        <category>Hexo 博客</category>
+        <category>怡情长智</category>
+        <category>阅读</category>
       </categories>
       <tags>
-        <tag>Hexo 博客</tag>
+        <tag>读书/生活</tag>
       </tags>
   </entry>
   <entry>
@@ -777,130 +952,6 @@
       <tags>
         <tag>网络安全</tag>
         <tag>Web 安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何配置 v2ray 详细教程</title>
-    <url>/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20v2ray%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<p>V2ray 是继 Shadowsocks(R) 后又一个体验很棒、功能非常强大的科学上网工具，近年来受到网友的广泛关注和喜爱。本教程详细介绍V2ray的安装和配置过程，让读者能迅速上手和使用V2ray。</p>
-<span id="more"></span>
-
-<h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><blockquote>
-<p>先创建安装 v2ray 的目录</p>
-</blockquote>
-<ol>
-<li>下载 QT 实现的 v2ray 界面。在官网链接上找到最新的 release 下载。<blockquote>
-<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
-</blockquote>
-</li>
-</ol>
-<p>比如，我目前下载的是Qv2ray.v2.2.3.linux-x64.AppImage。</p>
-<blockquote>
-<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a></p>
-</blockquote>
-<ol start="2">
-<li><p>下载v2ray核心</p>
-<blockquote>
-<p><a href="https://github.com/v2ray/v2ray-core/releases">https://github.com/v2ray/v2ray-core/releases</a></p>
-</blockquote>
-</li>
-<li><p>解压v2ray核心文件</p>
-</li>
-<li><p>执行 Qv2ray 客户端，选择首选项 -&gt; 内核设置，修改下列两个路径</p>
-<ul>
-<li>V2Ray 核心文件可执行<strong>文件</strong>路径：<code>.../v2ray-windows-64/wv2ray.exe</code></li>
-<li>V2Ray 资源<strong>目录</strong>：<code>.../v2ray-windows-64/</code></li>
-</ul>
-</li>
-<li><p>点击检查 V2Ray 核心设置，通过即可.<br><img src="v2ray_settings.png" alt="v2ray settings"></p>
-</li>
-<li><p>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）</p>
-</li>
-<li><p>配置成功 Qv2ray 主界面默认分组内会出现多条线路，并显示链路的个数。</p>
-</li>
-</ol>
-<h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><blockquote>
-<p>可自建 v2ray 目录，也可直接将 v2ray core 放在 ~/.config/qv2ray/vcore/ 中，这是 Qvray 默认路径。</p>
-</blockquote>
-<ol>
-<li>下载QT实现的v2ray界面。在官网链接上找到最新的release下载。<blockquote>
-<p><a href="https://github.com/Qv2ray/Qv2ray/releases">https://github.com/Qv2ray/Qv2ray/releases</a> 。</p>
-</blockquote>
-</li>
-</ol>
-<p>比如，我目前下载的是Qv2ray.v2.6.3.linux-x64.AppImage。</p>
-<ol start="2">
-<li>下载v2ray core核心文件。打开官方网站：<blockquote>
-<p><a href="https://github.com/v2ray/v2ray-core/releases/">https://github.com/v2ray/v2ray-core/releases/</a> 。</p>
-</blockquote>
-</li>
-</ol>
-<p>选择下载文件v2ray-linux-64.zip。</p>
-<ol start="3">
-<li><p>进入 v2ray 下载的目录（我的是<code>~/v2ray</code>），执行下面命令给 Qv2ray 增加权限</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chmod +x ./Qv2ray.v2.6.3.linux-x64.AppImage  # 注意版本号</span><br></pre></td></tr></table></figure></li>
-<li><p>启动 Qv2ray。仍然在v2ray根目录，执行下列终端命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./Qv2ray.v2.6.3.linux-x64.AppImage</span><br></pre></td></tr></table></figure></li>
-<li><p>解压 v2ray core 核心文件。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unzip v2ray-linux-64.zip</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>注意不要用 <code>sudo</code> 解压，用 <code>sudo</code> 解压须给 <code>v2ray-linux-64</code> 加权限，容易造成权限紊乱。</p>
-<ol start="5">
-<li>在 Qv2ray 的首选项(Preference) 页面的内核设置（General Setting）中，设置v2ray核心文件的路径。</li>
-</ol>
-<p>默认的路径是<code>~/.config/qv2ray/vcore/</code>。如果没有新建 v2ray 目录结构，可以将 v2ray-linux-64.zip 解压后的文件都放置到这个目录里面。</p>
-<p>如果自建 v2ray 目录，选择自己的 V2Ray 核心可执行文件路径和 V2Ray 资源目录。</p>
-<p>最后，可以点击Check V2ray Core Setting按钮，验证这两个可执行文件的有效性。<br>   <img src="v2ray_linux_settings.png" alt="v2ray settings"></p>
-<ol start="6">
-<li>返回 Qv2ray 主界面，选择：分组 -&gt; 订阅设置，勾选此分组是一个订阅，再填写上自己的 v2ray 订阅地址，点击更新订阅 -&gt; 确定（ok）<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 不可用</span><br><span class="line">https:&#x2F;&#x2F;cloudfront-cdn-hk-iplc1.com&#x2F;sub&#x2F;v&#x2F;wrvDgcKnw6nDncOAwrrCmMOOw5_CiH1-wqPCnMK1w4LCosOcw4B8wq1_w98k&#x3D;&#x2F;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li><p>在 Qv2ray 的首选项（Preferences）窗口中，可以设置语言、系统代理、开机启动等。</p>
-</li>
-<li><p>如果想仅仅在 Chrome 浏览器上做网络翻墙功能，就在 Chrome 浏览器上安装 Proxy SwitchyOmega 插件。在插件的配置页面上，设置Proxy Server，采用协议SOCK5，代理服务器是本地127.0.0.1，端口是1088（具体端口号查看 Qv2ray的 首选项（Preferences）。</p>
-</li>
-<li><p>如果不想做全局的系统代理 System Proxy，在Qv2ray的首选项中取消系统代理即可。</p>
-</li>
-<li><p>Git 的代理需要另外配置。</p>
-</li>
-</ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li>【Linux配置v2ray详细教程-Ubuntu为例】：<a href="https://www.boluo.in/1776.html">https://www.boluo.in/1776.htm</a>l</li>
-</ul>
-]]></content>
-      <categories>
-        <category>工具</category>
-        <category>proxy</category>
-      </categories>
-      <tags>
-        <tag>代理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>读书笔记——《具体生活》</title>
-    <url>/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/</url>
-    <content><![CDATA[<p>  焦虑是现代人的常态。时间不够用，钱不够花，职业发展不够快，对当下和未来不够了解…我们不断加快生活的节奏，但快节奏之后是否带来了好处，我们并不清楚，只是觉得“快”比“慢”要好。</p>
-<p>  很多时候，我们做不好事情，是我们太匆忙、太着急，其实只要慢三拍，我们的事情会比以前做得好很多。有时候，慢比快好。</p>
-<p>  当忙碌成为生活的主旋律时，我们是否可以思考一下：生活的目的是什么？从容做事，优雅生活，这是我们生活的目的。很多人羡慕所谓的贵族生活，其实过去贵族的物质生活并不比今天的中产阶级好多少，但是他们整体的生活质量远非今天一般意义上的富有家庭所能比的。究其原因，是因为今天的人缺少了那份应有的从容和优雅。</p>
-<p>  当我们做事情的时候能够慢一点，少走点弯路，多花点实践享受浪漫而美好的人生，畅游人类知识和艺术的海洋，我们会发现自己是在真正地生活，而不是只是为了工作而活着。</p>
-<span id="more"></span>
-
-<h2 id="1-旅行的意义"><a href="#1-旅行的意义" class="headerlink" title="1. 旅行的意义"></a>1. 旅行的意义</h2><h2 id="2-博物馆之美"><a href="#2-博物馆之美" class="headerlink" title="2. 博物馆之美"></a>2. 博物馆之美</h2><h2 id="3-读书以以怡情长智"><a href="#3-读书以以怡情长智" class="headerlink" title="3. 读书以以怡情长智"></a>3. 读书以以怡情长智</h2><p>  古人把读万卷书和行万里路看作精英阶层成长不可或缺的两个环节，它们既能使人获得知识，也能令人愉悦自我。</p>
-<h3 id="3-1-阅读的意义"><a href="#3-1-阅读的意义" class="headerlink" title="3.1 阅读的意义"></a>3.1 阅读的意义</h3><ol>
-<li>阅读是放下可以让我们审视人生的不多的方式之一。<br>苏格拉底曾经说过，未经审视的人生不值得度过。而绅士人生需要有闲暇。读书必须有比较长的一段时间，不做其他事情，专心致志地阅读。</li>
-<li>阅读是一种交友方式，借书可以令两人的关系有所增进。<br>借书，说明至少两个人有共同的语言，在此基础上，谈合作也好，谈利益也罢，才搭得上话。对于男女之间交往来说，借一次书，还一次，至少就接触了两次，并且这也能创造一个良好的交谈话题。</li>
-<li>阅读不仅仅是为了让我们在冷酷无情的科技时代获得喘息，让我们重启大脑深入思考的功能，也是抵抗狭隘、思想控制和舆论支配的方式。<blockquote>
-<p>常常在焦虑的时候，或者感到特别难的时候，会去看看曾经觉得深有启发的书，让自己慢慢静下来，焦虑慢慢会平息，困难也会渐渐淡化，恢复状态，继续前行。现在发现，将书中的内容，与自己思想相结合，写出来的时候，特别的舒畅。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="4-音乐的故事"><a href="#4-音乐的故事" class="headerlink" title="4. 音乐的故事"></a>4. 音乐的故事</h2><h2 id="5-徕卡摄影的魅力"><a href="#5-徕卡摄影的魅力" class="headerlink" title="5. 徕卡摄影的魅力"></a>5. 徕卡摄影的魅力</h2><h2 id="6-香醇美酒"><a href="#6-香醇美酒" class="headerlink" title="6. 香醇美酒"></a>6. 香醇美酒</h2><h2 id="7-奢侈品的光泽"><a href="#7-奢侈品的光泽" class="headerlink" title="7. 奢侈品的光泽"></a>7. 奢侈品的光泽</h2>]]></content>
-      <categories>
-        <category>怡情长智</category>
-        <category>阅读</category>
-      </categories>
-      <tags>
-        <tag>读书/生活</tag>
       </tags>
   </entry>
   <entry>
@@ -1390,7 +1441,7 @@
 <p>将该url使用sqlmap进行注入测试，，测试结果可能存在SQL注入，也可能不存在SQL注入，存在则可以进行数据库名称，数据库表以及数据的操作。</p>
 <p><strong>4. 批量检测</strong><br>将目标url搜集并整理为txt文件，如图4所示，所有文件都保存为tg.txt，然后使用“sqlmap.py-m tg.txt”，注意tg.txt跟sqlmap在同一个目录下。<br><img src="%E6%89%B9%E9%87%8F%E6%95%B4%E7%90%86%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80.jpg" alt="批量整理目标地址"></p>
 <h3 id="1-4-2-直接连接数据库"><a href="#1-4-2-直接连接数据库" class="headerlink" title="1.4.2 直接连接数据库"></a>1.4.2 直接连接数据库</h3><blockquote>
-<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#97;&#100;&#x6d;&#105;&#110;&#64;&#49;&#57;&#x32;&#46;&#x31;&#54;&#x38;&#46;&#x32;&#x31;&#x2e;&#49;&#x37;">&#97;&#100;&#x6d;&#105;&#110;&#64;&#49;&#57;&#x32;&#46;&#x31;&#54;&#x38;&#46;&#x32;&#x31;&#x2e;&#49;&#x37;</a>:3306/testdb” -f –banner –dbs–users</p>
+<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#97;&#100;&#109;&#x69;&#x6e;&#64;&#x31;&#x39;&#x32;&#x2e;&#49;&#x36;&#56;&#46;&#x32;&#49;&#x2e;&#49;&#55;">&#97;&#100;&#109;&#x69;&#x6e;&#64;&#x31;&#x39;&#x32;&#x2e;&#49;&#x36;&#56;&#46;&#x32;&#49;&#x2e;&#49;&#55;</a>:3306/testdb” -f –banner –dbs–users</p>
 </blockquote>
 <h3 id="1-4-3数据库相关操作"><a href="#1-4-3数据库相关操作" class="headerlink" title="1.4.3数据库相关操作"></a>1.4.3数据库相关操作</h3><ul>
 <li>列数据库信息：–dbs</li>
