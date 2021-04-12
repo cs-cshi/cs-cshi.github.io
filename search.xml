@@ -878,7 +878,15 @@
 <p>  判断方法：先尝试数学表达式，再尝试 1a,2a等特性的输入，最后通过 <em>‘#来判断，如果是字符，</em>后的 ‘ 会先与 SQL 语句形成闭合，而 # 会注释掉 SQL 后面那个 ‘。</p>
 <h3 id="2-1-4-布尔盲注、时间盲注"><a href="#2-1-4-布尔盲注、时间盲注" class="headerlink" title="2.1.4 布尔盲注、时间盲注"></a>2.1.4 布尔盲注、时间盲注</h3><p>  布尔盲注：<code>id=1&#39; and &#39;1</code>,在这个查询中，如果能确定 <code>id=1</code> 的查询结果，那么后面那个 1 就可以作为我们用来判断数据是否猜测正确的预测点。这种虽然我们看不到数据，但可以通过注入推测出数据的技术称为布尔盲注。</p>
 <p>  时间盲注：有些情况下，页面回显内容完全一致，需要借助其他手段对 SQL 注入的执行结果进行判断，如通过服务器执行 SQL 语句所需的时间，通过 sleep()，利用 IF 条件函数或 AND、OR 函数的短路特性和 SQL 执行的时间判断 SQL 攻击的结果。</p>
-<h3 id="2-1-5-报错注入、堆叠注入"><a href="#2-1-5-报错注入、堆叠注入" class="headerlink" title="2.1.5 报错注入、堆叠注入"></a>2.1.5 报错注入、堆叠注入</h3><p>  有时为了方便开发者调试，有的网站会开启错误调试信息，即数据库将语句执行后的报错信息输出，这种注入称为报错注入。</p>
+<p>  在 MySQL 中，有一个 BENCHMARK(count expr) 函数，它用于测试函数性能，函数的执行结果，是将 expr 执行 count 次。(不同数据库中都有类似的函数)<br>  <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="number">-1</span> <span class="keyword">UNION</span> <span class="keyword">SELECT</span> IF(<span class="built_in">SUBSTRING</span>(<span class="keyword">current</span>, <span class="number">1</span>, <span class="number">1</span>) <span class="operator">=</span> <span class="type">CHAR</span>(<span class="number">119</span>), BENCHMARK(<span class="number">5000000</span>, ENCODE(<span class="string">&#x27;MSG&#x27;</span>,<span class="string">&#x27;by 5 seconds&#x27;</span>)), <span class="keyword">null</span>) <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> Database() <span class="keyword">as</span> <span class="keyword">current</span>) <span class="keyword">as</span> tb1;</span><br></pre></td></tr></table></figure><br>  这段 payload 判断库名的第一个字母是否为 CHAR(119)，即小写w。若为真，则通过 BENCHMARK() 函数造成较长延时；若为假，则该语句很快会执行完。攻击者遍历所有的字母，直到整个数据库名全部验证完成为止。</p>
+<ul>
+<li>database()：the name of the database currently connected to</li>
+<li>system_user()：the system user for the database</li>
+<li>current_user()：the current user who is logged in to the database</li>
+<li>last_insert_id：the transaction ID of the last insert operation on the database.</li>
+<li></li>
+</ul>
+<h3 id="2-1-5-报错注入"><a href="#2-1-5-报错注入" class="headerlink" title="2.1.5 报错注入"></a>2.1.5 报错注入</h3><p>  有时为了方便开发者调试，有的网站会开启错误调试信息，即数据库将语句执行后的报错信息输出，这种注入称为报错注入。</p>
 <p>  在 MySQL 中， updatexml 函数在执行时，第二个参数应该为合法的 XPATH 路径，否则会在引发报错的同时将传入的参数进行输出。利用这个特性，将想要得到的信息传入 updataxml 函数的第二个参数。如 <code>https:127.0.0.1/sql3.php?id=1&#39; or updatexml(1,concat(0x7e,(select pwd from wp_user),0x7e),1)%23</code></p>
 <ul>
 <li><code>concat</code> 函数，用于将多个字符串连接为一个字符串。concat()函数是将其连成一个字符串，因此不会符合XPATH_string的格式，从而出现格式错误，爆出用户。</li>
@@ -893,8 +901,8 @@
 </li>
 <li><code>0x7e</code>，ASCII码,实为<code>~</code>,upadtexml()报错信息为特殊字符、字母及之后的内容,为了前面字母丢失,开头连接一个特殊字符~</li>
 </ul>
-<p>  如果目标开启了多语句执行，可以通过分号<code>;</code>执行多条语句，任意修改数据库的结构和数据。<br>使用优先级：UNION注入 &gt; 报错注入 &gt; 布尔盲注 &gt; 时间盲注</p>
-<h2 id="2-2-注入点"><a href="#2-2-注入点" class="headerlink" title="2.2 注入点"></a>2.2 注入点</h2><h3 id="2-2-1-SELECT-注入"><a href="#2-2-1-SELECT-注入" class="headerlink" title="2.2.1 SELECT 注入"></a>2.2.1 SELECT 注入</h3><ol>
+<p>  如果目标开启了多语句执行，可以通过分号<code>;</code>执行多条语句，任意修改数据库的结构和数据。</p>
+<h3 id="2-1-6-宽字节注入"><a href="#2-1-6-宽字节注入" class="headerlink" title="2.1.6 宽字节注入"></a>2.1.6 宽字节注入</h3><h2 id="2-2-注入点"><a href="#2-2-注入点" class="headerlink" title="2.2 注入点"></a>2.2 注入点</h2><h3 id="2-2-1-SELECT-注入"><a href="#2-2-1-SELECT-注入" class="headerlink" title="2.2.1 SELECT 注入"></a>2.2.1 SELECT 注入</h3><ol>
 <li>注入点在 select_expr。如<code>SELECT $&#123;_GET[&#39;id&#39;]&#125;, content FROM wp_news</code>，此时首先可以采取时间盲注，另外更优的方法是用 AS 别名的方法。例如注入<code>(SELECT pwd FROM wp_user) AS title</code></li>
 <li>注入点在 table_reference。如<code>SELECT title FROM $&#123; &#125;</code>，采用 AS 别名，可注入<code>(SELECT pwd AS title FROM wp_user)</code></li>
 <li>注入点在 WHERE 或 HAVING 后。这种情况与注入基础中介绍的一致，要先判断有无引号包裹。</li>
@@ -908,7 +916,7 @@
 <h3 id="2-2-3-UPDATE-注入"><a href="#2-2-3-UPDATE-注入" class="headerlink" title="2.2.3 UPDATE 注入"></a>2.2.3 UPDATE 注入</h3><p>  与 SELECT 注入类似</p>
 <h3 id="2-2-4-DELETE-注入"><a href="#2-2-4-DELETE-注入" class="headerlink" title="2.2.4 DELETE 注入"></a>2.2.4 DELETE 注入</h3><p>  DELETE 注入大多在 WHERE 后。为了保证不会对正常数据造成干扰，通常使用 <code>and sleep(1)</code> 的方式保证 WHERE 执行结果返回 FALSE，与时间盲注类似。</p>
 <h2 id="2-3-注入与防御"><a href="#2-3-注入与防御" class="headerlink" title="2.3 注入与防御"></a>2.3 注入与防御</h2><h3 id="2-3-1-字符替换"><a href="#2-3-1-字符替换" class="headerlink" title="2.3.1 字符替换"></a>2.3.1 字符替换</h3><ol>
-<li>过滤了空格。将空格特换位<code>%09</code></li>
+<li>过滤了空格。将空格替换位<code>%09</code></li>
 <li>将 SELECT 替换成空。可以用嵌套的方式，如 SESELECTLECT。</li>
 <li>大小写匹配。在 MySQL 中，关键字是不区分大小写的，但替换语句通常区分大小写，故可采用混写。</li>
 <li>正则匹配。正则匹配关键字<code>\bselect\b</code>，可以用形如<code>/*!50000select/</code>方式绕过。</li>
@@ -916,8 +924,8 @@
 </ol>
 <h3 id="2-3-2-逃逸引号"><a href="#2-3-2-逃逸引号" class="headerlink" title="2.3.2 逃逸引号"></a>2.3.2 逃逸引号</h3><p>  注入的重点在于逃逸引号，而开发者常会将用户的输入全局做一次 <code>addslashes</code>,即在预定义字符(‘、”、\）前添加反斜扛。</p>
 <ol>
-<li>编码解码</li>
-<li>意料之外的输入点</li>
+<li>编码解码<br>开发者常用到形如 urldecode、base64_decode 的解码函数或自定义的加解密函数。当用户输入 addslashes 函数时，数据处于编码状态，引号无法被转义。</li>
+<li>意料之外的输入点<br>开发者在转义用户输入时遗漏了一些可控点，以php为例，如上传的文件名、http header、 $_SERVER(‘PHP_SELF’)$</li>
 <li>二次注入。如 SQL 插入用户名 <code>admin&#39;or&#39;1</code>，经转义变成<code>admin\&#39;or\&#39;1</code>,正常入库。但当这个用户名被再次使用时， get 的 SQL 语句就变成了 <code>WHERE username = &#39;admin&#39; or &#39;1&#39;</code></li>
 <li>字符串截断。如输入<code>aaaa&#39;</code>，自动转义为<code>aaaa\&#39;</code>，但由于长度限制，被截取成了<code>aaaa\</code>，正好转义了 SQL 语句中预置的单引号。</li>
 </ol>
@@ -974,6 +982,7 @@
         <category>网络安全</category>
         <category>CTF</category>
         <category>《从0到1：CTFer成长之路》</category>
+        <category>Web 安全</category>
       </categories>
       <tags>
         <tag>网络安全</tag>
@@ -2857,6 +2866,35 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
       </categories>
       <tags>
         <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机网路：自顶向下方法</title>
+    <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF_%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF_%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>《计算机网络：自定向下方法》笔记</p>
+<span id="more"></span>
+
+<h1 id="第1章-计算机网络和因特网"><a href="#第1章-计算机网络和因特网" class="headerlink" title="第1章 计算机网络和因特网"></a>第1章 计算机网络和因特网</h1><h2 id="1-1-什么是因特网"><a href="#1-1-什么是因特网" class="headerlink" title="1.1 什么是因特网"></a>1.1 什么是因特网</h2><blockquote>
+<p>回答这个问题有两种方式：1. 描述因特网的具体构成，即构成因特网的基本硬件和软件组件；2. 根据为分布式应用提供服务的联网基础设施来描述因特网。</p>
+</blockquote>
+<h3 id="1-1-1-具体构成描述"><a href="#1-1-1-具体构成描述" class="headerlink" title="1.1.1 具体构成描述"></a>1.1.1 具体构成描述</h3><blockquote>
+<p>因特网是一个世界范围的计算机网络，即它是一个互联了遍及全世界数十亿计算设备的网络（智能手机、平板电脑、汽车等等）。用因特网术语来说，这些设备都称为<strong>主机（host）</strong>或<strong>端系统（end system）</strong>。</p>
+<p>端系统通过<strong>通信链路（communication link）</strong>和<strong>分组交换机（packet switch）</strong>连接在一起。不同的链路能够以不同的传输速率（transmission rate）传输数据。</p>
+<p>当一个端系统向另一个端系统发送数据时，发送端讲数据分段，并为每段加上首部字节。由此形成的信息包用计算机网络的术语来说称为<strong>分组（packet）</strong>。</p>
+<p>分组交换机从入通信链路接收到达的分组，并将它从出链路转发出去。最著名的两种分组交换机类型是<strong>路由器（router）</strong>和<strong>链路层交换机（link-layer switch）</strong>。链路层交换机通常用于接入网中，而路由器通常用于网络核心中。</p>
+<p>端系统通过因特网服务提供商（Internet Service Provider, ISP）接入因特网。</p>
+</blockquote>
+<h3 id="1-1-2-服务描述"><a href="#1-1-2-服务描述" class="headerlink" title="1.1.2 服务描述"></a>1.1.2 服务描述</h3><blockquote>
+<p>与因特网相连的端系统提供了一个套接字接口（socket interface），该接口规定了运行在一个端系统上的程序请求因特网基础设施向运行在另一个端系统上的特定目的地程序交付数据的方式。（五元组：source_ip, source_port, destination_ip, destination_port, protocol_type ）</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>计算机基础</category>
+        <category>网络</category>
+        <category>计算机网路_自顶向下方法</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
 </search>
