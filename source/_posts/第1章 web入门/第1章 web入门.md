@@ -5,6 +5,7 @@ tags:
       - Web 安全
 categories: 
 - [网络安全, CTF, 《从0到1：CTFer成长之路》]
+- [网络安全, Web 安全]
 ---
 
 按照 CTF 线上赛中各种 Web 漏洞出现的频率、漏洞的复杂程序，将 Web 漏洞分为入门、进阶、拓展三个层次。本章从入门层次开始，介绍 Web 类题目中最常见的 3 类漏洞，即信息搜索、SQL 注入、任意文件读取漏洞。
@@ -81,7 +82,18 @@ categories:
   
   时间盲注：有些情况下，页面回显内容完全一致，需要借助其他手段对 SQL 注入的执行结果进行判断，如通过服务器执行 SQL 语句所需的时间，通过 sleep()，利用 IF 条件函数或 AND、OR 函数的短路特性和 SQL 执行的时间判断 SQL 攻击的结果。
 
-### 2.1.5 报错注入、堆叠注入
+  在 MySQL 中，有一个 BENCHMARK(count expr) 函数，它用于测试函数性能，函数的执行结果，是将 expr 执行 count 次。(不同数据库中都有类似的函数)
+  ```sql
+  -1 UNION SELECT IF(SUBSTRING(current, 1, 1) = CHAR(119), BENCHMARK(5000000, ENCODE('MSG','by 5 seconds')), null) FROM (SELECT Database() as current) as tb1;
+  ```
+  这段 payload 判断库名的第一个字母是否为 CHAR(119)，即小写w。若为真，则通过 BENCHMARK() 函数造成较长延时；若为假，则该语句很快会执行完。攻击者遍历所有的字母，直到整个数据库名全部验证完成为止。
+  - database()：the name of the database currently connected to
+  - system_user()：the system user for the database
+  - current_user()：the current user who is logged in to the database
+  - last_insert_id：the transaction ID of the last insert operation on the database.
+  - 
+
+### 2.1.5 报错注入
   有时为了方便开发者调试，有的网站会开启错误调试信息，即数据库将语句执行后的报错信息输出，这种注入称为报错注入。
 
   在 MySQL 中， updatexml 函数在执行时，第二个参数应该为合法的 XPATH 路径，否则会在引发报错的同时将传入的参数进行输出。利用这个特性，将想要得到的信息传入 updataxml 函数的第二个参数。如 `https:127.0.0.1/sql3.php?id=1' or updatexml(1,concat(0x7e,(select pwd from wp_user),0x7e),1)%23`
@@ -94,7 +106,12 @@ categories:
   - `0x7e`，ASCII码,实为`~`,upadtexml()报错信息为特殊字符、字母及之后的内容,为了前面字母丢失,开头连接一个特殊字符~
   
   如果目标开启了多语句执行，可以通过分号`;`执行多条语句，任意修改数据库的结构和数据。
-使用优先级：UNION注入 > 报错注入 > 布尔盲注 > 时间盲注
+
+### 2.1.6 宽字节注入
+
+
+
+
 
 ## 2.2 注入点
 ### 2.2.1 SELECT 注入
@@ -116,7 +133,7 @@ categories:
 
 ## 2.3 注入与防御
 ### 2.3.1 字符替换
-  1. 过滤了空格。将空格特换位`%09`
+  1. 过滤了空格。将空格替换位`%09`
   2. 将 SELECT 替换成空。可以用嵌套的方式，如 SESELECTLECT。
   3. 大小写匹配。在 MySQL 中，关键字是不区分大小写的，但替换语句通常区分大小写，故可采用混写。
   4. 正则匹配。正则匹配关键字`\bselect\b`，可以用形如`/*!50000select/`方式绕过。
@@ -125,7 +142,9 @@ categories:
 ### 2.3.2 逃逸引号
   注入的重点在于逃逸引号，而开发者常会将用户的输入全局做一次 `addslashes`,即在预定义字符('、"、\）前添加反斜扛。
   1. 编码解码
+     开发者常用到形如 urldecode、base64_decode 的解码函数或自定义的加解密函数。当用户输入 addslashes 函数时，数据处于编码状态，引号无法被转义。
   2. 意料之外的输入点
+     开发者在转义用户输入时遗漏了一些可控点，以php为例，如上传的文件名、http header、 $_SERVER('PHP_SELF')$
   3. 二次注入。如 SQL 插入用户名 `admin'or'1`，经转义变成`admin\'or\'1`,正常入库。但当这个用户名被再次使用时， get 的 SQL 语句就变成了 `WHERE username = 'admin' or '1'`
   4. 字符串截断。如输入`aaaa'`，自动转义为`aaaa\'`，但由于长度限制，被截取成了`aaaa\`，正好转义了 SQL 语句中预置的单引号。
 
