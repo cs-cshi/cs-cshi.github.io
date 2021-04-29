@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="内容主要来自于拉勾教育《计算机网络通关29讲》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网路_拉勾教育">
+<meta property="og:url" content="https://cs-cshi.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="Chang">
+<meta property="og:description" content="内容主要来自于拉勾教育《计算机网络通关29讲》">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E5%85%AC%E5%8F%B8%E5%86%85%E7%BD%91%E7%BB%93%E6%9E%84%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E5%B0%81%E5%8C%85%E4%BA%A4%E6%8D%A2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E8%9C%82%E5%B7%A2%E7%BD%91%E7%BB%9C%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E8%9C%82%E7%AA%9D%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C%E6%9E%84%E6%88%90.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E5%9F%BA%E7%AB%99%E9%87%8D%E5%8F%A0%E7%9A%84%E7%BD%91%E6%A0%BC%E5%92%8C%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E8%8A%82%E7%82%B9.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E5%AE%B6%E7%94%A8%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E4%BA%92%E8%81%94%E7%BD%91%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/封包交换技术.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP-IP%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP3%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/4%E6%AC%A1%E6%8C%A5%E6%89%8B.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E5%8F%91%E9%80%81%E6%8E%A5%E6%94%B6%E7%BC%93%E5%AD%98.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%20%E6%AE%B5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/Sequence%20Number.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/Sequence%20bytes.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/Sequence%20Number2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%20%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%A8%A1%E5%9E%8B%EF%BC%88%E5%90%9E%E5%90%90%E9%87%8F%E4%BD%8E%EF%BC%89.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%20%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%20%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%A8%A1%E5%9E%8B%E9%98%9F%E5%88%97.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%E6%8E%92%E9%98%9F%E6%9C%BA%E5%88%B6.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A31.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A32.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A33.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A34.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A35.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/UDP%20%E7%9A%84%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F.png">
+<meta property="article:published_time" content="2021-04-27T06:00:00.000Z">
+<meta property="article:modified_time" content="2021-04-29T08:27:28.611Z">
+<meta property="article:author" content="Charles">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E5%85%AC%E5%8F%B8%E5%86%85%E7%BD%91%E7%BB%93%E6%9E%84%E7%A4%BA%E4%BE%8B.png">
+
+<link rel="canonical" href="https://cs-cshi.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>计算机网路_拉勾教育 | Chang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页 | home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于 | about</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签 | tags<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类 | categories<span class="badge">21</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">28</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索 | search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cs-cshi.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Charles">
+      <meta itemprop="description" content="慢下来，记录生活点滴，畅游人类知识和艺术的海洋。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机网路_拉勾教育
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-27 14:00:00" itemprop="dateCreated datePublished" datetime="2021-04-27T14:00:00+08:00">2021-04-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-29 16:27:28" itemprop="dateModified" datetime="2021-04-29T16:27:28+08:00">2021-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机基础</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>14k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>内容主要来自于拉勾教育《计算机网络通关29讲》</p>
+<span id="more"></span>
+
+<h1 id="01-漫游互联网：什么是蜂窝移动网络"><a href="#01-漫游互联网：什么是蜂窝移动网络" class="headerlink" title="01 | 漫游互联网：什么是蜂窝移动网络"></a>01 | 漫游互联网：什么是蜂窝移动网络</h1><h2 id="1-1-网络的组成"><a href="#1-1-网络的组成" class="headerlink" title="1.1 网络的组成"></a>1.1 网络的组成</h2><p>由无数个节点构成一个个小型网络，再再由小型网络组成重型网络，再组成大型网络，最后组成完整的网络世界。</p>
+<h3 id="1-1-1-公司内网"><a href="#1-1-1-公司内网" class="headerlink" title="1.1.1 公司内网"></a>1.1.1 公司内网</h3><p><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E5%85%AC%E5%8F%B8%E5%86%85%E7%BD%91%E7%BB%93%E6%9E%84%E7%A4%BA%E4%BE%8B.png" alt="公司内网结构示例"></p>
+<p>公司网络从<strong>本地网络服务提供商（Internet Service Provider, ISP）</strong>接入，然后内部再分成一个个子网。</p>
+<p>网络中的线路也被称作<strong>通信链路（Communication Link）</strong>，用于传输网络信号。有的网络节点会同时接入多条链路，数据传输到这些节点时需要选择方向，因此这些节点需要进行<strong>交换（Switch）</strong></p>
+<p>数据发生交换时，会从一条链路进入交换设备，然后缓存下来，再转发到另一条链路，如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E5%B0%81%E5%8C%85%E4%BA%A4%E6%8D%A2.png" alt="封包交换"></p>
+<p>网络中数据是以分组或者包（Packet）的形式传输，因此这种数据切换链路技术也称为<strong>封包交换技术（Packet Switch）</strong></p>
+<p>网络中常见的具有交换能力的设备是<strong>路由器（Router）</strong>和**链路层交换机(Link-Layer Switch)**。</p>
+<p>局域网络之间，可以通过路由器、交换机进行连接，从而构成一个更大的局域网。</p>
+<h3 id="1-1-2-移动网络"><a href="#1-1-2-移动网络" class="headerlink" title="1.1.2 移动网络"></a>1.1.2 移动网络</h3><p>前面提到的网络传输中需要的通信链路是一个抽象概念。无线信号的发送接收器可以构成通信链路，蓝牙信道也可以构成通信链路。</p>
+<p>移动网络中，无线信号构成通信链路。通信的核心被称作蜂窝塔（Cellular Tower），也称作基站（BaseStation）。每个蜂窝塔只覆盖一个六边形的范围，这种六边形的结构可以让信号无死角覆盖。如果是圆，圆与圆之间会有间隙。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E8%9C%82%E5%B7%A2%E7%BD%91%E7%BB%9C%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="蜂巢网络示意图"></p>
+<p>一个蜂窝网络构造大体如下图:<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E8%9C%82%E7%AA%9D%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C%E6%9E%84%E6%88%90.png" alt="蜂窝移动网络构成"><br>网络提供商将网络供给处于蜂窝网络边缘的路由器，路由器连接蜂窝塔，再通过蜂窝塔（基站）提供给处于六边形地区中的设备。</p>
+<p>将网络提供给一个子网的行为，称为网络提供（Network Provider）<br>对一个子网连接提供商的网络，称为网络接入（Network Access）</p>
+<p>实际上随着蜂窝网格中设备越来越多，基站覆盖的网络常常是重叠的。这样设计的好处是，当一个基站过载、出现故障、不稳定时，可以切换到另一个基站的网络。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E5%9F%BA%E7%AB%99%E9%87%8D%E5%8F%A0%E7%9A%84%E7%BD%91%E6%A0%BC%E5%92%8C%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97%E8%8A%82%E7%82%B9.png" alt="基站重叠的网格和边缘计算节点"></p>
+<p>另一方面，在一定范围内的区域，离用户较近的地方还可以部署服务器，帮助用户完成计算。这相当于计算资源的下沉，称为<strong>边缘计算</strong>。相比中心化的计算，边缘计算延迟低、链路短，能够将更好的体验带给距离边缘计算集群最近的节点。从而让用户享受到更优质、延迟更低、算力更强的服务。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97.png" alt="边缘计算"></p>
+<h3 id="1-1-3-家庭网络"><a href="#1-1-3-家庭网络" class="headerlink" title="1.1.3 家庭网络"></a>1.1.3 家庭网络</h3><p><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E5%AE%B6%E7%94%A8%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84.png" alt="家用网络结构"><br>家用网络现在已经发展成一种网格状的连接。一方面家用网络会通过路由器接入本地 ISP 提供的网络服务。另一方面，一些设备，比如电脑、笔记本、手机、冰箱等都可以直接和路由器连接。<strong>路由器也承担了链路层网关的作用</strong>，作为家用电器之间信息的交换设备。</p>
+<p>一些家用电器承担了蓝牙设备的控制器，如智能音箱。上图的智能音箱把家用网络带向了一个网格状，有的设备会同时连接路由器（WI-FI）和智能音箱，这样手机和音箱都可以直接控制这些设备。</p>
+<h3 id="1-1-4-整体关系"><a href="#1-1-4-整体关系" class="headerlink" title="1.1.4 整体关系"></a>1.1.4 整体关系</h3><p><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E4%BA%92%E8%81%94%E7%BD%91%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84.png" alt="互联网整体结构"><br>最顶部的全球或国家大型的 ISP 之间联网，构成了网络的主干。然后区域性的 ISP 承接主干网络，在这个基础之上再向家庭和公司提供接入服务。移动蜂窝网络因为部署复杂，往往也是由大型 ISP 直接提供。</p>
+<h2 id="1-2-数据的传输"><a href="#1-2-数据的传输" class="headerlink" title="1.2 数据的传输"></a>1.2 数据的传输</h2><p>为了传递数据，在网络中有几个特别重要的抽象。最终提供服务或者享受服务的设备，称为<strong>终端（Terminal）</strong>，或者<strong>端系统（End System）</strong>，有时候简单称为<strong>主机（Host）</strong>。比如说：电脑、手机、冰箱、汽车等，我们都可以看作是一个主机（Host）。</p>
+<p>网络传输分成两类，一类是端到端（Host-to-Host）的能力，由 TCP/IP 协议群提供。还有一类是广播的能力，是一对多、多对多的能力，可以看作是端到端（Host-to-Host）能力的延伸。</p>
+<p>网络基础设施往往不能一次性传输太大的数据量，因此通常会将数据分片传输。比如传输一个 MP3，我们会将 MP3 内容切分成很多个组，每个组也称作一个封包，英文都是 Packet。这样，如果一个封包损坏，只需要重发损坏的封包，而不需要重发所有数据。</p>
+<p>另一方面，网络中两点间的路径非常多，如果一条路径阻塞了，部分封包可以考虑走其他路径。发送端将数据拆分成封包（Packet），封包在网络中遇到岔路，由交换器和路由器节点决定走向，接收端再组包。下图对封包交换技术的一个演示。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/封包交换技术.gif" align=center /></p>
+<h2 id="1-3-总结"><a href="#1-3-总结" class="headerlink" title="1.3 总结"></a>1.3 总结</h2><p>互联网是一个非常庞大的结构，从整体来看，互联网是一个立体的、庞大的网状结构。但是如果将它放大、再放大，将镜头拉近，在微观层面，我们会看到一个个网络、一台台设备，还会看到大量的封包在交换、有设备在不断地改变封包的走向、损坏的封包被重发、一个个光电信号被转化和传输。</p>
+<h1 id="02-传输层协议-TCP：TCP-为什么握手是-3-次、挥手是-4-次？"><a href="#02-传输层协议-TCP：TCP-为什么握手是-3-次、挥手是-4-次？" class="headerlink" title="02 | 传输层协议 TCP：TCP 为什么握手是 3 次、挥手是 4 次？"></a>02 | 传输层协议 TCP：TCP 为什么握手是 3 次、挥手是 4 次？</h1><p>TCP 和 UDP 是今天应用最广泛的传输层协议，拥有最核心的垄断地位。今天互联网的整个传输层，几乎都是基于这两个协议打造的。无论是应用开发、框架设计选型、做底层和优化，还是定位线上问题，只要碰到网络，就逃不开 TCP 协议相关的知识。</p>
+<p>TCP（Transport Control Protocol）是一个传输层协议，提供 Host-To-Host 数据的可靠传输，支持全双工，是一个连接导向的协议。</p>
+<h3 id="2-1-主机到主机（Host-To-Host）如何通信？"><a href="#2-1-主机到主机（Host-To-Host）如何通信？" class="headerlink" title="2.1 主机到主机（Host-To-Host）如何通信？"></a>2.1 主机到主机（Host-To-Host）如何通信？</h3><p>TCP 提供的是 Host-To-Host 传输，一台主机通过 TCP 发送数据给另一台主机。这里的主机（Host）是一个抽象的概念，可以是手机、平板、手表等。收发数据的设备都是主机，所以双方是平等的。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP-IP%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B.png" alt="TCP/IP 5层模型"></p>
+<p><strong>TCP 协议往上是应用到应用（Application-To-Application）的协议。</strong>什么是应用到应用的协议呢？比如用微信发信息给张三，微信客户端、微信聊天服务都是应用。微信有自己的聊天协议，微信的聊天协议是应用到应用的协议；如果微信的聊天协议想要工作，就需要一个主机到主机的协议帮助它实现通信。</p>
+<p>TCP 上层的应用层协议要使用 TCP 能力的时候，需要告知 TCP 是哪个应用——这就是端口号。端口号用于区分应用。</p>
+<p>TCP 要实现主机到主机通信，就需要知道主机的网络地址（IP 地址），但是 TCP 不负责实际地址到地址（Address-To-Address）的传输，因此 TCP 协议把 IP 地址给底层的网络层处理。</p>
+<p><strong>网络层（Netowrk Layer）</strong>，提供地址到地址的通信，IP 协议就在这一层工作。网络层解决地址到地址的通信，但是不负责信号在具体两个设备间传递。因此，网络层会调用下方的<strong>链路层</strong>在两个相邻设备间传递信息。当信号在两个设备间传递的时候，<strong>物理层</strong>封装最底层的物理设备、传输介质等，由最下方的物理层提供最底层的传输能力。</p>
+<h3 id="2-2-什么是连接和会话？"><a href="#2-2-什么是连接和会话？" class="headerlink" title="2.2 什么是连接和会话？"></a>2.2 什么是连接和会话？</h3><p>连接是通信双方的一个约定，目标是让两个在通信的程序之间产生一个默契，保证两个程序都在线，而且尽快地响应对方的请求，这就是连接（Connection）。</p>
+<p>设计上，连接是一种传输数据的行为。传输之前，建立一个连接。具体来说，数据收发双方的内存中都建立一个用于维护数据传输状态的对象，比如双方 IP 和端口是多少？现在发送了多少数据了？状态健康吗？传输速度如何？等。所以，<strong>连接是网络行为状态的记录。</strong></p>
+<p>和连接关联的还有一个名词，叫作<strong>会话（Session），会话是应用的行为</strong>。比如微信里你要和张三聊天，你们创建一个聊天窗口，这个就是会话。你开始传输数据，你和微信服务器间建立一个连接。如果你们聊一段时间，各自休息了，约定先不要关微信，1 个小时后再回来。那么连接会断开，因为聊天窗口没关，所以会话还在。</p>
+<p>有些系统设计中，会话会自动重连（也就是重新创建连接），或者帮助创建连接。 此外，会话也负责在多次连接中保存状态，比如 HTTP Session 在多次 HTTP 请求（连接）间保持状态（如用户信息）。</p>
+<p><strong>会话是应用层的概念，连接是传输层的概念。</strong></p>
+<h3 id="2-3-单工-双工问题"><a href="#2-3-单工-双工问题" class="headerlink" title="2.3 单工/双工问题"></a>2.3 单工/双工问题</h3><p>在任何一个时刻，如果数据只能单向发送，就是<strong>单工</strong>，所以单工需要至少一条线路。如果在某个时刻数据可以向一个方向传输，也可以向另一个方向反方向传输，而且交替进行，叫作<strong>半双工</strong>；半双工需要至少 1 条线路。最后，如果任何时刻数据都可以双向收发，这就是<strong>全双工</strong>，全双工需要大于 1 条线路。当然这里的线路，是一个抽象概念，你可以并发地处理信号，达到模拟双工的目的。</p>
+<p><strong>TCP 是一个双工协议，数据任何时候都可以双向传输</strong>。这就意味着客户端和服务端可以平等地发送、接收信息。正因为如此，客户端和服务端在 TCP 协议中有一个平等的名词——<strong>Host（主机）</strong>。</p>
+<h3 id="2-4-什么是可靠性？"><a href="#2-4-什么是可靠性？" class="headerlink" title="2.4 什么是可靠性？"></a>2.4 什么是可靠性？</h3><p><strong>可靠性指数据保证无损传输</strong>。如果发送方按照顺序发送，然后数据无序地在网络间传递，就必须有一种算法在接收方将数据恢复原有的顺序。另外，如果发送方同时要把消息发送给多个接收方，这种情况叫作多播，可靠性要求每个接收方都无损收到相同的副本。多播情况还有强可靠性，就是如果有一个消息到达任何一个接收者，那么所有接受者都必须收到这个消息。</p>
+<h3 id="2-5-TCP的握手和挥手"><a href="#2-5-TCP的握手和挥手" class="headerlink" title="2.5 TCP的握手和挥手"></a>2.5 TCP的握手和挥手</h3><p>TCP 是一个连接导向的协议，设计有建立连接（握手）和断开连接（挥手）的过程。TCP 没有设计会话（Session），因为会话通常是一个应用的行为。</p>
+<p>TCP 协议有这样几个基本操作：</p>
+<ul>
+<li>如果一个 Host 主动向另一个 Host 发起连接，称为 SYN（Synchronization），请求同步；</li>
+<li>如果一个 Host 主动断开请求，称为 FIN（Finish），请求完成；</li>
+<li>如果一个 Host 给另一个 Host 发送数据，称为 PSH（Push），数据推送。</li>
+</ul>
+<p>以上 3 种情况，接收方收到数据后，都需要给发送方一个 ACK（Acknowledgement）响应。请求/响应的模型是可靠性的要求，如果一个请求没有响应，发送方可能会认为需要重发这个请求。</p>
+<h3 id="2-6-建立连接的过程（三次握手）"><a href="#2-6-建立连接的过程（三次握手）" class="headerlink" title="2.6 建立连接的过程（三次握手）"></a>2.6 建立连接的过程（三次握手）</h3><p>因为要保持连接和可靠性约束，TCP 协议要保证每一条发出的数据必须给返回，返回数据叫作 ACK（也就是响应）。</p>
+<p>按照这个思路，建立连接需要 3 次握手：<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP3%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="TCP3次握手"></p>
+<ol>
+<li>客户端发消息给服务端（SYN）</li>
+<li>服务端准备好进行连接</li>
+<li>服务端针对客户端的 SYN 给一个 ACK<br>服务端还没有确定客户端是否准备好了,所以还要继续确认。比如步骤 3 之后，服务端马上给客户端发送数据，这个时候客户端可能还没有准备好接收数据。因此还需要增加一个过程。</li>
+<li>服务端发送一个 SYN 给客户端</li>
+<li>客户端准备就绪</li>
+<li>客户端给服务端发送一个 ACK<blockquote>
+<p>步骤1、3、4、6 是传输数据，算是握手，3、4合并成 SYN-ACK 响应。</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="3次握手"></p>
+<p>从上面的例子中，可以进一步思考 SYN、ACK、PSH 这些常见的标识位（Flag）在传输中如何表示。</p>
+<p>一种思路是为 TCP 协议增加协议头。在协议头中取多个位（bit），其中 SYN、ACK、PSH 都占有 1 个位。比如 SYN 位，1 表示 SYN 开启，0 表示关闭。因此，SYN-ACK 就是 SYN 位和 ACK 位都置 1。这种设计，我们也称为标识（Flag）。标识位是放在 TCP 头部的。</p>
+<h3 id="2-7-断开连接的过程-4次挥手"><a href="#2-7-断开连接的过程-4次挥手" class="headerlink" title="2.7 断开连接的过程(4次挥手)"></a>2.7 断开连接的过程(4次挥手)</h3><ol>
+<li>客户端要求断开连接，发送一个断开的请求，这个叫作（FIN）。</li>
+<li>服务端收到请求，然后给客户端一个 ACK，作为 FIN 的响应。  </li>
+<li>这里需要思考一个问题，可不可以像握手那样马上传 FIN 回去？<br>这个时候服务端不能马上传 FIN，因为断开连接要处理的问题比较多，比如说服务端可能还有发送出去的消息没有得到 ACK；也有可能服务端自己有资源要释放。因此断开连接不能像握手那样操作——将两条消息合并。所以，服务端经过一个等待，确定可以关闭连接了，再发一条 FIN 给客户端。</li>
+<li>客户端收到服务端的 FIN，同时客户端也可能有自己的事情需要处理完，比如客户端有发送给服务端没有收到 ACK 的请求，客户端自己处理完成后，再给服务端发送一个 ACK。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/4%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="4次挥手.png"></p>
+<h3 id="2-8-总结"><a href="#2-8-总结" class="headerlink" title="2.8 总结"></a>2.8 总结</h3><p>在学习 3 次握手、4 次挥手时，一定要理解为什么这么设计，而不是死记硬背。</p>
+<ol>
+<li>TCP 提供连接（Connection），让双方的传输更加稳定、安全。</li>
+<li>TCP 没有直接提供会话，因为应用对会话的需求多种多样，比如聊天程序会话在保持双方的聊天记录，电商程序会话在保持购物车、订单一致，所以会话通常在 TCP 连接上进一步封装，在应用层提供。</li>
+<li>TCP 是一个面向连接的协议（Connection -oriented Protocol），说的就是 TCP 协议参与的双方（Host）在收发数据之前会先建立连接。后面我们还会学习 UDP 协议，UDP 是一个面向报文（Datagram-oriented）的协议——协议双方不需要建立连接，直接传送报文（数据）。</li>
+<li>连接需要消耗更多的资源。比如说，在传输数据前，必须先协商建立连接。因此，不是每种场景都应该用连接导向的协议。像视频播放的场景，如果使用连接导向的协议，服务端每向客户端推送一帧视频，客户端都要给服务端一次响应，这是不合理的。</li>
+</ol>
+<p><strong>TCP 为什么是 3 次握手，4 次挥手？</strong><br>TCP 是一个双工协议，为了让双方都保证，建立连接的时候，连接双方都需要向对方发送 SYC（同步请求）和 ACK（响应）。</p>
+<p>握手阶段双方都没有烦琐的工作，因此一方向另一方发起同步（SYN）之后，另一方可以将自己的 ACK 和 SYN 打包作为一条消息回复，因此是 3 次握手——需要 3 次数据传输。</p>
+<p>到了挥手阶段，双方都可能有未完成的工作。收到挥手请求的一方，必须马上响应（ACK），表示接收到了挥手请求。最后等所有工作结束，再发送请求中断连接（FIN），因此是 4 次挥手。</p>
+<p><strong>一台内存在 8G 左右的服务器，可以同时维护多少个连接？</strong></p>
+<ul>
+<li>tcp连接数上限其实受限于机器的内存，以8G内存为例，假设一个tcp连接需要占用的最小内存是8k（发送接收缓存各4k，当然还要考虑socket描述符），那么最大连接数为：8<em>1024</em>1024/8=1048576个，即约100万个tcp长连接。不过这只是理论数值，并未考虑实际业务。</li>
+</ul>
+<h1 id="03-TCP-的封包格式：TCP-为什么要粘包和拆包？"><a href="#03-TCP-的封包格式：TCP-为什么要粘包和拆包？" class="headerlink" title="03 | TCP 的封包格式：TCP 为什么要粘包和拆包？"></a>03 | TCP 的封包格式：TCP 为什么要粘包和拆包？</h1><h3 id="3-1-TCP的拆包和粘包"><a href="#3-1-TCP的拆包和粘包" class="headerlink" title="3.1 TCP的拆包和粘包"></a>3.1 TCP的拆包和粘包</h3><p>TCP 是一个传输层协议。TCP 发送数据的时候，往往不会将数据一次性发送，像下图这样：<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE1.png" alt="TCP发送数据1"><br>而是将数据拆分成很多个部分，然后再逐个发送。像下图这样：<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE2.png" alt="TCP发送数据2"></p>
+<p><strong>TCP 为什么不一次发送完所有的数据？</strong><br>这里有很多原因，比如为了<strong>稳定性</strong>，一次发送的数据越多，出错的概率越大。再比如说为了<strong>效率</strong>，网络中有时候存在着并行的路径，拆分数据包就能更好地利用这些并行的路径。再有，比如发送和接收数据的时候，都存在着缓冲区。如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E5%8F%91%E9%80%81%E6%8E%A5%E6%94%B6%E7%BC%93%E5%AD%98.png" alt="发送接收缓存"></p>
+<p>缓冲区是在内存中开辟的一块区域，目的是缓冲。因为大量的应用频繁地通过网卡收发数据，这个时候，网卡只能一个一个处理应用的请求。当网卡忙不过来的时候，数据就需要排队，也就是将数据放入缓冲区。如果每个应用都随意发送很大的数据，可能导致其他应用实时性遭到破坏。</p>
+<p>还有一些原因，比如内存的最小分配单位是页表，如果数据的大小超过一个页表，可能会存在页面置换问题，造成性能的损失。</p>
+<p>总之，方方面面的原因：在传输层封包不能太大。这种限制，往往是以缓冲区大小为单位的。也就是 TCP 协议，会将数据拆分成不超过缓冲区大小的一个个部分。每个部分有一个独特的名词，叫作 <strong>TCP 段（TCP Segment）</strong>。在接收数据时，一个个 TCP 段又被重组成原来的数据。</p>
+<p>像这样，数据经过拆分，然后传输，然后在目的地重组，俗称<strong>拆包</strong>。所以拆包是将数据拆分成多个 TCP 段传输。那么粘包是什么呢？有时候，如果发往一个目的地的多个数据太小了，为了防止多次发送占用资源，TCP 协议有可能将它们合并成一个 TCP 段发送，在目的地再还原成多个数据，这个过程俗称<strong>粘包</strong>。所以粘包是将多个数据合并成一个 TCP 段发送。</p>
+<h3 id="3-2-TCP-Segment"><a href="#3-2-TCP-Segment" class="headerlink" title="3.2 TCP Segment"></a>3.2 TCP Segment</h3><p>下图是一个 TCP 段的格式：<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%20%E6%AE%B5.png" alt="TCP 段"></p>
+<p>TCP 协议就是依靠每一个 TCP 段工作的，所以每认识一个 TCP 的能力，几乎都会找到在 TCP Segment 中与之对应的字段。</p>
+<ul>
+<li>Source Port/Destination Port 描述的是发送端口号和目标端口号，代表发送数据的应用程序和接收数据的应用程序。比如 80 代表 HTTP 服务，22 是 SSH 服务</li>
+<li>Sequence Number 和 Achnowledgment Number 是保证可靠性的两个关键。</li>
+<li>Data Offset 是一个偏移量。这个量存在的原因是 TCP Header 部分的长度是可变的，因此需要一个数值来描述数据从哪个字节开始。</li>
+<li>Reserved 是很多协议设计会保留的一个区域，用于日后扩展能力。</li>
+<li>URG/ACK/PSH/RST/SYN/FIN 是几个标志位，用于描述 TCP 段的行为。也就是一个 TCP 封包到底是做什么用的。（标志位可以混合使用）<ul>
+<li>URG 代表这是一个紧急数据，比如远程操作的时候，用户按下了 Ctrl+C，要求终止程序，这种请求需要紧急处理。</li>
+<li>ACK 代表响应，我们在“02 | 传输层协议 TCP：TCP 为什么握手是 3 次、挥手是 4 次？”讲到过，所有的消息都必须有 ACK，这是 TCP 协议确保稳定性的一环。</li>
+<li>PSH 代表数据推送，也就是在传输数据的意思。</li>
+<li>SYN 同步请求，也就是申请握手。</li>
+<li>FIN 终止请求，也就是挥手。</li>
+</ul>
+</li>
+<li>Window 是 TCP 保证稳定性并进行流量控制的工具</li>
+<li>Checksum 是校验和，用于校验 TCP 段有没有损坏。</li>
+<li>Urgent Pointer 指向最后一个紧急数据的序号（Sequence Number）。它存在的原因是：有时候紧急数据是连续的很多个段，所以需要提前告诉接收方进行准备。</li>
+<li>Options 中存储了一些可选字段，比如 MSS（Maxiumun Segment Size）。</li>
+<li>Padding 存在的意义是因为 Options 的长度不固定，需要 Pading 进行对齐。</li>
+</ul>
+<h4 id="3-2-1-Sequence-Number-和-Acknowledgement-Number"><a href="#3-2-1-Sequence-Number-和-Acknowledgement-Number" class="headerlink" title="3.2.1 Sequence Number 和 Acknowledgement Number"></a>3.2.1 Sequence Number 和 Acknowledgement Number</h4><p>在 TCP 协议的设计当中，数据被拆分成很多个部分，部分增加了协议头。合并成为一个 TCP 段，进行传输。这个过程，我们俗称拆包。这些 TCP 段经过复杂的网络结构，由底层的 IP 协议，负责传输到目的地，然后再进行重组。</p>
+<p>稳定性要求数据无损地传输，也就是说拆包获得数据，又需要恢复到原来的样子。而在复杂的网络环境当中，即便所有的段是顺序发出的，也不能保证它们顺序到达，因此，发出的每一个 TCP 段都需要有序号。这个序号，就是 Sequence Number（Seq）。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/Sequence%20Number.png" alt="Sequence Number"></p>
+<p>发送数据的时候，为每一个 TCP 段分配一个自增的 Sequence Number。接收数据的时候，虽然得到的是乱序的 TCP 段，但是可以通过 Seq 获得完整的顺序。</p>
+<p>接收方如果要回复发送方，也需要这个 Seq。而网络的两个终端，去同步一个自增的序号是非常困难的。因为任何两个网络主体间，时间都不能做到完全同步，又没有公共的存储空间，无法共享数据，更别说实现一个分布式的自增序号了。此时需要用到发送的字节数和接收的字节数。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/Sequence%20bytes.png" alt="Sequence bytes"></p>
+<p>重新定义一下 Seq（如上图所示），对于任何一个接收方，如果知道了发送者发送某个 TCP 段时，已经发送了多少字节的数据，那么就可以确定发送者发送数据的顺序。</p>
+<p>但是这里有一个问题。如果接收方也向发送者发送了数据请求（或者说双方在对话），接收方就不知道发送者发送的数据到底对应哪一条自己发送的数据了。</p>
+<p>因此我们还需要另一个数据，就是每个 TCP 段发送时，发送方已经接收了多少数据。用 Acknowledgement Number 表示，下面简写为 ACK。</p>
+<p>下图中，终端发送了三条数据，并且接收到四条数据，通过观察，根据接收到的数据中的 Seq 和 ACK，将发送和接收的数据进行排序。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/Sequence%20Number2.png" alt="Sequence Number2"><br>上图中，发送方发送了 100 字节的数据，而接收到的（Seq = 0 和 Seq =100）的两个封包，都是针对发送方（Seq = 0）这个封包的。发送 100 个字节，所以接收到的 ACK 刚好是 100。说明（Seq= 0 和 Seq= 100）这两个封包是针对接收到第 100 个字节数据后，发送回来的。这样就确定了整体的顺序。(感觉这段有问题)</p>
+<p>注意，无论 Seq 还是 ACK，都是针对“对方”而言的。是对方发送的数据和对方接收到的数据。</p>
+<h4 id="3-2-2-MSS（Maxiumun-Segment-Size）"><a href="#3-2-2-MSS（Maxiumun-Segment-Size）" class="headerlink" title="3.2.2 MSS（Maxiumun Segment Size）"></a>3.2.2 MSS（Maxiumun Segment Size）</h4><p>这个可选项控制了 TCP 段的大小，它是一个协商字段（Negotiate）。协议是双方都要遵循的标准，因此配置往往不能由单方决定，需要双方协商。</p>
+<p>TCP 段的大小（MSS）涉及发送、接收缓冲区的大小设置，双方实际发送接收封包的大小，对拆包和粘包的过程有指导作用，因此需要双方去协商。</p>
+<p>如果这个字段设置得非常大，就会带来一些影响。</p>
+<p>首先对方可能会拒绝，作为服务的提供方，可能不会愿意接收太大的 TCP 段。因为大的 TCP 段，会降低性能，比如内存使用的性能。</p>
+<p>其次，支持 TCP 协议工作的 IP 协议，工作效率会下降。TCP 协议不肯拆包，IP 协议就需要拆出大量的包。那么 IP 协议为什么需要拆包呢？这是因为在网络中，每次能够传输的数据不可能太大，这受限于具体的网络传输设备，也就是物理特性。但是 IP 协议，拆分太多的封包并没有意义。因为可能会导致属于同个 TCP 段的封包被不同的网络路线传输，这会加大延迟。同时，拆包，还需要消耗硬件和计算资源。</p>
+<p>那是不是 MSS 越小越好呢？MSS 太小的情况下，会浪费传输资源（降低吞吐量）。因为数据被拆分之后，每一份数据都要增加一个头部。如果 MSS 太小，那头部的数据占比会上升，这让吞吐量成为一个灾难。所以在使用的过程当中，MSS 的配置，往往都是一个折中的方案。而根据 Unix 的哲学，不要去猜想什么样的方案是最合理的，而是要尝试去用实验证明它，一切都要用实验依据说话。</p>
+<h3 id="3-3-总结"><a href="#3-3-总结" class="headerlink" title="3.3 总结"></a>3.3 总结</h3><p>TCP 协议是如何恢复数据的顺序的，TCP 拆包和粘包的作用是什么？</p>
+<p>TCP 拆包的作用是将任务拆分处理，降低整体任务出错的概率，以及减小底层网络处理的压力。拆包过程需要保证数据经过网络的传输，又能恢复到原始的顺序。这中间，需要数学提供保证顺序的理论依据。TCP 利用（发送字节数、接收字节数）的唯一性来确定封包之间的顺序关系。</p>
+<p>粘包是为了防止数据量过小，导致大量的传输，而将多个 TCP 段合并成一个发送。</p>
+<h1 id="04-TCP-的稳定性：滑动窗口和流速控制"><a href="#04-TCP-的稳定性：滑动窗口和流速控制" class="headerlink" title="04 | TCP 的稳定性：滑动窗口和流速控制"></a>04 | TCP 的稳定性：滑动窗口和流速控制</h1><p>TCP 利用发送字节数和接收字节数，这个二元组的唯一性保证顺序。</p>
+<p><strong>TCP 作为一个传输层协议，最核心的能力是传输。传输需要保证可靠性，还需要控制流速，这两个核心能力均由滑动窗口提供。</strong>而滑动窗口中解决的问题，是今后的工作中可以长期使用的，比如设计一个分布式的 RPC 框架、实现一个消息队列或者分布式的文件系统等。</p>
+<h3 id="1-请求-响应模型"><a href="#1-请求-响应模型" class="headerlink" title="1. 请求/响应模型"></a>1. 请求/响应模型</h3><p>TCP 中每个发送的请求都需要响应。如果一个请求没有收到响应，发送方就会认为这次发送出现了故障，会触发重发。</p>
+<p>大体的模型，和下图很像。但是如果完全和下图一样，每一个请求收到响应之后，再发送下一个请求，吞吐量会很低，浪费带宽。带宽没有用满，意味着可以同时发送更多的请求，接收更多的响应。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%20%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%A8%A1%E5%9E%8B%EF%BC%88%E5%90%9E%E5%90%90%E9%87%8F%E4%BD%8E%EF%BC%89.png" alt="TCP 请求-响应模型（吞吐量低）"></p>
+<p>一种改进的方式，就是让发送方有请求就发送出去，而不是等待响应。通过这样的处理方式，发送的数据连在了一起，响应的数据也连在了一起，吞吐量就提升了。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%20%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%A8%A1%E5%9E%8B.png" alt="TCP 请求-响应模型"></p>
+<p>如果同时发送的数据非常多，比如成百上千个 TCP 段都需要发送，这个时候带宽可能会不足，像下图这样。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%20%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%A8%A1%E5%9E%8B%E9%98%9F%E5%88%97.png" alt="TCP 请求-响应模型队列"></p>
+<h3 id="2-排队"><a href="#2-排队" class="headerlink" title="2. 排队"></a>2. 排队</h3><p>这种情况下，通常我们会考虑排队（Queuing）机制。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/TCP%E6%8E%92%E9%98%9F%E6%9C%BA%E5%88%B6.png" alt="TCP排队机制"><br>考虑上图这个模型，在 TCP 层实现一个队列，新元素从队列的一端（左侧）排队准备发送，从队列的右侧发送离开。可以思考一下，这个模型有什么问题？</p>
+<p>这样做需要多个队列，要将未发送的数据从队列中取出，加入发送中的队列。然后再将发送中的数据，收到 ACK 的部分取出，放入已接收的队列。而发送中的封包，何时收到 ACK 是一件不确定的事情，这样使用队列似乎也有一定的问题。</p>
+<h3 id="3-滑动窗口"><a href="#3-滑动窗口" class="headerlink" title="3. 滑动窗口"></a>3. 滑动窗口</h3><p>在上面的模型当中，之所以觉得算法不好设计，是因为用错了数据结构。这里应该用一种叫作<strong>滑动窗口</strong>的数据结构去实现。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A31.png" alt="滑动窗口1"></p>
+<ul>
+<li>深绿色代表已经收到 ACK 的段</li>
+<li>浅绿色代表发送了，但是没有收到 ACK 的段</li>
+<li>白色代表没有发送的段</li>
+<li>紫色代表暂时不能发送的段</li>
+</ul>
+<p>下面重新设计一下不同类型封包的顺序，将已发送的数据放到最左边，发送中的数据放到中间，未发送的数据放到右边。假设我们最多同时发送 5 个封包，也就是窗口大小 = 5。窗口中的数据被同时发送出去，然后等待 ACK。如果一个封包 ACK 到达，将它标记为已接收（深绿色）。</p>
+<p>如下图所示，有两个封包的 ACK 到达，因此标记为绿色。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A32.png" alt="滑动窗口2"></p>
+<p>这个时候滑动窗口可以向右滑动，如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A33.png" alt="滑动窗口3"></p>
+<h3 id="4-重传"><a href="#4-重传" class="headerlink" title="4. 重传"></a>4. 重传</h3><p>如果发送过程中，部分数据没能收到 ACK 会怎样呢？这就可能发生重传。</p>
+<p>如果发生下图这样的情况，段 4 迟迟没有收到 ACK。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A34.png" alt="滑动窗口4"></p>
+<p>这个时候滑动窗口只能右移一个位置，如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A35.png" alt="滑动窗口5"></p>
+<p>在这个过程中，如果后来段 4 重传成功（接收到 ACK），那么窗口就会继续右移。如果段 4 发送失败，还是没能收到 ACK，那么接收方也会抛弃段 5、段 6、段 7。这样从段 4 开始之后的数据都需要重发。</p>
+<h3 id="5-快速重传"><a href="#5-快速重传" class="headerlink" title="5. 快速重传"></a>5. 快速重传</h3><p>在 TCP 协议中，如果接收方想丢弃某个段，可以选择不发 ACK。发送端超时后，会重发这个 TCP 段。而有时候，接收方希望催促发送方尽快补发某个 TCP 段，这个时候可以使用快速重传能力。</p>
+<p>例如段 1、段 2、段 4 到了，但是段 3 没有到。 接收方可以发送多次段 3 的 ACK。如果发送方收到多个段 3 的 ACK，就会重发段 3。这个机制称为快速重传。这和超时重发不同，是一种催促的机制。</p>
+<p>为了不让发送方误以为段 3 已经收到了，在快速重传的情况下，接收方即便收到发来的段 4，依然会发段 3 的 ACK（不发段 4 的 ACK），直到发送方把段 3 重传。</p>
+<p>实际操作中，每个 TCP 段的大小不同，限制数量会让接收方的缓冲区不好操作，因此实际操作中窗口大小单位是字节数。</p>
+<h3 id="6-流速控制"><a href="#6-流速控制" class="headerlink" title="6. 流速控制"></a>6. 流速控制</h3><p>发送、接收窗口的大小可以用来控制 TCP 协议的流速。窗口越大，同时可以发送、接收的数据就越多，支持的吞吐量也就越大。当然，窗口越大，如果数据发生错误，损失也就越大，因为需要重传越多的数据。</p>
+<p>举个例子：我们用 RTT 表示 Round Trip Time，就是消息一去一回的时间。</p>
+<p>假设 RTT = 1ms，带宽是 1mb/s。如果窗口大小为 1kb，那么 1ms 可以发送一个 1kb 的数据（含 TCP 头），1s 就可以发送 1mb 的数据，刚好可以将带宽用满。如果 RTT 再慢一些，比如 RTT = 10ms，那么这样的设计就只能用完 1/10 的带宽。 当然你可以提高窗口大小提高吞吐量，但是实际的模型会比这个复杂，因为还存在重传、快速重传、丢包等因素。</p>
+<p>而实际操作中，也不可以真的把带宽用完，所以最终我们会使用折中的方案，在延迟、丢包率、吞吐量中进行选择，毕竟鱼和熊掌不可兼得。</p>
+<h3 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h3><p>为了提高传输速率，TCP 协议选择将多个段同时发送，为了让这些段不至于被接收方拒绝服务，在发送前，双方要协商好发送的速率。但是我们不可能完全确定网速，所以协商的方式，就变成确定窗口大小。</p>
+<p>有了窗口，发送方利用滑动窗口算法发送消息；接收方构造缓冲区接收消息，并给发送方 ACK。滑动窗口的实现只需要数组和少量的指针即可，是一个非常高效的算法。像这种算法，简单又实用，比如求一个数组中最大的连续 k 项和，就可以使用滑动窗口算法。如果你对这个问题感兴趣，不妨用你最熟悉的语言尝试解决一下。</p>
+<p><strong>滑动窗口和流速控制是怎么回事？</strong><br>滑动窗口是 TCP 协议控制可靠性的核心。发送方将数据拆包，变成多个分组。然后将数据放入一个拥有滑动窗口的数组，依次发出，仍然遵循先入先出（FIFO）的顺序，但是窗口中的分组会一次性发送。窗口中序号最小的分组如果收到 ACK，窗口就会发生滑动；如果最小序号的分组长时间没有收到 ACK，就会触发整个窗口的数据重新发送。<br>另一方面，在多次传输中，网络的平均延迟往往是相对固定的，这样 TCP 协议可以通过双方协商窗口大小控制流速。补充下，上面我们说的分组和 TCP 段是一个意思。</p>
+<h1 id="05-UDP-协议：TCP协议和-UDP-协议的优势和劣势"><a href="#05-UDP-协议：TCP协议和-UDP-协议的优势和劣势" class="headerlink" title="05 | UDP 协议：TCP协议和 UDP 协议的优势和劣势"></a>05 | UDP 协议：TCP协议和 UDP 协议的优势和劣势</h1><p>TCP 最核心的价值是提供了可靠性，而 UDP 最核心的价值是灵活，你几乎可以用它来做任何事情。例如：HTTP 协议 1.1 和 2.0 基于 TCP，HTTP 3.0 开始用 UDP。</p>
+<p>UDP 在数据传输、网络控制、音视频、Web 技术中，都有很重要的地位。</p>
+<h3 id="1-UDP-协议"><a href="#1-UDP-协议" class="headerlink" title="1. UDP 协议"></a>1. UDP 协议</h3><p>UDP（User Datagram Protocol），目标是在传输层提供直接发送报文（Datagram）的能力。Datagram 是数据传输的最小单位。UDP 协议不会帮助拆分数据，它的目标只有一个，就是发送报文。</p>
+<p>为什么不直接调用 IP 协议呢？ 如果裸发数据，IP 协议不香吗？<br>传输层协议在承接上方应用层的调用，需要提供应用到应用的通信——因此要附上端口号。每个端口，代表不同的应用。传输层下层的 IP 协议，承接传输层的调用，将数据从主机传输到主机。IP 层不能区分应用，导致哪怕是在 IP 协议上进行简单封装，也需要单独一个协议。这就构成了 UDP 协议的市场空间。</p>
+<h3 id="2-UDP-的封包格式"><a href="#2-UDP-的封包格式" class="headerlink" title="2. UDP 的封包格式"></a>2. UDP 的封包格式</h3><p>UDP 的设计目标就是在允许用户直接发送报文的情况下，最大限度地简化应用的设计。下图是 UDP 的报文格式。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/computer_network_lagou/UDP%20%E7%9A%84%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F.png" alt="UDP 的报文格式"></p>
+<ul>
+<li>Source Port 是源端口号。因为 UDP 协议的特性（不需要 ACK），因此这个字段是可以省略的。但有时候对于防火墙、代理来说，Source Port 有很重要的意义，它们需要用这个字段行过滤和路由。</li>
+<li>Destination Port 是目标端口号（这个字段不可以省略）。</li>
+<li>Length 是消息体长度。</li>
+<li>Checksum 是校验和，作用是检查封包是否出错。</li>
+<li>Data octets 就是一个字节一个字节的数据，Octet 是 8 位。</li>
+</ul>
+<p>校验数据在传输过程中有没有丢失、损坏是一个普遍需求。<br>一种最简单的校验和就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">checksum&#x3D;(a+b+c+d) ^ 0xff</span><br></pre></td></tr></table></figure>
+<p>如果发送方用上述方式计算出 Checksum，并将 a,b,c,d 和 Checksum 一起发送给接收方，接收方就可以用同样的算法再计算一遍，这样就可以确定数据有没有发生损坏（变化）。当然 Checksum 的做法，只适用于数据发生少量变化的情况。如果数据发生较大的变动，校验和也可能发生碰撞。</p>
+<p>UDP 的可靠性保证仅仅就是 Checksum 一种。如果一个数据封包 Datagram 发生了数据损坏，UDP 可以通过 Checksum 纠错或者修复。 但是 UDP 没有提供再多的任何机制，比如 ACK、顺序保证以及流控等。</p>
+<h3 id="3-UDP-与-TCP-的区别"><a href="#3-UDP-与-TCP-的区别" class="headerlink" title="3. UDP 与 TCP 的区别"></a>3. UDP 与 TCP 的区别</h3><ol>
+<li><p>目的差异<br>TCP 协议的核心目标是提供可靠的网络传输，而 UDP 的目标是在提供报文交换能力基础上尽可能地简化协议轻装上阵。</p>
+</li>
+<li><p>可靠性差异<br>TCP 核心是要在保证可靠性提供更好的服务。TCP 会有握手的过程，需要建立连接，保证双方同时在线。而且TCP 有时间窗口持续收集无序的数据，直到这一批数据都可以合理地排序组成连续的结果。</p>
+</li>
+</ol>
+<p>UDP 并不具备以上这些特性，它只管发送数据封包，而且 UDP 不需要 ACK，这意味着消息发送出去成功与否 UDP 是不管的。</p>
+<ol start="3">
+<li><p>连接 vs 无连接<br>TCP 是一个面向连接的协议（Connection-oriented Protocol），传输数据必须先建立连接。 UDP 是一个无连接协议（Connection-less Protocol），数据随时都可以发送，只提供发送封包（Datagram）的能力。</p>
+</li>
+<li><p>流控技术（Flow Control）<br>TCP 使用了流控技术来确保发送方不会因为一次发送过多的数据包而使接收方不堪重负。TCP 在发送缓冲区中存储数据，并在接收缓冲区中接收数据。当应用程序准备就绪时，它将从接收缓冲区读取数据。如果接收缓冲区已满，接收方将无法处理更多数据，并将其丢弃。UDP 没有提供类似的能力。</p>
+</li>
+<li><p>传输速度<br>UDP 协议简化，封包小，没有连接、可靠性检查等，因此单纯从传输速度上讲，UDP 更快。</p>
+</li>
+<li><p>场景差异<br>TCP 每个数据封包都需要确认，因此天然不适应高速数据传输场景，比如观看视频（流媒体应用）、网络游戏（TCP 有延迟）等。具体来说，如果网络游戏用 TCP，每个封包都需要确认，可能会造成一定的延迟；再比如音、视频传输天生就允许一定的丢包率；Ping 和 DNSLookup，这类型的操作只需要一次简单的请求/返回，不需要建立连接，用 UDP 就足够了。</p>
+</li>
+</ol>
+<p>近些年有一个趋势，TCP/UDP 的边界逐渐变得模糊，UDP 应用越来越多。比如传输文件，如果考虑希望文件无损到达，可以用 TCP。如果考虑希望传输足够块，就可能会用 UDP。再比如 HTTP 协议，如果考虑请求/返回的可靠性，用 TCP 比较合适。但是像 HTTP 3.0 这类应用层协议，从功能性上思考，暂时没有找到太多的优化点，但是想要把网络优化到极致，就会用 UDP 作为底层技术，然后在 UDP 基础上解决可靠性。</p>
+<p>所以理论上，任何一个用 TCP 协议构造的成熟应用层协议，都可以用 UDP 重构。这就好比，本来用一个工具可以解决所有问题，但是如果某一类问题体量非常大，就会专门为这类问题创造工具。因此，UDP 非常适合需要定制工具的场景。</p>
+<p>把场景分成三类，TCP 应用场景、UDP 应用场景、模糊地带（TCP、UDP 都可以考虑）</p>
+<ul>
+<li>第一类：TCP 场景<ul>
+<li>远程控制（SSH）</li>
+<li>File Transfer Protocol（FTP） </li>
+<li>邮件（SMTP、IMAP）等</li>
+<li>点对点文件传出（微信等）</li>
+</ul>
+</li>
+<li>第二类：UDP 场景<ul>
+<li>网络游戏</li>
+<li>音视频传输</li>
+<li>DNS</li>
+<li>Ping</li>
+<li>直播</li>
+</ul>
+</li>
+<li>第三类：模糊地带<ul>
+<li>HTTP（目前以 TCP 为主）</li>
+<li>文件传输 </li>
+</ul>
+</li>
+</ul>
+<p><strong>UDP 不提供可靠性，不代表我们不能解决可靠性。UDP 的核心价值是灵活、轻量，构造了最小版本的传输层协议。在这个之上，还可以实现连接（Connection），实现会话（Session），实现可靠性（Reliability）</strong></p>
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><p><strong>TCP 最核心的价值就是提供封装好的一套解决可靠性的优秀方案</strong>。解决可靠性是非常复杂的，要考虑非常多的因素。TCP 帮助我们在确保吞吐量、延迟、丢包率的基础上，保证可靠性。TCP 的成功在于它给人们提供了很多现成、好用的能力。</p>
+<p>UDP 则不同，<strong>UDP 提供了最小版的实现，只支持 Checksum</strong>。<strong>UDP 最核心的价值是灵活、轻量、传输速度快</strong>。考虑到不同应用的特性，如果不使用一个大而全的方案，为自己的应用特性量身定做，可能会做得更好。比如网络游戏中游戏客户端不断向服务端发送玩家的位置，如果某一次消息丢失了，只要这个消息不影响最终的游戏结果，就可以只看下一个消息。不同应用有不同的特性，需要的可靠性级别不一样，这就是越来越多的应用开始使用 UDP 的原因之一。</p>
+<p>TCP 协议和 UDP 协议根本不存在什么优势和劣势，只不过是场景不同，选择不同而已。最后还有一个非常重要的考虑因素就是<strong>成本，如果没有足够专业的团队解决网络问题，TCP 无疑会是更好的选择。</strong></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\TCPIP详解卷1_协议_第一章\TCPIP详解卷1_协议_第一章\" rel="bookmark">【TCP/IP详解】 第1章 概述</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\计算机网路_自顶向下方法\" rel="bookmark">计算机网路：自顶向下方法</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Charles 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Charles 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Charles
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cs-cshi.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网路_拉勾教育">https://cs-cshi.github.io/计算机网络/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag"># 计算机网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E5%8F%AF%E8%BD%AC%E5%80%BA%E6%89%93%E6%96%B0%E4%BB%8B%E7%BB%8D/" rel="prev" title="可转债打新介绍">
+      <i class="fa fa-chevron-left"></i> 可转债打新介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/CTFer%20%E7%AC%AC2%E7%AB%A0%20web%E8%BF%9B%E9%98%B6/" rel="next" title="CTFer：第1章 web入门">
+      CTFer：第1章 web入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录 | toc
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览 | overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#01-%E6%BC%AB%E6%B8%B8%E4%BA%92%E8%81%94%E7%BD%91%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E8%9C%82%E7%AA%9D%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C"><span class="nav-text">01 | 漫游互联网：什么是蜂窝移动网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E7%BD%91%E7%BB%9C%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-text">1.1 网络的组成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-%E5%85%AC%E5%8F%B8%E5%86%85%E7%BD%91"><span class="nav-text">1.1.1 公司内网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C"><span class="nav-text">1.1.2 移动网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-3-%E5%AE%B6%E5%BA%AD%E7%BD%91%E7%BB%9C"><span class="nav-text">1.1.3 家庭网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-4-%E6%95%B4%E4%BD%93%E5%85%B3%E7%B3%BB"><span class="nav-text">1.1.4 整体关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%95%B0%E6%8D%AE%E7%9A%84%E4%BC%A0%E8%BE%93"><span class="nav-text">1.2 数据的传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E6%80%BB%E7%BB%93"><span class="nav-text">1.3 总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#02-%E4%BC%A0%E8%BE%93%E5%B1%82%E5%8D%8F%E8%AE%AE-TCP%EF%BC%9ATCP-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8F%A1%E6%89%8B%E6%98%AF-3-%E6%AC%A1%E3%80%81%E6%8C%A5%E6%89%8B%E6%98%AF-4-%E6%AC%A1%EF%BC%9F"><span class="nav-text">02 | 传输层协议 TCP：TCP 为什么握手是 3 次、挥手是 4 次？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%B8%BB%E6%9C%BA%E5%88%B0%E4%B8%BB%E6%9C%BA%EF%BC%88Host-To-Host%EF%BC%89%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%9F"><span class="nav-text">2.1 主机到主机（Host-To-Host）如何通信？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9E%E6%8E%A5%E5%92%8C%E4%BC%9A%E8%AF%9D%EF%BC%9F"><span class="nav-text">2.2 什么是连接和会话？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%8D%95%E5%B7%A5-%E5%8F%8C%E5%B7%A5%E9%97%AE%E9%A2%98"><span class="nav-text">2.3 单工&#x2F;双工问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AF%E9%9D%A0%E6%80%A7%EF%BC%9F"><span class="nav-text">2.4 什么是可靠性？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-TCP%E7%9A%84%E6%8F%A1%E6%89%8B%E5%92%8C%E6%8C%A5%E6%89%8B"><span class="nav-text">2.5 TCP的握手和挥手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5%E7%9A%84%E8%BF%87%E7%A8%8B%EF%BC%88%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%EF%BC%89"><span class="nav-text">2.6 建立连接的过程（三次握手）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-%E6%96%AD%E5%BC%80%E8%BF%9E%E6%8E%A5%E7%9A%84%E8%BF%87%E7%A8%8B-4%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-text">2.7 断开连接的过程(4次挥手)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-%E6%80%BB%E7%BB%93"><span class="nav-text">2.8 总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#03-TCP-%E7%9A%84%E5%B0%81%E5%8C%85%E6%A0%BC%E5%BC%8F%EF%BC%9ATCP-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%B2%98%E5%8C%85%E5%92%8C%E6%8B%86%E5%8C%85%EF%BC%9F"><span class="nav-text">03 | TCP 的封包格式：TCP 为什么要粘包和拆包？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-TCP%E7%9A%84%E6%8B%86%E5%8C%85%E5%92%8C%E7%B2%98%E5%8C%85"><span class="nav-text">3.1 TCP的拆包和粘包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-TCP-Segment"><span class="nav-text">3.2 TCP Segment</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-Sequence-Number-%E5%92%8C-Acknowledgement-Number"><span class="nav-text">3.2.1 Sequence Number 和 Acknowledgement Number</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-MSS%EF%BC%88Maxiumun-Segment-Size%EF%BC%89"><span class="nav-text">3.2.2 MSS（Maxiumun Segment Size）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%80%BB%E7%BB%93"><span class="nav-text">3.3 总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#04-TCP-%E7%9A%84%E7%A8%B3%E5%AE%9A%E6%80%A7%EF%BC%9A%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%92%8C%E6%B5%81%E9%80%9F%E6%8E%A7%E5%88%B6"><span class="nav-text">04 | TCP 的稳定性：滑动窗口和流速控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E6%A8%A1%E5%9E%8B"><span class="nav-text">1. 请求&#x2F;响应模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8E%92%E9%98%9F"><span class="nav-text">2. 排队</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="nav-text">3. 滑动窗口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%87%8D%E4%BC%A0"><span class="nav-text">4. 重传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%BF%AB%E9%80%9F%E9%87%8D%E4%BC%A0"><span class="nav-text">5. 快速重传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%B5%81%E9%80%9F%E6%8E%A7%E5%88%B6"><span class="nav-text">6. 流速控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E6%80%BB%E7%BB%93"><span class="nav-text">7. 总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#05-UDP-%E5%8D%8F%E8%AE%AE%EF%BC%9ATCP%E5%8D%8F%E8%AE%AE%E5%92%8C-UDP-%E5%8D%8F%E8%AE%AE%E7%9A%84%E4%BC%98%E5%8A%BF%E5%92%8C%E5%8A%A3%E5%8A%BF"><span class="nav-text">05 | UDP 协议：TCP协议和 UDP 协议的优势和劣势</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-UDP-%E5%8D%8F%E8%AE%AE"><span class="nav-text">1. UDP 协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-UDP-%E7%9A%84%E5%B0%81%E5%8C%85%E6%A0%BC%E5%BC%8F"><span class="nav-text">2. UDP 的封包格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-UDP-%E4%B8%8E-TCP-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">3. UDP 与 TCP 的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%80%BB%E7%BB%93"><span class="nav-text">4. 总结</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Charles"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Charles</p>
+  <div class="site-description" itemprop="description">慢下来，记录生活点滴，畅游人类知识和艺术的海洋。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cs-cshi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cs-cshi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/572081809@qq.com" title="E-Mail → 572081809@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/CTFer%20%E7%AC%AC2%E7%AB%A0%20web%E8%BF%9B%E9%98%B6/" title="CTFer 第2章 web进阶&#x2F;">CTFer：第1章 web入门</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络&#x2F;">计算机网路_拉勾教育</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/%E5%8F%AF%E8%BD%AC%E5%80%BA%E6%89%93%E6%96%B0%E4%BB%8B%E7%BB%8D/" title="可转债打新介绍&#x2F;">可转债打新介绍</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20wget%20%E4%BB%A3%E7%90%86/" title="如何配置 wget 代理&#x2F;">如何配置 wget 代理</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/Beyond%20Compare%204%E5%AF%86%E9%92%A5%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="Beyond Compare 4密钥解决办法&#x2F;">Beyond Compare 4密钥解决办法</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Charles</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">127k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:55</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'hbdf2zNhxCCzlSuodiOKirnE-gzGzoHsz',
+      appKey     : 'gJuRc9Mu4JIB0czCtRefSodC',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
