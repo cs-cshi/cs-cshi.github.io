@@ -26,10 +26,12 @@ ssh://git@github.com/cms-sw/cmssw.git
 ### 2.1 针对所有域名的 Git 仓库
 ```
 # HTTP/HTTPS 协议，port 需与代理软件设置的一致
-git config –global http.proxy http://127.0.0.1:port
+git config –-global http.proxy http://127.0.0.1:port
+git config –-global http.proxy http://127.0.0.1:8889
 
 # SOCKS5 协议
 git config --global http.proxy socks5://127.0.0.1:port
+git config --global http.proxy socks5://127.0.0.1:1089
 ```
 注意：
 - `--glboal` 选项指的是修改 Git 的全局配置文件`~/.gitconfig`，而非各个 Git 仓库里的配置文件`.git/config`。

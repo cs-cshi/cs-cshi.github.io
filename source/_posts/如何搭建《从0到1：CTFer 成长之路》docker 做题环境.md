@@ -94,6 +94,7 @@ categories:
   # sudo docker-compose --version
   docker-compose --version
   ```
+  
 ## 4. 配置具体题目环境 docker-compose.yml
 - 在 home/用户 下 创建一个测试目录 compose
   ```
@@ -112,7 +113,7 @@ categories:
 
 ## 5. 启动方式
 在当前题目配置 docker-compose.yml 所在文件夹，执行以下命令
-```
+```yml
 docker-compose up -d
 
 or 
@@ -120,3 +121,8 @@ or
 sudo docker-compose up -d
 ```
 可以对每个题目都创建一个文件夹，里面存放这个题目的 docker-compose.yml，这样需要启动某个题目环境的时候直接进它的目录执行启动指令即可。
+
+停止
+```yml
+sudo docker-compose down
+```
