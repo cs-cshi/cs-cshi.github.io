@@ -50,8 +50,8 @@
 <meta property="og:image" content="https://image.3001.net/images/20180316/15211811425693.png!small">
 <meta property="og:image" content="https://image.3001.net/images/20180316/15211811512315.png!small">
 <meta property="og:image" content="https://image.3001.net/images/20180316/15211811595369.png!small">
-<meta property="article:published_time" content="2021-05-13T08:19:28.758Z">
-<meta property="article:modified_time" content="2021-05-13T09:42:15.621Z">
+<meta property="article:published_time" content="2021-05-13T07:20:00.000Z">
+<meta property="article:modified_time" content="2021-05-14T03:11:15.811Z">
 <meta property="article:author" content="Charles">
 <meta property="article:tag" content="网络安全">
 <meta property="article:tag" content="Web 安全">
@@ -161,7 +161,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">29</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">30</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -237,10 +237,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-05-13 16:19:28 / 修改时间：17:42:15" itemprop="dateCreated datePublished" datetime="2021-05-13T16:19:28+08:00">2021-05-13</time>
+              <time title="创建时间：2021-05-13 15:20:00" itemprop="dateCreated datePublished" datetime="2021-05-13T15:20:00+08:00">2021-05-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-14 11:11:15" itemprop="dateModified" datetime="2021-05-14T11:11:15+08:00">2021-05-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -441,7 +447,7 @@
 <p>含有payload的sql语句</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) <span class="keyword">AS</span> num <span class="keyword">FROM</span> blue_admin WHERE admin_name=<span class="string">&#x27;1 運&#x27;</span> <span class="keyword">or</span> <span class="number">1</span>=<span class="number">1</span> -- <span class="string">&#x27; and pwd = md5(&#x27;</span><span class="variable">$pwd</span><span class="string">&#x27;)</span></span><br></pre></td></tr></table></figure>
 <p>登录后台管理，可以寻找上传点，或者利用已知的漏洞，从而getshell，进而控制整个服务器。</p>
-<h2 id="5-漏洞防护"><a href="#5-漏洞防护" class="headerlink" title="5. 漏洞防护"></a>5. 漏洞防护</h2><p>使用mysql_set_charset(GBK)指定字符集</p>
+<h2 id="5-防护手段"><a href="#5-防护手段" class="headerlink" title="5. 防护手段"></a>5. 防护手段</h2><p>使用mysql_set_charset(GBK)指定字符集</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET character_set_connection&#x3D;gbk, character_set_results&#x3D;gbk,character_set_client&#x3D;binary</span><br></pre></td></tr></table></figure>
 <p>使用mysql_real_escape_string进行转义</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql_real_escape_string与addslashes的不同之处在于其会考虑当前设置的字符集（使用mysql_set_charset指定字符集），不会出现前面的df和5c拼接为一个宽字节的问题</span><br></pre></td></tr></table></figure>
@@ -457,6 +463,9 @@
   <div class="popular-posts-header">相关文章推荐</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\基于约数的SQL攻击\" rel="bookmark">基于约束的SQL攻击</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\信息安全产品\" rel="bookmark">信息安全产品</a></div>
     </li>
     <li class="popular-posts-item">
@@ -467,9 +476,6 @@
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\《从0到1：CTFer成长之路》配套题目\" rel="bookmark">《从0到1：CTFer成长之路》配套题目</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\超详细SQLMap使用攻略及技巧分享\" rel="bookmark">超详细SQLMap使用攻略及技巧分享</a></div>
     </li>
   </ul>
 
@@ -526,7 +532,10 @@
     <a href="/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E4%BA%A7%E5%93%81/" rel="prev" title="信息安全产品">
       <i class="fa fa-chevron-left"></i> 信息安全产品
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/%E5%9F%BA%E4%BA%8E%E7%BA%A6%E6%95%B0%E7%9A%84SQL%E6%94%BB%E5%87%BB/" rel="next" title="基于约束的SQL攻击">
+      基于约束的SQL攻击 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -586,7 +595,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1. 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-SQL%E7%9A%84%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-text">2. SQL的执行过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="nav-text">3. 宽字节注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%88%86%E6%9E%90"><span class="nav-text">4. 环境搭建及分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%AE%9E%E9%AA%8C1"><span class="nav-text">4.1 实验1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-%E7%A1%AE%E5%AE%9A%E6%B3%A8%E5%85%A5%E7%82%B9"><span class="nav-text">4.1.1 确定注入点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-%E7%A1%AE%E5%AE%9A%E8%A1%A8%E7%9A%84%E5%AD%97%E6%AE%B5%E6%95%B0"><span class="nav-text">4.1.2 确定表的字段数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-%E7%A1%AE%E5%AE%9A%E5%AD%97%E6%AE%B5%E7%9A%84%E6%98%BE%E7%A4%BA%E4%BD%8D"><span class="nav-text">4.1.3 确定字段的显示位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-4-%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%A1%E6%81%AF"><span class="nav-text">4.1.4 获取当前数据库信息</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D"><span class="nav-text">1. 获取当前数据库名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E8%8E%B7%E5%8F%96test%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E8%A1%A8%E4%BF%A1%E6%81%AF"><span class="nav-text">2. 获取test数据库中的表信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E8%8E%B7%E5%8F%96admin%E8%A1%A8%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="nav-text">3. 获取admin表的字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E8%8E%B7%E5%8F%96-admin-%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-text">4. 获取 admin 表的数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-text">5. 获取当前用户信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-%E8%AF%BB%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-text">6. 读服务器中的文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%AE%9E%E9%AA%8C2"><span class="nav-text">4.2 实验2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E6%B3%A8%E5%85%A5%E7%82%B9"><span class="nav-text">4.2.1 注入点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%AE%9E%E9%AA%8C3"><span class="nav-text">4.3 实验3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-text">4.3.1 源码分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-sql%E8%AF%AD%E5%8F%A5%E5%88%86%E6%9E%90"><span class="nav-text">4.3.2 sql语句分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%BC%8F%E6%B4%9E%E9%98%B2%E6%8A%A4"><span class="nav-text">5. 漏洞防护</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1. 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-SQL%E7%9A%84%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-text">2. SQL的执行过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="nav-text">3. 宽字节注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%88%86%E6%9E%90"><span class="nav-text">4. 环境搭建及分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%AE%9E%E9%AA%8C1"><span class="nav-text">4.1 实验1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-%E7%A1%AE%E5%AE%9A%E6%B3%A8%E5%85%A5%E7%82%B9"><span class="nav-text">4.1.1 确定注入点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-%E7%A1%AE%E5%AE%9A%E8%A1%A8%E7%9A%84%E5%AD%97%E6%AE%B5%E6%95%B0"><span class="nav-text">4.1.2 确定表的字段数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-%E7%A1%AE%E5%AE%9A%E5%AD%97%E6%AE%B5%E7%9A%84%E6%98%BE%E7%A4%BA%E4%BD%8D"><span class="nav-text">4.1.3 确定字段的显示位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-4-%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%A1%E6%81%AF"><span class="nav-text">4.1.4 获取当前数据库信息</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D"><span class="nav-text">1. 获取当前数据库名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E8%8E%B7%E5%8F%96test%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E8%A1%A8%E4%BF%A1%E6%81%AF"><span class="nav-text">2. 获取test数据库中的表信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E8%8E%B7%E5%8F%96admin%E8%A1%A8%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="nav-text">3. 获取admin表的字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E8%8E%B7%E5%8F%96-admin-%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-text">4. 获取 admin 表的数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-text">5. 获取当前用户信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-%E8%AF%BB%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-text">6. 读服务器中的文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%AE%9E%E9%AA%8C2"><span class="nav-text">4.2 实验2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E6%B3%A8%E5%85%A5%E7%82%B9"><span class="nav-text">4.2.1 注入点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%AE%9E%E9%AA%8C3"><span class="nav-text">4.3 实验3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-text">4.3.1 源码分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-sql%E8%AF%AD%E5%8F%A5%E5%88%86%E6%9E%90"><span class="nav-text">4.3.2 sql语句分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E9%98%B2%E6%8A%A4%E6%89%8B%E6%AE%B5"><span class="nav-text">5. 防护手段</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -602,7 +611,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -638,6 +647,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/%E5%9F%BA%E4%BA%8E%E7%BA%A6%E6%95%B0%E7%9A%84SQL%E6%94%BB%E5%87%BB/" title="基于约数的SQL攻击&#x2F;">基于约束的SQL攻击</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5%E6%B7%B1%E5%BA%A6%E8%AE%B2%E8%A7%A3/" title="宽字节注入深度讲解&#x2F;">宽字节注入深度讲解</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -648,9 +660,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络&#x2F;">计算机网络_拉勾教育</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/%E5%8F%AF%E8%BD%AC%E5%80%BA%E6%89%93%E6%96%B0%E4%BB%8B%E7%BB%8D/" title="可转债打新介绍&#x2F;">可转债打新介绍</a>
         </li>
     </ul>
   </div>
@@ -688,13 +697,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">148k</span>
+    <span title="站点总字数">153k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:14</span>
+    <span title="站点阅读时长">2:19</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
