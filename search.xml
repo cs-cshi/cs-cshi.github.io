@@ -4151,7 +4151,12 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
 </ul>
 </li>
 <li>substr(str, start, length)</li>
-<li>mid(str, start, length)</li>
+<li>mid(str, start, length)<ul>
+<li>str，必需</li>
+<li>start，必需</li>
+<li>length，可选</li>
+</ul>
+</li>
 <li>substring_index(str, delim, count) <ul>
 <li>str：被截取字符串</li>
 <li>delim：关键字</li>
@@ -4216,6 +4221,121 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
       <tags>
         <tag>网络安全</tag>
         <tag>Web 安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vim 编辑器</title>
+    <url>/vim/</url>
+    <content><![CDATA[<p>介绍 linux 编辑器 vim</p>
+<span id="more"></span>
+
+<h2 id="1-vim-的介绍"><a href="#1-vim-的介绍" class="headerlink" title="1. vim 的介绍"></a>1. vim 的介绍</h2><p>vim 是一款功能强大的文本编辑器，也是早年 Vi 编辑器的加强版，它的最大特色就是使用命令进行编辑，完全脱离了鼠标的操作。</p>
+<h2 id="2-vim-的工作模式"><a href="#2-vim-的工作模式" class="headerlink" title="2. vim 的工作模式"></a>2. vim 的工作模式</h2><ul>
+<li>命令模式</li>
+<li>编辑模式</li>
+<li>末行模式</li>
+</ul>
+<p>说明:<br>  vim 打开文件进入的是命令模式</p>
+<p>工作模式效果图:<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/linux/vim%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F.png" alt="工作模式效果图"></p>
+<blockquote>
+<p>注意点：<br>  编辑模式和末行模式之间不能直接进行切换，都需要通过命令模式来完成。</p>
+</blockquote>
+<h2 id="3-vim-的末行模式命令"><a href="#3-vim-的末行模式命令" class="headerlink" title="3. vim 的末行模式命令"></a>3. vim 的末行模式命令</h2><ul>
+<li>:w 保存</li>
+<li>:wq 保存退出</li>
+<li>:x 保存退出</li>
+<li>:q! 强制退出</li>
+</ul>
+<h2 id="4-vim-的常用命令"><a href="#4-vim-的常用命令" class="headerlink" title="4. vim 的常用命令"></a>4. vim 的常用命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>yy</td>
+<td>复制光标所在行</td>
+</tr>
+<tr>
+<td>p</td>
+<td>粘贴</td>
+</tr>
+<tr>
+<td>dd</td>
+<td>删除/剪切当前行</td>
+</tr>
+<tr>
+<td>V</td>
+<td>按行选中</td>
+</tr>
+<tr>
+<td>u</td>
+<td>撤销</td>
+</tr>
+<tr>
+<td>ctr+r</td>
+<td>反撤销</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>往右缩进</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>往左缩进</td>
+</tr>
+<tr>
+<td>:/搜索的内容</td>
+<td>搜索指定内容</td>
+</tr>
+<tr>
+<td>:%s/要替换的内容/替换后的内容/g</td>
+<td>全局替换</td>
+</tr>
+<tr>
+<td>:开始行数,结束行数s/要替换的内容/替换后的内容</td>
+<td>局部替换</td>
+</tr>
+<tr>
+<td>.</td>
+<td>重复上一次命令操作</td>
+</tr>
+<tr>
+<td>G</td>
+<td>回到最后一行</td>
+</tr>
+<tr>
+<td>gg</td>
+<td>回到第一行</td>
+</tr>
+<tr>
+<td>数字+G</td>
+<td>回到指定行</td>
+</tr>
+<tr>
+<td>shift+6</td>
+<td>回到当前行的行首</td>
+</tr>
+<tr>
+<td>shift+4</td>
+<td>回到当前行的行末</td>
+</tr>
+<tr>
+<td>ctr+f</td>
+<td>下一屏</td>
+</tr>
+<tr>
+<td>ctr+b</td>
+<td>上一屏</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
       </tags>
   </entry>
 </search>
