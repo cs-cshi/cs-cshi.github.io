@@ -3944,7 +3944,8 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
 <p>此外，报错信息是有长度限制的，在mysql/my_error.c中可以看到：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/* Max length of a error message. Should be</span><br><span class="line">kept in sync with MYSQL_ERRMSG_SIZE. */</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">define ERRMSGSIZE (512)</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="2-xpath语法错误"><a href="#2-xpath语法错误" class="headerlink" title="2. xpath语法错误"></a>2. xpath语法错误</h2><p>从mysql5.1.5开始提供两个<a href="https://dev.mysql.com/doc/refman/5.7/en/xml-functions.html">XML查询和修改的函数</a>，extractvalue和updatexml。extractvalue负责在xml文档中按照xpath语法查询节点内容，updatexml则负责修改查询到的内容:</p>
+<h2 id="2-xpath语法错误"><a href="#2-xpath语法错误" class="headerlink" title="2. xpath语法错误"></a>2. xpath语法错误</h2><p>从 mysql5.1.5 开始提供两个<a href="https://dev.mysql.com/doc/refman/5.7/en/xml-functions.html">XML查询和修改的函数</a>，extractvalue和updatexml。</p>
+<p>extractvalue负责在xml文档中按照xpath语法查询节点内容，updatexml则负责修改查询到的内容:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select extractvalue(1,<span class="string">&#x27;/a/b&#x27;</span>);</span></span><br><span class="line">+------------------------+</span><br><span class="line">| extractvalue(1,&#x27;/a/b&#x27;) |</span><br><span class="line">+------------------------+</span><br><span class="line">|                        |</span><br><span class="line">+------------------------+</span><br><span class="line">1 row in set (0.01 sec)</span><br></pre></td></tr></table></figure>
 
 <p>它们的第二个参数都要求是符合xpath语法的字符串，如果不满足要求，则会报错，并且将查询结果放在报错信息里：</p>
@@ -4089,7 +4090,7 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">RAND() in a WHERE clause is evaluated for every row (when selecting from one table) or combination of rows (when selecting from a multiple-table join). Thus, for optimizer purposes, RAND() is not a constant value and cannot be used for index optimizations.</span><br></pre></td></tr></table></figure>
 
 <p>如果有一个序列开头时 0,1,0,0 或者 1,0,1,1 则无论如何都不会报错了，因为虚表开头两个主键会分别是 0 和 1，后面的就直接count(*)加1了</p>
-<h2 id="4-一些特性"><a href="#4-一些特性" class="headerlink" title="4. 一些特性"></a>4. 一些特性</h2><h3 id="4-1-列名重复"><a href="#4-1-列名重复" class="headerlink" title="4.1 列名重复"></a>4.1 列名重复</h3><p>mysql列名重复会报错，我们利用name_const来制造一个列：</p>
+<h2 id="4-一些特性"><a href="#4-一些特性" class="headerlink" title="4. 一些特性"></a>4. 一些特性</h2><h3 id="4-1-列名重复"><a href="#4-1-列名重复" class="headerlink" title="4.1 列名重复"></a>4.1 列名重复</h3><p>mysql列名重复会报错，我们利用 name_const 来制造一个列：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x;</span></span><br><span class="line">ERROR 1060 (42S21): Duplicate column name &#x27;5.7.17&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>根据<a href="https://dev.mysql.com/doc/refman/5.7/en/miscellaneous-functions.html#function_name-const">官方文档</a>，name_const函数要求参数必须是常量，所以实际使用上还没找到什么比较好的利用方式。</p>
@@ -4163,6 +4164,8 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
 <li>count：关键字出现的次数 </li>
 </ul>
 </li>
+<li>left(str, length)，从左开始截取字符串</li>
+<li>right(str, length)，从右开始截取字符串</li>
 </ul>
 <p>实际上，使用正则表达式也能达到类似的效果,“^”表示从头开始匹配</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from user <span class="built_in">where</span> password rlike = <span class="string">&#x27;^1&#x27;</span>;</span></span><br><span class="line">+----+----------+----------+</span><br><span class="line">| id | username | password |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">|  1 | admin    | 12345678 |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">1 row in set (0.00sec)</span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select * from user <span class="built_in">where</span> password regexp <span class="string">&#x27;^12&#x27;</span>;</span></span><br><span class="line">+----+----------+----------+</span><br><span class="line">| id | username | password |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">|  1 | admin    | 12345678 |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">1 row in set (0.00sec)</span><br></pre></td></tr></table></figure>
@@ -4880,7 +4883,31 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
 <td>无任何权限</td>
 </tr>
 </tbody></table>
-<p><strong>chmod 数字法的使用</strong><br>| 权限 | 说明 |<br>|—|—|<br>| r | 可读，权限值是4 |<br>|  w | 可写，权限值是2 |<br>| x | 可执行，权限值是1 |<br>| - | 无任何权限，权限值是0 |</p>
+<p><strong>chmod 数字法的使用</strong></p>
+<table>
+<thead>
+<tr>
+<th>权限</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>r</td>
+<td>可读，权限值是4</td>
+</tr>
+<tr>
+<td>w</td>
+<td>可写，权限值是2</td>
+</tr>
+<tr>
+<td>x</td>
+<td>可执行，权限值是1</td>
+</tr>
+<tr>
+<td>-</td>
+<td>无任何权限，权限值是0</td>
+</tr>
+</tbody></table>
 <h3 id="2-管理员权限"><a href="#2-管理员权限" class="headerlink" title="2. 管理员权限"></a>2. 管理员权限</h3><table>
 <thead>
 <tr>
@@ -5366,6 +5393,32 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
       </categories>
       <tags>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 virtualBox 桥接网卡未指定问题</title>
+    <url>/virtualBox%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1%E6%9C%AA%E6%8C%87%E5%AE%9A/</url>
+    <content><![CDATA[<p>主要原因：window10 中没有安装virtualbox的桥接驱动</p>
+<span id="more"></span>
+
+<h2 id="1-界面样例"><a href="#1-界面样例" class="headerlink" title="1. 界面样例"></a>1. 界面样例</h2><p><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_%E7%95%8C%E9%9D%A2.png" alt="样例"></p>
+<h2 id="2-问题原因"><a href="#2-问题原因" class="headerlink" title="2. 问题原因"></a>2. 问题原因</h2><p>window10中没有安装virtualbox的桥接驱动</p>
+<h2 id="3-解决方法"><a href="#3-解决方法" class="headerlink" title="3. 解决方法"></a>3. 解决方法</h2><ol>
+<li>进入到网络连接<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5.png" alt="网络连接"></li>
+<li>右键打开属性<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_wlan%E5%B1%9E%E6%80%A7.png" alt="属性"></li>
+<li>没有启动，那么现在开始去安装桥接驱动<br>点击 【安装】—–&gt;【服务】——&gt;【添加】—–&gt;【从磁盘安装】—–&gt;【浏览】</li>
+<li>找到virtualbox目录中的一个文件【VBoxNetLwf】<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_driver_file.png" alt="driver"></li>
+<li>找到文件后开始安装<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_driver_install.png" alt="安装"></li>
+<li>安装完成后重新打开 virualbox 网络界面，可以看到网卡驱动已经可以加载了</li>
+</ol>
+<p>————————————————<br>本文转载自<a href="https://blog.csdn.net/qq_383698639/article/details/79527311">virtualBox 桥接网卡 未指定</a></p>
+]]></content>
+      <categories>
+        <category>工具</category>
+        <category>虚拟机</category>
+      </categories>
+      <tags>
+        <tag>工具</tag>
       </tags>
   </entry>
 </search>

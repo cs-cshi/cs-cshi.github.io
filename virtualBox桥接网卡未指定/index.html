@@ -20,20 +20,26 @@
     var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1. 设置背景图片将想要的背景图片放入 themes&#x2F;next&#x2F;source&#x2F;images。打开 themes&#x2F;next&#x2F;source&#x2F;css&#x2F; _custom&#x2F;custom.styl 文件，这个是 Next 故意留给用户自己个性化定制一些样式的文件，添加以下代码即可。">
+  <meta name="description" content="主要原因：window10 中没有安装virtualbox的桥接驱动">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo-NexT 设置博客背景图片">
-<meta property="og:url" content="https://cs-cshi.github.io/hexo-blog/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/index.html">
+<meta property="og:title" content="解决 virtualBox 桥接网卡未指定问题">
+<meta property="og:url" content="https://cs-cshi.github.io/virtualBox%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1%E6%9C%AA%E6%8C%87%E5%AE%9A/index.html">
 <meta property="og:site_name" content="Chang">
-<meta property="og:description" content="1. 设置背景图片将想要的背景图片放入 themes&#x2F;next&#x2F;source&#x2F;images。打开 themes&#x2F;next&#x2F;source&#x2F;css&#x2F; _custom&#x2F;custom.styl 文件，这个是 Next 故意留给用户自己个性化定制一些样式的文件，添加以下代码即可。">
+<meta property="og:description" content="主要原因：window10 中没有安装virtualbox的桥接驱动">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-31T16:30:00.000Z">
-<meta property="article:modified_time" content="2021-03-31T16:47:25.984Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_%E7%95%8C%E9%9D%A2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_wlan%E5%B1%9E%E6%80%A7.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_driver_file.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_driver_install.png">
+<meta property="article:published_time" content="2021-05-22T12:05:00.000Z">
+<meta property="article:modified_time" content="2021-05-22T12:17:54.623Z">
 <meta property="article:author" content="Charles">
-<meta property="article:tag" content="Hexo 博客">
+<meta property="article:tag" content="工具">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_%E7%95%8C%E9%9D%A2.png">
 
-<link rel="canonical" href="https://cs-cshi.github.io/hexo-blog/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/">
+<link rel="canonical" href="https://cs-cshi.github.io/virtualBox%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1%E6%9C%AA%E6%8C%87%E5%AE%9A/">
 
 
 <script id="page-configurations">
@@ -46,7 +52,7 @@
   };
 </script>
 
-  <title>Hexo-NexT 设置博客背景图片 | Chang</title>
+  <title>解决 virtualBox 桥接网卡未指定问题 | Chang</title>
   
 
 
@@ -190,7 +196,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://cs-cshi.github.io/hexo-blog/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/">
+    <link itemprop="mainEntityOfPage" href="https://cs-cshi.github.io/virtualBox%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1%E6%9C%AA%E6%8C%87%E5%AE%9A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -203,7 +209,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo-NexT 设置博客背景图片
+          解决 virtualBox 桥接网卡未指定问题
         </h1>
 
         <div class="post-meta">
@@ -214,7 +220,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-01 00:30:00 / 修改时间：00:47:25" itemprop="dateCreated datePublished" datetime="2021-04-01T00:30:00+08:00">2021-04-01</time>
+              <time title="创建时间：2021-05-22 20:05:00 / 修改时间：20:17:54" itemprop="dateCreated datePublished" datetime="2021-05-22T20:05:00+08:00">2021-05-22</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,11 +228,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%AB%99%E5%BB%BA%E8%AE%BE/" itemprop="url" rel="index"><span itemprop="name">网站建设</span></a>
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%AB%99%E5%BB%BA%E8%AE%BE/Hexo-%E5%8D%9A%E5%AE%A2/" itemprop="url" rel="index"><span itemprop="name">Hexo 博客</span></a>
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/%E8%99%9A%E6%8B%9F%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">虚拟机</span></a>
                 </span>
             </span>
 
@@ -239,8 +245,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/hexo-blog/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/hexo-blog/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/" itemprop="commentCount"></span>
+    <a title="valine" href="/virtualBox%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1%E6%9C%AA%E6%8C%87%E5%AE%9A/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/virtualBox%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1%E6%9C%AA%E6%8C%87%E5%AE%9A/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -250,7 +256,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
+              <span>276</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -269,24 +275,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="1-设置背景图片"><a href="#1-设置背景图片" class="headerlink" title="1. 设置背景图片"></a>1. 设置背景图片</h2><p>将想要的背景图片放入 themes/next/source/images。打开 themes/next/source/css/ _custom/custom.styl 文件，这个是 Next 故意留给用户自己个性化定制一些样式的文件，添加以下代码即可。</p>
+        <p>主要原因：window10 中没有安装virtualbox的桥接驱动</p>
 <span id="more"></span>
-<p>实际上我的版本里没有_custom，通过新建目录无法实现。我是在 themes/next/source/css/_schemes/Gemini/index.styl 中添加的代码，Gemini是我的 next 的布局样式。</p>
-<p>在写这篇博客的过程中，又尝试了下将代码添加到 blog_root/source/_data/styles.style 下，设置成功。如果没有这个目录，直接新建即可。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>:<span class="built_in">url</span>(<span class="string">/images/yourbackground.jpg</span>);</span><br><span class="line">    <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">    <span class="attribute">background-attachment</span>:fixed; //不重复</span><br><span class="line">    <span class="attribute">background-size</span>: cover;      //填充</span><br><span class="line">    <span class="attribute">background-position</span>:<span class="number">50%</span> <span class="number">50%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>background:url 为图片路径，也可以直接使用链接。</li>
-<li>background-repeat：若果背景图片不能全屏，那么是否平铺显示，充满屏幕</li>
-<li>background-attachment：背景是否随着网页上下滚动而滚动，fixed 为固定</li>
-<li>background-size：图片展示大小，这里设置 100%，100% 的意义为：如果背景图片不能全屏，那么是否通过拉伸的方式将背景强制拉伸至全屏显示。</li>
-</ul>
-<h2 id="2-博客内容透明化"><a href="#2-博客内容透明化" class="headerlink" title="2. 博客内容透明化"></a>2. 博客内容透明化</h2><p>NexT 主题的博客文章均是不透明的，这样读者就不能好好欣赏背景图片了，下面的方法可以使博客内容透明化：</p>
-<p>在 blog_root/source/_data/styles.style  中添加以下内容：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//博客内容透明化</span><br><span class="line">//文章内容的透明度设置</span><br><span class="line"><span class="selector-class">.content-wrap</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//侧边框的透明度设置</span><br><span class="line"><span class="selector-class">.sidebar</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//菜单栏的透明度设置</span><br><span class="line"><span class="selector-class">.header-inner</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.9</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//搜索框（local-search）的透明度设置</span><br><span class="line"><span class="selector-class">.popup</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意：其中 header-inner 不能使用 opacity 进行配置。因为 header-inner 包含 header.swig 中的所有内容。若使用 opacity 进行配置，子结点会出很多问题。</p>
-<h2 id="3-参考"><a href="#3-参考" class="headerlink" title="3. 参考"></a>3. 参考</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://tding.top/archives/761b6f4d.html">Hexo-NexT 设置博客背景图片</a></li>
-</ul>
+
+<h2 id="1-界面样例"><a href="#1-界面样例" class="headerlink" title="1. 界面样例"></a>1. 界面样例</h2><p><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_%E7%95%8C%E9%9D%A2.png" alt="样例"></p>
+<h2 id="2-问题原因"><a href="#2-问题原因" class="headerlink" title="2. 问题原因"></a>2. 问题原因</h2><p>window10中没有安装virtualbox的桥接驱动</p>
+<h2 id="3-解决方法"><a href="#3-解决方法" class="headerlink" title="3. 解决方法"></a>3. 解决方法</h2><ol>
+<li>进入到网络连接<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5.png" alt="网络连接"></li>
+<li>右键打开属性<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_wlan%E5%B1%9E%E6%80%A7.png" alt="属性"></li>
+<li>没有启动，那么现在开始去安装桥接驱动<br>点击 【安装】—–&gt;【服务】——&gt;【添加】—–&gt;【从磁盘安装】—–&gt;【浏览】</li>
+<li>找到virtualbox目录中的一个文件【VBoxNetLwf】<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_driver_file.png" alt="driver"></li>
+<li>找到文件后开始安装<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/virtualbox_driver_install.png" alt="安装"></li>
+<li>安装完成后重新打开 virualbox 网络界面，可以看到网卡驱动已经可以加载了</li>
+</ol>
+<p>————————————————<br>本文转载自<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_383698639/article/details/79527311">virtualBox 桥接网卡 未指定</a></p>
 
     </div>
 
@@ -297,19 +299,10 @@
   <div class="popular-posts-header">相关文章推荐</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\hexo-blog\Hexo-NexT 添加分类、标签\" rel="bookmark">Hexo 博客 NexT 主题下如何添加分类、标签</a></div>
+      <div class="popular-posts-title"><a href="\security tools\" rel="bookmark">security tools</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\hexo-blog\Hexo-NexT 分类多层级描述\" rel="bookmark">Hexo-NexT 分类多层级描述</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\hexo-blog\Hexo-NexT 设置近期文章\" rel="bookmark">Hexo-NexT 设置近期文章</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\hexo-blog\Hexo-NexT 设置圆角\" rel="bookmark">Hexo-NexT 设置圆角</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\hexo-blog\Hexo-NexT 添加图片\" rel="bookmark">Hexo-NexT 添加图片</a></div>
+      <div class="popular-posts-title"><a href="\超详细SQLMap使用攻略及技巧分享\" rel="bookmark">超详细SQLMap使用攻略及技巧分享</a></div>
     </li>
   </ul>
 
@@ -342,7 +335,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://cs-cshi.github.io/hexo-blog/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/" title="Hexo-NexT 设置博客背景图片">https://cs-cshi.github.io/hexo-blog/Hexo-NexT 设置博客背景图片/</a>
+    <a href="https://cs-cshi.github.io/virtualBox%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1%E6%9C%AA%E6%8C%87%E5%AE%9A/" title="解决 virtualBox 桥接网卡未指定问题">https://cs-cshi.github.io/virtualBox桥接网卡未指定/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -353,7 +346,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Hexo-%E5%8D%9A%E5%AE%A2/" rel="tag"># Hexo 博客</a>
+              <a href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag"># 工具</a>
           </div>
 
         
@@ -362,13 +355,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/hexo-blog/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E8%BF%91%E6%9C%9F%E6%96%87%E7%AB%A0/" rel="prev" title="Hexo-NexT 设置近期文章">
-      <i class="fa fa-chevron-left"></i> Hexo-NexT 设置近期文章
+    <a href="/linux%20%E5%91%BD%E4%BB%A4/" rel="prev" title="linux 命令">
+      <i class="fa fa-chevron-left"></i> linux 命令
     </a></div>
-      <div class="post-nav-item">
-    <a href="/hexo-blog/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92/" rel="next" title="Hexo-NexT 设置圆角">
-      Hexo-NexT 设置圆角 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -428,7 +418,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%AE%BE%E7%BD%AE%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87"><span class="nav-text">1. 设置背景图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9%E9%80%8F%E6%98%8E%E5%8C%96"><span class="nav-text">2. 博客内容透明化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%8F%82%E8%80%83"><span class="nav-text">3. 参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%95%8C%E9%9D%A2%E6%A0%B7%E4%BE%8B"><span class="nav-text">1. 界面样例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%97%AE%E9%A2%98%E5%8E%9F%E5%9B%A0"><span class="nav-text">2. 问题原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-text">3. 解决方法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -601,7 +591,7 @@
       quicklink({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/hexo-blog/Hexo-NexT%20%E8%AE%BE%E7%BD%AE%E5%8D%9A%E5%AE%A2%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/virtualBox%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1%E6%9C%AA%E6%8C%87%E5%AE%9A/',]
       });
       });
   </script>
