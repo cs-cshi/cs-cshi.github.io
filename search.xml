@@ -4338,4 +4338,126 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
         <tag>linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>vim 编辑器</title>
+    <url>/linux%20%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>记录 linux bash 命令</p>
+<span id="more"></span>
+<h2 id="0-终端命令说明"><a href="#0-终端命令说明" class="headerlink" title="0. 终端命令说明"></a>0. 终端命令说明</h2><p>command [-options] [parameter]</p>
+<ul>
+<li>command：命令名, 比如: ls、pwd</li>
+<li>[-options]：选项，可以有零个、一个或者多个选项，多个选项可以合并，比如使用的 -r 就是选项。</li>
+<li>[parameter]：参数，可以有零个、一个 或者 多个参数， 比如: touch 文件名、mkdir 目录名、cd 目标目录(路径)，这些文件名和目录名都是参数。</li>
+<li>[]：代表可选</li>
+<li>命令的选项和参数一般情况下没有顺序要求，但是scp命令是必须先选项然后在跟上参数。</li>
+</ul>
+<h2 id="1-查看目录命令"><a href="#1-查看目录命令" class="headerlink" title="1. 查看目录命令"></a>1. 查看目录命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ls</td>
+<td>查看当前目录信息</td>
+</tr>
+<tr>
+<td>tree</td>
+<td>以树状方式显示目录信息</td>
+</tr>
+<tr>
+<td>pwd</td>
+<td>查看当前目录路径</td>
+</tr>
+<tr>
+<td>clear</td>
+<td>清除终端内容</td>
+</tr>
+</tbody></table>
+<h2 id="2-切换目录命令-cd"><a href="#2-切换目录命令-cd" class="headerlink" title="2. 切换目录命令 cd"></a>2. 切换目录命令 cd</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cd 目录</td>
+<td>切换到指定目录</td>
+</tr>
+<tr>
+<td>cd ~</td>
+<td>切换到当前用户的主目录</td>
+</tr>
+<tr>
+<td>cd ..</td>
+<td>切换到上一级目录</td>
+</tr>
+<tr>
+<td>cd .</td>
+<td>切换到当前目录</td>
+</tr>
+<tr>
+<td>cd -</td>
+<td>切换到上一次目录</td>
+</tr>
+</tbody></table>
+<ul>
+<li>绝对路径<ul>
+<li>从 / 目录开始</li>
+</ul>
+</li>
+<li>相对路径<ul>
+<li>从当前目录开始</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-创建、删除、复制、移动"><a href="#3-创建、删除、复制、移动" class="headerlink" title="3. 创建、删除、复制、移动"></a>3. 创建、删除、复制、移动</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>touch 文件名</td>
+<td>创建指定文件</td>
+</tr>
+<tr>
+<td>mkdir 目录名</td>
+<td>创建目录(文件夹)</td>
+</tr>
+<tr>
+<td>rm 文件名</td>
+<td>删除指定文件</td>
+</tr>
+<tr>
+<td>rm -r 目录名</td>
+<td>删除指定目录</td>
+</tr>
+<tr>
+<td>rmdir 目录名</td>
+<td>删除空目录</td>
+</tr>
+<tr>
+<td>cp</td>
+<td>拷贝文件、拷贝目录</td>
+</tr>
+<tr>
+<td>mv</td>
+<td>移动文件、移动目录、重命名</td>
+</tr>
+</tbody></table>
+<ul>
+<li>拷贝目录需要加上-r 选项，-r 表示递归拷贝目录及其内容</li>
+</ul>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
 </search>
