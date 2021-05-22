@@ -4339,17 +4339,54 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
       </tags>
   </entry>
   <entry>
-    <title>vim 编辑器</title>
+    <title>linux 命令</title>
     <url>/linux%20%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<p>记录 linux bash 命令</p>
 <span id="more"></span>
-<h2 id="0-终端命令说明"><a href="#0-终端命令说明" class="headerlink" title="0. 终端命令说明"></a>0. 终端命令说明</h2><p>command [-options] [parameter]</p>
+<h2 id="0-终端命令说明"><a href="#0-终端命令说明" class="headerlink" title="0. 终端命令说明"></a>0. 终端命令说明</h2><ul>
+<li><p>command [-options] [parameter]</p>
 <ul>
 <li>command：命令名, 比如: ls、pwd</li>
 <li>[-options]：选项，可以有零个、一个或者多个选项，多个选项可以合并，比如使用的 -r 就是选项。</li>
 <li>[parameter]：参数，可以有零个、一个 或者 多个参数， 比如: touch 文件名、mkdir 目录名、cd 目标目录(路径)，这些文件名和目录名都是参数。</li>
 <li>[]：代表可选</li>
 <li>命令的选项和参数一般情况下没有顺序要求，但是scp命令是必须先选项然后在跟上参数。</li>
+</ul>
+</li>
+<li><p>查看命令帮助</p>
+<ul>
+<li>–help : command –help</li>
+<li>man : man command<table>
+<thead>
+<tr>
+<th>操作键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空格</td>
+<td>显示下一屏信息</td>
+</tr>
+<tr>
+<td>回车</td>
+<td>显示下一行信息</td>
+</tr>
+<tr>
+<td>b</td>
+<td>显示上一屏信息</td>
+</tr>
+<tr>
+<td>f</td>
+<td>显示下一屏信息</td>
+</tr>
+<tr>
+<td>q</td>
+<td>退出</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
 </ul>
 <h2 id="1-查看目录命令"><a href="#1-查看目录命令" class="headerlink" title="1. 查看目录命令"></a>1. 查看目录命令</h2><table>
 <thead>
@@ -4361,6 +4398,18 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
 <tbody><tr>
 <td>ls</td>
 <td>查看当前目录信息</td>
+</tr>
+<tr>
+<td>ls -l</td>
+<td>以列表方式显示</td>
+</tr>
+<tr>
+<td>ls -h</td>
+<td>显示文件大小单位，默认是字节</td>
+</tr>
+<tr>
+<td>ls -a</td>
+<td>显示隐藏文件和隐藏目录</td>
 </tr>
 <tr>
 <td>tree</td>
@@ -4375,6 +4424,7 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
 <td>清除终端内容</td>
 </tr>
 </tbody></table>
+<p>ls -l 详情<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/linux/ls%E9%80%89%E9%A1%B9%E8%AF%A6%E6%83%85.png" alt="ls参数详情"></p>
 <h2 id="2-切换目录命令-cd"><a href="#2-切换目录命令-cd" class="headerlink" title="2. 切换目录命令 cd"></a>2. 切换目录命令 cd</h2><table>
 <thead>
 <tr>
@@ -4429,8 +4479,28 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
 <td>创建目录(文件夹)</td>
 </tr>
 <tr>
+<td>mkdir -p</td>
+<td>创建所依赖的文件夹/递归创建文件夹</td>
+</tr>
+<tr>
 <td>rm 文件名</td>
 <td>删除指定文件</td>
+</tr>
+<tr>
+<td>rm -i</td>
+<td>交互式提示</td>
+</tr>
+<tr>
+<td>rm -r</td>
+<td>递归删除目录及其内容</td>
+</tr>
+<tr>
+<td>rm -f</td>
+<td>强制删除，忽略不存在的文件，无需提示</td>
+</tr>
+<tr>
+<td>rm -d</td>
+<td>删除空目录</td>
 </tr>
 <tr>
 <td>rm -r 目录名</td>
@@ -4445,12 +4515,850 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
 <td>拷贝文件、拷贝目录</td>
 </tr>
 <tr>
+<td>cp -i</td>
+<td>交互式提示</td>
+</tr>
+<tr>
+<td>cp -r</td>
+<td>递归拷贝目录及其内容</td>
+</tr>
+<tr>
+<td>cp -v</td>
+<td>显示拷贝后的路径描述</td>
+</tr>
+<tr>
+<td>cp -a</td>
+<td>保留文件的原有权限</td>
+</tr>
+<tr>
 <td>mv</td>
 <td>移动文件、移动目录、重命名</td>
 </tr>
+<tr>
+<td>mv -i</td>
+<td>交互式提示</td>
+</tr>
+<tr>
+<td>mv -v</td>
+<td>显示移动后的路径描述</td>
+</tr>
+</tbody></table>
+<h2 id="4-重定向"><a href="#4-重定向" class="headerlink" title="4. 重定向"></a>4. 重定向</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&gt;</td>
+<td>如果文件存在会覆盖原有文件内容，相当于文件操作中的‘w’模式</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>如果文件存在会追加写入文件末尾，相当于文件操作中的‘a’ 模式</td>
+</tr>
+</tbody></table>
+<h2 id="5-查看文件内容"><a href="#5-查看文件内容" class="headerlink" title="5. 查看文件内容"></a>5. 查看文件内容</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cat</td>
+<td>查看小型文件</td>
+</tr>
+<tr>
+<td>more</td>
+<td>分屏查看大型文件</td>
+</tr>
+<tr>
+<td>less</td>
+<td>分屏查看大型文件, 比 more 少百分比</td>
+</tr>
+<tr>
+<td>tail</td>
+<td>默认显示文件最后10行内容</td>
+</tr>
+<tr>
+<td>watch</td>
+<td>根据指定间隔时间重复运行后续命令</td>
+</tr>
+</tbody></table>
+<blockquote>
+<ul>
+<li>cat命令结合重定向可以完成多个文件的合并</li>
+<li>tail -n<ul>
+<li>n 为要查看的内容的行数</li>
+</ul>
+</li>
+<li><code>watch -n 2 tail -20 /var/log/messages</code><ul>
+<li>每个两秒查看 messages 文件最后20行</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>more 操作说明：<br>| 操作键 | 说明 |<br>| — | — |<br>| 空格 | 显示下一屏信息 |<br>| 回车 | 显示下一行信息 |<br>| b | 显示上一屏信息 |<br>| f | 显示下一屏信息 |<br>| q | 退出 |</p>
+<h2 id="6-管道命令"><a href="#6-管道命令" class="headerlink" title="6. 管道命令 |"></a>6. 管道命令 |</h2><p>管道(|)：一个命令的输出可以通过管道做为另一个命令的输入，可以理解成是一个容器，存放在终端显示的内容。</p>
+<h2 id="7-链接命令-ln"><a href="#7-链接命令-ln" class="headerlink" title="7. 链接命令 ln"></a>7. 链接命令 ln</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ln -s</td>
+<td>创建软链接</td>
+</tr>
+<tr>
+<td>ln</td>
+<td>创建硬链接</td>
+</tr>
+</tbody></table>
+<blockquote>
+<ul>
+<li>软链接: 类似于Windows下的快捷方式。<ul>
+<li>ln -s 源文件路径(使用绝对路径) 软链接</li>
+<li>如果软链接和源文件不在同一个目录，源文件要使用绝对路径，不能使用相对路径。</li>
+<li>删除源文件则软链接失效</li>
+<li>可以给目录创建软链接</li>
+</ul>
+</li>
+<li>硬链接: 类似于源文件的一个别名，也就是说这两个名字指向的是同一个文件数据。<ul>
+<li>创建硬链接使用相对路径和绝对路径都可以</li>
+<li>删除源文件，硬链接还可以访问到数据。</li>
+<li>创建硬链接，硬链接数会加1，删除源文件或者硬链接，硬链接数会减1。</li>
+<li>创建软链接，硬链接数不会加1</li>
+<li>不能给目录创建硬链接</li>
+</ul>
+</li>
+<li>硬链接数就是文件数据被文件名使用的次数, 好比引用计数</li>
+</ul>
+</blockquote>
+<h2 id="8-文本处理命令"><a href="#8-文本处理命令" class="headerlink" title="8. 文本处理命令"></a>8. 文本处理命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>grep</td>
+<td>文本搜索</td>
+</tr>
+<tr>
+<td>grep -i</td>
+<td>忽略大小写</td>
+</tr>
+<tr>
+<td>grep -n</td>
+<td>显示匹配行号</td>
+</tr>
+<tr>
+<td>grep -v</td>
+<td>显示不包含匹配文本的所有行</td>
+</tr>
+<tr>
+<td>egrep</td>
+<td>在文件内查找指定的字符串。</td>
+</tr>
+<tr>
+<td>awk</td>
+<td>文本数据处理工具</td>
+</tr>
+</tbody></table>
+<blockquote>
+<ul>
+<li>grep 搜索内容 文本<ul>
+<li>grep ‘a’ test.txt</li>
+<li>ls | grep test</li>
+</ul>
+</li>
+<li>egrep执行效果与 grep-E 相似<ul>
+<li>egrep是用extended regular expression语法来解读的，而grep则用basic regular expression 语法解读，extended regular expression比basic regular expression的表达更规范。 </li>
+</ul>
+</li>
+<li>awk 命令也是逐行扫描文件（从第 1 行到最后一行），寻找含有目标文本的行，如果匹配成功，则会在该行上执行用户想要的操作；反之，则不对行做任何处理。<ul>
+<li>netstat -pantu | egrep -v ‘0.0.0.0|:::’ | awk ‘{print $5}’，打印 netstat -pantu 的第五列，以空格作分隔符</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p><strong>grep 可以结合正则表达式一起使用</strong><br>| 正则表达式 | 说明 |<br>| — | — |<br>| ^ | 以指定字符串开头 |<br>| $ | 以指定字符串结尾 |<br>| . | 匹配一个非换行符的字符 |</p>
+<h2 id="9-查找文件命令"><a href="#9-查找文件命令" class="headerlink" title="9. 查找文件命令"></a>9. 查找文件命令</h2><blockquote>
+<p>whereis 命令比 find 快，原因：非源码安装的软件信息实际上会存储在 linux 的一个数据库中， whereis 是通过查询数据库获得信息</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>find</td>
+<td>在指定目录下查找文件(包括目录)</td>
+</tr>
+<tr>
+<td>find -name</td>
+<td>根据文件名(包括目录名)字查找</td>
+</tr>
+<tr>
+<td>which</td>
+<td>查看命令位置</td>
+</tr>
+</tbody></table>
+<p><strong>find命令结合通配符的使用</strong><br>通配符不仅能结合 find 命令使用，还可以结合其它命令使用, 比如: ls、mv、cp 等，只有 find 命令使用通配符需要加上引号。<br>| 通配符 | 说明 |<br>| — | — |<br>| * | 代表0个或多个任意字符 |<br>| ? | 代表任意一个字符 |</p>
+<blockquote>
+<p>find -name “1?1.txt”</p>
+</blockquote>
+<h2 id="10-压缩和解压缩命令tar"><a href="#10-压缩和解压缩命令tar" class="headerlink" title="10. 压缩和解压缩命令tar"></a>10. 压缩和解压缩命令tar</h2><ul>
+<li>Linux默认支持的压缩格式:<ul>
+<li>.gz</li>
+<li>.bz2</li>
+<li>.zip<blockquote>
+<p>.gz和.bz2的压缩包需要使用tar命令来压缩和解压缩<br>.zip的压缩包需要使用zip命令来压缩，使用unzip命令来解压缩</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tar</td>
+<td>压缩和解压缩命令</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>创建打包文件</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示打包或者解包的详细信息</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>指定文件名称, 必须放到所有选项后面</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>压缩或解压缩(.gz)</td>
+</tr>
+<tr>
+<td>-j</td>
+<td>压缩或解压缩(.bz2)</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>解包</td>
+</tr>
+<tr>
+<td>-C</td>
+<td>解压缩到指定目录</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>zip</td>
+<td>压缩成.zip格式文件</td>
+</tr>
+<tr>
+<td>unzip</td>
+<td>解压缩.zip格式文件</td>
+</tr>
+<tr>
+<td>unzip -d</td>
+<td>解压缩到指定目录</td>
+</tr>
+</tbody></table>
+<h2 id="11-权限命令"><a href="#11-权限命令" class="headerlink" title="11. 权限命令"></a>11. 权限命令</h2><h3 id="1-文件权限"><a href="#1-文件权限" class="headerlink" title="1. 文件权限"></a>1. 文件权限</h3><blockquote>
+<ul>
+<li>字母法格式: chmod 不同角色设置的权限 文件</li>
+<li>数字法格式: chmod 不同角色的权限值 文件名</li>
+</ul>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>chmod</td>
+<td>修改文件权限</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u</td>
+<td>user, 表示该文件的所有者</td>
+</tr>
+<tr>
+<td>g</td>
+<td>group, 表示用户组</td>
+</tr>
+<tr>
+<td>o</td>
+<td>other, 表示其他用户</td>
+</tr>
+<tr>
+<td>a</td>
+<td>all, 表示所有用户</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>增加权限</td>
+</tr>
+<tr>
+<td>-</td>
+<td>撤销权限</td>
+</tr>
+<tr>
+<td>=</td>
+<td>设置权限</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>权限</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>r</td>
+<td>可读</td>
+</tr>
+<tr>
+<td>w</td>
+<td>可写</td>
+</tr>
+<tr>
+<td>x</td>
+<td>可执行</td>
+</tr>
+<tr>
+<td>-</td>
+<td>无任何权限</td>
+</tr>
+</tbody></table>
+<p><strong>chmod 数字法的使用</strong><br>| 权限 | 说明 |<br>|—|—|<br>| r | 可读，权限值是4 |<br>|  w | 可写，权限值是2 |<br>| x | 可执行，权限值是1 |<br>| - | 无任何权限，权限值是0 |</p>
+<h3 id="2-管理员权限"><a href="#2-管理员权限" class="headerlink" title="2. 管理员权限"></a>2. 管理员权限</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sudo -s</td>
+<td>切换到root用户，获取管理员权限</td>
+</tr>
+<tr>
+<td>sudo</td>
+<td>某个命令的执行需要获取管理员权限可以在执行命令前面加上sudo</td>
+</tr>
+<tr>
+<td>whoami</td>
+<td>查看当前用户限</td>
+</tr>
+<tr>
+<td>exit</td>
+<td>退出登录用户</td>
+</tr>
+</tbody></table>
+<blockquote>
+<ul>
+<li>exit <ul>
+<li>如果是切换后的登陆用户，退出则返回上一个登陆账号。</li>
+<li>如果是终端界面，退出当前终端。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="12-用户相关操作"><a href="#12-用户相关操作" class="headerlink" title="12. 用户相关操作"></a>12. 用户相关操作</h2><blockquote>
+<p>/etc/passwd 文件记录了所有用户信息</p>
+</blockquote>
+<h3 id="1-创建用户"><a href="#1-创建用户" class="headerlink" title="1. 创建用户"></a>1. 创建用户</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>useradd</td>
+<td>创建(添加)用户</td>
+</tr>
+<tr>
+<td>id</td>
+<td>查看用户信息</td>
+</tr>
+</tbody></table>
+<blockquote>
+<blockquote>
+<p>创建用户 chang 并指定用户组 test : sudo useradd -m -g test chang</p>
+</blockquote>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-m</td>
+<td>自动创建用户主目录,主目录的名字就是用户名</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>指定用户所属的用户组，默认不指定会自动创建一个同名的用户组</td>
+</tr>
 </tbody></table>
 <ul>
-<li>拷贝目录需要加上-r 选项，-r 表示递归拷贝目录及其内容</li>
+<li>说明<ul>
+<li>useradd 命令的使用需要使用管理员权限，前面需要加上 sudo</li>
+<li>创建用户如果不指定用户组，默认会自动创建一个同名的用户组</li>
+<li>查看用户是否创建成功，可以查看/etc/passwd这个文件</li>
+<li>查看用户组是否创建成功，可以查看/etc/group这个文件</li>
+</ul>
+</li>
+<li>passwd文件中的每项信息说明,以root:x:0:0:root:/root:/bin/bash为例:<ul>
+<li>第一个：用户名</li>
+<li>第二个：密码占位符</li>
+<li>第三个：uid, 用户id</li>
+<li>第四个：gid, 用户所在组id</li>
+<li>第五个：用户描述, 可选，</li>
+<li>第六个：用户的主目录所在位置</li>
+<li>第七个：用户所用 shell 的类型，一般由bash或者sh，默认不设置是sh类型</li>
+</ul>
+</li>
+<li>group文件中的每项信息说明, 以chang:x:1001:为例:<ul>
+<li>第一个：用户组名</li>
+<li>第二个：用户组密码占位符，一般Linux系统的用户组都没有密码的</li>
+<li>第三个：组id</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-设置密码"><a href="#2-设置密码" class="headerlink" title="2. 设置密码"></a>2. 设置密码</h3><p>sudo passwd 用户名</p>
+<h3 id="3-切换用户"><a href="#3-切换用户" class="headerlink" title="3. 切换用户"></a>3. 切换用户</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>su</td>
+<td>切换用户</td>
+</tr>
+</tbody></table>
+<h3 id="4-修改用户信息"><a href="#4-修改用户信息" class="headerlink" title="4. 修改用户信息"></a>4. 修改用户信息</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>usermod</td>
+<td>修改用户信息</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-G</td>
+<td>设置一个附加组</td>
+</tr>
+<tr>
+<td>-g</td>
+<td>修改用户组</td>
+</tr>
+</tbody></table>
+<h3 id="5-删除附加组"><a href="#5-删除附加组" class="headerlink" title="5. 删除附加组"></a>5. 删除附加组</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gpasswd</td>
+<td>添加和删除附加组信息</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a 用户名</td>
+<td>给用户添加附加组</td>
+</tr>
+<tr>
+<td>-d 用户名</td>
+<td>给用户删除附加组</td>
+</tr>
+</tbody></table>
+<h3 id="6-删除用户"><a href="#6-删除用户" class="headerlink" title="6. 删除用户"></a>6. 删除用户</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>userdel</td>
+<td>删除用户</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-r 用户名</td>
+<td>删除用户主目录，必须要设置，否则用户主目录不会删除</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>删除用户，默认同名的用户组也会被删除</p>
+</blockquote>
+<h2 id="13-用户组相关操作"><a href="#13-用户组相关操作" class="headerlink" title="13. 用户组相关操作"></a>13. 用户组相关操作</h2><h3 id="1-创建用户组"><a href="#1-创建用户组" class="headerlink" title="1. 创建用户组"></a>1. 创建用户组</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>groupadd</td>
+<td>创建(添加)用户组</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>创建用户 chang 并指定用户组 test : sudo useradd -m -g test chang</p>
+</blockquote>
+<h3 id="2-修改用户组"><a href="#2-修改用户组" class="headerlink" title="2. 修改用户组"></a>2. 修改用户组</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>usermod</td>
+<td>创修改用户的用户组</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>sudo usermod -g test1 chang</p>
+</blockquote>
+<h3 id="3-删除用户组"><a href="#3-删除用户组" class="headerlink" title="3. 删除用户组"></a>3. 删除用户组</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>groupdel</td>
+<td>删除用户组</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>如果用户组下面有用户先删除用户在删除用户组</p>
+</blockquote>
+<h2 id="14-远程登录、远程拷贝命令"><a href="#14-远程登录、远程拷贝命令" class="headerlink" title="14. 远程登录、远程拷贝命令"></a>14. 远程登录、远程拷贝命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ssh</td>
+<td>远程登录</td>
+</tr>
+<tr>
+<td>scp</td>
+<td>远程拷贝</td>
+</tr>
+</tbody></table>
+<h3 id="1-ssh"><a href="#1-ssh" class="headerlink" title="1. ssh"></a>1. ssh</h3><p>在Ubuntu安装ssh客户端命令: </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install openssh-client</span><br></pre></td></tr></table></figure>
+<p>若Ubuntu作为服务端,需要安装ssh服务端软件.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install openssh-server</span><br></pre></td></tr></table></figure>
+
+<p>ssh 连接命令：ssh 用户名@ip地址</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh chang@172.16.47.197</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-scp"><a href="#2-scp" class="headerlink" title="2. scp"></a>2. scp</h3><p>scp是基于ssh进行远程文件拷贝的命令，需要保证服务端和客户端电脑安装了相应的ssh软件</p>
+<ul>
+<li>scp命令格式:<ul>
+<li>远程拷贝文件<ul>
+<li>scp 本地文件 远程服务器用户名@远程服务器ip地址:指定拷贝到远程服务器的路径</li>
+<li>scp 远程服务器用户名@远程服务器ip地址:远程服务器文件 指定拷贝到本地电脑的路径</li>
+</ul>
+</li>
+<li>远程拷贝目标<ul>
+<li>scp -r 本地目录 远程服务器用户名@远程服务器ip地址:指定拷贝到远程服务器的路径</li>
+<li>scp -r 远程服务器用户名@远程服务器ip地址:远程服务器目录 指定拷贝到本地电脑的路径</li>
+<li>-r 表示递归拷贝整个目录<blockquote>
+<p>大量的文件上传和下载可以通过可视化工具FileZilla来完成。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="14-软件安装与卸载"><a href="#14-软件安装与卸载" class="headerlink" title="14. 软件安装与卸载"></a>14. 软件安装与卸载</h2><h3 id="1-软件安装"><a href="#1-软件安装" class="headerlink" title="1. 软件安装"></a>1. 软件安装</h3><p>Ubuntu软件安装有两种方式:</p>
+<ul>
+<li>离线安装(deb文件格式安装）</li>
+<li>在线安装(apt-get方式安装)</li>
+</ul>
+<p>dpkg 是 Ubuntu 的安装包格式，可以使用 dpkg 命令进行软件的安装和卸载<br>| 命令 | 说明 |<br>| — | — |<br>| dpkg | 安装和卸载deb安装包 |<br>| dpkg -i | 离线安装deb安装包 |</p>
+<p>apt-get 是在线安装 deb 软件包的命令，主要用于在线从互联网的软件仓库中搜索、安装、升级、卸载软件。</p>
+<blockquote>
+<p>sudo apt–get install 安装包</p>
+</blockquote>
+<h3 id="2-软件卸载"><a href="#2-软件卸载" class="headerlink" title="2. 软件卸载"></a>2. 软件卸载</h3><p>Ubuntu软件卸载有两种方式:</p>
+<ul>
+<li>离线安装包的卸载(deb 文件格式卸载）</li>
+<li>在线安装包的卸载(apt-get 方式卸载)</li>
+</ul>
+<p>deb 文件格式卸载</p>
+<blockquote>
+<p>sudo dpkg –r 安装包名</p>
+</blockquote>
+<p>apt-get 方式卸载</p>
+<blockquote>
+<p>sudo apt-get remove 安装包名</p>
+</blockquote>
+<h2 id="15-查看系统实时信息"><a href="#15-查看系统实时信息" class="headerlink" title="15. 查看系统实时信息"></a>15. 查看系统实时信息</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>top</td>
+<td>查看系统实时信息</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>k，结束某进程：pid to signal/kill<br>q,退出</p>
+</blockquote>
+<h2 id="16-查看进程信息"><a href="#16-查看进程信息" class="headerlink" title="16. 查看进程信息"></a>16. 查看进程信息</h2><p> ps 命令 为了适应不同的 UNIX 系统，可用格式非常多</p>
+<ul>
+<li>ps aux ：可以查看系统中所有的进程；</li>
+<li>ps -le ： 可以查看系统中所有的进程，而且还能看到进程的父进程的 PID 和进程优先级；</li>
+<li>ps -l ： 只能看到当前 Shell 产生的进程；</li>
+</ul>
+<h2 id="17-网络相关命令"><a href="#17-网络相关命令" class="headerlink" title="17. 网络相关命令"></a>17. 网络相关命令</h2><h3 id="1-ifconfig-命令"><a href="#1-ifconfig-命令" class="headerlink" title="1. ifconfig 命令"></a>1. ifconfig 命令</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ifconfig</td>
+<td>查看或修改网络接口配置信息</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a</td>
+<td>显示全部接口信息。</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>显示摘要信息（类似于 netstat -i）。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; address</td>
+<td>为网卡设置IPv4地址。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; add <address></td>
+<td>给指定网卡配置IPv6地址。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; del <address></td>
+<td>删除指定网卡的IPv6地址。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; netmask <address></td>
+<td>设置网卡的子网掩码。掩码可以是有前缀0x的32位十六进制数，也可以是用点分开的4个十进制数。如果不打算将网络分成子网，可以不管这一选项；如果要使用子网，那么请记住，网络中每一个系统必须有相同子网掩码。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; dstaddr <address></td>
+<td>设定一个远端地址，建立点对点通信。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; tunnel <address></td>
+<td>建立隧道。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; hw <address></td>
+<td>设置硬件地址。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; mtu <NN></td>
+<td>设置最大传输单元。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; [-]arp</td>
+<td>设置指定网卡是否支持ARP协议。-表示不支持arp。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; multicast</td>
+<td>为网卡设置组播标志。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; [-]promisc</td>
+<td>设置是否支持网卡的promiscuous模式，如果选择此参数，网卡将接收网络中发给它所有的数据包。-表示关闭混杂模式。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; txqueuelen <NN></td>
+<td>为网卡设置传输列队的长度。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; up</td>
+<td>启动指定网卡。</td>
+</tr>
+<tr>
+<td>&lt;interface&gt; down</td>
+<td>关闭指定网卡。该参数可以有效地阻止通过指定接口的IP信息流，如果想永久地关闭一个接口，我们还需要从核心路由表中将该接口的路由信息全部删除。</td>
+</tr>
+</tbody></table>
+<h3 id="2-macchanger"><a href="#2-macchanger" class="headerlink" title="2. macchanger"></a>2. macchanger</h3><p>修改 mac 地址</p>
+<blockquote>
+<p>只能修改让别人看见的mac地址，实际真正的mac地址不能改变</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-h,  –help</td>
+<td>帮助信息</td>
+</tr>
+<tr>
+<td>-V,  –version</td>
+<td>输出版本信息并退出</td>
+</tr>
+<tr>
+<td>-s,  –show</td>
+<td>输出MAC地址并退出</td>
+</tr>
+<tr>
+<td>-e,  –ending</td>
+<td>不改变有关设备商信息的字节</td>
+</tr>
+<tr>
+<td>-a,  –another</td>
+<td>设置相同供应商的随机MAC地址</td>
+</tr>
+<tr>
+<td>-A</td>
+<td>设置任意类型的供应商MAC</td>
+</tr>
+<tr>
+<td>-p,  –permanent</td>
+<td>重置为原始、永久的硬件MAC</td>
+</tr>
+<tr>
+<td>-r,  –random</td>
+<td>设置完全随机MAC地址</td>
+</tr>
+<tr>
+<td>-l,  –list[=keyword]</td>
+<td>输出已知的供应商</td>
+</tr>
+<tr>
+<td>-b,  –bia</td>
+<td>冒充地址</td>
+</tr>
+<tr>
+<td>-m,  –mac XX:XX:XX:XX:XX:XX</td>
+<td>设置 MAC XX:XX:XX:XX:XX:XX</td>
+</tr>
+</tbody></table>
+<h3 id="3-netstat"><a href="#3-netstat" class="headerlink" title="3. netstat"></a>3. netstat</h3><p>netstat命令用于显示与IP、TCP、UDP和ICMP协议相关的统计数据，一般用于检验本机各端口的网络连接情况。netstat是在内核中访问网络及相关信息的程序，它能提供TCP连接，TCP和UDP监听，进程内存管理的相关报告。</p>
+<p> 查看 Active Internet connections (servers and established)：</p>
+<blockquote>
+<p>sudo netstat -pantu</p>
+</blockquote>
+<p>————————————————</p>
+<ul>
+<li><a href="https://blog.csdn.net/u011857683/article/details/83758503">ifconfig 命令详解</a></li>
+<li><a href="https://blog.csdn.net/qq_26090065/article/details/80500137">Macchanger-更改mac地址</a></li>
+<li><a href="http://c.biancheng.net/view/1062.html">Linux ps命令详解：查看正在运行的进程</a></li>
+<li><a href="http://c.biancheng.net/linux_tutorial/">Linux学习教程，Linux入门教程（超详细）</a></li>
 </ul>
 ]]></content>
       <categories>
