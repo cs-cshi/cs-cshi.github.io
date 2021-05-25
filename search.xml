@@ -3775,84 +3775,6 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
       </tags>
   </entry>
   <entry>
-    <title>基于约束的SQL攻击</title>
-    <url>/%E5%9F%BA%E4%BA%8E%E7%BA%A6%E6%95%B0%E7%9A%84SQL%E6%94%BB%E5%87%BB/</url>
-    <content><![CDATA[<p>sql 中 insert 和 select 对字符串处理方式的差异造成的漏洞</p>
-<span id="more"></span>
-
-<h2 id="1-背景介绍"><a href="#1-背景介绍" class="headerlink" title="1. 背景介绍"></a>1. 背景介绍</h2><p>一个有趣的代码片段，开发者尝试各种方法来确保数据库的安全访问，当新用户尝试注册时，将运行以下代码：</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// Checking whether a user with the same username exists</span></span><br><span class="line"><span class="variable">$username</span> = mysql_real_escape_string(<span class="variable">$_GET</span>[<span class="string">&#x27;username&#x27;</span>]);</span><br><span class="line"><span class="variable">$password</span> = mysql_real_escape_string(<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>]);</span><br><span class="line"><span class="variable">$query</span> = <span class="string">&quot;SELECT *</span></span><br><span class="line"><span class="string">          FROM users</span></span><br><span class="line"><span class="string">          WHERE username=&#x27;<span class="subst">$username</span>&#x27;&quot;</span>;</span><br><span class="line"><span class="variable">$res</span> = mysql_query(<span class="variable">$query</span>, <span class="variable">$database</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$res</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span>(mysql_num_rows(<span class="variable">$res</span>) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// User exists, exit gracefully</span></span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// If not, only then insert a new entry</span></span><br><span class="line">    <span class="variable">$query</span> = <span class="string">&quot;INSERT INTO users(username, password)</span></span><br><span class="line"><span class="string">              VALUES (&#x27;<span class="subst">$username</span>&#x27;,&#x27;<span class="subst">$password</span>&#x27;)&quot;</span>;</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用以下代码验证登录信息：</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$username</span> = mysql_real_escape_string(<span class="variable">$_GET</span>[<span class="string">&#x27;username&#x27;</span>]);</span><br><span class="line"><span class="variable">$password</span> = mysql_real_escape_string(<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>]);</span><br><span class="line"><span class="variable">$query</span> = <span class="string">&quot;SELECT username FROM users</span></span><br><span class="line"><span class="string">          WHERE username=&#x27;<span class="subst">$username</span>&#x27;</span></span><br><span class="line"><span class="string">              AND password=&#x27;<span class="subst">$password</span>&#x27; &quot;</span>;</span><br><span class="line"><span class="variable">$res</span> = mysql_query(<span class="variable">$query</span>, <span class="variable">$database</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$res</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span>(mysql_num_rows(<span class="variable">$res</span>) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="variable">$row</span> = mysql_fetch_assoc(<span class="variable">$res</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="variable">$row</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">Null</span>;</span><br></pre></td></tr></table></figure>
-
-<p>安全考虑:</p>
-<blockquote>
-<ul>
-<li>过滤用户输入参数了吗？ – 完成检查</li>
-<li>使用单引号（’）来增加安全性了吗？ – 完成检查</li>
-</ul>
-</blockquote>
-<h2 id="2-攻击手法"><a href="#2-攻击手法" class="headerlink" title="2. 攻击手法"></a>2. 攻击手法</h2><p>在SQL中执行字符串处理时，字符串末尾的空格符将会被删除。换句话说“vampire”等同于“vampire ”，对于绝大多数情况来说都是成立的（诸如WHERE子句中的字符串或INSERT语句中的字符串）例如以下语句的查询结果，与使用用户名“vampire”进行查询时的结果是一样的。</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username<span class="operator">=</span><span class="string">&#x27;vampire     &#x27;</span>;</span><br><span class="line"></span><br><span class="line">等同于</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username<span class="operator">=</span><span class="string">&#x27;vampire&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>也存在异常情况，最好的例子就是 LIKE 子句了。注意，对尾部空白符的这种修剪操作，主要是在“字符串比较”期间进行的。这是因为，SQL会在内部使用空格来填充字符串，以便在比较之前使其它们的长度保持一致。</p>
-<blockquote>
-<p>SQL Server follows the ANSI/ISO SQL-92 specification (Section 8.2, <Comparison Predicate>, General rules #3) on how to compare strings with spaces. The ANSI standard requires padding for the character strings used in comparisons so that their lengths match before comparing them. The padding directly affects the semantics of WHERE and HAVING clause predicates and other Transact-SQL string comparisons. For example, Transact-SQL considers the strings ‘abc’ and ‘abc ‘ to be equivalent for most comparison operations.</p>
-<p>The only exception to this rule is the LIKE predicate. When the right side of a LIKE predicate expression features a value with a trailing space, SQL Server does not pad the two values to the same length before the comparison occurs. Because the purpose of the LIKE predicate, by definition, is to facilitate pattern searches rather than simple string equality tests, this does not violate the section of the ANSI SQL-92 specification mentioned earlier.</p>
-<p><a href="https://support.microsoft.com/en-us/topic/inf-how-sql-server-compares-strings-with-trailing-spaces-b62b1a2d-27d3-4260-216d-a605719003b0">https://support.microsoft.com/en-us/topic/inf-how-sql-server-compares-strings-with-trailing-spaces-b62b1a2d-27d3-4260-216d-a605719003b0</a></p>
-</blockquote>
-<p>在所有的 INSERT 查询中，SQL都会根据 varchar(n) 来限制字符串的最大长度。也就是说，如果字符串的长度大于“n”个字符的话，那么仅使用字符串的前“n”个字符。比如特定列的长度约束为“5”个字符，那么在插入字符串“vampire”时，实际上只能插入字符串的前5个字符，即“vampi”。</p>
-<p>而攻击就是利用 select 与 insert 对长度和空格处理方式不同造成的漏洞。</p>
-<p>select 语句对于参数后面空格的处理是删除，insert 只是截取最大长度的字符串，然后插入数据库。</p>
-<p>假设最大长度限制为25 我们输入用户名为 admin[20个空格]1,密码随意。在本文一开始的代码逻辑中，select 检查的时候实际用的是 admin1，这时数据库中是不存在 admin1 的，（假设数据库中已经存在 admin），所以会执行 insert 操作。</p>
-<p>但由于 select 与 insert 机制不同，insert 会直接截断，插入的是 admin[20个空格]，由于 SQL 处理字符串的机制，实际插入的就变成了 admin，这样库中就插入了两条 admin。</p>
-<h2 id="3-攻击演示"><a href="#3-攻击演示" class="headerlink" title="3. 攻击演示"></a>3. 攻击演示</h2><p>现在，让我们建立一个测试数据库来演示具体攻击过程。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vampire@linux:~$ mysql -u root -p</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> CREATE DATABASE testing;</span></span><br><span class="line">Query OK, 1 row affected (0.03 sec)</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> USE testing;</span></span><br><span class="line">Database changed</span><br></pre></td></tr></table></figure>
-
-<p>接着创建一个数据表users，其包含username和password列，并且字段的最大长度限制为25个字符。然后，我将向username字段插入“vampire”，向password字段插入“my_password”。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> CREATE TABLE users (</span></span><br><span class="line">    -&gt;   username varchar(25),</span><br><span class="line">    -&gt;   password varchar(25)</span><br><span class="line">    -&gt; );</span><br><span class="line">Query OK, 0 rows affected (0.09 sec)</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> INSERT INTO users</span></span><br><span class="line">    -&gt; VALUES(&#x27;vampire&#x27;, &#x27;my_password&#x27;);</span><br><span class="line">Query OK, 1 row affected (0.11 sec)</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> SELECT * FROM users;</span></span><br><span class="line">+----------+-------------+</span><br><span class="line">| username | password    |</span><br><span class="line">+----------+-------------+</span><br><span class="line">| vampire  | my_password |</span><br><span class="line">+----------+-------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<p>为了展示尾部空白字符的修剪情况，我们可以键入下列命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> SELECT * FROM users</span></span><br><span class="line">    -&gt; WHERE username=&#x27;vampire       &#x27;;</span><br><span class="line">+----------+-------------+</span><br><span class="line">| username | password    |</span><br><span class="line">+----------+-------------+</span><br><span class="line">| vampire  | my_password |</span><br><span class="line">+----------+-------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<p>现在我们假设一个存在漏洞的网站使用了前面提到的PHP代码来处理用户的注册及登录过程。为了侵入任意用户的帐户（在本例中为“vampire”），只需要使用用户名“vampire[许多空白符]1”和一个随机密码进行注册即可。对于选择的用户名，前25个字符应该只包含vampire和空白字符，这样做将有助于绕过检查特定用户名是否已存在的查询。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> SELECT * FROM users</span></span><br><span class="line">    -&gt; WHERE username=&#x27;vampire                   1&#x27;;</span><br><span class="line">Empty set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<p>需要注意的是，在执行SELECT查询语句时，SQL是不会将字符串缩短为25个字符的。因此，这里将使用完整的字符串进行搜索，所以不会找到匹配的结果。接下来，当执行INSERT查询语句时，它只会插入前25个字符。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">   INSERT INTO users(username, password)</span></span><br><span class="line">    -&gt; VALUES (&#x27;vampire                   1&#x27;, &#x27;random_pass&#x27;);</span><br><span class="line">Query OK, 1 row affected, 1 warning (0.05 sec)</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> SELECT * FROM users</span></span><br><span class="line">    -&gt; WHERE username=&#x27;vampire&#x27;;</span><br><span class="line">+---------------------------+-------------+</span><br><span class="line">| username                  | password    |</span><br><span class="line">+---------------------------+-------------+</span><br><span class="line">| vampire                   | my_password |</span><br><span class="line">| vampire                   | random_pass |</span><br><span class="line">+---------------------------+-------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<p>现在我们检索“vampire”的，将返回两个独立用户。注意，第二个用户名实际上是“vampire”加上尾部的18个空格。现在，如果使用用户名“vampire”和密码“random_pass”登录的话，则所有搜索该用户名的SELECT查询都将返回第一个数据记录，也就是原始的数据记录。这样的话，攻击者就能够以原始用户身份登录。这个攻击已经在MySQL和SQLite上成功通过测试。我相信在其他情况下依旧适用。</p>
-<h2 id="4-防护手段"><a href="#4-防护手段" class="headerlink" title="4. 防护手段"></a>4. 防护手段</h2><ol>
-<li><p>将要求或者预期具有唯一性的那些列加上UNIQUE约束。</p>
-<blockquote>
-<p>实际上这是一个涉及软件开发的重要规则，即使你的代码有维持其完整性的功能，也应该恰当的定义数据。由于’username’列具有UNIQUE约束，所以不能插入另一条记录。将会检测到两个相同的字符串，并且INSERT查询将失败。</p>
-</blockquote>
-</li>
-<li><p>最好使用’id’作为数据库表的主键。并且数据应该通过程序中的 id 进行跟踪</p>
-</li>
-<li><p>为了更加安全，还可以用手动调整输入参数的限制长度（依照数据库设置）</p>
-</li>
-</ol>
-<p>————————————————<br>参考来源：</p>
-<ul>
-<li><a href="https://www.freebuf.com/articles/web/124537.html">基于约束的SQL攻击</a>，来自<a href="https://www.freebuf.com/">FreeBuf.COM</a></li>
-<li><a href="https://dhavalkapil.com/blogs/SQL-Attack-Constraint-Based/">SQL Attack (Constraint-based)</a></li>
-<li><a href="https://blog.csdn.net/weixin_41489908/article/details/108481692">基于约束的sql攻击</a>,来自<a href="https://www.csdn.net/">CSDN</a></li>
-<li><a href="https://www.k0rz3n.com/2017/06/03/passsignup/">基于约束的SQL攻击</a>,来自<a href="https://www.k0rz3n.com/">K0rz3n’s Blog</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>网络安全</category>
-        <category>CTF</category>
-        <category>Web 安全</category>
-      </categories>
-      <tags>
-        <tag>网络安全</tag>
-        <tag>Web 安全</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>报错注入</title>
     <url>/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<p>SQL报错注入就是利用数据库的某些机制，人为地制造错误条件，使得查询结果能够出现在错误信息中。</p>
@@ -5422,8 +5344,8 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
       </tags>
   </entry>
   <entry>
-    <title>网络工具中的瑞士军刀 netcat</title>
-    <url>/%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E4%B8%AD%E7%9A%84%E7%91%9E%E5%A3%AB%E5%86%9B%E5%88%80netcat/</url>
+    <title>netcat</title>
+    <url>/netcat/</url>
     <content><![CDATA[<p>Netcat 常被称为网络工具中的瑞士军刀，以体积小（可执行 200KB）功能灵活而著称。</p>
 <span id="more"></span>
 
@@ -5614,6 +5536,167 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
       <tags>
         <tag>网络安全</tag>
         <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>wireshark</title>
+    <url>/wireshark/</url>
+    <content><![CDATA[<p>抓包嗅探协议分析</p>
+<span id="more"></span>
+
+<blockquote>
+<p>wirkshark 官网：<a href="https://www.wireshark.org/">https://www.wireshark.org/</a></p>
+</blockquote>
+<h2 id="1-基本使用"><a href="#1-基本使用" class="headerlink" title="1. 基本使用"></a>1. 基本使用</h2><ul>
+<li>选择抓包网卡<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/network_card.png" alt="1"></li>
+<li>混杂模式(promiscuous)<ul>
+<li>不选混杂模式，抓的数据包是发给该网卡、该网卡发出的，以及广播或组播（多播）的包，但对于单播等只是经过网卡的数据包不抓取。一般默认会勾选。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/promiscuous.png" alt="2"></li>
+</ul>
+</li>
+<li>抓包筛选器<ul>
+<li>wireshark 有默认的筛选规则供选择，也可以自己写<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/capture_filter.png" alt="3"> </li>
+</ul>
+</li>
+<li>文件保存<ul>
+<li>file -&gt; save，可以保存抓取的数据包，一般选择兼容性最好的 pcap 格式，pcapng 是 wireshark  专有的格式。</li>
+</ul>
+</li>
+<li>界面调整<ul>
+<li>edit -&gt; preferences</li>
+<li>对显示的包信息的列进行添加<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/preferences_columns.png" alt="4"></li>
+<li>preferences -&gt; protocols 会列出 wireshark 支持的所有协议</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-筛选器"><a href="#2-筛选器" class="headerlink" title="2. 筛选器"></a>2. 筛选器</h2><p>目的：过滤掉干扰的数据包</p>
+<p>分类：抓包筛选器、显示筛选器</p>
+<blockquote>
+<p>实时抓包时 filter 框是显示筛选器</p>
+</blockquote>
+<p>流程：<br>  Network -&gt; Capture Filters -&gt; Capture Engine -&gt; Display Filters</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 可以通过鼠标选择具体的包，再在具体的字段属性右击，将规则 apply as filter</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 筛选出 udp 以及 来源不是 192.168.1.118 的包</span></span><br><span class="line">(udp) &amp;&amp; !(ip.src == 192.168.1.118)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 筛选出 udp 以及 来源和目的都不是 192.168.1.118 的包</span></span><br><span class="line">(udp) &amp;&amp; !(ip.addr == 192.168.1.118)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-常见协议包"><a href="#3-常见协议包" class="headerlink" title="3. 常见协议包"></a>3. 常见协议包</h2><p>数据包的层次结构：<br>  wireshark 中由上至下显示的是自底向上的网络层次（物理层-&gt;数据链路层-&gt;…-&gt;应用层）<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/wireshark_protocol.png" alt="5"></p>
+<p>访问非默认端口时，wireshark 不会按照默认协议去解析数据包，可以在包上右键 decode as ，手动选择解析的协议</p>
+<h2 id="4-数据流"><a href="#4-数据流" class="headerlink" title="4. 数据流"></a>4. 数据流</h2><p>在对应的包上右击<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/follow_stream.png" alt="6"><br> https ssl 传输时，公钥证书会以明文的方式从服务器传输到客户端，客户端再产生后续会话加密用的对称密钥，再用证书里的公钥对会话密钥加密传给服务器，完成加密密钥的交换。 </p>
+<h2 id="5-信息统计"><a href="#5-信息统计" class="headerlink" title="5. 信息统计"></a>5. 信息统计</h2><blockquote>
+<p>wireshark 信息统计基本上都位于 Statistics 菜单栏中<br>wireshark 官网中有常见的协议的例子文件 <a href="https://wiki.wireshark.org/SampleCaptures/#Sample_Captures">https://wiki.wireshark.org/SampleCaptures/#Sample_Captures</a></p>
+</blockquote>
+<ul>
+<li>summary(cpature file properties)：捕捉文件摘要</li>
+<li>protocol hierarchy：协议分布，各协议流量占比</li>
+<li>conversations：网络会话连接</li>
+<li>endpoint：以太网，IP, TCP或UDP节点数</li>
+<li>packet lengths：包大小分布</li>
+</ul>
+<h2 id="6-缺陷"><a href="#6-缺陷" class="headerlink" title="6. 缺陷"></a>6. 缺陷</h2><ul>
+<li>对大型网络文件分析效率低</li>
+<li>企业抓包部署方案<ul>
+<li>sniffer</li>
+<li>cace/ riverbed</li>
+<li>cascad pilot</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络安全</category>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tcpdump</title>
+    <url>/tcpdump/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>网络安全</category>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于约束的SQL攻击</title>
+    <url>/%E5%9F%BA%E4%BA%8E%E7%BA%A6%E6%9D%9F%E7%9A%84SQL%E6%94%BB%E5%87%BB/</url>
+    <content><![CDATA[<p>sql 中 insert 和 select 对字符串处理方式的差异造成的漏洞</p>
+<span id="more"></span>
+
+<h2 id="1-背景介绍"><a href="#1-背景介绍" class="headerlink" title="1. 背景介绍"></a>1. 背景介绍</h2><p>一个有趣的代码片段，开发者尝试各种方法来确保数据库的安全访问，当新用户尝试注册时，将运行以下代码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// Checking whether a user with the same username exists</span></span><br><span class="line"><span class="variable">$username</span> = mysql_real_escape_string(<span class="variable">$_GET</span>[<span class="string">&#x27;username&#x27;</span>]);</span><br><span class="line"><span class="variable">$password</span> = mysql_real_escape_string(<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>]);</span><br><span class="line"><span class="variable">$query</span> = <span class="string">&quot;SELECT *</span></span><br><span class="line"><span class="string">          FROM users</span></span><br><span class="line"><span class="string">          WHERE username=&#x27;<span class="subst">$username</span>&#x27;&quot;</span>;</span><br><span class="line"><span class="variable">$res</span> = mysql_query(<span class="variable">$query</span>, <span class="variable">$database</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$res</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span>(mysql_num_rows(<span class="variable">$res</span>) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// User exists, exit gracefully</span></span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// If not, only then insert a new entry</span></span><br><span class="line">    <span class="variable">$query</span> = <span class="string">&quot;INSERT INTO users(username, password)</span></span><br><span class="line"><span class="string">              VALUES (&#x27;<span class="subst">$username</span>&#x27;,&#x27;<span class="subst">$password</span>&#x27;)&quot;</span>;</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用以下代码验证登录信息：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$username</span> = mysql_real_escape_string(<span class="variable">$_GET</span>[<span class="string">&#x27;username&#x27;</span>]);</span><br><span class="line"><span class="variable">$password</span> = mysql_real_escape_string(<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>]);</span><br><span class="line"><span class="variable">$query</span> = <span class="string">&quot;SELECT username FROM users</span></span><br><span class="line"><span class="string">          WHERE username=&#x27;<span class="subst">$username</span>&#x27;</span></span><br><span class="line"><span class="string">              AND password=&#x27;<span class="subst">$password</span>&#x27; &quot;</span>;</span><br><span class="line"><span class="variable">$res</span> = mysql_query(<span class="variable">$query</span>, <span class="variable">$database</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$res</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span>(mysql_num_rows(<span class="variable">$res</span>) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="variable">$row</span> = mysql_fetch_assoc(<span class="variable">$res</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="variable">$row</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">Null</span>;</span><br></pre></td></tr></table></figure>
+
+<p>安全考虑:</p>
+<blockquote>
+<ul>
+<li>过滤用户输入参数了吗？ – 完成检查</li>
+<li>使用单引号（’）来增加安全性了吗？ – 完成检查</li>
+</ul>
+</blockquote>
+<h2 id="2-攻击手法"><a href="#2-攻击手法" class="headerlink" title="2. 攻击手法"></a>2. 攻击手法</h2><p>在SQL中执行字符串处理时，字符串末尾的空格符将会被删除。换句话说“vampire”等同于“vampire ”，对于绝大多数情况来说都是成立的（诸如WHERE子句中的字符串或INSERT语句中的字符串）例如以下语句的查询结果，与使用用户名“vampire”进行查询时的结果是一样的。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username<span class="operator">=</span><span class="string">&#x27;vampire     &#x27;</span>;</span><br><span class="line"></span><br><span class="line">等同于</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username<span class="operator">=</span><span class="string">&#x27;vampire&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>也存在异常情况，最好的例子就是 LIKE 子句了。注意，对尾部空白符的这种修剪操作，主要是在“字符串比较”期间进行的。这是因为，SQL会在内部使用空格来填充字符串，以便在比较之前使其它们的长度保持一致。</p>
+<blockquote>
+<p>SQL Server follows the ANSI/ISO SQL-92 specification (Section 8.2, <Comparison Predicate>, General rules #3) on how to compare strings with spaces. The ANSI standard requires padding for the character strings used in comparisons so that their lengths match before comparing them. The padding directly affects the semantics of WHERE and HAVING clause predicates and other Transact-SQL string comparisons. For example, Transact-SQL considers the strings ‘abc’ and ‘abc ‘ to be equivalent for most comparison operations.</p>
+<p>The only exception to this rule is the LIKE predicate. When the right side of a LIKE predicate expression features a value with a trailing space, SQL Server does not pad the two values to the same length before the comparison occurs. Because the purpose of the LIKE predicate, by definition, is to facilitate pattern searches rather than simple string equality tests, this does not violate the section of the ANSI SQL-92 specification mentioned earlier.</p>
+<p><a href="https://support.microsoft.com/en-us/topic/inf-how-sql-server-compares-strings-with-trailing-spaces-b62b1a2d-27d3-4260-216d-a605719003b0">https://support.microsoft.com/en-us/topic/inf-how-sql-server-compares-strings-with-trailing-spaces-b62b1a2d-27d3-4260-216d-a605719003b0</a></p>
+</blockquote>
+<p>在所有的 INSERT 查询中，SQL都会根据 varchar(n) 来限制字符串的最大长度。也就是说，如果字符串的长度大于“n”个字符的话，那么仅使用字符串的前“n”个字符。比如特定列的长度约束为“5”个字符，那么在插入字符串“vampire”时，实际上只能插入字符串的前5个字符，即“vampi”。</p>
+<p>而攻击就是利用 select 与 insert 对长度和空格处理方式不同造成的漏洞。</p>
+<p>select 语句对于参数后面空格的处理是删除，insert 只是截取最大长度的字符串，然后插入数据库。</p>
+<p>假设最大长度限制为25 我们输入用户名为 admin[20个空格]1,密码随意。在本文一开始的代码逻辑中，select 检查的时候实际用的是 admin1，这时数据库中是不存在 admin1 的，（假设数据库中已经存在 admin），所以会执行 insert 操作。</p>
+<p>但由于 select 与 insert 机制不同，insert 会直接截断，插入的是 admin[20个空格]，由于 SQL 处理字符串的机制，实际插入的就变成了 admin，这样库中就插入了两条 admin。</p>
+<h2 id="3-攻击演示"><a href="#3-攻击演示" class="headerlink" title="3. 攻击演示"></a>3. 攻击演示</h2><p>现在，让我们建立一个测试数据库来演示具体攻击过程。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vampire@linux:~$ mysql -u root -p</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> CREATE DATABASE testing;</span></span><br><span class="line">Query OK, 1 row affected (0.03 sec)</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> USE testing;</span></span><br><span class="line">Database changed</span><br></pre></td></tr></table></figure>
+
+<p>接着创建一个数据表users，其包含username和password列，并且字段的最大长度限制为25个字符。然后，我将向username字段插入“vampire”，向password字段插入“my_password”。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> CREATE TABLE users (</span></span><br><span class="line">    -&gt;   username varchar(25),</span><br><span class="line">    -&gt;   password varchar(25)</span><br><span class="line">    -&gt; );</span><br><span class="line">Query OK, 0 rows affected (0.09 sec)</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> INSERT INTO users</span></span><br><span class="line">    -&gt; VALUES(&#x27;vampire&#x27;, &#x27;my_password&#x27;);</span><br><span class="line">Query OK, 1 row affected (0.11 sec)</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> SELECT * FROM users;</span></span><br><span class="line">+----------+-------------+</span><br><span class="line">| username | password    |</span><br><span class="line">+----------+-------------+</span><br><span class="line">| vampire  | my_password |</span><br><span class="line">+----------+-------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>为了展示尾部空白字符的修剪情况，我们可以键入下列命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> SELECT * FROM users</span></span><br><span class="line">    -&gt; WHERE username=&#x27;vampire       &#x27;;</span><br><span class="line">+----------+-------------+</span><br><span class="line">| username | password    |</span><br><span class="line">+----------+-------------+</span><br><span class="line">| vampire  | my_password |</span><br><span class="line">+----------+-------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>现在我们假设一个存在漏洞的网站使用了前面提到的PHP代码来处理用户的注册及登录过程。为了侵入任意用户的帐户（在本例中为“vampire”），只需要使用用户名“vampire[许多空白符]1”和一个随机密码进行注册即可。对于选择的用户名，前25个字符应该只包含vampire和空白字符，这样做将有助于绕过检查特定用户名是否已存在的查询。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> SELECT * FROM users</span></span><br><span class="line">    -&gt; WHERE username=&#x27;vampire                   1&#x27;;</span><br><span class="line">Empty set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，在执行SELECT查询语句时，SQL是不会将字符串缩短为25个字符的。因此，这里将使用完整的字符串进行搜索，所以不会找到匹配的结果。接下来，当执行INSERT查询语句时，它只会插入前25个字符。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">   INSERT INTO users(username, password)</span></span><br><span class="line">    -&gt; VALUES (&#x27;vampire                   1&#x27;, &#x27;random_pass&#x27;);</span><br><span class="line">Query OK, 1 row affected, 1 warning (0.05 sec)</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> SELECT * FROM users</span></span><br><span class="line">    -&gt; WHERE username=&#x27;vampire&#x27;;</span><br><span class="line">+---------------------------+-------------+</span><br><span class="line">| username                  | password    |</span><br><span class="line">+---------------------------+-------------+</span><br><span class="line">| vampire                   | my_password |</span><br><span class="line">| vampire                   | random_pass |</span><br><span class="line">+---------------------------+-------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>现在我们检索“vampire”的，将返回两个独立用户。注意，第二个用户名实际上是“vampire”加上尾部的18个空格。现在，如果使用用户名“vampire”和密码“random_pass”登录的话，则所有搜索该用户名的SELECT查询都将返回第一个数据记录，也就是原始的数据记录。这样的话，攻击者就能够以原始用户身份登录。这个攻击已经在MySQL和SQLite上成功通过测试。我相信在其他情况下依旧适用。</p>
+<h2 id="4-防护手段"><a href="#4-防护手段" class="headerlink" title="4. 防护手段"></a>4. 防护手段</h2><ol>
+<li><p>将要求或者预期具有唯一性的那些列加上UNIQUE约束。</p>
+<blockquote>
+<p>实际上这是一个涉及软件开发的重要规则，即使你的代码有维持其完整性的功能，也应该恰当的定义数据。由于’username’列具有UNIQUE约束，所以不能插入另一条记录。将会检测到两个相同的字符串，并且INSERT查询将失败。</p>
+</blockquote>
+</li>
+<li><p>最好使用’id’作为数据库表的主键。并且数据应该通过程序中的 id 进行跟踪</p>
+</li>
+<li><p>为了更加安全，还可以用手动调整输入参数的限制长度（依照数据库设置）</p>
+</li>
+</ol>
+<p>————————————————<br>参考来源：</p>
+<ul>
+<li><a href="https://www.freebuf.com/articles/web/124537.html">基于约束的SQL攻击</a>，来自<a href="https://www.freebuf.com/">FreeBuf.COM</a></li>
+<li><a href="https://dhavalkapil.com/blogs/SQL-Attack-Constraint-Based/">SQL Attack (Constraint-based)</a></li>
+<li><a href="https://blog.csdn.net/weixin_41489908/article/details/108481692">基于约束的sql攻击</a>,来自<a href="https://www.csdn.net/">CSDN</a></li>
+<li><a href="https://www.k0rz3n.com/2017/06/03/passsignup/">基于约束的SQL攻击</a>,来自<a href="https://www.k0rz3n.com/">K0rz3n’s Blog</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>网络安全</category>
+        <category>CTF</category>
+        <category>Web 安全</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>Web 安全</tag>
       </tags>
   </entry>
 </search>

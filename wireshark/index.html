@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="抓包嗅探协议分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wireshark">
+<meta property="og:url" content="https://cs-cshi.github.io/wireshark/index.html">
+<meta property="og:site_name" content="Chang">
+<meta property="og:description" content="抓包嗅探协议分析">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/network_card.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/promiscuous.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/capture_filter.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/preferences_columns.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/wireshark_protocol.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/follow_stream.png">
+<meta property="article:published_time" content="2021-05-24T06:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-25T09:31:31.863Z">
+<meta property="article:author" content="Charles">
+<meta property="article:tag" content="网络安全">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/network_card.png">
+
+<link rel="canonical" href="https://cs-cshi.github.io/wireshark/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>wireshark | Chang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页 | home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于 | about</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签 | tags<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类 | categories<span class="badge">23</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">38</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索 | search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cs-cshi.github.io/wireshark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Charles">
+      <meta itemprop="description" content="慢下来，记录生活点滴，畅游人类知识和艺术的海洋。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          wireshark
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-24 14:00:00" itemprop="dateCreated datePublished" datetime="2021-05-24T14:00:00+08:00">2021-05-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-25 17:31:31" itemprop="dateModified" datetime="2021-05-25T17:31:31+08:00">2021-05-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">网络安全</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/wireshark/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/wireshark/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>抓包嗅探协议分析</p>
+<span id="more"></span>
+
+<blockquote>
+<p>wirkshark 官网：<a target="_blank" rel="noopener" href="https://www.wireshark.org/">https://www.wireshark.org/</a></p>
+</blockquote>
+<h2 id="1-基本使用"><a href="#1-基本使用" class="headerlink" title="1. 基本使用"></a>1. 基本使用</h2><ul>
+<li>选择抓包网卡<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/network_card.png" alt="1"></li>
+<li>混杂模式(promiscuous)<ul>
+<li>不选混杂模式，抓的数据包是发给该网卡、该网卡发出的，以及广播或组播（多播）的包，但对于单播等只是经过网卡的数据包不抓取。一般默认会勾选。<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/promiscuous.png" alt="2"></li>
+</ul>
+</li>
+<li>抓包筛选器<ul>
+<li>wireshark 有默认的筛选规则供选择，也可以自己写<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/capture_filter.png" alt="3"> </li>
+</ul>
+</li>
+<li>文件保存<ul>
+<li>file -&gt; save，可以保存抓取的数据包，一般选择兼容性最好的 pcap 格式，pcapng 是 wireshark  专有的格式。</li>
+</ul>
+</li>
+<li>界面调整<ul>
+<li>edit -&gt; preferences</li>
+<li>对显示的包信息的列进行添加<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/preferences_columns.png" alt="4"></li>
+<li>preferences -&gt; protocols 会列出 wireshark 支持的所有协议</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-筛选器"><a href="#2-筛选器" class="headerlink" title="2. 筛选器"></a>2. 筛选器</h2><p>目的：过滤掉干扰的数据包</p>
+<p>分类：抓包筛选器、显示筛选器</p>
+<blockquote>
+<p>实时抓包时 filter 框是显示筛选器</p>
+</blockquote>
+<p>流程：<br>  Network -&gt; Capture Filters -&gt; Capture Engine -&gt; Display Filters</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 可以通过鼠标选择具体的包，再在具体的字段属性右击，将规则 apply as filter</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 筛选出 udp 以及 来源不是 192.168.1.118 的包</span></span><br><span class="line">(udp) &amp;&amp; !(ip.src == 192.168.1.118)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 筛选出 udp 以及 来源和目的都不是 192.168.1.118 的包</span></span><br><span class="line">(udp) &amp;&amp; !(ip.addr == 192.168.1.118)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-常见协议包"><a href="#3-常见协议包" class="headerlink" title="3. 常见协议包"></a>3. 常见协议包</h2><p>数据包的层次结构：<br>  wireshark 中由上至下显示的是自底向上的网络层次（物理层-&gt;数据链路层-&gt;…-&gt;应用层）<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/wireshark_protocol.png" alt="5"></p>
+<p>访问非默认端口时，wireshark 不会按照默认协议去解析数据包，可以在包上右键 decode as ，手动选择解析的协议</p>
+<h2 id="4-数据流"><a href="#4-数据流" class="headerlink" title="4. 数据流"></a>4. 数据流</h2><p>在对应的包上右击<br><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/follow_stream.png" alt="6"><br> https ssl 传输时，公钥证书会以明文的方式从服务器传输到客户端，客户端再产生后续会话加密用的对称密钥，再用证书里的公钥对会话密钥加密传给服务器，完成加密密钥的交换。 </p>
+<h2 id="5-信息统计"><a href="#5-信息统计" class="headerlink" title="5. 信息统计"></a>5. 信息统计</h2><blockquote>
+<p>wireshark 信息统计基本上都位于 Statistics 菜单栏中<br>wireshark 官网中有常见的协议的例子文件 <a target="_blank" rel="noopener" href="https://wiki.wireshark.org/SampleCaptures/#Sample_Captures">https://wiki.wireshark.org/SampleCaptures/#Sample_Captures</a></p>
+</blockquote>
+<ul>
+<li>summary(cpature file properties)：捕捉文件摘要</li>
+<li>protocol hierarchy：协议分布，各协议流量占比</li>
+<li>conversations：网络会话连接</li>
+<li>endpoint：以太网，IP, TCP或UDP节点数</li>
+<li>packet lengths：包大小分布</li>
+</ul>
+<h2 id="6-缺陷"><a href="#6-缺陷" class="headerlink" title="6. 缺陷"></a>6. 缺陷</h2><ul>
+<li>对大型网络文件分析效率低</li>
+<li>企业抓包部署方案<ul>
+<li>sniffer</li>
+<li>cace/ riverbed</li>
+<li>cascad pilot</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\超详细SQLMap使用攻略及技巧分享\" rel="bookmark">超详细SQLMap使用攻略及技巧分享</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\netcat\" rel="bookmark">netcat</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\tcpdump\" rel="bookmark">tcpdump</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\信息安全产品\" rel="bookmark">信息安全产品</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\如何搭建《从0到1：CTFer 成长之路》docker 做题环境\" rel="bookmark">如何搭建《从0到1：CTFer 成长之路》docker 做题环境</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Charles 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Charles 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Charles
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cs-cshi.github.io/wireshark/" title="wireshark">https://cs-cshi.github.io/wireshark/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag"># 网络安全</a>
+              <a href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag"># 工具</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/netcat/" rel="prev" title="netcat">
+      <i class="fa fa-chevron-left"></i> netcat
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/tcpdump/" rel="next" title="tcpdump">
+      tcpdump <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录 | toc
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览 | overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-text">1. 基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%AD%9B%E9%80%89%E5%99%A8"><span class="nav-text">2. 筛选器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%B8%B8%E8%A7%81%E5%8D%8F%E8%AE%AE%E5%8C%85"><span class="nav-text">3. 常见协议包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="nav-text">4. 数据流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%BF%A1%E6%81%AF%E7%BB%9F%E8%AE%A1"><span class="nav-text">5. 信息统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%BC%BA%E9%99%B7"><span class="nav-text">6. 缺陷</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Charles"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Charles</p>
+  <div class="site-description" itemprop="description">慢下来，记录生活点滴，畅游人类知识和艺术的海洋。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cs-cshi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cs-cshi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/572081809@qq.com" title="E-Mail → 572081809@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/tcpdump/" title="tcpdump&#x2F;">tcpdump</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/wireshark/" title="wireshark&#x2F;">wireshark</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/netcat/" title="netcat&#x2F;">netcat</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/virtualBox%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1%E6%9C%AA%E6%8C%87%E5%AE%9A/" title="virtualBox桥接网卡未指定&#x2F;">解决 virtualBox 桥接网卡未指定问题</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/linux%20%E5%91%BD%E4%BB%A4/" title="linux 命令&#x2F;">linux 命令</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Charles</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">179k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:42</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/wireshark/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'hbdf2zNhxCCzlSuodiOKirnE-gzGzoHsz',
+      appKey     : 'gJuRc9Mu4JIB0czCtRefSodC',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
