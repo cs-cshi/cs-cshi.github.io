@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="使用 pyshark 解析 pcap，输出 http header 信息的 csv 文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pyshark 解析 pcap 获取 http header">
+<meta property="og:url" content="https://cs-cshi.github.io/pyshark%20%E8%A7%A3%E6%9E%90pcap%E8%8E%B7%E5%BE%97%20http%20header/index.html">
+<meta property="og:site_name" content="Chang">
+<meta property="og:description" content="使用 pyshark 解析 pcap，输出 http header 信息的 csv 文件">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-29T06:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-29T07:13:54.866Z">
+<meta property="article:author" content="Charles">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://cs-cshi.github.io/pyshark%20%E8%A7%A3%E6%9E%90pcap%E8%8E%B7%E5%BE%97%20http%20header/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>pyshark 解析 pcap 获取 http header | Chang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页 | home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于 | about</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签 | tags<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类 | categories<span class="badge">24</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">40</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索 | search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cs-cshi.github.io/pyshark%20%E8%A7%A3%E6%9E%90pcap%E8%8E%B7%E5%BE%97%20http%20header/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Charles">
+      <meta itemprop="description" content="慢下来，记录生活点滴，畅游人类知识和艺术的海洋。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          pyshark 解析 pcap 获取 http header
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-29 14:00:00 / 修改时间：15:13:54" itemprop="dateCreated datePublished" datetime="2021-05-29T14:00:00+08:00">2021-05-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/pyshark%20%E8%A7%A3%E6%9E%90pcap%E8%8E%B7%E5%BE%97%20http%20header/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/pyshark%20%E8%A7%A3%E6%9E%90pcap%E8%8E%B7%E5%BE%97%20http%20header/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>使用 pyshark 解析 pcap，输出 http header 信息的 csv 文件</p>
+<span id="more"></span>
+
+<h2 id="1-pyshark-简介"><a href="#1-pyshark-简介" class="headerlink" title="1. pyshark 简介"></a>1. pyshark 简介</h2><p>Python wrapper for tshark, allowing python packet parsing using wireshark dissectors.</p>
+<p>There are quite a few python packet parsing modules, this one is different because it doesn’t actually parse any packets, it simply uses tshark’s (wireshark command-line utility) ability to export XMLs to use its parsing.</p>
+<p>This package allows parsing from a capture file or a live capture, using all wireshark dissectors you have installed. Tested on windows/linux.</p>
+<h2 id="2-Reading-from-a-capture-file"><a href="#2-Reading-from-a-capture-file" class="headerlink" title="2. Reading from a capture file"></a>2. Reading from a capture file</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pyshark</span><br><span class="line">cap = pyshark.FileCapture(<span class="string">&#x27;/tmp/mycapture.cap&#x27;</span>)</span><br><span class="line">cap</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&lt;FileCapture /tmp/mycapture.cap&gt;</span><br><span class="line"><span class="built_in">print</span> cap[<span class="number">0</span>]</span><br><span class="line">Packet (Length: <span class="number">698</span>)</span><br><span class="line">Layer ETH:</span><br><span class="line">        Destination: aa:bb:cc:dd:ee:ff</span><br><span class="line">        Source: <span class="number">00</span>:de:ad:be:ef:<span class="number">00</span></span><br><span class="line">        <span class="type">Type</span>: IP (<span class="number">0x0800</span>)</span><br><span class="line">Layer IP:</span><br><span class="line">        Version: <span class="number">4</span></span><br><span class="line">        Header Length: <span class="number">20</span> <span class="built_in">bytes</span></span><br><span class="line">        Differentiated Services Field: <span class="number">0x00</span> (DSCP <span class="number">0x00</span>: Default; ECN: <span class="number">0x00</span>: Not-ECT (Not ECN-Capable Transport))</span><br><span class="line">        Total Length: <span class="number">684</span></span><br><span class="line">        Identification: <span class="number">0x254f</span> (<span class="number">9551</span>)</span><br><span class="line">        Flags: <span class="number">0x00</span></span><br><span class="line">        Fragment offset: <span class="number">0</span></span><br><span class="line">        Time to live: <span class="number">1</span></span><br><span class="line">        Protocol: UDP (<span class="number">17</span>)</span><br><span class="line">        Header checksum: <span class="number">0xe148</span> [correct]</span><br><span class="line">        Source: <span class="number">192.168</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">        Destination: <span class="number">192.168</span><span class="number">.0</span><span class="number">.2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Reading-from-a-live-interface"><a href="#3-Reading-from-a-live-interface" class="headerlink" title="3. Reading from a live interface"></a>3. Reading from a live interface</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">capture = pyshark.LiveCapture(interface=<span class="string">&#x27;eth0&#x27;</span>)</span><br><span class="line">capture.sniff(timeout=<span class="number">50</span>)</span><br><span class="line">capture</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&lt;LiveCapture (<span class="number">5</span> packets)&gt;</span><br><span class="line">capture[<span class="number">3</span>]</span><br><span class="line">&lt;UDP/HTTP Packet&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> packet <span class="keyword">in</span> capture.sniff_continuously(packet_count=<span class="number">5</span>):</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;Just arrived:&#x27;</span>, packet</span><br></pre></td></tr></table></figure>
+
+<p>Capturing from a live interface can be done in two ways: either using the sniff() method to capture a given amount of packets (or for a given amount of time) and then read the packets from the capture object as a list, or use the sniff_continously() method as a generator and work on each packet as it arrives. Another alternative is defining a callback for each received packet:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_callback</span>(<span class="params">pkt</span>):</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;Just arrived:&#x27;</span>, pkt</span><br><span class="line">capture.apply_on_packets(print_callback, timeout=<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>The capture can also run on multiple interfaces if a list is provided, or all interfaces if no interface is provided. It can even be run through a remote interface using RemoteCapture.</p>
+<h2 id="4-属性和方法"><a href="#4-属性和方法" class="headerlink" title="4. 属性和方法"></a>4. 属性和方法</h2><p>使用 LiveCapture 或者 FileCapture 方法建立 Capture 对象后，在捕获（capture）和数据包（packet）层面就会有多个方法和属性可用。PyShark的强大在于可以调用tshark内建的所有数据包解码器。</p>
+<ol>
+<li><p>获取数据包摘要（类似于tshark捕获的输出）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="keyword">for</span> pkt <span class="keyword">in</span> <span class="built_in">cap</span>:</span></span><br><span class="line">...:     print pkt</span><br><span class="line">...:</span><br><span class="line">2 0.512323 0.512323 fe80::f141:48a9:9a2c:73e5 ff02::c SSDP 208 M-SEARCH * HTTP/</span><br><span class="line">3 1.331469 0.819146 fe80::159a:5c9f:529c:f1eb ff02::c SSDP 208 M-SEARCH * HTTP/</span><br><span class="line">4 2.093188 0.761719 192.168.1.1 239.255.255.250 SSDP 395 NOTIFY * HTTP/1.  0x0000 (0)</span><br><span class="line">5 2.096287 0.003099 192.168.1.1 239.255.255.250 SSDP 332 NOTIFY * HTTP/1.  0x0000 (0)</span><br></pre></td></tr></table></figure></li>
+<li><p>按层深入获取数据包属性</p>
+<blockquote>
+<p>可在 ipython 中 使用 dir(pkt) 或 pkt. 按tab键</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; pkt.   <span class="comment">#(tab auto-complete)</span></span></span><br><span class="line">pkt.captured_length     pkt.highest_layer       pkt.ip                  pkt.pretty_print        pkt.transport_layer</span><br><span class="line">pkt.eth                 pkt.http                pkt.layers              pkt.sniff_time          pkt.udp</span><br><span class="line">pkt.frame_info          pkt.interface_captured  pkt.length              pkt.sniff_timestamp</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt;</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; pkt[pkt.highest_layer].    <span class="comment">#(tab auto-complete)</span></span></span><br><span class="line">pkt_app.                 pkt_app.get_field_value  pkt_app.raw_mode         pkt_app.request_version</span><br><span class="line">pkt_app.DATA_LAYER       pkt_app.get_raw_value    pkt_app.request</span><br><span class="line">pkt_app.chat             pkt_app.layer_name       pkt_app.request_method</span><br><span class="line">pkt_app.get_field        pkt_app.pretty_print     pkt_app.request_uri</span><br></pre></td></tr></table></figure></li>
+<li><p>capture 对象</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dir(cap)</span><br><span class="line">Out[3]:</span><br><span class="line">[&#x27;apply_on_packets&#x27;,</span><br><span class="line"> &#x27;close&#x27;,</span><br><span class="line"> &#x27;current_packet&#x27;,</span><br><span class="line"> &#x27;display_filter&#x27;,</span><br><span class="line"> &#x27;encryption&#x27;,</span><br><span class="line"> &#x27;input_filename&#x27;,</span><br><span class="line"> &#x27;next&#x27;,</span><br><span class="line"> &#x27;next_packet&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>此处真正强大的是apply_on_packets()和next()方法。next()方法使得 capture 对象可以通过for循环进行遍历。</p>
+<p>apply_on_packets() 方法是另一种遍历数据包的方式，它接受一个函数作为参数并将之作用于所有的数据包。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span> = pyshark.FileCapture(<span class="string">&#x27;test.pcap&#x27;</span>, keep_packets=False)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; def print_highest_layer(pkt)</span></span><br><span class="line">...: print pkt.highest_layer</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; cap.apply_on_packets(print_highest_layer)</span></span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">... (truncated)</span><br></pre></td></tr></table></figure>
+
+<p>这个方法也可以用于打印之外的功能，例如将数据包添加入一个列表进行其它处理。下面的脚本会将所有的数据包加入到一个列表中并打印总数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import pyshark</span><br><span class="line"></span><br><span class="line">def get_capture_count():</span><br><span class="line">    p = pyshark.FileCapture(&#x27;test.cap.pcap&#x27;, keep_packets=False)</span><br><span class="line"></span><br><span class="line">    count = []</span><br><span class="line">    def counter(*args):</span><br><span class="line">        count.append(args[0])</span><br><span class="line"></span><br><span class="line">    p.apply_on_packets(counter, timeout=100000)</span><br><span class="line"></span><br><span class="line">    return len(count)</span><br><span class="line"></span><br><span class="line">print get_capture_count()</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="5-FileCapture和LiveCapture模块"><a href="#5-FileCapture和LiveCapture模块" class="headerlink" title="5. FileCapture和LiveCapture模块"></a>5. FileCapture和LiveCapture模块</h2><p>PyShark中进行数据包分析的两个典型方法是使用 FileCapture 和 LiveCapture 模块。<br>前者从一个存储的捕获文件中导入u数据包，后者将使用本机的网络接口进行嗅探。<br>使用这两个模块都会返回一个 capture 对象。之后的文章中会详细介绍。<br>我们首先来了解一下这两个模块如何使用。</p>
+<p>两个模块提供相似的参数来控制 capture 对象中返回的数据包。下面的定义直接从模块的docstring中获取：</p>
+<ul>
+<li>interface: [仅用于LiveCapture] 进行嗅探的网络接口。如果没有给出，使用可用的第一个接口。</li>
+<li>bpf_filter: [仅用于LiveCapture] 在嗅探时使用的BPF(tcpdump)过滤条件。</li>
+<li>input_file: [仅用于FileCapture] 保存的捕获文件的路径（PCAP, PCAPNG格式）。</li>
+<li>keep_packets: 设定在调用next()函数之后是否保留之前读取的数据包。用于在读取较大的捕获时节省内存。</li>
+<li>display_filter: 设定在读取捕获时使用的display过滤条件（即Wireshark过滤器）。</li>
+<li>only_summaries: 仅产生数据包摘要，比正常读取速度快的多，但包含信息很少。</li>
+<li>decryption_key: 可选的用于加密解密捕获的流量的密钥。</li>
+<li>encryption_type: 捕获的数据流量所使用的加密标准（必须是WEP，WPA-PWD或WPA-PWK中之一，默认是WPA-PWK）。</li>
+</ul>
+<h3 id="5-1-only-summaries选项"><a href="#5-1-only-summaries选项" class="headerlink" title="5.1 only_summaries选项"></a>5.1 only_summaries选项</h3><p>使用 only_summaries 后，返回的 capture 对象中的数据包将只包含摘要信息，类似于tshark的默认输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span> = pyshark.FileCapture(<span class="string">&#x27;test.pcap&#x27;</span>, only_summaries=True)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">print</span> <span class="built_in">cap</span>[0]</span></span><br><span class="line">2 0.512323 0.512323 fe80::f141:48a9:9a2c:73e5 ff02::c SSDP 208 M-SEARCH * HTTP/</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; dir(<span class="built_in">cap</span>[0])</span></span><br><span class="line">[&#x27;delta&#x27;, &#x27;destination&#x27;, &#x27;info&#x27;, &#x27;ip id&#x27;, &#x27;length&#x27;, &#x27;no&#x27;, &#x27;protocol&#x27;, &#x27;source&#x27;, &#x27;stream&#x27;, &#x27;summary_line&#x27;, &#x27;time&#x27;, &#x27;window&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>使用这个选项，读取捕获文件将变得很快，但每个数据包将只包含下面的这些属性。如果你想获取嗅探中的IP地址来构建会话列表，或者使用时间和包长度来计算带宽的统计数据，那么这些信息也足够了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; pkt.     <span class="comment">#(tab auto-complete)</span></span></span><br><span class="line">pkt.delta         pkt.info          pkt.no            pkt.stream        pkt.window</span><br><span class="line">pkt.destination   pkt.ip id         pkt.protocol      pkt.summary_line</span><br><span class="line">pkt.host          pkt.length        pkt.source        pkt.time</span><br></pre></td></tr></table></figure>
+<ul>
+<li>delta : 当前数据包和上一个数据包捕获时间的差值。</li>
+<li>destination : IP层的目标地址。</li>
+<li>info ：应用层数据的简短摘要（比如”HTTP GET /resource_folder/page.html”）。</li>
+<li>ip id : IP标识符字段。</li>
+<li>length : 以字节表示的数据包长度。</li>
+<li>no : 数据包在列表中的索引值。</li>
+<li>protocol : 数据包中识别出的最高层级的协议。（译注：HTTP数据包如果是JSON的数据，此处可能是JSON而非HTTP）</li>
+<li>source : IP层的源地址。</li>
+<li>stream : 索引值，标识出该数据包属于哪一个TCP流（仅用于TCP数据包）。</li>
+<li>summary_line : 将所有的摘要属性输出在一个tab分隔的字符串中。</li>
+<li>time : 当前数据包到达时间与第一个数据包的差值。</li>
+<li>window : TCP的窗口大小（仅用于TCP数据包）。</li>
+</ul>
+<h3 id="5-2-keep-packets选项"><a href="#5-2-keep-packets选项" class="headerlink" title="5.2 keep_packets选项"></a>5.2 keep_packets选项</h3><p>PyShark只会在要对数据包进行处理的时候才会将其读入内存。在你处理数据包的过程中，PyShark会将每个数据包添加到 capture 对象中叫 _packet 的列表属性的末尾。当处理大量的数据包时，这个列表将占用大量的内存，因此PyShark提供了这个选项使得内存中一次仅保留一个数据包。如果 keep_packets 设置为False（默认为True），PyShark在读取新数据包时会将上一个从内存中清除。我发现这样能提升一点数据包遍历处理的速度，提升一点也是好的！</p>
+<h3 id="5-3-display-filter和bpf-filter"><a href="#5-3-display-filter和bpf-filter" class="headerlink" title="5.3 display_filter和bpf_filter"></a>5.3 display_filter和bpf_filter</h3><p>这些过滤器有助于使你的应用集中精力于你想要分析的内容上。类似于使用Wireshark或者tshark进行嗅探，BPF过滤器可以用于确定进入到返回的 capture 对象中的流量。<br>BPF过滤器的灵活性不如Wireshark的display过滤器，但是你仍可以创造性的使用这些有限的关键字和偏移过滤器。<br>如果需要对使用BPF过滤器更详细的说明，参考<a target="_blank" rel="noopener" href="https://wiki.wireshark.org/CaptureFilters">Wireshark的官方文档</a>。</p>
+<p>下面是一个使用BPF过滤器嗅探目标HTTP流量的例子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span> = pyshark.LiveCapture(interface=<span class="string">&#x27;en0&#x27;</span>, bpf_filter=<span class="string">&#x27;ip and tcp port 80&#x27;</span>)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; cap.sniff(timeout=5)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span></span></span><br><span class="line">   &lt;LiveCapture (21 packets)&gt;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">print</span> <span class="built_in">cap</span>[5].highest_layer</span></span><br><span class="line">HTTP</span><br></pre></td></tr></table></figure>
+
+<p>在读取保存的捕获文件时，你可以通过设置 display_filter 选项，利用Wireshark强大的解析器来限制返回的数据包。<br>下面是没有使用过滤器的情况下，我的test.pcap文件中的前几个数据包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span> = pyshark.FileCapture(<span class="string">&#x27;test.pcap&#x27;</span>)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="keyword">for</span> pkt <span class="keyword">in</span> <span class="built_in">cap</span>:</span></span><br><span class="line">...:    print pkt.highest_layer</span><br><span class="line">...:</span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">TCP</span><br><span class="line">HTTP</span><br><span class="line">... (truncated)</span><br></pre></td></tr></table></figure>
+
+<p>使用了display过滤器来限制只显示DNS数据流量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span> = pyshark.FileCapture(<span class="string">&#x27;test.pcap&#x27;</span>, display_filter=<span class="string">&quot;dns&quot;</span>)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="keyword">for</span> pkt <span class="keyword">in</span> <span class="built_in">cap</span>:</span></span><br><span class="line">...:    print pkt.highest_layer</span><br><span class="line">...:</span><br><span class="line">DNS</span><br><span class="line">DNS</span><br><span class="line">DNS</span><br><span class="line">DNS</span><br><span class="line">DNS</span><br><span class="line">... (truncated)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-动态的层的引用"><a href="#6-动态的层的引用" class="headerlink" title="6. 动态的层的引用"></a>6. 动态的层的引用</h2><p>使用上面提到的动态变化的层属性（比如transport_layer和highest_layer）让我们在分析数据包时更灵活。<br>如果你对每个数据包都试图访问pkt.dns.qry_resp属性，那么如果这个数据包不是DNS数据包就会返回AttributeError异常。传输层也有类似的问题，因为有TCP和UDP两种可能。我们可以使用动态引用的层属性来获取源地址和目的地址，然后使用try/except来处理既不是TCP也不是UDP数据包的情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pyshark</span><br><span class="line"></span><br><span class="line">cap = pyshark.FileCapture(<span class="string">&#x27;test.pcap&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_conversation_header</span>(<span class="params">pkt</span>):</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        protocol =  pkt.transport_layer</span><br><span class="line">        src_addr = pkt.ip.src</span><br><span class="line">        src_port = pkt[pkt.transport_layer].srcport</span><br><span class="line">        dst_addr = pkt.ip.dst</span><br><span class="line">        dst_port = pkt[pkt.transport_layer].dstport</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;%s  %s:%s --&gt; %s:%s&#x27;</span> % (protocol, src_addr, src_port, dst_addr, dst_port)</span><br><span class="line">    <span class="keyword">except</span> AttributeError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="comment">#ignore packets that aren&#x27;t TCP/UDP or IPv4</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">cap.apply_on_packets(print_conversation_header, timeout=<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+
+<p>该脚本会输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">UDP  10.10.10.12:51554 --&gt; 239.255.255.250:1900</span><br><span class="line">UDP  10.10.10.12:51554 --&gt; 239.255.255.250:1900</span><br><span class="line">UDP  10.10.10.15:58803 --&gt; 8.8.8.8:53</span><br><span class="line">UDP  8.8.8.8:53 --&gt; 10.10.10.15:58803</span><br><span class="line">TCP  10.10.10.15:58632 --&gt; 192.168.20.197:80</span><br><span class="line">TCP  192.168.20.197:80 --&gt; 10.10.10.15:58632</span><br><span class="line">TCP  10.10.10.15:58632 --&gt; 192.168.20.197:80</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-解析-http-header"><a href="#7-解析-http-header" class="headerlink" title="7. 解析 http header"></a>7. 解析 http header</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pyshark</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">cap = pyshark.FileCapture(<span class="string">&#x27;./data/SUEE1.pcap&#x27;</span>, display_filter=<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造 DataFrame</span></span><br><span class="line">output_csv_field_names = [<span class="string">&#x27;host&#x27;</span>, <span class="string">&#x27;request method&#x27;</span>, <span class="string">&#x27;request uri&#x27;</span>, <span class="string">&#x27;request version&#x27;</span>, <span class="string">&#x27;request full uri&#x27;</span>, <span class="string">&#x27;user agent&#x27;</span>, <span class="string">&#x27;referer&#x27;</span>]</span><br><span class="line">output_df = pd.DataFrame(columns=output_csv_field_names)</span><br><span class="line"></span><br><span class="line"><span class="comment"># for 循环能遍历 pcap 中的 package</span></span><br><span class="line"><span class="comment"># 动态解析中有些数据包可能没有某个属性，会报 AttributeError</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">for pkt in cap:</span></span><br><span class="line"><span class="string">    try:</span></span><br><span class="line"><span class="string">        print(pkt.http.host)</span></span><br><span class="line"><span class="string">    except AttributeError as e:</span></span><br><span class="line"><span class="string">        print(&quot;Tag was not found&quot;)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 没有找到 pyshark 中关于属性方法的介绍，下面的属性和方法我是通过 dir 函数探测出来的</span></span><br><span class="line"><span class="comment"># 也许 wireshark 中会有文档说明，毕竟 pyshark 使用的也是 tshark</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> pkt <span class="keyword">in</span> cap:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        http_layer_pkt = pkt.http</span><br><span class="line">        output_df = output_df.append(</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&#x27;host&#x27;</span>: http_layer_pkt.host,</span><br><span class="line">                <span class="string">&#x27;request method&#x27;</span>: http_layer_pkt.request_method,</span><br><span class="line">                <span class="string">&#x27;request uri&#x27;</span>: http_layer_pkt.request_uri,</span><br><span class="line">                <span class="string">&#x27;request version&#x27;</span>: http_layer_pkt.request_version,</span><br><span class="line">                <span class="string">&#x27;request full uri&#x27;</span>: http_layer_pkt.request_full_uri,</span><br><span class="line">                <span class="string">&#x27;user agent&#x27;</span>: http_layer_pkt.user_agent,</span><br><span class="line">                <span class="string">&#x27;referer&#x27;</span>: http_layer_pkt.referer</span><br><span class="line">            &#125;, ignore_index=<span class="literal">True</span></span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">except</span> AttributeError:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"><span class="built_in">print</span>(output_df.head())</span><br><span class="line"><span class="built_in">print</span>(output_df.shape)</span><br><span class="line">output_df.to_csv(<span class="string">&quot;./data/pcap_http_header.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">In [11]: dir(cap[0].http)</span></span><br><span class="line"><span class="string">Out[11]: </span></span><br><span class="line"><span class="string">[&#x27;&#x27;, &#x27;DATA_LAYER&#x27;, &#x27;__class__&#x27;, &#x27;__delattr__&#x27;, &#x27;__dict__&#x27;, &#x27;__dir__&#x27;, &#x27;__doc__&#x27;, &#x27;__eq__&#x27;, &#x27;__format__&#x27;, &#x27;__ge__&#x27;, &#x27;__getattr__&#x27;, &#x27;__getattribute__&#x27;, &#x27;__getstate__&#x27;, &#x27;__gt__&#x27;, &#x27;__hash__&#x27;, &#x27;__init__&#x27;, &#x27;__init_subclass__&#x27;, &#x27;__le__&#x27;, &#x27;__lt__&#x27;, &#x27;__module__&#x27;, &#x27;__ne__&#x27;, &#x27;__new__&#x27;, &#x27;__reduce__&#x27;, &#x27;__reduce_ex__&#x27;, &#x27;__repr__&#x27;, &#x27;__setattr__&#x27;, &#x27;__setstate__&#x27;, &#x27;__sizeof__&#x27;, &#x27;__str__&#x27;, __subclasshook__&#x27;, &#x27;__weakref__&#x27;, &#x27;_all_fields&#x27;, &#x27;_field_prefix&#x27;, &#x27;_get_all_field_lines&#x27;, &#x27;_get_all_fields_with_alternates&#x27;, &#x27;_get_field_or_layer_repr&#x27;, &#x27;_get_field_repr&#x27;, &#x27;_layer_name&#x27;, &#x27;_sanitize_field_name&#x27;, &#x27;_ws_expert&#x27;, &#x27;_ws_expert_group&#x27;, &#x27;_ws_expert_message&#x27;, &#x27;_ws_expert_severity&#x27;, &#x27;chat&#x27;, &#x27;field_names&#x27;, &#x27;get&#x27;, &#x27;get_field&#x27;, &#x27;get_field_by_showname&#x27;, &#x27;get_field_value&#x27;, &#x27;host&#x27;, &#x27;layer_name&#x27;, &#x27;pretty_print&#x27;, &#x27;raw_mode&#x27;, &#x27;referer&#x27;, &#x27;request&#x27;, &#x27;request_full_uri&#x27;, &#x27;request_line&#x27;, &#x27;request_method&#x27;, &#x27;request_number&#x27;, &#x27;request_uri&#x27;, &#x27;request_version&#x27;, &#x27;user_agent&#x27;]</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">In [12]: cap[0].http.field_names</span></span><br><span class="line"><span class="string">Out[12]: [&#x27;&#x27;, &#x27;_ws_expert&#x27;, &#x27;chat&#x27;, &#x27;_ws_expert_message&#x27;, &#x27;_ws_expert_severity&#x27;, &#x27;_ws_expert_group&#x27;, &#x27;request_method&#x27;, &#x27;request_uri&#x27;, &#x27;request_version&#x27;, &#x27;host&#x27;, &#x27;request_line&#x27;, &#x27;user_agent&#x27;, &#x27;referer&#x27;, &#x27;request_full_uri&#x27;, &#x27;request&#x27;, &#x27;request_number&#x27;]&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="8-声明"><a href="#8-声明" class="headerlink" title="8. 声明"></a>8. 声明</h2><p>参考文章</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000006043576">PyShark入门(1)：简介</a></li>
+<li><a target="_blank" rel="noopener" href="http://zodiacg.net/2016/07/intro2pyshark-ep2/">PyShark入门(2)：FileCapture和LiveCapture模块</a></li>
+<li><a target="_blank" rel="noopener" href="http://zodiacg.net/2016/07/intro2pyshark-ep3/">PyShark入门(3)：capture对象</a></li>
+<li><a target="_blank" rel="noopener" href="http://zodiacg.net/2016/07/intro2pyshark-ep4/">PyShark入门(4)：packet对象</a></li>
+<li><a target="_blank" rel="noopener" href="http://kiminewt.github.io/pyshark/">pyshark</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\pandas\" rel="bookmark">pandas</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\python基础\" rel="bookmark">python 基础</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Charles 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Charles 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Charles
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cs-cshi.github.io/pyshark%20%E8%A7%A3%E6%9E%90pcap%E8%8E%B7%E5%BE%97%20http%20header/" title="pyshark 解析 pcap 获取 http header">https://cs-cshi.github.io/pyshark 解析pcap获得 http header/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/kali/%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" rel="prev" title="被动信息收集工具">
+      <i class="fa fa-chevron-left"></i> 被动信息收集工具
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录 | toc
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览 | overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-pyshark-%E7%AE%80%E4%BB%8B"><span class="nav-text">1. pyshark 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Reading-from-a-capture-file"><span class="nav-text">2. Reading from a capture file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Reading-from-a-live-interface"><span class="nav-text">3. Reading from a live interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="nav-text">4. 属性和方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-FileCapture%E5%92%8CLiveCapture%E6%A8%A1%E5%9D%97"><span class="nav-text">5. FileCapture和LiveCapture模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-only-summaries%E9%80%89%E9%A1%B9"><span class="nav-text">5.1 only_summaries选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-keep-packets%E9%80%89%E9%A1%B9"><span class="nav-text">5.2 keep_packets选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-display-filter%E5%92%8Cbpf-filter"><span class="nav-text">5.3 display_filter和bpf_filter</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%8A%A8%E6%80%81%E7%9A%84%E5%B1%82%E7%9A%84%E5%BC%95%E7%94%A8"><span class="nav-text">6. 动态的层的引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E8%A7%A3%E6%9E%90-http-header"><span class="nav-text">7. 解析 http header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%A3%B0%E6%98%8E"><span class="nav-text">8. 声明</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Charles"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Charles</p>
+  <div class="site-description" itemprop="description">慢下来，记录生活点滴，畅游人类知识和艺术的海洋。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cs-cshi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cs-cshi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/572081809@qq.com" title="E-Mail → 572081809@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/pyshark%20%E8%A7%A3%E6%9E%90pcap%E8%8E%B7%E5%BE%97%20http%20header/" title="pyshark 解析pcap获得 http header&#x2F;">pyshark 解析 pcap 获取 http header</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/kali/%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="kali&#x2F;主动信息收集&#x2F;">被动信息收集工具</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/tcpdump/" title="tcpdump&#x2F;">tcpdump</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/wireshark/" title="wireshark&#x2F;">wireshark</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/netcat/" title="netcat&#x2F;">netcat</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Charles</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">198k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:01</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/pyshark%20%E8%A7%A3%E6%9E%90pcap%E8%8E%B7%E5%BE%97%20http%20header/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'hbdf2zNhxCCzlSuodiOKirnE-gzGzoHsz',
+      appKey     : 'gJuRc9Mu4JIB0czCtRefSodC',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

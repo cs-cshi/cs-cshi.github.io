@@ -1509,10 +1509,21 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
 </ul>
 </li>
 <li>使用df.sort_index给索引进行排序<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 对索引进行排序, 这个股票的日期索引原来是从大到小，现在重新排序，从小到大</span></span><br><span class="line">data.sort_index()</span><br></pre></td></tr></table></figure>
-<h2 id="3-3-2-Series-排序"><a href="#3-3-2-Series-排序" class="headerlink" title="3.3.2 Series 排序"></a>3.3.2 Series 排序</h2></li>
+<h3 id="3-3-2-Series-排序"><a href="#3-3-2-Series-排序" class="headerlink" title="3.3.2 Series 排序"></a>3.3.2 Series 排序</h3></li>
 <li>使用series.sort_values(ascending=True)进行排序，series排序时，只有一列，不需要参数<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data[<span class="string">&#x27;p_change&#x27;</span>].sort_values(ascending=<span class="literal">True</span>).head()</span><br><span class="line"></span><br><span class="line"><span class="number">2015</span>-09-01   -<span class="number">10.03</span></span><br><span class="line"><span class="number">2015</span>-09-<span class="number">14</span>   -<span class="number">10.02</span></span><br><span class="line"><span class="number">2016</span>-01-<span class="number">11</span>   -<span class="number">10.02</span></span><br><span class="line"><span class="number">2015</span>-07-<span class="number">15</span>   -<span class="number">10.02</span></span><br><span class="line"><span class="number">2015</span>-08-<span class="number">26</span>   -<span class="number">10.01</span></span><br><span class="line">Name: p_change, dtype: float64</span><br></pre></td></tr></table></figure></li>
 <li>使用series.sort_index()进行排序<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 对索引进行排序</span></span><br><span class="line">data[<span class="string">&#x27;p_change&#x27;</span>].sort_index().head()</span><br><span class="line"></span><br><span class="line"><span class="number">2015</span>-03-02    <span class="number">2.62</span></span><br><span class="line"><span class="number">2015</span>-03-03    <span class="number">1.44</span></span><br><span class="line"><span class="number">2015</span>-03-04    <span class="number">1.57</span></span><br><span class="line"><span class="number">2015</span>-03-05    <span class="number">2.02</span></span><br><span class="line"><span class="number">2015</span>-03-06    <span class="number">8.51</span></span><br><span class="line">Name: p_change, dtype: float64</span><br></pre></td></tr></table></figure></li>
 </ul>
+<h3 id="3-4-增加"><a href="#3-4-增加" class="headerlink" title="3.4 增加"></a>3.4 增加</h3><blockquote>
+<p>官方文档：<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.append.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.append.html</a><br>DataFrame.append(other, ignore_index=False, verify_integrity=False, sort=False)[source]<br>功能：向 dataframe 对象中添加新的行，如果添加的列名不在 dataframe 对象中，将会被当作新的列进行添加</p>
+</blockquote>
+<ul>
+<li>other：DataFrame、series、dict、list 等数据结构</li>
+<li>ignore_index：默认值为 False，如果为 True 则不使用 index 标签</li>
+<li>verify_integraty：默认值为 False，如果为 True 当创建相同的 index 时会抛出 ValueError 的异常</li>
+<li>sort：boolean，默认是 None，pandas 0.23.0 的版本才有</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">output_csv_field_names = [<span class="string">&#x27;host&#x27;</span>, <span class="string">&#x27;request method&#x27;</span>, <span class="string">&#x27;request uri&#x27;</span>, <span class="string">&#x27;request version&#x27;</span>, <span class="string">&#x27;request full uri&#x27;</span>, <span class="string">&#x27;user agent&#x27;</span>, <span class="string">&#x27;referer&#x27;</span>]</span><br><span class="line">output_df = pd.DataFrame(columns=output_csv_field_names)</span><br><span class="line">output_df = output_df.append(</span><br><span class="line">    &#123;</span><br><span class="line">     <span class="string">&#x27;host&#x27;</span>: http_pkt_1.host,</span><br><span class="line">     <span class="string">&#x27;request method&#x27;</span>: http_pkt_1.request_method,</span><br><span class="line">     <span class="string">&#x27;request uri&#x27;</span>: http_pkt_1.request_uri,</span><br><span class="line">     <span class="string">&#x27;request version&#x27;</span>: http_pkt_1.request_version,</span><br><span class="line">     <span class="string">&#x27;request full uri&#x27;</span>: http_pkt_1.request_full_uri,</span><br><span class="line">     <span class="string">&#x27;user agent&#x27;</span>: http_pkt_1.user_agent,</span><br><span class="line">     <span class="string">&#x27;referer&#x27;</span>: http_pkt_1.referer</span><br><span class="line">    &#125;, ignore_index=<span class="literal">True</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
 <h1 id="4-DataFrame-运算"><a href="#4-DataFrame-运算" class="headerlink" title="4 | DataFrame 运算"></a>4 | DataFrame 运算</h1><h2 id="4-1-算数运算"><a href="#4-1-算数运算" class="headerlink" title="4.1 算数运算"></a>4.1 算数运算</h2><ul>
 <li>add(n)</li>
 <li>sub(n)<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data[<span class="string">&#x27;open&#x27;</span>].add(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="number">2018</span>-02-<span class="number">27</span>    <span class="number">24.53</span></span><br><span class="line"><span class="number">2018</span>-02-<span class="number">26</span>    <span class="number">23.80</span></span><br><span class="line"><span class="number">2018</span>-02-<span class="number">23</span>    <span class="number">23.88</span></span><br><span class="line"><span class="number">2018</span>-02-<span class="number">22</span>    <span class="number">23.25</span></span><br><span class="line"><span class="number">2018</span>-02-<span class="number">14</span>    <span class="number">22.49</span></span><br></pre></td></tr></table></figure></li>
@@ -2495,7 +2506,7 @@ Flask是一个使用Python编写的轻量级web应用框架，其WSGI工具箱�
       </tags>
   </entry>
   <entry>
-    <title>【python】python基础</title>
+    <title>python 基础</title>
     <url>/python%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<p>python 基础语法</p>
 <span id="more"></span>
@@ -5611,7 +5622,66 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
   <entry>
     <title>tcpdump</title>
     <url>/tcpdump/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p> tcpdump 使用介绍</p>
+<span id="more"></span>
+<blockquote>
+<ul>
+<li>wireshark 是图形化的分析工具，无法在 linux、unix 纯字符页面工作</li>
+<li>wireshark 需要另外下载安装，且稍显笨重</li>
+<li>tcpdump 是 No-GUI 的抓包分析工具，linux、unix 系统默认安装</li>
+</ul>
+</blockquote>
+<h2 id="1-抓包"><a href="#1-抓包" class="headerlink" title="1. 抓包"></a>1. 抓包</h2><ul>
+<li>抓包<ul>
+<li>默认只抓 68 个字节（通常能抓完包头）</li>
+<li>tcpdump -i eth0 -s 0 -w file.pcap<ul>
+<li>-i 指定网口</li>
+<li>-s 抓的数据包大小，0表示全抓，有多大抓多大</li>
+<li>-w 抓到的数据包保存到文件</li>
+</ul>
+</li>
+<li>抓包筛选器<ul>
+<li>tcpdump -i eth0 port 22 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>读取抓包文件 pcap<ul>
+<li>tcpdump -r file.pcap<ul>
+<li>-A 以 ascaii方式显示 pcap 文件更详细的信息：tcpdump -A -r file.pcap</li>
+<li>-A 以 16进制方式显示 pcap 文件更详细的信息：tcpdump -X -r file.pcap</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-显示筛选器"><a href="#2-显示筛选器" class="headerlink" title="2. 显示筛选器"></a>2. 显示筛选器</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -n -r http.cap | awk <span class="string">&#x27;&#123;print $3&#125;&#x27;</span>| sort –u</span> </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-n 不对包里的 ip 地址作域名解析<br>-r 读取文件<br>awk ‘{print $3}’ 筛选第三列内容,awk默认以空格作分隔符<br>sort -u 剔除重复项</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -n src host 145.254.160.237 -r http.cap</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -n src host 145.254.160.237 -r http.cap</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -n port 53 -r http.cap</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -n tcp port 53 -r http.cap</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -n udp port 53 -r http.cap</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -n port 53 -r http.cap</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -nX port 80 -r http.cap</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>src host 显示指定源 ip 数据</li>
+<li>dst host 查看指定目的 ip 数据</li>
+<li>port 按端口号筛选</li>
+<li>tcp port 按 tcp 端口号筛选</li>
+<li>X  16进制 + ascaii 码显示，与 wireshark 中显示效果类似</li>
+</ul>
+</blockquote>
+<h2 id="3-高级筛选"><a href="#3-高级筛选" class="headerlink" title="3. 高级筛选"></a>3. 高级筛选</h2><blockquote>
+<p>作更细粒度的筛选</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/others/tcpdump_tcp_head.png" alt="1"></p>
+<blockquote>
+<p>红色部分为 tcp 的 flag，即标签位，表示当前包是什么类型，如 SYN、ACK<br>TCP 三次握手后 ACK 和 PSH 都会置1，二进制：00011000，对应十进制 24</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -A -n <span class="string">&#x27;tcp[13] = 24&#x27;</span> -r http.pcap</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>tcp[13]：第14个字节，对应标签位</li>
+<li>24：ACK 和 PSH 置 1，表示 TCP 数据传输</li>
+</ul>
+]]></content>
       <categories>
         <category>网络安全</category>
         <category>工具</category>
@@ -5697,6 +5767,296 @@ session 2<figure class="highlight shell"><table><tr><td class="code"><pre><span 
       <tags>
         <tag>网络安全</tag>
         <tag>Web 安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pyshark 解析 pcap 获取 http header</title>
+    <url>/pyshark%20%E8%A7%A3%E6%9E%90pcap%E8%8E%B7%E5%BE%97%20http%20header/</url>
+    <content><![CDATA[<p>使用 pyshark 解析 pcap，输出 http header 信息的 csv 文件</p>
+<span id="more"></span>
+
+<h2 id="1-pyshark-简介"><a href="#1-pyshark-简介" class="headerlink" title="1. pyshark 简介"></a>1. pyshark 简介</h2><p>Python wrapper for tshark, allowing python packet parsing using wireshark dissectors.</p>
+<p>There are quite a few python packet parsing modules, this one is different because it doesn’t actually parse any packets, it simply uses tshark’s (wireshark command-line utility) ability to export XMLs to use its parsing.</p>
+<p>This package allows parsing from a capture file or a live capture, using all wireshark dissectors you have installed. Tested on windows/linux.</p>
+<h2 id="2-Reading-from-a-capture-file"><a href="#2-Reading-from-a-capture-file" class="headerlink" title="2. Reading from a capture file"></a>2. Reading from a capture file</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pyshark</span><br><span class="line">cap = pyshark.FileCapture(<span class="string">&#x27;/tmp/mycapture.cap&#x27;</span>)</span><br><span class="line">cap</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&lt;FileCapture /tmp/mycapture.cap&gt;</span><br><span class="line"><span class="built_in">print</span> cap[<span class="number">0</span>]</span><br><span class="line">Packet (Length: <span class="number">698</span>)</span><br><span class="line">Layer ETH:</span><br><span class="line">        Destination: aa:bb:cc:dd:ee:ff</span><br><span class="line">        Source: <span class="number">00</span>:de:ad:be:ef:<span class="number">00</span></span><br><span class="line">        <span class="type">Type</span>: IP (<span class="number">0x0800</span>)</span><br><span class="line">Layer IP:</span><br><span class="line">        Version: <span class="number">4</span></span><br><span class="line">        Header Length: <span class="number">20</span> <span class="built_in">bytes</span></span><br><span class="line">        Differentiated Services Field: <span class="number">0x00</span> (DSCP <span class="number">0x00</span>: Default; ECN: <span class="number">0x00</span>: Not-ECT (Not ECN-Capable Transport))</span><br><span class="line">        Total Length: <span class="number">684</span></span><br><span class="line">        Identification: <span class="number">0x254f</span> (<span class="number">9551</span>)</span><br><span class="line">        Flags: <span class="number">0x00</span></span><br><span class="line">        Fragment offset: <span class="number">0</span></span><br><span class="line">        Time to live: <span class="number">1</span></span><br><span class="line">        Protocol: UDP (<span class="number">17</span>)</span><br><span class="line">        Header checksum: <span class="number">0xe148</span> [correct]</span><br><span class="line">        Source: <span class="number">192.168</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">        Destination: <span class="number">192.168</span><span class="number">.0</span><span class="number">.2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Reading-from-a-live-interface"><a href="#3-Reading-from-a-live-interface" class="headerlink" title="3. Reading from a live interface"></a>3. Reading from a live interface</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">capture = pyshark.LiveCapture(interface=<span class="string">&#x27;eth0&#x27;</span>)</span><br><span class="line">capture.sniff(timeout=<span class="number">50</span>)</span><br><span class="line">capture</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&lt;LiveCapture (<span class="number">5</span> packets)&gt;</span><br><span class="line">capture[<span class="number">3</span>]</span><br><span class="line">&lt;UDP/HTTP Packet&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> packet <span class="keyword">in</span> capture.sniff_continuously(packet_count=<span class="number">5</span>):</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;Just arrived:&#x27;</span>, packet</span><br></pre></td></tr></table></figure>
+
+<p>Capturing from a live interface can be done in two ways: either using the sniff() method to capture a given amount of packets (or for a given amount of time) and then read the packets from the capture object as a list, or use the sniff_continously() method as a generator and work on each packet as it arrives. Another alternative is defining a callback for each received packet:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_callback</span>(<span class="params">pkt</span>):</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;Just arrived:&#x27;</span>, pkt</span><br><span class="line">capture.apply_on_packets(print_callback, timeout=<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>The capture can also run on multiple interfaces if a list is provided, or all interfaces if no interface is provided. It can even be run through a remote interface using RemoteCapture.</p>
+<h2 id="4-属性和方法"><a href="#4-属性和方法" class="headerlink" title="4. 属性和方法"></a>4. 属性和方法</h2><p>使用 LiveCapture 或者 FileCapture 方法建立 Capture 对象后，在捕获（capture）和数据包（packet）层面就会有多个方法和属性可用。PyShark的强大在于可以调用tshark内建的所有数据包解码器。</p>
+<ol>
+<li><p>获取数据包摘要（类似于tshark捕获的输出）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="keyword">for</span> pkt <span class="keyword">in</span> <span class="built_in">cap</span>:</span></span><br><span class="line">...:     print pkt</span><br><span class="line">...:</span><br><span class="line">2 0.512323 0.512323 fe80::f141:48a9:9a2c:73e5 ff02::c SSDP 208 M-SEARCH * HTTP/</span><br><span class="line">3 1.331469 0.819146 fe80::159a:5c9f:529c:f1eb ff02::c SSDP 208 M-SEARCH * HTTP/</span><br><span class="line">4 2.093188 0.761719 192.168.1.1 239.255.255.250 SSDP 395 NOTIFY * HTTP/1.  0x0000 (0)</span><br><span class="line">5 2.096287 0.003099 192.168.1.1 239.255.255.250 SSDP 332 NOTIFY * HTTP/1.  0x0000 (0)</span><br></pre></td></tr></table></figure></li>
+<li><p>按层深入获取数据包属性</p>
+<blockquote>
+<p>可在 ipython 中 使用 dir(pkt) 或 pkt. 按tab键</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; pkt.   <span class="comment">#(tab auto-complete)</span></span></span><br><span class="line">pkt.captured_length     pkt.highest_layer       pkt.ip                  pkt.pretty_print        pkt.transport_layer</span><br><span class="line">pkt.eth                 pkt.http                pkt.layers              pkt.sniff_time          pkt.udp</span><br><span class="line">pkt.frame_info          pkt.interface_captured  pkt.length              pkt.sniff_timestamp</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt;</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; pkt[pkt.highest_layer].    <span class="comment">#(tab auto-complete)</span></span></span><br><span class="line">pkt_app.                 pkt_app.get_field_value  pkt_app.raw_mode         pkt_app.request_version</span><br><span class="line">pkt_app.DATA_LAYER       pkt_app.get_raw_value    pkt_app.request</span><br><span class="line">pkt_app.chat             pkt_app.layer_name       pkt_app.request_method</span><br><span class="line">pkt_app.get_field        pkt_app.pretty_print     pkt_app.request_uri</span><br></pre></td></tr></table></figure></li>
+<li><p>capture 对象</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dir(cap)</span><br><span class="line">Out[3]:</span><br><span class="line">[&#x27;apply_on_packets&#x27;,</span><br><span class="line"> &#x27;close&#x27;,</span><br><span class="line"> &#x27;current_packet&#x27;,</span><br><span class="line"> &#x27;display_filter&#x27;,</span><br><span class="line"> &#x27;encryption&#x27;,</span><br><span class="line"> &#x27;input_filename&#x27;,</span><br><span class="line"> &#x27;next&#x27;,</span><br><span class="line"> &#x27;next_packet&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>此处真正强大的是apply_on_packets()和next()方法。next()方法使得 capture 对象可以通过for循环进行遍历。</p>
+<p>apply_on_packets() 方法是另一种遍历数据包的方式，它接受一个函数作为参数并将之作用于所有的数据包。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span> = pyshark.FileCapture(<span class="string">&#x27;test.pcap&#x27;</span>, keep_packets=False)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; def print_highest_layer(pkt)</span></span><br><span class="line">...: print pkt.highest_layer</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; cap.apply_on_packets(print_highest_layer)</span></span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">... (truncated)</span><br></pre></td></tr></table></figure>
+
+<p>这个方法也可以用于打印之外的功能，例如将数据包添加入一个列表进行其它处理。下面的脚本会将所有的数据包加入到一个列表中并打印总数：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">import pyshark</span><br><span class="line"></span><br><span class="line">def get_capture_count():</span><br><span class="line">    p = pyshark.FileCapture(&#x27;test.cap.pcap&#x27;, keep_packets=False)</span><br><span class="line"></span><br><span class="line">    count = []</span><br><span class="line">    def counter(*args):</span><br><span class="line">        count.append(args[0])</span><br><span class="line"></span><br><span class="line">    p.apply_on_packets(counter, timeout=100000)</span><br><span class="line"></span><br><span class="line">    return len(count)</span><br><span class="line"></span><br><span class="line">print get_capture_count()</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="5-FileCapture和LiveCapture模块"><a href="#5-FileCapture和LiveCapture模块" class="headerlink" title="5. FileCapture和LiveCapture模块"></a>5. FileCapture和LiveCapture模块</h2><p>PyShark中进行数据包分析的两个典型方法是使用 FileCapture 和 LiveCapture 模块。<br>前者从一个存储的捕获文件中导入u数据包，后者将使用本机的网络接口进行嗅探。<br>使用这两个模块都会返回一个 capture 对象。之后的文章中会详细介绍。<br>我们首先来了解一下这两个模块如何使用。</p>
+<p>两个模块提供相似的参数来控制 capture 对象中返回的数据包。下面的定义直接从模块的docstring中获取：</p>
+<ul>
+<li>interface: [仅用于LiveCapture] 进行嗅探的网络接口。如果没有给出，使用可用的第一个接口。</li>
+<li>bpf_filter: [仅用于LiveCapture] 在嗅探时使用的BPF(tcpdump)过滤条件。</li>
+<li>input_file: [仅用于FileCapture] 保存的捕获文件的路径（PCAP, PCAPNG格式）。</li>
+<li>keep_packets: 设定在调用next()函数之后是否保留之前读取的数据包。用于在读取较大的捕获时节省内存。</li>
+<li>display_filter: 设定在读取捕获时使用的display过滤条件（即Wireshark过滤器）。</li>
+<li>only_summaries: 仅产生数据包摘要，比正常读取速度快的多，但包含信息很少。</li>
+<li>decryption_key: 可选的用于加密解密捕获的流量的密钥。</li>
+<li>encryption_type: 捕获的数据流量所使用的加密标准（必须是WEP，WPA-PWD或WPA-PWK中之一，默认是WPA-PWK）。</li>
+</ul>
+<h3 id="5-1-only-summaries选项"><a href="#5-1-only-summaries选项" class="headerlink" title="5.1 only_summaries选项"></a>5.1 only_summaries选项</h3><p>使用 only_summaries 后，返回的 capture 对象中的数据包将只包含摘要信息，类似于tshark的默认输出：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span> = pyshark.FileCapture(<span class="string">&#x27;test.pcap&#x27;</span>, only_summaries=True)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">print</span> <span class="built_in">cap</span>[0]</span></span><br><span class="line">2 0.512323 0.512323 fe80::f141:48a9:9a2c:73e5 ff02::c SSDP 208 M-SEARCH * HTTP/</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; dir(<span class="built_in">cap</span>[0])</span></span><br><span class="line">[&#x27;delta&#x27;, &#x27;destination&#x27;, &#x27;info&#x27;, &#x27;ip id&#x27;, &#x27;length&#x27;, &#x27;no&#x27;, &#x27;protocol&#x27;, &#x27;source&#x27;, &#x27;stream&#x27;, &#x27;summary_line&#x27;, &#x27;time&#x27;, &#x27;window&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>使用这个选项，读取捕获文件将变得很快，但每个数据包将只包含下面的这些属性。如果你想获取嗅探中的IP地址来构建会话列表，或者使用时间和包长度来计算带宽的统计数据，那么这些信息也足够了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; pkt.     <span class="comment">#(tab auto-complete)</span></span></span><br><span class="line">pkt.delta         pkt.info          pkt.no            pkt.stream        pkt.window</span><br><span class="line">pkt.destination   pkt.ip id         pkt.protocol      pkt.summary_line</span><br><span class="line">pkt.host          pkt.length        pkt.source        pkt.time</span><br></pre></td></tr></table></figure>
+<ul>
+<li>delta : 当前数据包和上一个数据包捕获时间的差值。</li>
+<li>destination : IP层的目标地址。</li>
+<li>info ：应用层数据的简短摘要（比如”HTTP GET /resource_folder/page.html”）。</li>
+<li>ip id : IP标识符字段。</li>
+<li>length : 以字节表示的数据包长度。</li>
+<li>no : 数据包在列表中的索引值。</li>
+<li>protocol : 数据包中识别出的最高层级的协议。（译注：HTTP数据包如果是JSON的数据，此处可能是JSON而非HTTP）</li>
+<li>source : IP层的源地址。</li>
+<li>stream : 索引值，标识出该数据包属于哪一个TCP流（仅用于TCP数据包）。</li>
+<li>summary_line : 将所有的摘要属性输出在一个tab分隔的字符串中。</li>
+<li>time : 当前数据包到达时间与第一个数据包的差值。</li>
+<li>window : TCP的窗口大小（仅用于TCP数据包）。</li>
+</ul>
+<h3 id="5-2-keep-packets选项"><a href="#5-2-keep-packets选项" class="headerlink" title="5.2 keep_packets选项"></a>5.2 keep_packets选项</h3><p>PyShark只会在要对数据包进行处理的时候才会将其读入内存。在你处理数据包的过程中，PyShark会将每个数据包添加到 capture 对象中叫 _packet 的列表属性的末尾。当处理大量的数据包时，这个列表将占用大量的内存，因此PyShark提供了这个选项使得内存中一次仅保留一个数据包。如果 keep_packets 设置为False（默认为True），PyShark在读取新数据包时会将上一个从内存中清除。我发现这样能提升一点数据包遍历处理的速度，提升一点也是好的！</p>
+<h3 id="5-3-display-filter和bpf-filter"><a href="#5-3-display-filter和bpf-filter" class="headerlink" title="5.3 display_filter和bpf_filter"></a>5.3 display_filter和bpf_filter</h3><p>这些过滤器有助于使你的应用集中精力于你想要分析的内容上。类似于使用Wireshark或者tshark进行嗅探，BPF过滤器可以用于确定进入到返回的 capture 对象中的流量。<br>BPF过滤器的灵活性不如Wireshark的display过滤器，但是你仍可以创造性的使用这些有限的关键字和偏移过滤器。<br>如果需要对使用BPF过滤器更详细的说明，参考<a href="https://wiki.wireshark.org/CaptureFilters">Wireshark的官方文档</a>。</p>
+<p>下面是一个使用BPF过滤器嗅探目标HTTP流量的例子：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span> = pyshark.LiveCapture(interface=<span class="string">&#x27;en0&#x27;</span>, bpf_filter=<span class="string">&#x27;ip and tcp port 80&#x27;</span>)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; cap.sniff(timeout=5)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span></span></span><br><span class="line">   &lt;LiveCapture (21 packets)&gt;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">print</span> <span class="built_in">cap</span>[5].highest_layer</span></span><br><span class="line">HTTP</span><br></pre></td></tr></table></figure>
+
+<p>在读取保存的捕获文件时，你可以通过设置 display_filter 选项，利用Wireshark强大的解析器来限制返回的数据包。<br>下面是没有使用过滤器的情况下，我的test.pcap文件中的前几个数据包：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span> = pyshark.FileCapture(<span class="string">&#x27;test.pcap&#x27;</span>)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="keyword">for</span> pkt <span class="keyword">in</span> <span class="built_in">cap</span>:</span></span><br><span class="line">...:    print pkt.highest_layer</span><br><span class="line">...:</span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">HTTP</span><br><span class="line">TCP</span><br><span class="line">HTTP</span><br><span class="line">... (truncated)</span><br></pre></td></tr></table></figure>
+
+<p>使用了display过滤器来限制只显示DNS数据流量：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">cap</span> = pyshark.FileCapture(<span class="string">&#x27;test.pcap&#x27;</span>, display_filter=<span class="string">&quot;dns&quot;</span>)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="keyword">for</span> pkt <span class="keyword">in</span> <span class="built_in">cap</span>:</span></span><br><span class="line">...:    print pkt.highest_layer</span><br><span class="line">...:</span><br><span class="line">DNS</span><br><span class="line">DNS</span><br><span class="line">DNS</span><br><span class="line">DNS</span><br><span class="line">DNS</span><br><span class="line">... (truncated)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-动态的层的引用"><a href="#6-动态的层的引用" class="headerlink" title="6. 动态的层的引用"></a>6. 动态的层的引用</h2><p>使用上面提到的动态变化的层属性（比如transport_layer和highest_layer）让我们在分析数据包时更灵活。<br>如果你对每个数据包都试图访问pkt.dns.qry_resp属性，那么如果这个数据包不是DNS数据包就会返回AttributeError异常。传输层也有类似的问题，因为有TCP和UDP两种可能。我们可以使用动态引用的层属性来获取源地址和目的地址，然后使用try/except来处理既不是TCP也不是UDP数据包的情况。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pyshark</span><br><span class="line"></span><br><span class="line">cap = pyshark.FileCapture(<span class="string">&#x27;test.pcap&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_conversation_header</span>(<span class="params">pkt</span>):</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        protocol =  pkt.transport_layer</span><br><span class="line">        src_addr = pkt.ip.src</span><br><span class="line">        src_port = pkt[pkt.transport_layer].srcport</span><br><span class="line">        dst_addr = pkt.ip.dst</span><br><span class="line">        dst_port = pkt[pkt.transport_layer].dstport</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;%s  %s:%s --&gt; %s:%s&#x27;</span> % (protocol, src_addr, src_port, dst_addr, dst_port)</span><br><span class="line">    <span class="keyword">except</span> AttributeError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="comment">#ignore packets that aren&#x27;t TCP/UDP or IPv4</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">cap.apply_on_packets(print_conversation_header, timeout=<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+
+<p>该脚本会输出：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">UDP  10.10.10.12:51554 --&gt; 239.255.255.250:1900</span><br><span class="line">UDP  10.10.10.12:51554 --&gt; 239.255.255.250:1900</span><br><span class="line">UDP  10.10.10.15:58803 --&gt; 8.8.8.8:53</span><br><span class="line">UDP  8.8.8.8:53 --&gt; 10.10.10.15:58803</span><br><span class="line">TCP  10.10.10.15:58632 --&gt; 192.168.20.197:80</span><br><span class="line">TCP  192.168.20.197:80 --&gt; 10.10.10.15:58632</span><br><span class="line">TCP  10.10.10.15:58632 --&gt; 192.168.20.197:80</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-解析-http-header"><a href="#7-解析-http-header" class="headerlink" title="7. 解析 http header"></a>7. 解析 http header</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pyshark</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">cap = pyshark.FileCapture(<span class="string">&#x27;./data/SUEE1.pcap&#x27;</span>, display_filter=<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造 DataFrame</span></span><br><span class="line">output_csv_field_names = [<span class="string">&#x27;host&#x27;</span>, <span class="string">&#x27;request method&#x27;</span>, <span class="string">&#x27;request uri&#x27;</span>, <span class="string">&#x27;request version&#x27;</span>, <span class="string">&#x27;request full uri&#x27;</span>, <span class="string">&#x27;user agent&#x27;</span>, <span class="string">&#x27;referer&#x27;</span>]</span><br><span class="line">output_df = pd.DataFrame(columns=output_csv_field_names)</span><br><span class="line"></span><br><span class="line"><span class="comment"># for 循环能遍历 pcap 中的 package</span></span><br><span class="line"><span class="comment"># 动态解析中有些数据包可能没有某个属性，会报 AttributeError</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">for pkt in cap:</span></span><br><span class="line"><span class="string">    try:</span></span><br><span class="line"><span class="string">        print(pkt.http.host)</span></span><br><span class="line"><span class="string">    except AttributeError as e:</span></span><br><span class="line"><span class="string">        print(&quot;Tag was not found&quot;)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 没有找到 pyshark 中关于属性方法的介绍，下面的属性和方法我是通过 dir 函数探测出来的</span></span><br><span class="line"><span class="comment"># 也许 wireshark 中会有文档说明，毕竟 pyshark 使用的也是 tshark</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> pkt <span class="keyword">in</span> cap:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        http_layer_pkt = pkt.http</span><br><span class="line">        output_df = output_df.append(</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&#x27;host&#x27;</span>: http_layer_pkt.host,</span><br><span class="line">                <span class="string">&#x27;request method&#x27;</span>: http_layer_pkt.request_method,</span><br><span class="line">                <span class="string">&#x27;request uri&#x27;</span>: http_layer_pkt.request_uri,</span><br><span class="line">                <span class="string">&#x27;request version&#x27;</span>: http_layer_pkt.request_version,</span><br><span class="line">                <span class="string">&#x27;request full uri&#x27;</span>: http_layer_pkt.request_full_uri,</span><br><span class="line">                <span class="string">&#x27;user agent&#x27;</span>: http_layer_pkt.user_agent,</span><br><span class="line">                <span class="string">&#x27;referer&#x27;</span>: http_layer_pkt.referer</span><br><span class="line">            &#125;, ignore_index=<span class="literal">True</span></span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">except</span> AttributeError:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"><span class="built_in">print</span>(output_df.head())</span><br><span class="line"><span class="built_in">print</span>(output_df.shape)</span><br><span class="line">output_df.to_csv(<span class="string">&quot;./data/pcap_http_header.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">In [11]: dir(cap[0].http)</span></span><br><span class="line"><span class="string">Out[11]: </span></span><br><span class="line"><span class="string">[&#x27;&#x27;, &#x27;DATA_LAYER&#x27;, &#x27;__class__&#x27;, &#x27;__delattr__&#x27;, &#x27;__dict__&#x27;, &#x27;__dir__&#x27;, &#x27;__doc__&#x27;, &#x27;__eq__&#x27;, &#x27;__format__&#x27;, &#x27;__ge__&#x27;, &#x27;__getattr__&#x27;, &#x27;__getattribute__&#x27;, &#x27;__getstate__&#x27;, &#x27;__gt__&#x27;, &#x27;__hash__&#x27;, &#x27;__init__&#x27;, &#x27;__init_subclass__&#x27;, &#x27;__le__&#x27;, &#x27;__lt__&#x27;, &#x27;__module__&#x27;, &#x27;__ne__&#x27;, &#x27;__new__&#x27;, &#x27;__reduce__&#x27;, &#x27;__reduce_ex__&#x27;, &#x27;__repr__&#x27;, &#x27;__setattr__&#x27;, &#x27;__setstate__&#x27;, &#x27;__sizeof__&#x27;, &#x27;__str__&#x27;, __subclasshook__&#x27;, &#x27;__weakref__&#x27;, &#x27;_all_fields&#x27;, &#x27;_field_prefix&#x27;, &#x27;_get_all_field_lines&#x27;, &#x27;_get_all_fields_with_alternates&#x27;, &#x27;_get_field_or_layer_repr&#x27;, &#x27;_get_field_repr&#x27;, &#x27;_layer_name&#x27;, &#x27;_sanitize_field_name&#x27;, &#x27;_ws_expert&#x27;, &#x27;_ws_expert_group&#x27;, &#x27;_ws_expert_message&#x27;, &#x27;_ws_expert_severity&#x27;, &#x27;chat&#x27;, &#x27;field_names&#x27;, &#x27;get&#x27;, &#x27;get_field&#x27;, &#x27;get_field_by_showname&#x27;, &#x27;get_field_value&#x27;, &#x27;host&#x27;, &#x27;layer_name&#x27;, &#x27;pretty_print&#x27;, &#x27;raw_mode&#x27;, &#x27;referer&#x27;, &#x27;request&#x27;, &#x27;request_full_uri&#x27;, &#x27;request_line&#x27;, &#x27;request_method&#x27;, &#x27;request_number&#x27;, &#x27;request_uri&#x27;, &#x27;request_version&#x27;, &#x27;user_agent&#x27;]</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">In [12]: cap[0].http.field_names</span></span><br><span class="line"><span class="string">Out[12]: [&#x27;&#x27;, &#x27;_ws_expert&#x27;, &#x27;chat&#x27;, &#x27;_ws_expert_message&#x27;, &#x27;_ws_expert_severity&#x27;, &#x27;_ws_expert_group&#x27;, &#x27;request_method&#x27;, &#x27;request_uri&#x27;, &#x27;request_version&#x27;, &#x27;host&#x27;, &#x27;request_line&#x27;, &#x27;user_agent&#x27;, &#x27;referer&#x27;, &#x27;request_full_uri&#x27;, &#x27;request&#x27;, &#x27;request_number&#x27;]&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="8-声明"><a href="#8-声明" class="headerlink" title="8. 声明"></a>8. 声明</h2><p>参考文章</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000006043576">PyShark入门(1)：简介</a></li>
+<li><a href="http://zodiacg.net/2016/07/intro2pyshark-ep2/">PyShark入门(2)：FileCapture和LiveCapture模块</a></li>
+<li><a href="http://zodiacg.net/2016/07/intro2pyshark-ep3/">PyShark入门(3)：capture对象</a></li>
+<li><a href="http://zodiacg.net/2016/07/intro2pyshark-ep4/">PyShark入门(4)：packet对象</a></li>
+<li><a href="http://kiminewt.github.io/pyshark/">pyshark</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>被动信息收集工具</title>
+    <url>/kali/%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/</url>
+    <content><![CDATA[<p>主动信息收集</p>
+<span id="more"></span>
+
+<blockquote>
+<ul>
+<li>直接与目标系统交互通信</li>
+<li>无法避免留下访问的痕迹</li>
+<li>使用受控的第三方电脑进行探测<ul>
+<li>使用代理或已被控制的主机</li>
+<li>做好被封杀的准备</li>
+<li>使用噪声迷惑目标，淹没真实的探测流量</li>
+</ul>
+</li>
+<li>扫描<ul>
+<li>发送不同的探测，根据返回结果判断目标状态</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>识别活着的主机<ul>
+<li>潜在的被攻击目标</li>
+</ul>
+</li>
+<li>输出一个 IP 地址列表</li>
+</ul>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/kali/kali_osi_model.png" alt="osi model"></p>
+<blockquote>
+<p>有些网络设备（路由器/防火墙等等）会过滤不规则数据包，使探测失效</p>
+</blockquote>
+<h2 id="1-二层发现"><a href="#1-二层发现" class="headerlink" title="1. 二层发现"></a>1. 二层发现</h2><ul>
+<li><p>概览</p>
+<blockquote>
+<ul>
+<li>优点：扫描速度块、可靠</li>
+<li>缺点：不可路由，只能发现本网段内</li>
+<li>协议：ARP</li>
+</ul>
+</blockquote>
+</li>
+<li><p>arping</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> arping 1.1.1.1 -c 1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> arping 1.1.1.1 -d</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ping 1.1.1.1 -c 1 | grep <span class="string">&quot;bytes from&quot;</span> | cut -d <span class="string">&quot; &quot;</span> -f 4 | cut -d <span class="string">&quot;:&quot;</span> -f 1</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>-c 发送数据包的数量，1 表示只发一个报文</li>
+<li>-d 发现重复IP。即不同 MAC地址 有同样 IP。(ARP地址欺骗)</li>
+<li>grep “bytes from” 筛选结果行</li>
+<li>cut -d “ “ -f 4 以空格分隔，筛选出第4段</li>
+</ul>
+<blockquote>
+<p>arping 只能对某个IP探测，无法对网段探测，如需对整个网段探测，需要脚本</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">if [ &quot;$#&quot; -ne 1 ]; then</span><br><span class="line">  echo &quot;Usage - ./arping.sh [interface]&quot;</span><br><span class="line">  echo &quot;Example - ./arping.sh eth0&quot;</span><br><span class="line">  echo &quot;Example will perform an ARP scan of the local subnet to which eth0 is assigner&quot;</span><br><span class="line">  exit</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">interface = $1</span><br><span class="line">prefix=$(ifconfig $interface | grep &#x27;inet addr&#x27; | cut -d &#x27;:&#x27; -f 2 | cut - d &#x27; &#x27; -f 1 | cut -d &#x27;.&#x27; -f 1-3 )</span><br><span class="line">for addr in $(seq 1 254); do</span><br><span class="line">  arping -c 1 $prefix.$addr | grep &quot;bytes from&quot; | cut -d &#x27; &#x27; -f 5 | cut -d &#x27;[&#x27; -f 2 | cut -d &#x27;]&#x27; -f 1</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 网段探测脚本</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 版本不同代码会有所不一样，此脚本在 kali 2021.1 上测试通过</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">if [ &quot;$#&quot; -ne 1 ]</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="string">&quot;<span class="variable">$#</span>&quot;</span> 表示参数个数， -ne = not equal</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">if</span> 后要有空格，[]内与表达式间也要有空格</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$#</span>&quot;</span> != 1 ]  也可以</span></span><br><span class="line">then</span><br><span class="line">  echo &quot;Usage - ./arping.sh [interface]&quot;</span><br><span class="line">  echo &quot;Example - ./arping.sh eth0&quot;</span><br><span class="line">  echo &quot;Example will perform an ARP scan of the local subnet to which eth0 is assigner&quot;</span><br><span class="line">  exit</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">interface=$1</span><br><span class="line">prefix=$(ifconfig $interface | grep &#x27;inet &#x27; | cut -d &#x27; &#x27; -f 10 | cut -d &#x27;.&#x27; -f 1-3 )</span><br><span class="line">for addr in $(seq 1 254); do</span><br><span class="line">  arping -c 1 $prefix.$addr | grep &quot;bytes from&quot; | cut -d &#x27; &#x27; -f 5 | cut -d &#x27;(&#x27; -f 2 | cut -d &#x27;)&#x27; -f 1</span><br><span class="line">done</span><br></pre></td></tr></table></figure></li>
+<li><p>nmap 二层发现</p>
+<blockquote>
+<p>nmap 二层发现用的参数 -sn</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 扫描网段下主机</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap -sn 192.168.1.0/24</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap -sn 192.168.1.1-254</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 根据  ip list 扫描，一行一个地址</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> namp -iL iplist.txt -sn</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Netdiscover</p>
+<ul>
+<li>专用于二层发现</li>
+<li>可用于无线和交换网络环境</li>
+<li>主动<ul>
+<li>netdiscover -i eth0 -r 1.1.1.0/24</li>
+<li>netdiscover -l iplist.txt</li>
+</ul>
+</li>
+<li>被动<ul>
+<li>netdiscover -p<ul>
+<li>原理：将网卡置成混杂模式，收取给本网卡 ip/mac 地址的数据包</li>
+</ul>
+</li>
+<li>主动 arp 容易出发报警</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Scapy</p>
+<ul>
+<li>pyhon 库、也可作为单独的工具使用：抓包、分析、创建包、修改、注入网路流量</li>
+<li>ARP().display()，显示 ARP 包</li>
+<li>ARP() 可以对包的各字段丢该，如 ARP().pdst = “192.168.1.1”</li>
+<li>sr1(), 发送包：ar1(arp=ARP())</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-三层发现"><a href="#2-三层发现" class="headerlink" title="2. 三层发现"></a>2. 三层发现</h2><blockquote>
+<p>IP、icmp 协议<br>优点：可路由、速度比较快<br>缺点：速度比二层慢，被边界防火墙过滤  </p>
+</blockquote>
+<ul>
+<li><p>ping</p>
+<ul>
+<li>ping  1.1.1.1 -c 2  # 发2个包<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">if[ &quot;$#&quot; -ne 1 ]; then</span><br><span class="line">  echo &quot;Usage - ./pinger.sh [/24 network address]&quot;</span><br><span class="line">  echo &quot;Example - ./pinger.sh 1.1.1.0&quot;</span><br><span class="line">  echo &quot;Example will perform an ICMP ping sweep of the 1.1.1.0/24 range&quot;</span><br><span class="line">  exit</span><br><span class="line">fi</span><br><span class="line">prefix=$(echo $1 | cut -d &#x27;.&#x27; -f 1-3)</span><br><span class="line">for addr in $(seq 1 254); do</span><br><span class="line">  ping -c 1 $prefix.$addr | grep &quot;bytes from&quot; | cut -d &#x27;&#x27; -f 4 | cut -d &#x27;.&#x27; -f 1 &amp;</span><br><span class="line">done</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>traceroute 路由追踪</p>
+<ul>
+<li>通过 ttl 值实现，ttl 先设为1，第一跳会反馈一个包，再发一个包,ttl = 2<blockquote>
+<ul>
+<li>traceroute 返回路由器离主机较近的那个网卡的 ip</li>
+<li>ping -R 返回路由器离主机较远的那个网卡的 ip</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>scapy</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ip = IP()</span></span><br><span class="line">ip.dst = &quot;1.1.1.1&quot;</span><br><span class="line">ping = ICMP()</span><br><span class="line">resp = sr1( ip/ping, timeout=1)</span><br><span class="line">resp.display()</span><br><span class="line"><span class="meta">#</span><span class="bash"> 与上面等价</span></span><br><span class="line">sr1(IP(dst=&quot;1.1.1.1&quot;)/ICMP(), timeout=1)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># python 脚本</span></span><br><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">logging.getLogger(<span class="string">&quot;scapy.runtime&quot;</span>).setLevel(logging.ERROR)</span><br><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) !=<span class="number">2</span> :</span><br><span class="line">  <span class="built_in">print</span> <span class="string">&quot;Usage - ./pinger.sh [/24 network address]&quot;</span></span><br><span class="line">  <span class="built_in">print</span> <span class="string">&quot;Example - ./pinger.sh 1.1.1.0&quot;</span></span><br><span class="line">  <span class="built_in">print</span> <span class="string">&quot;Example will perform an ICMP ping sweep of the 1.1.1.0/24 range&quot;</span></span><br><span class="line">  sys.exit()</span><br><span class="line"></span><br><span class="line">address=<span class="built_in">str</span>(sys.argv[<span class="number">1</span>])</span><br><span class="line">prefix=address.split(<span class="string">&quot;.&quot;</span>)[<span class="number">0</span>] + <span class="string">&quot;.&quot;</span> + address.split(<span class="string">&quot;.&quot;</span>)[<span class="number">1</span>] + <span class="string">&quot;.&quot;</span>+ address.split(<span class="string">&quot;.&quot;</span>)[<span class="number">2</span>] + <span class="string">&quot;.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># file : ip_list</span></span><br><span class="line"><span class="comment"># filename=str(sys.argv[1])</span></span><br><span class="line"><span class="comment"># file = open(filename, &#x27;r&#x27;)</span></span><br><span class="line"><span class="comment"># for addr in file :</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> addr <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">254</span>):</span><br><span class="line">  a = sr1(IP(dst=prefix+<span class="built_in">str</span>(addr)) / ICMP(), timeout=<span class="number">0.1</span>, verbose = <span class="number">0</span>)</span><br><span class="line">  <span class="keyword">if</span>  a == Node:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line">  <span class="keyword">else</span> :</span><br><span class="line">    <span class="built_in">print</span> prefix + <span class="built_in">str</span>(addr)  </span><br></pre></td></tr></table></figure></li>
+<li><p>nmap</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 与二层发现一样用 -sn，如果目标与本主机在同一网段，发 arp 包，不在同一网段则发 ICMP 包</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> nmap 一般会综合各层来实现</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap -sn 1.1.1.1-255</span></span><br></pre></td></tr></table></figure></li>
+<li><p>fping</p>
+<blockquote>
+<p>ping 本身不支持对 ip 段发 ping 包</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> fping 1.1.1.1 -c 1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> fping -g 1.1.1.1 1.1.1.2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> fping -g 1.1.1.0/24</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> fping -f iplist.txt</span></span><br></pre></td></tr></table></figure></li>
+<li><p>hping</p>
+<blockquote>
+<ul>
+<li>能过发送几乎任意 TCP/IP 包</li>
+<li>功能强大但每次只能扫描一个目标</li>
+</ul>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hping3 1.1.1.1 --icmp -c 2</span></span><br><span class="line"></span><br><span class="line">for addr in $(seq 1 254); do</span><br><span class="line">  hping3 1.1.1.$addr --icmp -c 1 &gt;&gt; handle.txt &amp; done</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="3-四层发现"><a href="#3-四层发现" class="headerlink" title="3. 四层发现"></a>3. 四层发现</h2><blockquote>
+<p>判断 ip 是否在线，不对端口做精确判断</p>
+<ul>
+<li>优点<ul>
+<li>可路由且结果可靠</li>
+<li>不太可能被防火墙过滤</li>
+<li>甚至可以发现所有端口都被过滤的主机，准确度比3层高</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>基于状态过滤的防火墙可能过滤扫描</li>
+<li>全端口扫描速度慢</li>
+</ul>
+</li>
+<li>TCP<ul>
+<li>TCP未建立连接直接发 ACK，会回复RST</li>
+<li>SYN——SYN/ACK、RST</li>
+</ul>
+</li>
+<li>UDP<ul>
+<li>端口未开放时，发送UDP，会回复ICMP 端口不可达</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="1-scapy"><a href="#1-scapy" class="headerlink" title="1. scapy"></a>1. scapy</h3><ul>
+<li><p>TCP </p>
+<blockquote>
+<p>未建立连接，直接发 ACK 包，会回复 RST</p>
+</blockquote>
+<ul>
+<li>scapy<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">i=IP()</span><br><span class="line">i.dst=&quot;1.1.1.1&quot;</span><br><span class="line">t=TCP()</span><br><span class="line">t.flags=&#x27;A&#x27;</span><br><span class="line">r=(i/t) # 请求，完成的3层4层包</span><br><span class="line">a = sr1(r, timeout=1)</span><br><span class="line">a.display()</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 等价于</span></span><br><span class="line">a = sr1(IP(dst=&quot;1.1.1.1&quot;)/TCP(dport=80, flags=&#x27;A&#x27;), timeout=1)</span><br><span class="line">```  </span><br><span class="line">```python</span><br><span class="line"><span class="meta">#</span><span class="bash"> ACK_Ping</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/python</span></span><br><span class="line">import logging</span><br><span class="line">logging.getLogger(&quot;scapy.running&quot;).setLevel(logging.ERROR)</span><br><span class="line">from scapy.all import *</span><br><span class="line"></span><br><span class="line">if len(sys.argv) !=2 :</span><br><span class="line">  print &quot;Usage - ./ACK_Ping.py [/24 network address]&quot;</span><br><span class="line">  print &quot;Example - ./ACK_Ping.py 1.1.1.0&quot;</span><br><span class="line">  print &quot;Example will perform a TCP ACK ping scan of the 1.1.1.0/24 range&quot;</span><br><span class="line">  sys.exit()</span><br><span class="line"></span><br><span class="line">address=str(sys.argv[1])</span><br><span class="line">prefix=address.split(&quot;.&quot;)[0] + &quot;.&quot; + address.split(&quot;.&quot;)[1] + &quot;.&quot;+ address.split(&quot;.&quot;)[2] + &quot;.&quot;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> file : ip_list</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> filename=str(sys.argv[1])</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> file = open(filename, <span class="string">&#x27;r&#x27;</span>)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">for</span> addr <span class="keyword">in</span> file :</span></span><br><span class="line">  </span><br><span class="line">for addr in range(1,254):</span><br><span class="line">  response = sr1(IP(dst=prefix+str(addr)) / TCP(dport=2222, flags=&#x27;A&#x27;), timeout=0.1, verbose = 0)</span><br><span class="line">  try:</span><br><span class="line">    if int(response[TCP].flags) == 4 :</span><br><span class="line">      print prefix + str(addr)</span><br><span class="line">  except:</span><br><span class="line">    pass  </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>UDP</p>
+<blockquote>
+<p> 端口未开放时，发送UDP，会回复ICMP 端口不可达</p>
+</blockquote>
+<ul>
+<li>scapy<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">a = sr1(IP(dst=&quot;1.1.1.1&quot;)/UDP(dport=33333), timeout=1)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># python udp 四层探测</span></span><br><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.getLogger(<span class="string">&quot;scapy.running&quot;</span>).setLevel(logging.ERROR)</span><br><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) !=<span class="number">2</span> :</span><br><span class="line">  <span class="built_in">print</span> <span class="string">&quot;Usage - ./UDP_Ping.py [/24 network address]&quot;</span></span><br><span class="line">  <span class="built_in">print</span> <span class="string">&quot;Example - ./UDP_Ping.py 1.1.1.0&quot;</span></span><br><span class="line">  <span class="built_in">print</span> <span class="string">&quot;Example will perform a UDP ping scan of the 1.1.1.0/24 range&quot;</span></span><br><span class="line">  sys.exit()</span><br><span class="line"></span><br><span class="line">address=<span class="built_in">str</span>(sys.argv[<span class="number">1</span>])</span><br><span class="line">prefix=address.split(<span class="string">&quot;.&quot;</span>)[<span class="number">0</span>] + <span class="string">&quot;.&quot;</span> + address.split(<span class="string">&quot;.&quot;</span>)[<span class="number">1</span>] + <span class="string">&quot;.&quot;</span>+ address.split(<span class="string">&quot;.&quot;</span>)[<span class="number">2</span>] + <span class="string">&quot;.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># file : ip_list</span></span><br><span class="line"><span class="comment"># filename=str(sys.argv[1])</span></span><br><span class="line"><span class="comment"># file = open(filename, &#x27;r&#x27;)</span></span><br><span class="line"><span class="comment"># for addr in file :</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">for</span> addr <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">254</span>):</span><br><span class="line">  response = sr1(IP(dst=prefix+<span class="built_in">str</span>(addr)) / UDP(dport=<span class="number">2222</span> ), timeout=<span class="number">0.1</span>, verbose = <span class="number">0</span>)</span><br><span class="line">  <span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">int</span>(response[IP].proto) == <span class="number">1</span>  :</span><br><span class="line">      <span class="built_in">print</span> prefix + <span class="built_in">str</span>(addr)</span><br><span class="line">  <span class="keyword">except</span>:</span><br><span class="line">    <span class="keyword">pass</span>  </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-nmap"><a href="#2-nmap" class="headerlink" title="2. nmap"></a>2. nmap</h3><blockquote>
+<p>nmap 在 三、四层扫描很强</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> -PU53 UDP IMCP 不可达</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap 1.1.1.1-254 -PU53 -sn</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> -PA80 TCP ACK RST</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap 1.1.1.1-254 -PA80 -sn</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> </span></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>网络安全</category>
+        <category>渗透</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>渗透</tag>
       </tags>
   </entry>
 </search>
