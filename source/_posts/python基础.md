@@ -1,5 +1,5 @@
 ---
-title: 【python】python基础
+title: python 基础
 date: 2021-03-24 22:43:57
 tags: 
       - python

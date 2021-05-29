@@ -454,7 +454,7 @@ data.sort_values(by=['open', 'high'])
   # 对索引进行排序, 这个股票的日期索引原来是从大到小，现在重新排序，从小到大
   data.sort_index()
   ```
-## 3.3.2 Series 排序
+### 3.3.2 Series 排序
 - 使用series.sort_values(ascending=True)进行排序，series排序时，只有一列，不需要参数
   ```python
   data['p_change'].sort_values(ascending=True).head()
@@ -478,6 +478,31 @@ data.sort_values(by=['open', 'high'])
   2015-03-06    8.51
   Name: p_change, dtype: float64
   ```
+
+### 3.4 增加
+> 官方文档：https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.append.html
+DataFrame.append(other, ignore_index=False, verify_integrity=False, sort=False)[source]
+功能：向 dataframe 对象中添加新的行，如果添加的列名不在 dataframe 对象中，将会被当作新的列进行添加
+- other：DataFrame、series、dict、list 等数据结构
+- ignore_index：默认值为 False，如果为 True 则不使用 index 标签
+- verify_integraty：默认值为 False，如果为 True 当创建相同的 index 时会抛出 ValueError 的异常
+- sort：boolean，默认是 None，pandas 0.23.0 的版本才有
+
+```python
+output_csv_field_names = ['host', 'request method', 'request uri', 'request version', 'request full uri', 'user agent', 'referer']
+output_df = pd.DataFrame(columns=output_csv_field_names)
+output_df = output_df.append(
+    {
+     'host': http_pkt_1.host,
+     'request method': http_pkt_1.request_method,
+     'request uri': http_pkt_1.request_uri,
+     'request version': http_pkt_1.request_version,
+     'request full uri': http_pkt_1.request_full_uri,
+     'user agent': http_pkt_1.user_agent,
+     'referer': http_pkt_1.referer
+    }, ignore_index=True
+)
+```
 
 # 4 | DataFrame 运算
 ## 4.1 算数运算

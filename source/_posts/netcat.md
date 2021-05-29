@@ -1,5 +1,5 @@
 ---
-title: 网络工具中的瑞士军刀 netcat
+title: netcat
 date: 2021-05-23 14:50:57
 tags: 
       - 网络安全
