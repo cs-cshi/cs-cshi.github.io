@@ -22,14 +22,14 @@
 
   <meta name="description" content="主动信息收集">
 <meta property="og:type" content="article">
-<meta property="og:title" content="被动信息收集工具">
+<meta property="og:title" content="主动信息收集">
 <meta property="og:url" content="https://cs-cshi.github.io/kali/%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/index.html">
 <meta property="og:site_name" content="Chang">
 <meta property="og:description" content="主动信息收集">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/cs-cshi/image-host/kali/kali_osi_model.png">
 <meta property="article:published_time" content="2021-05-26T01:20:57.000Z">
-<meta property="article:modified_time" content="2021-05-29T05:54:07.294Z">
+<meta property="article:modified_time" content="2021-05-31T13:23:45.423Z">
 <meta property="article:author" content="Charles">
 <meta property="article:tag" content="网络安全">
 <meta property="article:tag" content="渗透">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>被动信息收集工具 | Chang</title>
+  <title>主动信息收集 | Chang</title>
   
 
 
@@ -206,7 +206,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          被动信息收集工具
+          主动信息收集
         </h1>
 
         <div class="post-meta">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-29 13:54:07" itemprop="dateModified" datetime="2021-05-29T13:54:07+08:00">2021-05-29</time>
+                <time title="修改时间：2021-05-31 21:23:45" itemprop="dateModified" datetime="2021-05-31T21:23:45+08:00">2021-05-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,14 +259,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6k</span>
+              <span>10k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -452,7 +452,113 @@
 <h3 id="2-nmap"><a href="#2-nmap" class="headerlink" title="2. nmap"></a>2. nmap</h3><blockquote>
 <p>nmap 在 三、四层扫描很强</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> -PU53 UDP IMCP 不可达</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap 1.1.1.1-254 -PU53 -sn</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> -PA80 TCP ACK RST</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap 1.1.1.1-254 -PA80 -sn</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> </span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> -PU53 UDP IMCP 不可达</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 53指端口号</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -sn 不作端口扫描，只作主机发信啊</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap 1.1.1.1-254 -PU53 -sn</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> -PA80 TCP ACK RST</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap 1.1.1.1-254 -PA80 -sn</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-hping3"><a href="#3-hping3" class="headerlink" title="3. hping3"></a>3. hping3</h3><blockquote>
+<p>准确性不高</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 主机在线：ICMP Port Unreachable</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hping3 --udp 1.1.1.1 -c 1</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 未验证</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">if[ &quot;$#&quot; -ne 1 ]; then</span><br><span class="line">  echo &quot;Usage - ./udp_hping.sh [/24 network address]&quot;</span><br><span class="line">  echo &quot;Example - ./udp_hping.sh 1.1.1.0&quot;</span><br><span class="line">  echo &quot;Example will perform an UDP ping sweep of the 1.1.1.0/24 range&quot;</span><br><span class="line">  exit</span><br><span class="line">fi</span><br><span class="line">  prefix=$(echo $1 | cut -d &#x27;.&#x27; -f 1-3)</span><br><span class="line">  for addr in $(seq 1 254); do</span><br><span class="line">    hping3 $prefix.$addr --udp -c 1 &gt;&gt; r.txt;</span><br><span class="line">done</span><br><span class="line">grep Unreachable r.txt | cut -d &quot; &quot; -f 5 | cut -d &quot;=&quot; -f 2 &gt;&gt; output.txt</span><br><span class="line">rm r.txt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> TCP</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hping3 1.1.1.1 -c 1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">if[ &quot;$#&quot; -ne 1 ]; then</span><br><span class="line">  echo &quot;Usage - ./tcp_hping.sh [/24 network address]&quot;</span><br><span class="line">  echo &quot;Example - ./tcp_hping.sh 1.1.1.0&quot;</span><br><span class="line">  echo &quot;Example will perform a TCP ping sweep of the 1.1.1.0/24 range&quot;</span><br><span class="line">  exit</span><br><span class="line">fi</span><br><span class="line">  prefix=$(echo $1 | cut -d &#x27;.&#x27; -f 1-3)</span><br><span class="line">  for addr in $(seq 1 254); do</span><br><span class="line">    hping3 $prefix.$addr -c 1 &gt;&gt; r.txt;</span><br><span class="line">done</span><br><span class="line">grep ^len r.txt | cut -d &quot; &quot; -f 2 | cut -d &quot;=&quot; -f 2 &gt;&gt; output.txt</span><br><span class="line">rm r.txt</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>hping TCP 使用的是发送一个 flag 位全为0的包，如果返回的包 ACK、RST 为1说明主机在线</p>
+</blockquote>
+<h2 id="4-端口扫描"><a href="#4-端口扫描" class="headerlink" title="4. 端口扫描"></a>4. 端口扫描</h2><h3 id="4-1-UDP"><a href="#4-1-UDP" class="headerlink" title="4.1 UDP"></a>4.1 UDP</h3><h4 id="1-Scapy"><a href="#1-Scapy" class="headerlink" title="1. Scapy"></a>1. Scapy</h4><ul>
+<li>端口关闭：ICMP port unreachable</li>
+<li>端口开放：没有回包</li>
+<li>误判(路由器拦截)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.getLogger(<span class="string">&quot;scapy.running&quot;</span>).setLevel(logging.ERROR)</span><br><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time </span><br><span class="line"><span class="keyword">import</span> sysy</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) !=<span class="number">2</span> :</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;Usage - ./udp_scapy.py [/24 network address]&quot;</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;Example - ./udp_scapy.py 1.1.1.0&quot;</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;Example will scan UDP ports &quot;</span></span><br><span class="line">    sys.exit()</span><br><span class="line"></span><br><span class="line">ip=<span class="built_in">str</span>(sys.argv[<span class="number">1</span>])</span><br><span class="line">start=<span class="built_in">int</span>(sys.argv[<span class="number">2</span>])</span><br><span class="line">end=<span class="built_in">int</span>[sys.argv[<span class="number">3</span>]]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> <span class="built_in">range</span>(start, end):</span><br><span class="line">    a=sr1(IP(dst=ip)/UPD(dport=port), timeout=<span class="number">5</span>, verbose=<span class="number">0</span>)</span><br><span class="line">    time.sleep()</span><br><span class="line">    <span class="keyword">if</span> a==<span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">print</span> port</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-Nmap"><a href="#2-Nmap" class="headerlink" title="2. Nmap"></a>2. Nmap</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 扫描默认指定端口</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap -sU 1.1.1.1</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 扫描所有端口</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap 1.1.1.1 -sU -p-</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 扫描指定范围端口</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap 1.1.1.1 -sU -p1-1000</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>不指定端口，默认使用常见的1000个端口</li>
+<li>特征：ICMP host-unreachable</li>
+</ul>
+</blockquote>
+<h3 id="4-2-TCP"><a href="#4-2-TCP" class="headerlink" title="4.2 TCP"></a>4.2 TCP</h3><blockquote>
+<p>TCP 情况比 UDP 复杂很多<br>所有 TCP 扫描方式都是基于三次握手的变化来判断目标端口状态</p>
+</blockquote>
+<ul>
+<li>TCP 端口扫描<ul>
+<li>基于连接的协议</li>
+<li>三次握手</li>
+<li>隐蔽扫描<ul>
+<li>不建立完整连接（三次握手），或者不发 SYN 包</li>
+<li>应用日志不记录扫描行为，应用层不会有记录</li>
+</ul>
+</li>
+<li>僵尸扫描（条件苛刻：闲置系统、系统使用递增的IPID）<ul>
+<li><ol>
+<li>扫描者先控制一台僵尸机，这台僵尸机要求足够闲置，很少发生甚至不发生网络行为；</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>扫描者向僵尸机发送一个 SYN/ACK 包，这时僵尸机会回复 RST 包，并且 IPID = x；</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>扫描者伪装僵尸机的 ip 发送给目标机一个 SYN 包，目标机会回复僵尸机 SYN/ACK 包，此时僵尸机会回复目标机 RST 包，并且 IPID=x+1;</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>扫描者向僵尸机发送 SYN/ACK 包，此时如果僵尸机收到过目标机的 SYN/ACK 包，并回复过 RST 包，此时回复扫描机的应该是 IPID=x+2 的 RST 包。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>全连接扫描</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-隐蔽端口扫描"><a href="#1-隐蔽端口扫描" class="headerlink" title="1. 隐蔽端口扫描"></a>1. 隐蔽端口扫描</h4><ul>
+<li>scapy：<blockquote>
+<p>sr1(IP( dst=”192.168.60.3”)/TCP(dport=80), timeout=1, verbose=1 )</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.getLogger(<span class="string">&quot;scapy.running&quot;</span>).setLevel(logging.ERROR)</span><br><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) !=<span class="number">4</span> :</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;Usage - ./syn_scan.py [Target-IP] [First Port] [Last Port]&quot;</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;Example - ./syn_scan.py 1.1.1.1 1 100&quot;</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;Example will TCP SYN scan ports 1 through 100 on 1.1.1.1&quot;</span></span><br><span class="line">    sys.exit()</span><br><span class="line"></span><br><span class="line">ip=<span class="built_in">str</span>(sys.argv[<span class="number">1</span>])</span><br><span class="line">start=<span class="built_in">int</span>(sys.argv[<span class="number">2</span>])</span><br><span class="line">end=<span class="built_in">int</span>[sys.argv[<span class="number">3</span>]]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> <span class="built_in">range</span>(start, end):</span><br><span class="line">    a=sr1(IP(dst=ip)/TCP(dport=port), timeout=<span class="number">5</span>, verbose=<span class="number">0</span>)</span><br><span class="line">    time.sleep()</span><br><span class="line">    <span class="keyword">if</span> a==<span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">int</span>(a[TCP].flag)==<span class="number">18</span>:</span><br><span class="line">            <span class="built_in">print</span> port</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>nmap</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nmap -sS 1.1.1.1 -p 80,21,25  <span class="comment"># nmap 不加 -sS 参数端口扫描默认用的就是此方式</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap -sS 1.1.1.1 -p -65535 --open</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap -sS 1.1.1.1 -p- --open</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap -sS -iL iplist.txt -p 80,21,22</span></span><br></pre></td></tr></table></figure></li>
+<li><p>hping3</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hping3 1.1.1.1 --scan 80 -S  <span class="comment"># -S syn包</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hping3 1.1.1.1 --scan 80,21 -S</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hping3 1.1.1.1 --scan 0-65535 -S</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hping3 -c 10 -S --spoof 1.1.1.2 -p ++1 1.1.3  <span class="comment"># 伪造源地址，从端口1开始，每次递增1发10个包，且必须能想办法看到被伪装机的结果</span></span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-全连接端口扫描"><a href="#2-全连接端口扫描" class="headerlink" title="2. 全连接端口扫描"></a>2. 全连接端口扫描</h4><blockquote>
+<p>很容易出发报警</p>
+</blockquote>
+<ul>
+<li>scapy<blockquote>
+<p>全连接扫描对 scapy 比较困难</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="keyword">import</span> logging </span><br><span class="line">logging.getLogger(<span class="string">&quot;scapy.running&quot;</span>).setLevel(logging.ERROR)</span><br><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">response = sr1( IP(dst=<span class="string">&quot;1.1.1.1&quot;</span>)/TCP(dport=<span class="number">80</span>, flags=<span class="string">&#x27;S&#x27;</span>) )</span><br><span class="line">reply = sr1( IP(dst=<span class="string">&quot;1.1.1.1&quot;</span>)/TCP(dport=<span class="number">80</span>, flags=<span class="string">&#x27;A&#x27;</span>, ack=(response[TCP].seq+<span class="number">1</span>)) )</span><br><span class="line"><span class="comment"># 实际上 os 内核会认为 syn/ack 是非法包，直接发 rst 断开连接</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="keyword">import</span> logging </span><br><span class="line">logging.getLogger(<span class="string">&quot;scapy.running&quot;</span>).setLevel(logging.ERROR)</span><br><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">SYN = IP(dst=<span class="string">&#x27;1.1.1.1.&#x27;</span>)/TCP(dport=<span class="number">25</span>, flags=<span class="string">&#x27;S&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;----sent---&quot;</span>  </span><br><span class="line">SYN.display()  <span class="comment">#显示要发的包</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;---RECEIVED---&quot;</span></span><br><span class="line">response =sr1(SYN,timeout=<span class="number">1</span>, verbose=<span class="number">0</span>) <span class="comment"># 发 SYN 包并收 SYN+ACK 包</span></span><br><span class="line">response.display()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实际上在此系统内核会发 RST 包</span></span><br><span class="line"><span class="comment"># 解决办法，使用 iptables 过滤，内核发出去的包也会经过 iptables 过滤掉再发出去</span></span><br><span class="line"><span class="comment"># $ iptables -A OUTPUT -p tcp --tcp-flags RST RST -d 1.1.1.1 -j DROP</span></span><br><span class="line"><span class="comment"># $ iptables -L 查看规则</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">int</span>(response[TCP].flags) == <span class="number">18</span>:  <span class="comment"># SYN+ACK</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n\n---SENT---&quot;</span>)</span><br><span class="line">    A = IP(dst=<span class="string">&#x27;1.1.1.1&#x27;</span>/TCP(dport=<span class="number">25</span>, flags=<span class="string">&#x27;A&#x27;</span>,ack=(response[TCP].seq +<span class="number">1</span>)))  <span class="comment"># ACK</span></span><br><span class="line">    A.display()</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;\n\n--RECEIVED--&quot;</span></span><br><span class="line">    response2=sr1(A,timeout=<span class="number">1</span>,verbose=<span class="number">0</span>)</span><br><span class="line">    response2.display()</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;SYN-ACK not returned&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>nmap</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 默认 1000 个常用端口</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap -sT 1.1.1.1 -p 80</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap -sT 1.1.1.1 -p 80,21,25</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap -sT 1.1.1.1 -p 80-2000</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nmap -sT -iL iplist.txt -p 80</span></span><br></pre></td></tr></table></figure></li>
+<li><p>dmitry</p>
+<blockquote>
+<ul>
+<li>功能简单，但是用简便</li>
+<li>默认150个常用端口</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dmitry -p 1.1.1.1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dmitry -p 1.1.1.1 -o output.txt</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>nc<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nc -nv -w 1 -z 1.1.1.1 1-100  <span class="comment"># -w 1 超时时间    -z 超时尝试下一个端口</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> </span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
     </div>
 
     
@@ -507,7 +613,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://cs-cshi.github.io/kali/%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="被动信息收集工具">https://cs-cshi.github.io/kali/主动信息收集/</a>
+    <a href="https://cs-cshi.github.io/kali/%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="主动信息收集">https://cs-cshi.github.io/kali/主动信息收集/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -594,7 +700,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BA%8C%E5%B1%82%E5%8F%91%E7%8E%B0"><span class="nav-text">1. 二层发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%89%E5%B1%82%E5%8F%91%E7%8E%B0"><span class="nav-text">2. 三层发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%9B%9B%E5%B1%82%E5%8F%91%E7%8E%B0"><span class="nav-text">3. 四层发现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-scapy"><span class="nav-text">1. scapy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-nmap"><span class="nav-text">2. nmap</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BA%8C%E5%B1%82%E5%8F%91%E7%8E%B0"><span class="nav-text">1. 二层发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%89%E5%B1%82%E5%8F%91%E7%8E%B0"><span class="nav-text">2. 三层发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%9B%9B%E5%B1%82%E5%8F%91%E7%8E%B0"><span class="nav-text">3. 四层发现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-scapy"><span class="nav-text">1. scapy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-nmap"><span class="nav-text">2. nmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-hping3"><span class="nav-text">3. hping3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F"><span class="nav-text">4. 端口扫描</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-UDP"><span class="nav-text">4.1 UDP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Scapy"><span class="nav-text">1. Scapy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Nmap"><span class="nav-text">2. Nmap</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-TCP"><span class="nav-text">4.2 TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E9%9A%90%E8%94%BD%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F"><span class="nav-text">1. 隐蔽端口扫描</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%85%A8%E8%BF%9E%E6%8E%A5%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F"><span class="nav-text">2. 全连接端口扫描</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -649,7 +755,7 @@
           <a href="/pyshark%20%E8%A7%A3%E6%9E%90pcap%E8%8E%B7%E5%BE%97%20http%20header/" title="pyshark 解析pcap获得 http header&#x2F;">pyshark 解析 pcap 获取 http header</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/kali/%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="kali&#x2F;主动信息收集&#x2F;">被动信息收集工具</a>
+          <a href="/kali/%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="kali&#x2F;主动信息收集&#x2F;">主动信息收集</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/tcpdump/" title="tcpdump&#x2F;">tcpdump</a>
@@ -696,13 +802,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">198k</span>
+    <span title="站点总字数">202k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:01</span>
+    <span title="站点阅读时长">3:04</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
